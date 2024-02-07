@@ -1,0 +1,581 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#-- global variables, can be accessed by sub-charts.
+global:
+  #-- the registry where the images are stored. override during runtime for other registry at global level or individual level.
+  repository:
+  #-- the registry where the images are stored. override during runtime for other registry at global level or individual level. default is ghcr.io
+  registry: ghcr.io
+  #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
+  tag: ~
+  #-- turn off autoscaling for the entire suite by setting this to false. default is true.
+  autoscaling: true
+  #-- global secrets, can be accessed by sub-charts.
+  secrets:
+    enabled: true
+    databasePassword: ~
+    databaseUser: ~
+    databaseName: ~
+    annotation:
+      helm.sh/policy: "keep"
+  #-- domain of the application, it is required, apps.silver.devops.gov.bc.ca for silver cluster and apps.devops.gov.bc.ca for gold cluster
+  domain: "apps.silver.devops.gov.bc.ca"
+  #-- the image registry of OpenShift. It is used in conjunction with ImageStreams which is a OpenShift specific resource.
+  openshiftImageRegistry: "image-registry.openshift-image-registry.svc:5000"
+  #-- the database Alias gives a nice way to switch to different databases, crunchy, patroni ... etc.
+  databaseAlias: bitnami-pg # this is the alias for bitnami postgres, change it based on db type(crunchy,patroni...) and alias used in the chart.
+  #-- extra annotations for the pod, it is optional and is an object.
+  podAnnotations: |
+      app.kubernetes.io/timestamp: {{now | toString }}
+#-- the components of the application, backend.
+backend:
+  #-- enable or disable a component deployment.
+  enabled: true
+  #-- can be either a statefulSet or a deployment not both. TBD (StatefulSet)
+  deployment: # can be either a statefulSet or a deployment not both
+    enabled: true
+  #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
+  deploymentStrategy:
+    type: Recreate
+  #-- containers specific to the component. one or many containers can be defined.
+  containers:
+    #-- name of the container.
+    - name: backend
+      #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
+      registry: '{{ .Values.global.registry }}'
+      #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
+      repository: '{{ .Values.global.repository }}'
+      #-- the exact component name, in this case backend.
+      image: backend
+      #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
+      tag: '{{ .Values.global.tag }}'
+      #-- environment variables for the container. it is optional and is an object.
+      env:
+        #-- the environment variables from global secrets, the secret name is auto deciphered from the release name.
+        fromGlobalSecret:
+          - name: POSTGRES_PASSWORD
+            key: password
+          - name: POSTGRES_USER
+            key: databaseUser
+          - name: POSTGRES_DATABASE
+            key: databaseName
+        #-- the environment variables from values, these are interpolated during runtime and can contain tpl.
+        fromValues:
+          - name: POSTGRES_HOST
+            value: '{{ .Release.Name }}-{{.Values.global.databaseAlias}}'
+      #-- the ports for the container. it is optional and is an array of objects.
+      ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+      #-- the resources for the container. it is optional and is an object. for default values check this link:   https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L298-L304
+      resources: # this is optional
+        limits:
+          cpu: 250m
+          memory: 250Mi
+        requests:
+          cpu: 100m
+          memory: 150Mi
+      #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
+      readinessProbe:
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 2
+        timeoutSeconds: 2
+        successThreshold: 1
+        failureThreshold: 30
+      #-- the liveness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L324-L328
+      livenessProbe:
+        successThreshold: 1
+        failureThreshold: 3
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 30
+        timeoutSeconds: 5
+  #-- init containers specific to the component. one or many containers can be defined.
+  initContainers:
+    #-- name of the container.
+    - name: database-migrations
+      #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
+      registry: '{{ .Values.global.registry }}'
+      #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
+      repository: '{{ .Values.global.repository }}' # example, it includes registry and repository
+      #-- the exact image name, in this case migrations
+      image: migrations
+      #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
+      tag: '{{ .Values.global.tag }}'
+      #-- the security context for the container. it is optional and is an object.
+      env:
+        #-- the environment variables from global secrets, the secret name is auto deciphered from the release name.
+        fromGlobalSecret:
+          - name: FLYWAY_PASSWORD
+            key: databasePassword
+          - name: FLYWAY_URL
+            key: databaseJDBCURLNoCreds
+          - name: FLYWAY_USER
+            key: databaseUser
+        #-- the environment variables from values, these are interpolated during runtime and can contain tpl.
+        fromValues:
+          - name: FLYWAY_BASELINE_ON_MIGRATE
+            value: "true"
+          - name: FLYWAY_DEFAULT_SCHEMA
+            value: "USERS"
+          - name: FLYWAY_CONNECT_RETRIES
+            value: "30"
+      #-- the resources for the container. it is optional and is an object. for default values check this link:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 250Mi
+        requests:
+          cpu: 200m
+          memory: 150Mi
+  #-- autoscaling for the component. it is optional and is an object.
+  autoscaling:
+    #-- enable or disable autoscaling.
+    enabled: true
+    #-- the minimum number of replicas.
+    minReplicas: 3
+    #-- the maximum number of replicas.
+    maxReplicas: 7
+    #-- the target cpu utilization percentage, is from request cpu and NOT LIMIT CPU.
+    targetCPUUtilizationPercentage: 80
+    #-- the behavior for the autoscaling. it is optional and is an object.
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+          - type: Percent
+            value: 10
+            periodSeconds: 60
+          - type: Pods
+            value: 2
+            periodSeconds: 60
+        selectPolicy: Min
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 30
+          - type: Pods
+            value: 2
+            periodSeconds: 30
+        selectPolicy: Max
+  #-- vault, for injecting secrets from vault. it is optional and is an object. it creates an initContainer which reads from vault and app container can source those secrets. for referring to a working example with vault follow this link: https://github.com/bcgov/onroutebc/blob/main/charts/onroutebc/values.yaml#L171-L186
+  vault:
+    #-- enable or disable vault.
+    enabled: false
+    #-- the role of the vault. it is required, #licenseplate-prod or licenseplate-nonprod, license plate is the namespace without env
+    role: ~
+    #-- the vault path where the secrets live. it is required, dev/api-1, dev/api-2, test/api-1 etc...
+    secretPaths:
+      - dev/api-1
+      - dev/api-2
+      - test/api-1
+      - test/api-2
+      - prod/api-1
+      - prod/api-2
+    #-- resources specific to vault initContainer. it is optional and is an object.
+    resources:
+      limits:
+        cpu: 50m
+        memory: 50Mi
+      requests:
+        cpu: 50m
+        memory: 25Mi
+  #-- the service for the component. for inter namespace communication, use the service name as the hostname.
+  service:
+    #-- enable or disable the service.
+    enabled: true
+    #-- the type of the service. it can be ClusterIP, NodePort, LoadBalancer, ExternalName. ClusterIP is the default and is recommended.
+    type: ClusterIP
+    #-- the ports for the service.
+    ports:
+      #-- the name for the port.
+      - name: http
+        #-- the port for the service. the service will be accessible on this port within the namespace.
+        port: 80
+        #-- the container port where the application is listening on.
+        targetPort: 3000
+        protocol: TCP
+  nodeSelector: { }
+  tolerations: [ ]
+  affinity: { }
+  podAnnotations: |
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '3000'
+    prometheus.io/path: '/api/metrics'
+frontend:
+  # -- enable or disable a component deployment.
+  enabled: true
+  # -- can be either a statefulSet or a deployment not both. TBD (StatefulSet)
+  deployment: # can be either a statefulSet or a deployment not both
+    enabled: true
+  # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
+  deploymentStrategy:
+    type: Recreate
+  # -- the configmap specific to the component.
+  configmap:
+    # -- enable or disable the configmap.
+    enabled: true
+    # -- dat contains key value pairs for the configmap. can contain multiple files. value can be piped as string.
+    data:
+      #-- sample to create a config.js object.
+      config.js: |-
+        const envConfig = (() => {
+          return {
+            "VITE_DEPLOY_ENVIRONMENT":"{{ .Release.Name }}-{{ .Release.Namespace }}"
+          };
+        })();
+      #-- sample to create a config.prod.js object.
+      config.prod.js: |-
+        const envConfig = (() => {
+          return {
+            "VITE_DEPLOY_ENVIRONMENT":"static"
+          };
+        })();
+  # -- the containers specific to the component. one or many containers can be defined.
+  containers:
+    #-- name of the container.
+    - name: frontend
+      #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
+      registry: '{{ .Values.global.registry }}'
+      #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
+      repository: '{{ .Values.global.repository }}' # example, it includes registry and repository
+      #-- the exact component name, in this case frontend.
+      image: frontend
+      #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
+      tag: '{{ .Values.global.tag }}'
+      #-- the security context for the container. it is optional and is an object.
+      securityContext:
+        capabilities:
+          add: [ "NET_BIND_SERVICE" ]
+      #-- the environment variables for the container. it is optional and is an object.
+      env:
+        #-- the environment variables from values, these are interpolated during runtime and can contain tpl.
+        fromValues:
+          - name: BACKEND_URL
+            value: "http://{{ .Release.Name }}-backend"
+          - name: LOG_LEVEL
+            value: "info"
+        #-- the environment variables from local configmap(configmap associated to the component), these are interpolated during runtime and can contain tpl.
+        fromLocalConfigmap:
+          - name: frontend-configmap
+            key: config.js
+          - name: frontend-prod-configmap
+            key: config.prod.js
+      #-- the ports for the container. it is optional and is an array of objects.
+      ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+        - name: http2
+          containerPort: 3001
+          protocol: TCP
+        - name: metrics
+          containerPort: 3003
+          protocol: TCP
+      #-- the resources for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L298-L304
+      resources:
+        limits:
+          cpu: 100m
+          memory: 150Mi
+        requests:
+          cpu: 30m
+          memory: 50Mi
+      #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 3001
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 2
+        timeoutSeconds: 2
+        successThreshold: 1
+        failureThreshold: 30
+      #-- the liveness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L324-L328
+      livenessProbe:
+        successThreshold: 1
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 3001
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 30
+        timeoutSeconds: 5
+  podAnnotations: |
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '3003'
+    prometheus.io/path: '/metrics'
+  #-- autoscaling for the component. it is optional and is an object.
+  autoscaling:
+    #-- enable or disable autoscaling.
+    enabled: true
+    #-- the minimum number of replicas.
+    minReplicas: 3
+    #-- the maximum number of replicas.
+    maxReplicas: 7
+    #-- the target cpu utilization percentage, is from request cpu and NOT LIMIT CPU.
+    targetCPUUtilizationPercentage: 80
+    #-- the behavior for the autoscaling. it is optional and is an object.
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+          - type: Percent
+            value: 10
+            periodSeconds: 60
+          - type: Pods
+            value: 2
+            periodSeconds: 60
+        selectPolicy: Min
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 30
+          - type: Pods
+            value: 2
+            periodSeconds: 30
+        selectPolicy: Max
+  #-- the service for the component. for inter namespace communication, use the service name as the hostname.
+  service:
+    #-- enable or disable the service.
+    enabled: true
+    #-- the type of the service. it can be ClusterIP, NodePort, LoadBalancer, ExternalName. ClusterIP is the default and is recommended.
+    type: ClusterIP
+    #-- the ports for the service.
+    ports:
+      - name: http
+        #-- the port for the service. the service will be accessible on this port within the namespace.
+        port: 80
+        #-- the container port where the application is listening on
+        targetPort: 3000
+        #-- the protocol for the port. it can be TCP or UDP. TCP is the default and is recommended.
+        protocol: TCP
+      - port: 3003
+        targetPort: 3003
+        protocol: TCP
+        name: metrics
+  #-- the route for the component. it is optional and is an object. To make the application accessible from internet, use the route.
+  route:
+    #-- enable or disable the route.
+    enabled: true
+    #-- the hostname for the route. this will be the URL for the application, you can access by https://{{ .Release.Name }}-frontend.{{ .Values.global.domain }}
+    host: "{{ .Release.Name }}-frontend.{{ .Values.global.domain }}"
+    #-- the target port of the service. this is the port where the service is listening on. The name is mapped to the port name in the service.
+    targetPort: http
+
+crunchy: # enable it for TEST and PROD, for PR based pipelines simply use single postgres
+  enabled: false
+
+  crunchyImage: artifacts.developer.gov.bc.ca/bcgov-docker-local/crunchy-postgres-gis:ubi8-15.2-3.3-0
+
+  postgresVersion: 15
+  postGISVersion: '3.3'
+  imagePullPolicy: Always
+  instances:
+    name: ha # high availability
+    replicas: 1 # 2 or 3 for high availability in TEST and PROD.
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9187'
+    dataVolumeClaimSpec:
+      storage: 120Mi
+      storageClassName: netapp-block-standard
+    requests:
+      cpu: 25m
+      memory: 256Mi
+    limits:
+      cpu: 100m
+      memory: 512Mi
+    replicaCertCopy:
+      requests:
+        cpu: 1m
+        memory: 32Mi
+      limits:
+        cpu: 50m
+        memory: 64Mi
+
+  pgBackRest:
+    enabled: false
+    image: # it's not necessary to specify an image as the images specified in the Crunchy Postgres Operator will be pulled by default
+    retention: "1" # Ideally a larger number such as 30 backups/days
+    # If retention-full-type set to 'count' then the oldest backups will expire when the number of backups reach the number defined in retention
+    # If retention-full-type set to 'time' then the number defined in retention will take that many days worth of full backups before expiration
+    retentionFullType: count
+    repos:
+      schedules:
+        full: 0 8 * * *
+        incremental: 0 0,4,12,16,20 * * *
+      volume:
+        accessModes: "ReadWriteOnce"
+        storage: 64Mi
+        storageClassName: netapp-file-backup
+    repoHost:
+      requests:
+        cpu: 1m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+    sidecars:
+      requests:
+        cpu: 1m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+
+  patroni:
+    postgresql:
+      pg_hba: "host all all 0.0.0.0/0 md5"
+      parameters:
+        shared_buffers: 16MB # default is 128MB; a good tuned default for shared_buffers is 25% of the memory allocated to the pod
+        wal_buffers: "64kB" # this can be set to -1 to automatically set as 1/32 of shared_buffers or 64kB, whichever is larger
+        min_wal_size: 32MB
+        max_wal_size: 64MB # default is 1GB
+        max_slot_wal_keep_size: 128MB # default is -1, allowing unlimited wal growth when replicas fall behind
+
+  proxy:
+    pgBouncer:
+      image: # it's not necessary to specify an image as the images specified in the Crunchy Postgres Operator will be pulled by default
+      replicas: 1
+      requests:
+        cpu: 1m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+
+  # Postgres Cluster resource values:
+  pgmonitor:
+    enabled: false
+    exporter:
+      image: # it's not necessary to specify an image as the images specified in the Crunchy Postgres Operator will be pulled by default
+      requests:
+        cpu: 1m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+
+bitnami-pg:
+  enabled: true
+  image:
+    registry: ghcr.io
+    repository: bcgov/nr-containers/bitnami/postgresql
+    tag: 15.5.0
+  auth:
+    existingSecret: '{{ .Release.Name }}'
+    username: 'quickstart'
+    database: quickstart
+  shmVolume:
+    enabled: false
+  backup:
+    enabled: false
+    cronjob:
+      containerSecurityContext: { }
+      podSecurityContext:
+        enabled: false
+      storage:
+        size: 200Mi
+  primary:
+    persistence:
+      enabled: true
+      storageClass: netapp-file-standard
+      accessModes:
+        - ReadWriteOnce
+      size: 100Mi
+    containerSecurityContext:
+      enabled: false
+    podSecurityContext:
+      enabled: false
+    initdb:
+      scripts: # remove the below script, if POSTGIS is not required.
+        postgis.sh: |
+          #!/bin/sh
+          PGPASSWORD=$POSTGRES_PASSWORD psql -U postgres -d postgres -c "CREATE EXTENSION postgis;"
+    resources:
+      requests:
+        cpu: 50m
+        memory: 150Mi
+      limits:
+        cpu: 150m
+        memory: 250Mi
+
+backup:
+  enabled: true
+  pvc:
+    enabled: true
+    size: 256Mi
+    storageClassName: netapp-file-standard
+    accessModes: ReadWriteOnce
+  cronjob:
+    enabled: true
+    volumes:
+      - name: "{{.Release.Name}}-backup"
+        persistentVolumeClaim:
+          claimName: "{{.Release.Name}}-backup"
+    restartPolicy: "Never"
+    schedule: "0 0 * * *"
+    concurrencyPolicy: "Replace"
+    failedJobsHistoryLimit: 7
+    successfulJobsHistoryLimit: 30
+    startingDeadlineSeconds: 3600
+  containers:
+    - name: backup
+      registry: 'docker.io'
+      repository: 'bcgovimages' # example, it includes registry and repository
+      image: backup-container # the exact component name, be it backend, api-1 etc...
+      tag: latest # the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
+      command:
+        - "/bin/bash"
+        - "-c"
+        - "/backup.sh -1"
+      volumeMounts:
+        - mountPath: "/backups/"
+          name: "{{.Release.Name}}-backup"
+      env:
+        fromValues:
+          - name: BACKUP_DIR
+            value: "/backups/"
+          - name: BACKUP_STRATEGY
+            value: "rolling"
+          - name: NUM_BACKUPS
+            value: '5'
+          - name: DAILY_BACKUPS
+            value: '7'
+          - name: WEEKLY_BACKUPS
+            value: '4'
+          - name: MONTHLY_BACKUPS
+            value: '1'
+          - name: DATABASE_SERVICE_NAME # depends on which chart being used, adjust accordingly.
+            value: '{{.Release.Name}}-{{.Values.global.databaseAlias}}'
+          - name: DEFAULT_PORT
+            value: "5432"
+        fromGlobalSecret:
+          - name: DATABASE_PASSWORD
+            key: password
+          - name: POSTGRESQL_DATABASE
+            key: databaseName
+          - name: DATABASE_USER
+            key: databaseUser
+      resources:
+        limits:
+          cpu: 50m
+          memory: 256Mi
+        requests:
+          cpu: 20m
+          memory: 128Mi

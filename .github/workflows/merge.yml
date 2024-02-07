@@ -1,0 +1,77 @@
+name: Merge
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '*.md'
+      - '.github/**'
+      - '.graphics/**'
+      - '!.github/workflows/.deploy.yml'
+      - '!.github/workflows/merge.yml'
+  workflow_dispatch:
+    inputs:
+      pr_no:
+        description: "PR-numbered container set to deploy"
+        type: number
+        required: true
+
+jobs:
+  vars:
+    name: Set Variables
+    outputs:
+      pr: ${{ steps.pr.outputs.pr }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    steps:
+      # Get PR number for squash merges to main
+      - name: PR Number
+        id: pr
+        uses: bcgov-nr/action-get-pr@v0.0.1
+
+  deploy-test:
+    name: Deploy (test)
+    needs: [vars]
+    uses: ./.github/workflows/.deploy.yml
+    secrets: inherit
+    with:
+      autoscaling: false
+      environment: test
+      tag: ${{ needs.vars.outputs.pr }}
+      release: test
+
+  integration-e2e:
+    name: Integration and E2E Tests
+    needs: [deploy-test, vars]
+    uses: ./.github/workflows/.tests.yml
+    with:
+      target: test
+
+  deploy-prod:
+    name: Deploy (prod)
+    needs: [integration-e2e, vars]
+    uses: ./.github/workflows/.deploy.yml
+    secrets: inherit
+    with:
+      environment: prod
+      tag: ${{ needs.vars.outputs.pr }}
+      release: prod
+      params: --set backend.deploymentStrategy.type=RollingUpdate --set frontend.deploymentStrategy.type=RollingUpdate
+
+  promote:
+    name: Promote Images
+    needs: [deploy-prod, vars]
+    runs-on: ubuntu-22.04
+    permissions:
+      packages: write
+    strategy:
+      matrix:
+        package: [migrations, backend, frontend]
+    timeout-minutes: 1
+    steps:
+      - uses: shrink/actions-docker-registry-tag@v3
+        with:
+          registry: ghcr.io
+          repository: ${{ github.repository }}/${{ matrix.package }}
+          target: ${{ needs.vars.outputs.pr }}
+          tags: prod
