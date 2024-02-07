@@ -1,5 +1,5 @@
 apiVersion: v2
-name: quickstart-openshift
+name: nr-omrr-transparency
 description: A Helm chart for Kubernetes deployment.
 icon: https://www.nicepng.com/png/detail/521-5211827_bc-icon-british-columbia-government-logo.png
 
@@ -43,11 +43,6 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     alias: bitnami-pg
 
-  - name: component
-    condition: backup.enabled
-    version: 0.3.0
-    repository: https://bcgov.github.io/helm-service
-    alias: backup
 maintainers:
   - name: Om Mishra
     email: omprakash.2.mishra@gov.bc.ca
