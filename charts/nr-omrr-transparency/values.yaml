@@ -481,6 +481,8 @@ bitnami-pg:
     tag: 15.5.0
   auth:
     existingSecret: '{{ .Release.Name }}'
+    username: 'omrr'
+    database: 'omrr'
   shmVolume:
     enabled: false
   backup:
