@@ -16,16 +16,23 @@
     "strictNullChecks": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals","cypress", "node", "cypress-file-upload","@testing-library/cypress"],
+    "types": [
+      "vitest/globals",
+      "cypress",
+      "node",
+      "cypress-file-upload",
+      "@testing-library/cypress",
+    ],
     "baseUrl": "./",
     "paths": {
       "@": ["src"],
       "test": ["test"],
       "test/*": ["test/*"],
       "@/*": ["src/*"],
-      "~/*": ["node_modules/*"]
-    }
+      "~/*": ["node_modules/*"],
+    },
   },
-  "include": ["src","src/**/*", "src/**/*.tsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "src/**/*", "src/**/*.tsx"],
+  "exclude": ["**/*.png"], // Add this line to exclude PNG files
+  "references": [{ "path": "./tsconfig.node.json" }],
 }

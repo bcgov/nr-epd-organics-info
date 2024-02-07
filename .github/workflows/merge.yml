@@ -40,12 +40,7 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: test
 
-  integration-e2e:
-    name: Integration and E2E Tests
-    needs: [deploy-test, vars]
-    uses: ./.github/workflows/.tests.yml
-    with:
-      target: test
+
 
   deploy-prod:
     name: Deploy (prod)

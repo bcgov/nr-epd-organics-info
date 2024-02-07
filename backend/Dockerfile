@@ -1,44 +1,40 @@
-# Build static files
-# Node Bullseye has npm
-FROM node:20.11.0-bullseye-slim AS buildWithDevDeps
-
-# Install packages, build and keep only prod packages
-WORKDIR /app
-COPY *.json ./
-COPY ./src ./src
-COPY ./prisma ./prisma
-RUN npm ci --ignore-scripts --no-update-notifier
-RUN npm run prisma-generate
 FROM node:20.11.0-bullseye-slim AS build
 
 # Install packages, build and keep only prod packages
 WORKDIR /app
 COPY *.json ./
 COPY ./src ./src
-COPY ./prisma ./prisma
-RUN npm ci --ignore-scripts --no-update-notifier --omit=dev
+RUN npm ci --ignore-scripts && \
+    npm run build
 
-# COPY over few dependencies from buildWithDevDeps
-COPY --from=buildWithDevDeps /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=buildWithDevDeps /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=buildWithDevDeps /app/node_modules/prisma ./node_modules/prisma
+RUN mkdir -p /app/sessions
 
-RUN npm run build
+FROM node:20.11.0-bullseye-slim AS dependencies
 
-# Deploy container
-# Distroless has node, but not npm
+# Install packages, build and keep only prod packages
+WORKDIR /app
+COPY *.json ./
+RUN npm ci --omit=dev --ignore-scripts
+
+
+# Deployment container
 FROM gcr.io/distroless/nodejs20-debian11:nonroot
 ENV NODE_ENV production
-
-# Copy over app
+# Copy over app.ts
 WORKDIR /app
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /app/node_modules/prisma ./node_modules/prisma
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/sessions ./sessions
 
-# Ports, health check and non-root user
+# Port and health check
 EXPOSE 3000
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/:3000/api || exit 1
-USER nonroot
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/:3000
 
-# Start up command with 50MB of heap size, each application needs to determine what is the best value. DONT use default as it is 4GB.
-CMD ["--max-old-space-size=50", "/app/dist/main"]
+# Non-privileged user
+USER app
+
+# Start up command with 250MB of heap size, each application needs to determine what is the best value. DONT use default as it is 4GB.
+CMD ["--max-old-space-size=250", "/app/dist/server"]

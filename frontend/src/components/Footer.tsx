@@ -7,7 +7,7 @@ const styles = {
     top: 'auto',
     bottom: 0,
     color: '#ffffff',
-    backgroundColor: '#355992',
+    backgroundColor: '#003366',
   },
   toolbar: {
     display: 'flex',
@@ -15,8 +15,8 @@ const styles = {
     alignItems: 'center',
   },
   footerButton: {
-    margin: '0.1em',
-    padding: '0.1em',
+    margin: '0.2em',
+    padding: '0.2em',
     color: '#000000',
     backgroundColor: '#ffffff',
   },
