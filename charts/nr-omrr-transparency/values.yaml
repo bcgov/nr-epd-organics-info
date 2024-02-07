@@ -63,6 +63,8 @@ backend:
         fromValues:
           - name: POSTGRES_HOST
             value: '{{ .Release.Name }}-{{.Values.global.databaseAlias}}'
+          - name: NODE_ENV
+            value: 'production'
       #-- the ports for the container. it is optional and is an array of objects.
       ports:
         - name: http
