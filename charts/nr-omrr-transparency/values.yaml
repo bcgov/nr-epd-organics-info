@@ -81,7 +81,7 @@ backend:
       #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
       readinessProbe:
         httpGet:
-          path: /health
+          path: /api/health
           port: 3000
           scheme: HTTP
         initialDelaySeconds: 5
@@ -94,7 +94,7 @@ backend:
         successThreshold: 1
         failureThreshold: 3
         httpGet:
-          path: /health
+          path: /api/health
           port: 3000
           scheme: HTTP
         initialDelaySeconds: 15
