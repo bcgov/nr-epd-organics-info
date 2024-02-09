@@ -11,7 +11,7 @@ export default function Dashboard() {
   useEffect(() => {
     apiService
       .getAxiosInstance()
-      .get('/hello')
+      .get('/health')
       .then((response: AxiosResponse) => {
         console.log(response.data)
         setData([])
