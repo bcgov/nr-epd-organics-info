@@ -63,6 +63,8 @@ backend:
         fromValues:
           - name: POSTGRES_HOST
             value: '{{ .Release.Name }}-{{.Values.global.databaseAlias}}'
+          - name: NODE_ENV
+            value: 'production'
       #-- the ports for the container. it is optional and is an array of objects.
       ports:
         - name: http
@@ -79,7 +81,7 @@ backend:
       #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
       readinessProbe:
         httpGet:
-          path: /api/health
+          path: /health
           port: 3000
           scheme: HTTP
         initialDelaySeconds: 5
@@ -92,7 +94,7 @@ backend:
         successThreshold: 1
         failureThreshold: 3
         httpGet:
-          path: /api/health
+          path: /health
           port: 3000
           scheme: HTTP
         initialDelaySeconds: 15
@@ -125,16 +127,16 @@ backend:
           - name: FLYWAY_BASELINE_ON_MIGRATE
             value: "true"
           - name: FLYWAY_DEFAULT_SCHEMA
-            value: "USERS"
+            value: "omrr"
           - name: FLYWAY_CONNECT_RETRIES
             value: "30"
       #-- the resources for the container. it is optional and is an object. for default values check this link:
       resources:
         limits:
-          cpu: 500m
+          cpu: 100m
           memory: 250Mi
         requests:
-          cpu: 200m
+          cpu: 30m
           memory: 150Mi
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
@@ -479,8 +481,8 @@ bitnami-pg:
     tag: 15.5.0
   auth:
     existingSecret: '{{ .Release.Name }}'
-    username: 'quickstart'
-    database: quickstart
+    username: 'omrr'
+    database: 'omrr'
   shmVolume:
     enabled: false
   backup:

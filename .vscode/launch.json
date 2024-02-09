@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend",
+      "request": "launch",
+      "runtimeArgs": ["run-script", "dev"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["backend/<node_internals>/**"],
+      "type": "node",
+      "cwd": "${workspaceFolder}/backend",
+      "preLaunchTask": "database"
+    }
+    {
+      "name": "Frontend",
+      "request": "launch",
+      "runtimeArgs": ["run-script", "serve"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["frontend/<node_internals>/**"],
+      "type": "node",
+      "cwd": "${workspaceFolder}/frontend"
+    },
+    {
+      "name": "Launch Edge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:3001",
+      "webRoot": "${workspaceFolder}/frontend"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch All",
+      "configurations": ["Backend", "Frontend", "Launch Edge"],
+      "stopAll": true
+    }
+  ]
+}

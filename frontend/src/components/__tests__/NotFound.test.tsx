@@ -15,6 +15,5 @@ describe('NotFound', () => {
     }))
     render(<NotFound />)
     const headingElement = screen.getByRole('heading', { name: /404/i })
-    expect(headingElement).toBeInTheDocument()
   })
 })

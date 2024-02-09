@@ -2,12 +2,9 @@
 version: "3.9"
 
 x-var:
-  - &POSTGRES_USER
-    postgres
-  - &POSTGRES_PASSWORD
-    default
-  - &POSTGRES_DATABASE
-    postgres
+  - &POSTGRES_USER postgres
+  - &POSTGRES_PASSWORD default
+  - &POSTGRES_DATABASE postgres
 
 x-postgres-vars: &postgres-vars
   POSTGRES_HOST: database
@@ -35,7 +32,7 @@ services:
       FLYWAY_USER: *POSTGRES_USER
       FLYWAY_PASSWORD: *POSTGRES_PASSWORD
       FLYWAY_BASELINE_ON_MIGRATE: true
-      FLYWAY_DEFAULT_SCHEMA: USERS
+      FLYWAY_DEFAULT_SCHEMA: omrr
     depends_on:
       database:
         condition: service_healthy

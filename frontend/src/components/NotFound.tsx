@@ -13,10 +13,9 @@ export default function NotFound() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh',
       }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="xs">
         <Grid>
           <Typography variant="h1">404</Typography>
           <Typography variant="h6">

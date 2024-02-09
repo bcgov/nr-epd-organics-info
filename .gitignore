@@ -118,5 +118,3 @@ test-report.xml
 **/out
 **/target
 
-# VSCode
-.vscode/
