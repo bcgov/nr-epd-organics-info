@@ -26,7 +26,7 @@ global:
   databaseAlias: bitnami-pg # this is the alias for bitnami postgres, change it based on db type(crunchy,patroni...) and alias used in the chart.
   #-- extra annotations for the pod, it is optional and is an object.
   podAnnotations: |
-      app.kubernetes.io/timestamp: {{now | toString }}
+    app.kubernetes.io/timestamp: {{now | toString }}
 #-- the components of the application, backend.
 backend:
   #-- enable or disable a component deployment.
@@ -42,13 +42,13 @@ backend:
     #-- name of the container.
     - name: backend
       #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
-      registry: '{{ .Values.global.registry }}'
+      registry: "{{ .Values.global.registry }}"
       #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
-      repository: '{{ .Values.global.repository }}'
+      repository: "{{ .Values.global.repository }}"
       #-- the exact component name, in this case backend.
       image: backend
       #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
-      tag: '{{ .Values.global.tag }}'
+      tag: "{{ .Values.global.tag }}"
       #-- environment variables for the container. it is optional and is an object.
       env:
         #-- the environment variables from global secrets, the secret name is auto deciphered from the release name.
@@ -62,9 +62,9 @@ backend:
         #-- the environment variables from values, these are interpolated during runtime and can contain tpl.
         fromValues:
           - name: POSTGRES_HOST
-            value: '{{ .Release.Name }}-{{.Values.global.databaseAlias}}'
+            value: "{{ .Release.Name }}-{{.Values.global.databaseAlias}}"
           - name: NODE_ENV
-            value: 'production'
+            value: "production"
       #-- the ports for the container. it is optional and is an array of objects.
       ports:
         - name: http
@@ -73,11 +73,11 @@ backend:
       #-- the resources for the container. it is optional and is an object. for default values check this link:   https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L298-L304
       resources: # this is optional
         limits:
-          cpu: 250m
-          memory: 250Mi
-        requests:
-          cpu: 100m
+          cpu: 50m
           memory: 150Mi
+        requests:
+          cpu: 30m
+          memory: 50Mi
       #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
       readinessProbe:
         httpGet:
@@ -105,13 +105,13 @@ backend:
     #-- name of the container.
     - name: database-migrations
       #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
-      registry: '{{ .Values.global.registry }}'
+      registry: "{{ .Values.global.registry }}"
       #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
-      repository: '{{ .Values.global.repository }}' # example, it includes registry and repository
+      repository: "{{ .Values.global.repository }}" # example, it includes registry and repository
       #-- the exact image name, in this case migrations
       image: migrations
       #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
-      tag: '{{ .Values.global.tag }}'
+      tag: "{{ .Values.global.tag }}"
       #-- the security context for the container. it is optional and is an object.
       env:
         #-- the environment variables from global secrets, the secret name is auto deciphered from the release name.
@@ -133,11 +133,11 @@ backend:
       #-- the resources for the container. it is optional and is an object. for default values check this link:
       resources:
         limits:
-          cpu: 100m
+          cpu: 50m
           memory: 250Mi
         requests:
           cpu: 30m
-          memory: 150Mi
+          memory: 100Mi
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
@@ -207,9 +207,9 @@ backend:
         #-- the container port where the application is listening on.
         targetPort: 3000
         protocol: TCP
-  nodeSelector: { }
-  tolerations: [ ]
-  affinity: { }
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
   podAnnotations: |
     prometheus.io/scrape: 'true'
     prometheus.io/port: '3000'
@@ -248,17 +248,17 @@ frontend:
     #-- name of the container.
     - name: frontend
       #-- the registry where the image is stored. override during runtime for other registry at global level or individual level.
-      registry: '{{ .Values.global.registry }}'
+      registry: "{{ .Values.global.registry }}"
       #-- the repository where the image is stored. override during runtime for other repository at global level or individual level.
-      repository: '{{ .Values.global.repository }}' # example, it includes registry and repository
+      repository: "{{ .Values.global.repository }}" # example, it includes registry and repository
       #-- the exact component name, in this case frontend.
       image: frontend
       #-- the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
-      tag: '{{ .Values.global.tag }}'
+      tag: "{{ .Values.global.tag }}"
       #-- the security context for the container. it is optional and is an object.
       securityContext:
         capabilities:
-          add: [ "NET_BIND_SERVICE" ]
+          add: ["NET_BIND_SERVICE"]
       #-- the environment variables for the container. it is optional and is an object.
       env:
         #-- the environment variables from values, these are interpolated during runtime and can contain tpl.
@@ -287,10 +287,10 @@ frontend:
       #-- the resources for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L298-L304
       resources:
         limits:
-          cpu: 100m
-          memory: 150Mi
-        requests:
           cpu: 30m
+          memory: 100Mi
+        requests:
+          cpu: 15m
           memory: 50Mi
       #-- the readiness probe for the container. it is optional and is an object. for default values check this link: https://github.com/bcgov/helm-service/blob/main/charts/component/templates/deployment.yaml#L312-L316
       readinessProbe:
@@ -384,15 +384,15 @@ crunchy: # enable it for TEST and PROD, for PR based pipelines simply use single
   crunchyImage: artifacts.developer.gov.bc.ca/bcgov-docker-local/crunchy-postgres-gis:ubi8-15.2-3.3-0
 
   postgresVersion: 15
-  postGISVersion: '3.3'
+  postGISVersion: "3.3"
   imagePullPolicy: Always
   instances:
     name: ha # high availability
     replicas: 1 # 2 or 3 for high availability in TEST and PROD.
     metadata:
       annotations:
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '9187'
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9187"
     dataVolumeClaimSpec:
       storage: 120Mi
       storageClassName: netapp-block-standard
@@ -480,15 +480,15 @@ bitnami-pg:
     repository: bcgov/nr-containers/bitnami/postgresql
     tag: 15.6.0
   auth:
-    existingSecret: '{{ .Release.Name }}'
-    username: 'omrr'
-    database: 'omrr'
+    existingSecret: "{{ .Release.Name }}"
+    username: "omrr"
+    database: "omrr"
   shmVolume:
     enabled: false
   backup:
     enabled: false
     cronjob:
-      containerSecurityContext: { }
+      containerSecurityContext: {}
       podSecurityContext:
         enabled: false
       storage:
@@ -538,8 +538,8 @@ backup:
     startingDeadlineSeconds: 3600
   containers:
     - name: backup
-      registry: 'docker.io'
-      repository: 'bcgovimages' # example, it includes registry and repository
+      registry: "docker.io"
+      repository: "bcgovimages" # example, it includes registry and repository
       image: backup-container # the exact component name, be it backend, api-1 etc...
       tag: latest # the tag of the image, it can be latest, 1.0.0 etc..., or the sha256 hash
       command:
@@ -556,15 +556,15 @@ backup:
           - name: BACKUP_STRATEGY
             value: "rolling"
           - name: NUM_BACKUPS
-            value: '5'
+            value: "5"
           - name: DAILY_BACKUPS
-            value: '7'
+            value: "7"
           - name: WEEKLY_BACKUPS
-            value: '4'
+            value: "4"
           - name: MONTHLY_BACKUPS
-            value: '1'
+            value: "1"
           - name: DATABASE_SERVICE_NAME # depends on which chart being used, adjust accordingly.
-            value: '{{.Release.Name}}-{{.Values.global.databaseAlias}}'
+            value: "{{.Release.Name}}-{{.Values.global.databaseAlias}}"
           - name: DEFAULT_PORT
             value: "5432"
         fromGlobalSecret:
