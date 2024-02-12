@@ -3,6 +3,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import { BrowserRouter } from 'react-router-dom'
+import LeftDrawer from '@/components/LeftDrawer'
+import { Divider } from '@mui/material'
+import { Stack } from '@mui/system'
 
 const styles = {
   container: {
@@ -17,17 +20,22 @@ const styles = {
     marginLeft: '1em',
     marginBottom: '5em',
     height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
 }
+
 export default function App() {
   return (
     <Box sx={styles.container}>
       <Header />
-      <Box sx={styles.content}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Stack direction="row" spacing={2} sx={{ margin: '5em' }}>
+          <LeftDrawer />
           <AppRoutes />
-        </BrowserRouter>
-      </Box>
+        </Stack>
+      </BrowserRouter>
       <Footer />
     </Box>
   )

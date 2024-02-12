@@ -13,6 +13,7 @@ export default function NotFound() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        paddingLeft: '40em',
       }}
     >
       <Container maxWidth="xs">

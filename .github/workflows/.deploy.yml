@@ -31,23 +31,23 @@ on:
 
       ### Usually a bad idea / not recommended
       directory:
-        description: 'Chart directory'
-        default: 'charts/${{ github.event.repository.name }}'
+        description: "Chart directory"
+        default: "charts/${{ github.event.repository.name }}"
         required: false
         type: string
       timeout-minutes:
-        description: 'Timeout minutes'
+        description: "Timeout minutes"
         default: 10
         required: false
         type: number
       values:
-        description: 'Values file'
-        default: 'values.yaml'
+        description: "Values file"
+        default: "values.yaml"
         required: false
         type: string
       params:
-        description: 'Extra parameters to pass to helm upgrade'
-        default: ''
+        description: "Extra parameters to pass to helm upgrade"
+        default: ""
         required: false
         type: string
 
@@ -111,11 +111,10 @@ jobs:
           # Deploy Helm Chart
           helm dependency update
           helm package --app-version="${{ env.package_tag }}" --version=${{ inputs.tag }} .
-          
+
           helm upgrade \
             --set global.autoscaling=${{ inputs.autoscaling }} \
             --set-string global.repository=${{ github.repository }} \
-            --set-string global.secrets.databasePassword=${{ secrets.DB_PASSWORD }} \
             --set-string backend.containers[0].tag="${{ env.package_tag }}" \
             --set-string backend.initContainers[0].tag="${{ env.package_tag }}" \
             --set-string frontend.containers[0].tag="${{ env.package_tag }}" \
@@ -127,6 +126,6 @@ jobs:
 
           # print history 
           helm history ${{ env.repo_release }}
-          
+
           # Remove old build runs, build pods and deployment pods
           oc delete po --field-selector=status.phase==Succeeded
