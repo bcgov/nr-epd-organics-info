@@ -29,6 +29,20 @@ backend:
   #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
   #-- autoscaling for the component. it is optional and is an object.
+  initContainerResources:
+    limits:
+      cpu: 150m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+  containerResources:
+    limits:
+      cpu: 150m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
   autoscaling:
     #-- enable or disable autoscaling.
     enabled: true
@@ -53,7 +67,13 @@ frontend:
   enabled: true
   # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
-
+  containerResources:
+    limits:
+      cpu: 50m
+      memory: 100Mi
+    requests:
+      cpu: 20m
+      memory: 30Mi
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
