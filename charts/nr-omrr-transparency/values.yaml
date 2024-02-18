@@ -28,6 +28,7 @@ backend:
   enabled: true
   #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
+  imagePullPolicy: Always
   #-- autoscaling for the component. it is optional and is an object.
   initContainerResources:
     limits:
@@ -67,6 +68,7 @@ frontend:
   enabled: true
   # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
   deploymentStrategy: Recreate
+  imagePullPolicy: Always
   containerResources:
     limits:
       cpu: 50m
