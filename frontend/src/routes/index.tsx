@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import NotFound from '@/components/NotFound'
 import Dashboard from '@/components/Dashboard'
 import DataTable from '@/components/DataTable'
-import MapComponent from '@/components/MapView'
+//import MapComponent from '@/components/MapView'
 
 export default function AppRoutes() {
   return (

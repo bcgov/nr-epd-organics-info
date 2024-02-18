@@ -1,15 +1,15 @@
-import { defineConfig, loadEnv  } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default  ({ mode }) => {
+export default ({ mode }) => {
   // Load app-level env vars to node-level env vars.
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
   return defineConfig({
     plugins: [react()],
     server: {
-      port: 3001,//parseInt(process.env.PORT),
+      port: 3001, //parseInt(process.env.PORT),
       fs: {
         // Allow serving files from one level up to the project root
         allow: ['..'],
@@ -28,7 +28,18 @@ export default  ({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
         '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
       },
-      extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue','.png','.jpeg','.jpg'],
+      extensions: [
+        '.js',
+        '.json',
+        '.jsx',
+        '.mjs',
+        '.ts',
+        '.tsx',
+        '.vue',
+        '.png',
+        '.jpeg',
+        '.jpg',
+      ],
     },
     build: {
       // Build Target
@@ -59,11 +70,11 @@ export default  ({ mode }) => {
       },
     },
     test: {
-      environment: "jsdom",
+      environment: 'jsdom',
       globals: true,
       coverage: {
-        reporter: ['lcov', 'text-summary','text', 'json', 'html'],
-      }
+        reporter: ['lcov', 'text-summary', 'text', 'json', 'html'],
+      },
     },
-  });
+  })
 }
