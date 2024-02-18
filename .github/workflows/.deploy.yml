@@ -107,6 +107,13 @@ jobs:
             helm rollback ${{ env.repo_release }} || \
               helm uninstall ${{ env.repo_release }}
           fi
+          # Clean previous deployments for PR pipeline, if any 
+          if [[ '${{inputs.environment}}' == '' ]]; then
+            helm uninstall ${{ env.repo_release }} || true
+            # Remove Bitnami Crunchy PVCs
+            oc delete pvc data-${{ env.repo_release }}-bitnami-pg-0 || \
+              echo "Not found: pvc data-${{ env.repo_release }}-bitnami-pg-0"
+          fi
 
           # Deploy Helm Chart
           helm dependency update
