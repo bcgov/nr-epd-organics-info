@@ -28,7 +28,9 @@ export default function Header() {
     <AppBar position="fixed" sx={styles.appBar}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <img style={{ maxHeight: '60px' }} alt="Logo" src={BCGovLogo} />
-        <Typography>OMRR Transparency (Alpha)</Typography>
+        <Typography sx={{ color: '#2a4679' }}>
+          OMRR Transparency (Alpha)
+        </Typography>
         <a href={'/'} target={'_self'}>
           <IconButton color="secondary">
             <HomeRounded color="secondary"></HomeRounded>
