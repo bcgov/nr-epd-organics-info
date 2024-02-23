@@ -39,10 +39,10 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: test
       params: |
-        --set backend.deploymentStrategy=RollingUpdate \ 
-        --set frontend.deploymentStrategy=RollingUpdate \
-        --set backend.pdb.enabled=true \
-        --set frontend.pdb.enabled=true
+         --set backend.deploymentStrategy=RollingUpdate \ 
+         --set frontend.deploymentStrategy=RollingUpdate \
+         --set backend.pdb.enabled=true \
+         --set frontend.pdb.enabled=true \
 
 
   deploy-prod:
@@ -55,10 +55,10 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: prod
       params: |
-        --set backend.deploymentStrategy=RollingUpdate \ 
-        --set frontend.deploymentStrategy=RollingUpdate \
-        --set backend.pdb.enabled=true \
-        --set frontend.pdb.enabled=true
+          --set backend.deploymentStrategy=RollingUpdate \ 
+          --set frontend.deploymentStrategy=RollingUpdate \
+          --set backend.pdb.enabled=true \
+          --set frontend.pdb.enabled=true \
 
   promote:
     name: Promote Images
