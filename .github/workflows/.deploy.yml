@@ -123,6 +123,9 @@ jobs:
             --set global.autoscaling=${{ inputs.autoscaling }} \
             --set-string global.repository=${{ github.repository }} \
             --set-string global.tag="${{ env.package_tag }}" \
+            --set-string global.secrets.osBucket="${{ secrets.osBucket }}" \
+            --set-string global.secrets.osAccessKeyId="${{ secrets.osAccessKeyId }}" \
+            --set-string global.secrets.osSecretAccessKeyId="${{ secrets.osSecretAccessKeyId }}" \
             ${{ inputs.params }} \
             --install --wait --atomic  ${{ env.repo_release }} \
             --timeout ${{ inputs.timeout-minutes }}m \

@@ -8,6 +8,9 @@ import { AppController } from "./app.controller";
 import { MetricsController } from "./metrics.controller";
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from "./health.controller";
+import { ThrottlerModule } from '@nestjs/throttler'
+import { ObjectStoreModule } from './v1/object-store/object.store.module'
+import { ObjectStoreService } from './v1/object-store/object.store.service'
 
 const DB_HOST = process.env.POSTGRES_HOST || "localhost";
 const DB_USER = process.env.POSTGRES_USER || "postgres";
@@ -44,9 +47,14 @@ function getMiddlewares() {
         middlewares: getMiddlewares(),
       },
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 1000,
+    }]),
+    ObjectStoreModule,
   ],
   controllers: [AppController, MetricsController, HealthController],
-  providers: [AppService]
+  providers: [AppService, ObjectStoreService]
 })
 export class AppModule { // let's add a middleware on all routes
   configure(consumer: MiddlewareConsumer) {
