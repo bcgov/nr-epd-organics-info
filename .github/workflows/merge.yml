@@ -35,11 +35,14 @@ jobs:
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
     with:
-      autoscaling: false
       environment: test
       tag: ${{ needs.vars.outputs.pr }}
       release: test
-
+      params: |
+        --set backend.deploymentStrategy=RollingUpdate \ 
+        --set frontend.deploymentStrategy=RollingUpdate \
+        --set backend.pdb.enabled=true \
+        --set frontend.pdb.enabled=true
 
 
   deploy-prod:
@@ -51,7 +54,11 @@ jobs:
       environment: prod
       tag: ${{ needs.vars.outputs.pr }}
       release: prod
-      params: --set backend.deploymentStrategy=RollingUpdate --set frontend.deploymentStrategy=RollingUpdate
+      params: |
+        --set backend.deploymentStrategy=RollingUpdate \ 
+        --set frontend.deploymentStrategy=RollingUpdate \
+        --set backend.pdb.enabled=true \
+        --set frontend.pdb.enabled=true
 
   promote:
     name: Promote Images
