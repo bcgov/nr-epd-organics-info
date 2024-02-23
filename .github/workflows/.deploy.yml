@@ -126,6 +126,7 @@ jobs:
             --set-string global.secrets.osBucket="${{ secrets.osBucket }}" \
             --set-string global.secrets.osAccessKeyId="${{ secrets.osAccessKeyId }}" \
             --set-string global.secrets.osSecretAccessKeyId="${{ secrets.osSecretAccessKeyId }}" \
+            --set-string global.secrets.osEndpoint="${{ secrets.osEndpoint }}" \
             ${{ inputs.params }} \
             --install --wait --atomic  ${{ env.repo_release }} \
             --timeout ${{ inputs.timeout-minutes }}m \
