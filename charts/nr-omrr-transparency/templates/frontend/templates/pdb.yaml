@@ -9,6 +9,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "frontend.fullname" . }}
+      app.kubernetes.io/name: {{ include "frontend.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   minAvailable: {{ .Values.frontend.pdb.minAvailable }}
 {{- end }}
