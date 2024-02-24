@@ -126,7 +126,7 @@ export default function DataTable() {
         onRowClick={(params) => setSelectedRow(params.row)}
       />
       <Dialog open={!!selectedRow} onClose={handleClose}>
-        <DialogTitle>Row Details</DialogTitle>
+        <DialogTitle>Details</DialogTitle>
         <DialogContent>
           <Table>
             <TableBody>
