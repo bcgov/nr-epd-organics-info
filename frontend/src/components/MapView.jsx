@@ -47,15 +47,7 @@ const LeafletMapWithPoint = () => {
   }, [])
   // Set the position of the marker for center of BC
   const position = [53.7267, -127.6476]
-  // define points
-  const samplePoints = [
-    { position: [60, -140], details: 'BC' },
-    {
-      position: [49.019, -122.455],
-      details: 'BC',
-    },
-    { position: [51.7267, -128.6476], details: 'BC' },
-  ]
+
   //define red icon
   const redIcon = new L.Icon({
     //read from assets
