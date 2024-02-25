@@ -1,6 +1,7 @@
 import 'leaflet/dist/leaflet.css' // Import Leaflet CSS
 import L from 'leaflet'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import MarkerClusterGroup from 'react-leaflet-cluster'
 import { useEffect, useState } from 'react'
 import apiService from '@/service/api-service'
 import pin from '../assets/marker-icon-2x-red.png'
@@ -38,7 +39,6 @@ const LeafletMapWithPoint = () => {
             }
           })
         setData(points)
-        console.log(points)
         setDataFetched(true)
       })
       .catch((error) => {
@@ -48,10 +48,14 @@ const LeafletMapWithPoint = () => {
   // Set the position of the marker for center of BC
   const position = [53.7267, -127.6476]
   // define points
-  const samplePoints = [{ position: [60, -140], details: 'BC' }, {
-    position: [49.019, -122.455],
-    details: 'BC',
-  }, { position: [51.7267, -128.6476], details: 'BC' }]
+  const samplePoints = [
+    { position: [60, -140], details: 'BC' },
+    {
+      position: [49.019, -122.455],
+      details: 'BC',
+    },
+    { position: [51.7267, -128.6476], details: 'BC' },
+  ]
   //define red icon
   const redIcon = new L.Icon({
     //read from assets
@@ -63,32 +67,45 @@ const LeafletMapWithPoint = () => {
     shadowSize: [41, 41],
   })
 
-  return (<>
-    <MapContainer
-      id="map"
-      center={position}
-      zoom={6}
-      style={{ height: '60em', width: '100%', marginLeft: '4em' }}
-      className="map-container"
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {dataFetched && data.map((item, index) => (<Marker key={index} position={item.position} icon={redIcon}>
-          <Popup sx={{ maxWidth: '50em' }}>
-            <Table size="small">
-              {Object.keys(item.details).map((itemDetails) => (
-                <><TableRow><TableCell variant="head" align="right">{itemDetails}</TableCell>
-                  <TableCell align="right">{item.details[itemDetails]}</TableCell></TableRow></>
-              ))
-              }
-            </Table>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
-  </>)
+  return (
+    <>
+      <MapContainer
+        id="map"
+        center={position}
+        zoom={6}
+        style={{ height: '60em', width: '100%', marginLeft: '4em' }}
+        className="map-container"
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <MarkerClusterGroup chunkedLoading>
+          {dataFetched &&
+            data.map((item, index) => (
+              <Marker key={index} position={item.position} icon={redIcon}>
+                <Popup sx={{ maxWidth: '50em' }}>
+                  <Table size="small">
+                    {Object.keys(item.details).map((itemDetails) => (
+                      <>
+                        <TableRow>
+                          <TableCell variant="head" align="right">
+                            {itemDetails}
+                          </TableCell>
+                          <TableCell align="right">
+                            {item.details[itemDetails]}
+                          </TableCell>
+                        </TableRow>
+                      </>
+                    ))}
+                  </Table>
+                </Popup>
+              </Marker>
+            ))}
+        </MarkerClusterGroup>
+      </MapContainer>
+    </>
+  )
 }
 
 export default LeafletMapWithPoint
