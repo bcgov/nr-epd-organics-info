@@ -85,10 +85,10 @@ const LeafletMapWithPoint = () => {
             data.map((item, index) => (
               <Marker key={index} position={item.position} icon={redIcon}>
                 <Popup sx={{ maxWidth: '50em' }}>
-                  <Table size="small">
+                  <Table key={index} size="small">
                     {Object.keys(item.details).map((itemDetails) => (
                       <>
-                        <TableRow>
+                        <TableRow key={itemDetails}>
                           <TableCell variant="head" align="right">
                             {itemDetails}
                           </TableCell>
