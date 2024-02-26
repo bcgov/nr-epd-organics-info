@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from '@/features/counter/counter-slice'
+import { omrrSlice } from '@/features/omrr/omrr-slice'
 export const store = configureStore({
-  reducer: { counter: counterReducer },
+  reducer: { counter: counterReducer, omrr: omrrSlice.reducer},
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
