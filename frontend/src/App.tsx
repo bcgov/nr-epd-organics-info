@@ -4,8 +4,12 @@ import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import { BrowserRouter } from 'react-router-dom'
 import LeftDrawer from '@/components/LeftDrawer'
-import { Divider } from '@mui/material'
 import { Stack } from '@mui/system'
+import { useDispatch } from 'react-redux'
+import { fetchOMRRData } from '@/features/omrr/omrr-slice'
+import { useEffect } from 'react'
+import apiService from '@/service/api-service'
+import { AxiosResponse } from '~/axios'
 
 const styles = {
   container: {
@@ -27,6 +31,11 @@ const styles = {
 }
 
 export default function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    //@ts-expect-error
+    dispatch(fetchOMRRData())
+  }, [dispatch])
   return (
     <Box sx={styles.container}>
       <Header />

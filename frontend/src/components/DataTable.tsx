@@ -1,4 +1,5 @@
-import apiService from '@/service/api-service'
+import { RootState } from '@/app/store'
+import OmrrData from '@/interfaces/omrr'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -9,9 +10,8 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import { useEffect, useState } from 'react'
-import { AxiosResponse } from '~/axios'
-import TextField from '@mui/material/TextField'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 const columns: GridColDef[] = [
   {
     field: 'Authorization Number',
@@ -23,6 +23,13 @@ const columns: GridColDef[] = [
   {
     field: 'Authorization Type',
     headerName: 'Authorization Type',
+    sortable: true,
+    filterable: true,
+    flex: 1,
+  },
+  {
+    field: 'Operation Type',
+    headerName: 'Operation Type',
     sortable: true,
     filterable: true,
     flex: 1,
@@ -78,23 +85,12 @@ const columns: GridColDef[] = [
     filterable: true,
     flex: 1,
   },
-
 ]
 
 export default function DataTable() {
-  const [data, setData] = useState<any>([]);
+  const data: OmrrData[] = useSelector((state: RootState) => state.omrr.value)
+  const status: string = useSelector((state: RootState) => state.omrr.status)
 
-  useEffect(() => {
-    apiService
-      .getAxiosInstance()
-      .get('/omrr')
-      .then((response: AxiosResponse) => {
-        setData(response?.data)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [])
   const [selectedRow, setSelectedRow] = useState(null)
 
   const handleClose = () => {
