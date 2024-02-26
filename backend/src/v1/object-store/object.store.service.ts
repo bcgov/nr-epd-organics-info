@@ -41,6 +41,7 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
     return new Promise((resolve, reject) => {
       Papa.parse(csv, {
         header: true,
+        skipEmptyLines: true,
         complete: (results: any) => {
           resolve(results.data)
         },
@@ -94,6 +95,7 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
       const fileStream: any = result?.Body
       if (fileStream) {
         this._omrrData = await this.convertCSVToJson(fileStream)
+
         return this._omrrData
       }
     } catch (e) {
