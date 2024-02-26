@@ -9,7 +9,12 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import {
+  DataGrid,
+  GridColDef,
+  GridFilterModel,
+  GridToolbar,
+} from '@mui/x-data-grid'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 const columns: GridColDef[] = [
@@ -92,7 +97,15 @@ export default function DataTable() {
   const status: string = useSelector((state: RootState) => state.omrr.status)
 
   const [selectedRow, setSelectedRow] = useState(null)
-
+  const [filterModel, setFilterModel] = useState<GridFilterModel>({
+    items: [
+      {
+        field: 'Authorization Status',
+        operator: 'equals',
+        value: 'Active',
+      },
+    ],
+  })
   const handleClose = () => {
     setSelectedRow(null)
   }
@@ -113,6 +126,8 @@ export default function DataTable() {
             showQuickFilter: true,
           },
         }}
+        filterModel={filterModel}
+        onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
         experimentalFeatures={{ ariaV7: true }}
         checkboxSelection={false}
         rows={data}
