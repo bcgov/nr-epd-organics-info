@@ -54,7 +54,22 @@ export const omrrSlice = createSlice({
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state
-      state.value = action.payload
+
+      let omrrData = [];
+      for(const item of action.payload){
+        const individualData = {
+          ...item
+        }
+        individualData['Effective/Issue Date'] = new Date(item['Effective/Issue Date']).toLocaleDateString();
+        if(item['Last Amendment Date']){
+          individualData['Last Amendment Date'] = new Date(item['Last Amendment Date']).toLocaleDateString();
+        }else{
+          individualData['Last Amendment Date'] = 'N/A';
+        }
+
+        omrrData.push(individualData);
+      }
+      state.value = omrrData
       state.mapValue = action.payload?.filter(
         (item: OmrrData) => item.Latitude && item.Longitude,
       )
