@@ -51,6 +51,7 @@ export const omrrSlice = createSlice({
     })
     // Handle the fulfilled action
     builder.addCase(fetchOMRRData.fulfilled, (state, action) => {
+      console.log('received omrr data')
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state
@@ -74,7 +75,7 @@ export const omrrSlice = createSlice({
         omrrData.push(individualData);
       }
       state.value = omrrData
-      state.mapValue = action.payload?.filter(
+      state.mapValue = state.value?.filter(
         (item: OmrrData) => item.Latitude && item.Longitude,
       )
       state.mapPopupValue = state.mapValue?.map((item: OmrrData) => {
