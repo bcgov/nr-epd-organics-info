@@ -64,7 +64,7 @@ export const omrrSlice = createSlice({
         if(item['Last Amendment Date']){
           individualData['Last Amendment Date'] = new Date(item['Last Amendment Date']).toLocaleDateString();
         }else{
-          individualData['Last Amendment Date'] = 'N/A';
+          individualData['Last Amendment Date'] = undefined;
         }
 
         omrrData.push(individualData);
