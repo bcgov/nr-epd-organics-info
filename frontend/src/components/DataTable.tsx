@@ -139,6 +139,7 @@ export default function DataTable() {
               placeholder: 'Search across all fields',
               debounceMs: 250,
             },
+            printOptions: { disableToolbarButton: true },
           },
         }}
         filterModel={filterModel}
