@@ -120,10 +120,25 @@ export default function DataTable() {
       }}
     >
       <DataGrid
+        sx={{
+          '& .MuiDataGrid-toolbarContainer': {
+            border: '1px solid #385a8a',
+            backgroundColor: '#385a8a',
+            color: '#ffffff',
+          },
+          '& .MuiInputBase-root': {
+            backgroundColor: '#ffffff',
+          },
+        }}
         slots={{ toolbar: GridToolbar }}
+        disableColumnSelector
         slotProps={{
           toolbar: {
             showQuickFilter: true,
+            quickFilterProps: {
+              placeholder: 'Search across all fields',
+              debounceMs: 250,
+            },
           },
         }}
         filterModel={filterModel}
