@@ -7,6 +7,7 @@ import {
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
+import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 
 export interface OmrrSliceState {
   value: OmrrData[]
@@ -56,23 +57,29 @@ export const omrrSlice = createSlice({
       state.status = 'succeeded'
       // Store the data in the state
 
-      let omrrData = [];
-      for(const item of action.payload){
+      let omrrData = []
+      for (const item of action.payload) {
         const individualData = {
-          ...item
+          ...item,
         }
-        if(individualData['Effective/Issue Date']){
-          individualData['Effective/Issue Date'] = new Date(item['Effective/Issue Date']).toLocaleDateString();
-        }else{
-          individualData['Effective/Issue Date'] = undefined;
+        if (individualData['Effective/Issue Date']) {
+          const date = new Date(item['Effective/Issue Date'])
+          individualData['Effective/Issue Date'] = nativeJs(date).format(
+            DateTimeFormatter.ISO_LOCAL_DATE,
+          )
+        } else {
+          individualData['Effective/Issue Date'] = undefined
         }
-        if(item['Last Amendment Date']){
-          individualData['Last Amendment Date'] = new Date(item['Last Amendment Date']).toLocaleDateString();
-        }else{
-          individualData['Last Amendment Date'] = undefined;
+        if (item['Last Amendment Date']) {
+          const date = new Date(item['Last Amendment Date'])
+          individualData['Last Amendment Date'] = nativeJs(date).format(
+            DateTimeFormatter.ISO_LOCAL_DATE,
+          )
+        } else {
+          individualData['Last Amendment Date'] = undefined
         }
 
-        omrrData.push(individualData);
+        omrrData.push(individualData)
       }
       state.value = omrrData
       state.mapValue = state.value?.filter(
