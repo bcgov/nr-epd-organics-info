@@ -10,9 +10,9 @@ export class TasksService {
 
   }
 
-  @Cron('0 0 0/4 * * *')
+  @Cron('0 0/5 * * * *')
   async refreshCache() {
-    logger.info('refresh cache every 4 hours')
+    logger.info('refresh cache every 5 minutes')
     await this.objectStoreService.getLatestOmrrDataFromObjectStore()
 
   }
