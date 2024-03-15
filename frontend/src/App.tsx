@@ -3,13 +3,10 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import { BrowserRouter } from 'react-router-dom'
-import LeftDrawer from '@/components/LeftDrawer'
 import { Stack } from '@mui/system'
 import { useDispatch } from 'react-redux'
 import { fetchOMRRData } from '@/features/omrr/omrr-slice'
 import { useEffect } from 'react'
-import apiService from '@/service/api-service'
-import { AxiosResponse } from '~/axios'
 
 const styles = {
   container: {
@@ -41,7 +38,6 @@ export default function App() {
       <Header />
       <BrowserRouter>
         <Stack direction="row" spacing={2} sx={{ margin: '5em' }}>
-          <LeftDrawer />
           <AppRoutes />
         </Stack>
       </BrowserRouter>
