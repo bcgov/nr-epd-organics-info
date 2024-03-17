@@ -10,9 +10,11 @@ import {
   Card,
   CardContent,
   Checkbox,
+  Chip,
   Divider,
   FormControlLabel,
-  InputAdornment, Pagination,
+  InputAdornment,
+  Pagination,
   Radio,
   RadioGroup,
   TextField,
@@ -23,9 +25,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/app/store'
 import {
   resetFilters,
+  searchAuthorizationsByGlobalFilter,
   setExpand,
   setFilters,
-  setLocation, setPage,
+  setLocation,
+  setPage,
   setSearchBy,
 } from '@/features/omrr/omrr-slice'
 
@@ -42,7 +46,8 @@ export default function AuthorizationList() {
     operationalCertificateFilter,
     location,
     searchBy,
-    page
+    page,
+    globalTextSearchFilter,
   } = useSelector((state: RootState) => state.omrr)
   /*const [expand, setExpand] = useState(false)
   const [location, setLocation] = useState<Location | null>(null)*/
@@ -96,6 +101,10 @@ export default function AuthorizationList() {
           color: '#9F9D9C',
         }}
         label="Search Authorizations"
+        value={globalTextSearchFilter}
+        onChange={(event) =>
+          dispatch(searchAuthorizationsByGlobalFilter(event.target.value))
+        }
         variant="outlined"
         InputProps={{
           startAdornment: (
@@ -241,6 +250,7 @@ export default function AuthorizationList() {
               sx={{
                 border: '1px solid #353433',
                 borderRadius: '4px',
+                textTransform: 'none',
               }}
               variant="contained"
               color="secondary"
@@ -252,31 +262,199 @@ export default function AuthorizationList() {
         </Stack>
       )}
       <Divider />
-      <Pagination sx={{margin:'2em'}}
-        count={Math.ceil(filteredValue.length / 10)}
-        page={page}
-        onChange={(event,value) => dispatch(setPage(value))}
-      />
-      <Stack sx={{margin:'2em'}} spacing={2}>
+      <Box
+        sx={{
+          display: 'flex',
+          width: '98%', // Make the Box take full width
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Pagination
+          sx={{
+            marginLeft: '2em',
+            '& .MuiPagination-root': { color: '#053662' },
+          }}
+          variant="outlined"
+          shape="rounded"
+          count={Math.ceil(filteredValue.length / 10)}
+          page={page}
+          onChange={(event, value) => dispatch(setPage(value))}
+        />
+        <Typography>
+          Showing {(page - 1) * 10 + 1}-
+          {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}
+        </Typography>
+      </Box>
+      <Stack sx={{ margin: '2em' }} spacing={2}>
         {filteredValue.slice((page - 1) * 10, page * 10).map((item, index) => (
-          <Card  key={index}>
+          <Card sx={{ background: '#E0DEDC', order: 5 }} key={index}>
             <CardContent>
-              <Typography variant="h5" component="div">
-                {item['Authorization Number']}
-              </Typography>
               <Typography variant="body2" color="text.secondary">
-                {item['Facility Location']}
+                <span
+                  style={{
+                    fontFamily: 'BC Sans',
+                    fontStyle: 'normal',
+                    fontWeight: 700,
+                  }}
+                >
+                  {' '}
+                  Authorization #:
+                  <span
+                    style={{ textDecoration: 'underline', marginLeft: '0.5em' }}
+                  >
+                    {item['Authorization Number']}
+                  </span>
+                </span>
               </Typography>
+              <br />
+              <Typography variant="h5" component="div">
+                <span
+                  style={{
+                    fontFamily: 'BC Sans',
+                    fontStyle: 'normal',
+                    fontWeight: 700,
+                  }}
+                >
+                  {item['Regulated Party']}
+                </span>
+              </Typography>
+              <br />
+              <Stack>
+                <Stack
+                  sx={{
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    display: 'flex',
+                  }}
+                  direction="row"
+                >
+                  <span
+                    style={{
+                      fontFamily: 'BC Sans',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                    }}
+                  >
+                    Location of Facility
+                  </span>
+                  {item['Operation Type'] && (
+                    <span
+                      style={{
+                        fontFamily: 'BC Sans',
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Type of Facility
+                    </span>
+                  )}
+                </Stack>
+                <Stack
+                  sx={{
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    display: 'flex',
+                  }}
+                  direction="row"
+                >
+                  <span
+                    style={{
+                      fontFamily: 'BC Sans',
+                      fontStyle: 'normal',
+                    }}
+                  >
+                    {item['Facility Location']}
+                  </span>
+                  {item['Operation Type'] && (
+                    <span
+                      style={{
+                        fontFamily: 'BC Sans',
+                        fontStyle: 'normal',
+                      }}
+                    >
+                      {item['Operation Type']}
+                    </span>
+                  )}
+                </Stack>
+              </Stack>
+              <Stack
+                sx={{
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  display: 'flex',
+                  marginTop: '1em',
+                }}
+                direction="row"
+              >
+                <Stack
+                  direction="row"
+                  sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+
+                    marginTop: '1em',
+                  }}
+                  spacing={1}
+                >
+                  <span>Status: </span>
+                  <Chip
+                    sx={{
+                      background:
+                        item['Authorization Status'] === 'Active'
+                          ? '#353433'
+                          : '#605E5C',
+                      color: '#ffffff',
+                    }}
+                    label={item['Authorization Status']}
+                  />
+                </Stack>
+                <Button
+                  sx={{
+                    border: '1px solid #353433',
+                    borderRadius: '4px',
+                    background: '#E0DEDC',
+                    fontFamily: 'BC Sans',
+                    fontStyle: 'normal',
+                    color: '#353433',
+                    textTransform: 'none',
+                  }}
+                  variant="contained"
+                  onClick={() => dispatch(resetFilters())}
+                >
+                  View Facility Details
+                </Button>
+              </Stack>
             </CardContent>
           </Card>
         ))}
       </Stack>
 
-      <Pagination
-        count={Math.ceil(filteredValue.length / 10)}
-        page={page}
-        onChange={(event,value) => dispatch(setPage(value))}
-      />
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          width: '98%', // Make the Box take full width
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Pagination
+          sx={{
+            marginLeft: '2em',
+            '& .MuiPagination-root': { color: '#053662' },
+          }}
+          variant="outlined"
+          shape="rounded"
+          count={Math.ceil(filteredValue.length / 10)}
+          page={page}
+          onChange={(event, value) => dispatch(setPage(value))}
+        />
+        <Typography>
+          Showing {(page - 1) * 10 + 1}-
+          {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}
+        </Typography>
+      </Box>
     </Stack>
   )
 }

@@ -9,6 +9,7 @@ import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
+import { deepClone } from '~/@mui/x-data-grid/utils/utils'
 export interface OmrrSliceState {
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
@@ -25,7 +26,9 @@ export interface OmrrSliceState {
   operationalCertificateFilter: boolean,
   compostFacilityFilter: boolean,
   landApplicationBioSolidsFilter: boolean,
-  page: number
+  page: number,
+  searchByFilteredValue: OmrrData[],
+  globalTextSearchFilter: string
 }
 export const fetchOMRRData = createAsyncThunk(
   'data/fetchOMRRRecords',
@@ -56,6 +59,8 @@ export const initialState: OmrrSliceState = {
   compostFacilityFilter: false,
   landApplicationBioSolidsFilter: false,
   page: 1,
+  searchByFilteredValue: [],
+  globalTextSearchFilter: ''
 
 }
 
@@ -74,24 +79,64 @@ export const omrrSlice = createSlice({
     },
     setSearchBy: (state, action: PayloadAction<string>) => {
       state.searchBy = action.payload
+      state.page = 1
       switch (action.payload) {
         case 'all':
-          state.filteredValue = state.value
+          state.searchByFilteredValue = state.value
+          state.filteredValue = state.searchByFilteredValue
+          if(state.globalTextSearchFilter && state.globalTextSearchFilter?.length > 0){
+            state.filteredValue = state.searchByFilteredValue.filter(
+              (item: OmrrData) => {
+                return Object.values(item).some((value) => {
+                  return value?.toLowerCase().includes(state.globalTextSearchFilter.toLowerCase())
+                })
+              },
+            )
+          }
           break
         case 'inactive':
-          state.filteredValue = state.value.filter(
+          state.searchByFilteredValue = state.value.filter(
             (item: OmrrData) => item['Authorization Status'] === 'Inactive',
           )
+          state.filteredValue = state.searchByFilteredValue
+          if(state.globalTextSearchFilter && state.globalTextSearchFilter?.length > 0){
+            state.filteredValue = state.searchByFilteredValue.filter(
+              (item: OmrrData) => {
+                return Object.values(item).some((value) => {
+                  return value?.toLowerCase().includes(state.globalTextSearchFilter.toLowerCase())
+                })
+              },
+            )
+          }
           break
         case 'active':
-          state.filteredValue = state.value.filter(
+          state.searchByFilteredValue = state.value.filter(
             (item: OmrrData) => item['Authorization Status'] === 'Active',
           )
+          state.filteredValue = state.searchByFilteredValue
+          if(state.globalTextSearchFilter && state.globalTextSearchFilter?.length > 0){
+            state.filteredValue = state.searchByFilteredValue.filter(
+              (item: OmrrData) => {
+                return Object.values(item).some((value) => {
+                  return value?.toLowerCase().includes(state.globalTextSearchFilter.toLowerCase())
+                })
+              },
+            )
+          }
           break
         default:
-          state.filteredValue = state.value
+          state.searchByFilteredValue = deepClone(state.value)
+          state.filteredValue = deepClone(state.searchByFilteredValue)
+          if(state.globalTextSearchFilter && state.globalTextSearchFilter?.length > 0){
+            state.filteredValue = state.searchByFilteredValue.filter(
+              (item: OmrrData) => {
+                return Object.values(item).some((value) => {
+                  return value?.toLowerCase().includes(state.globalTextSearchFilter.toLowerCase())
+                })
+              },
+            )
+          }
           break
-
       }
     },
     setFilters: (state, action: PayloadAction<string>) => {
@@ -125,6 +170,23 @@ export const omrrSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
     },
+    searchAuthorizationsByGlobalFilter: (state, action: PayloadAction<string>) => {
+      state.globalTextSearchFilter = action.payload
+      state.page = 1
+      if(state.globalTextSearchFilter?.length > 0){
+        console.log('searching by global filter', state.globalTextSearchFilter)
+        state.filteredValue = state.searchByFilteredValue.filter(
+          (item: OmrrData) => {
+            return Object.values(item).some((value) => {
+              return value?.toLowerCase().includes(state.globalTextSearchFilter.toLowerCase())
+            })
+          },
+        )
+      }else{
+        state.filteredValue = state.searchByFilteredValue
+      }
+
+    }
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
     // Handle the pending action
@@ -180,7 +242,8 @@ export const omrrSlice = createSlice({
           },
         }
       })
-      state.filteredValue = state.value
+      state.searchByFilteredValue = deepClone(state.value)
+      state.filteredValue = deepClone(state.searchByFilteredValue)
     })
     // Handle the rejected action
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
@@ -192,5 +255,5 @@ export const omrrSlice = createSlice({
   },
 })
 export const omrrData = (state: RootState) => state.omrr.value
-export const { setOmrrData, setFilters,setExpand,setLocation,setSearchBy, resetFilters, setPage } = omrrSlice.actions
+export const { setOmrrData, setFilters,setExpand,setLocation,setSearchBy, resetFilters, setPage, searchAuthorizationsByGlobalFilter } = omrrSlice.actions
 export default omrrSlice.reducer
