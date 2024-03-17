@@ -8,13 +8,24 @@ import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
-
+import { Location } from '@/interfaces/location'
 export interface OmrrSliceState {
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
-  mapValue: OmrrData[]
-  mapPopupValue: any[]
+  mapValue: OmrrData[],
+  filteredValue: OmrrData[],
+  mapPopupValue: any[],
+  searchBy: string | null
+  expand: boolean,
+  location: Location | null,
+  omrrFilter: boolean,
+  permitFilter: boolean,
+  approvalFilter: boolean,
+  operationalCertificateFilter: boolean,
+  compostFacilityFilter: boolean,
+  landApplicationBioSolidsFilter: boolean,
+  page: number
 }
 export const fetchOMRRData = createAsyncThunk(
   'data/fetchOMRRRecords',
@@ -28,12 +39,24 @@ export const fetchOMRRData = createAsyncThunk(
 export const initialState: OmrrSliceState = {
   // The data array
   value: [],
+  filteredValue: [],
   mapValue: [],
   mapPopupValue: [],
   // The status of the API call
   status: 'idle',
   // The error message if any
   error: null,
+  searchBy: 'all',
+  expand: false,
+  location: null,
+  omrrFilter: false,
+  permitFilter: false,
+  approvalFilter: false,
+  operationalCertificateFilter: false,
+  compostFacilityFilter: false,
+  landApplicationBioSolidsFilter: false,
+  page: 1,
+
 }
 
 export const omrrSlice = createSlice({
@@ -42,6 +65,65 @@ export const omrrSlice = createSlice({
   reducers: {
     setOmrrData: (state, action: PayloadAction<OmrrData[]>) => {
       state.value = action.payload
+    },
+    setExpand: (state, action: PayloadAction<boolean>) => {
+      state.expand = action.payload
+    },
+    setLocation: (state, action: PayloadAction<Location>) => {
+      state.location = action.payload
+    },
+    setSearchBy: (state, action: PayloadAction<string>) => {
+      state.searchBy = action.payload
+      switch (action.payload) {
+        case 'all':
+          state.filteredValue = state.value
+          break
+        case 'inactive':
+          state.filteredValue = state.value.filter(
+            (item: OmrrData) => item['Authorization Status'] === 'Inactive',
+          )
+          break
+        case 'active':
+          state.filteredValue = state.value.filter(
+            (item: OmrrData) => item['Authorization Status'] === 'Active',
+          )
+          break
+        default:
+          state.filteredValue = state.value
+          break
+
+      }
+    },
+    setFilters: (state, action: PayloadAction<string>) => {
+      if (action.payload === 'omrr') {
+        state.omrrFilter = !state.omrrFilter
+      }
+      if (action.payload === 'permit') {
+        state.permitFilter = !state.permitFilter
+      }
+      if (action.payload === 'approval') {
+        state.approvalFilter = !state.approvalFilter
+      }
+      if (action.payload === 'operationalCertificate') {
+        state.operationalCertificateFilter = !state.operationalCertificateFilter
+      }
+      if (action.payload === 'compostFacility') {
+        state.compostFacilityFilter = !state.compostFacilityFilter
+      }
+      if (action.payload === 'landApplicationBioSolids') {
+        state.landApplicationBioSolidsFilter = !state.landApplicationBioSolidsFilter
+      }
+    },
+    resetFilters: (state) => {
+      state.omrrFilter = false
+      state.permitFilter = false
+      state.approvalFilter = false
+      state.operationalCertificateFilter = false
+      state.compostFacilityFilter = false
+      state.landApplicationBioSolidsFilter = false
+    },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
@@ -98,6 +180,7 @@ export const omrrSlice = createSlice({
           },
         }
       })
+      state.filteredValue = state.value
     })
     // Handle the rejected action
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
@@ -109,5 +192,5 @@ export const omrrSlice = createSlice({
   },
 })
 export const omrrData = (state: RootState) => state.omrr.value
-export const { setOmrrData } = omrrSlice.actions
+export const { setOmrrData, setFilters,setExpand,setLocation,setSearchBy, resetFilters, setPage } = omrrSlice.actions
 export default omrrSlice.reducer

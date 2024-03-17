@@ -37,7 +37,7 @@ export default function App() {
     <Box sx={styles.container}>
       <Header />
       <BrowserRouter>
-        <Stack direction="row" spacing={2} sx={{ margin: '5em' }}>
+        <Stack direction="row" spacing={2} sx={{ marginTop: '4em', marginBottom:'5em' }}>
           <AppRoutes />
         </Stack>
       </BrowserRouter>

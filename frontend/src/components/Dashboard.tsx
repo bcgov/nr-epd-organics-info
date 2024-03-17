@@ -35,7 +35,6 @@ export default function Dashboard() {
           }}
           onClick={() => {
             buttonClicked('/map')
-            // Add your action here
           }}
         >
           Search on a map
@@ -49,8 +48,7 @@ export default function Dashboard() {
             color: '#000000',
           }}
           onClick={() => {
-            buttonClicked('/table')
-            // Add your action here
+            buttonClicked('/search')
           }}
         >
           List all authorizations
@@ -59,118 +57,114 @@ export default function Dashboard() {
     </>
   )
   const infoCard = (
-    <>
-      <CardContent>
-        <Typography
-          sx={{
-            fontFamily: 'BC Sans',
-            fontWeight: 400,
-            fontSize: 28,
-            color: '#000000',
-          }}
-          component="div"
+    <CardContent>
+      <Typography
+        sx={{
+          fontFamily: 'BC Sans',
+          fontWeight: 400,
+          fontSize: 28,
+          color: '#000000',
+        }}
+        component="div"
+      >
+        Organic Recycling in B.C.
+      </Typography>
+      <Typography component="div">
+        <Link
+          sx={{ color: '#000000' }}
+          href={
+            'https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines'
+          }
+          target={'_blank'}
         >
-          Organic Recycling in B.C.
-        </Typography>
-        <Typography component="div">
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines'
-            }
-            target={'_blank'}
-          >
-            {' '}
-            <span style={{ textDecoration: 'underline' }}>
+          {' '}
+          <span style={{ textDecoration: 'underline' }}>
               British Columbia's Organic Matter Recycling Regulation (OMRR):
             </span>
-          </Link>
-          <ul>
-            <li>
-              Governs the construction and operation of compost facilities
-            </li>{' '}
-            <li>
-              Regulates the production, distribution, storage, sale and use of
-              biosolids and compost
-            </li>{' '}
-            <li>Controls how compost facilities are built and operated</li>{' '}
-          </ul>
-          The B.C. government has a plan to update the regulation to:
-          <ul>
-            <li>Better protect of human and environment health </li>
-            <li>Increase engagement with Indigenous communities</li>
-            <li> Improve transparency around organic matter management</li>
-          </ul>{' '}
-          Learn about the planned changes in the{' '}
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
-            }
-            target={'_blank'}
-          >
+        </Link>
+        <ul>
+          <li>
+            Governs the construction and operation of compost facilities
+          </li>
+          {' '}
+          <li>
+            Regulates the production, distribution, storage, sale and use of
+            biosolids and compost
+          </li>
+          {' '}
+          <li>Controls how compost facilities are built and operated</li>
+          {' '}
+        </ul>
+        The B.C. government has a plan to update the regulation to:
+        <ul>
+          <li>Better protect of human and environment health</li>
+          <li>Increase engagement with Indigenous communities</li>
+          <li> Improve transparency around organic matter management</li>
+        </ul>{' '}
+        Learn about the planned changes in the{' '}
+        <Link
+          sx={{ color: '#000000' }}
+          href={
+            'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
+          }
+          target={'_blank'}
+        >
             <span style={{ textDecoration: 'underline' }}>
               project update report
             </span>
-          </Link>
-        </Typography>
-      </CardContent>
-    </>
+        </Link>
+      </Typography>
+    </CardContent>
   )
   const navigate = useNavigate()
   const buttonClicked = (route: any) => {
     navigate(route, { state: { data: undefined } }) // reset the state
   }
   return (
-    <>
-      <Stack>
-        <Card
-          sx={{
-            padding: '1em 0.475em 0.5em',
-            backgroundColor: '#D1CFCD',
-            height: '20em',
-            width: '100%',
-            marginTop: '-1em !important',
-            marginLeft: '-5em !important',
-            marginRight: '-5em !important',
-            marginBottom: '-5em !important',
-            '@media (min-width: 600px)': {
-              width: '80em',
-            },
-            '@media (min-width: 900px)': {
-              width: '100em',
-            },
-            '@media (min-width: 1200px)': {
-              width: '120em',
-            },
-          }}
-        >
-          {headerCard}
-        </Card>
-        <Card
-          sx={{
-            padding: '1em 0.475em 0.5em',
-            backgroundColor: '#ECEAE8',
-            height: '30em',
-            marginTop: '5em !important',
-            marginLeft: '-5em !important',
-            marginRight: '-5em !important',
-            marginBottom: '-5em !important',
-            width: '100%',
-            '@media (min-width: 600px)': {
-              width: '80em',
-            },
-            '@media (min-width: 900px)': {
-              width: '100em',
-            },
-            '@media (min-width: 1200px)': {
-              width: '120em',
-            },
-          }}
-        >
-          {infoCard}
-        </Card>
-      </Stack>
-    </>
+    <Stack>
+      <Card
+        sx={{
+          padding: '1em 0.475em 0.5em',
+          backgroundColor: '#D1CFCD',
+          height: '20em',
+          width: '100%',
+          marginRight: '-5em !important',
+          marginBottom: '-5em !important',
+          '@media (min-width: 600px)': {
+            width: '80em',
+          },
+          '@media (min-width: 900px)': {
+            width: '100em',
+          },
+          '@media (min-width: 1200px)': {
+            width: '120em',
+          },
+        }}
+      >
+        {headerCard}
+      </Card>
+      <Card
+        sx={{
+          padding: '1em 0.475em 0.5em',
+          backgroundColor: '#ECEAE8',
+          height: '30em',
+          marginTop: '5em !important',
+          marginRight: '-5em !important',
+          marginBottom: '-5em !important',
+          width: '100%',
+          '@media (min-width: 600px)': {
+            width: '80em',
+          },
+          '@media (min-width: 900px)': {
+            width: '100em',
+          },
+          '@media (min-width: 1200px)': {
+            width: '120em',
+          },
+        }}
+      >
+        {infoCard}
+      </Card>
+    </Stack>
   )
 }
