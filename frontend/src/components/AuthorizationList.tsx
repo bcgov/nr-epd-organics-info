@@ -257,11 +257,10 @@ export default function AuthorizationList() {
               </Stack>
               <Stack
                 direction="row"
-                spacing={6}
+                spacing={46}
                 sx={{
-                  width: '44.1vw', // Make the Stack take full width
                   marginTop: '1em',
-                  justifyContent: 'space-between', // Add space between children
+                  justifyContent: 'normal', // Add space between children
                 }}
               >
                 <FormControlLabel
