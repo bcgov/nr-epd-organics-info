@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
@@ -10,8 +10,6 @@ import { useEffect } from 'react'
 
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
     minHeight: '100vh',
   },
   content: {
@@ -34,7 +32,7 @@ export default function App() {
     dispatch(fetchOMRRData())
   }, [dispatch])
   return (
-    <Box sx={styles.container}>
+    <Grid xs={12} sx={styles.container}>
       <Header />
       <BrowserRouter>
         <Stack direction="row" spacing={2} sx={{ marginTop: '4em', marginBottom:'5em' }}>
@@ -42,6 +40,6 @@ export default function App() {
         </Stack>
       </BrowserRouter>
       <Footer />
-    </Box>
+    </Grid>
   )
 }
