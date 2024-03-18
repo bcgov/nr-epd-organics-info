@@ -20,17 +20,17 @@ const styles = {
   footerButton: {
     margin: '0.2em',
     padding: '0.2em',
+    color: '#ffffff',
   },
 }
 export default function Footer() {
   return (
     <AppBar position="fixed" sx={styles.appBar} color="default">
       <Toolbar sx={styles.toolbar}>
-        <Grid container justifyContent={'center'}>
+        <Grid container spacing={2} justifyContent={'center'}>
           <Grid item columns={12}>
             <Link
               sx={styles.footerButton}
-              color="primary"
               id="footer-home"
               target="_blank"
               href="https://www.gov.bc.ca/"
@@ -40,7 +40,6 @@ export default function Footer() {
 
             <Link
               sx={styles.footerButton}
-              color="primary"
               id="footer-about"
               target="_blank"
               href="https://www2.gov.bc.ca/gov/content/about-gov-bc-ca"
@@ -50,7 +49,6 @@ export default function Footer() {
 
             <Link
               sx={styles.footerButton}
-              color="primary"
               id="footer-disclaimer"
               target="_blank"
               href="https://gov.bc.ca/disclaimer"
@@ -60,7 +58,6 @@ export default function Footer() {
 
             <Link
               sx={styles.footerButton}
-              color="primary"
               id="footer-privacy"
               target="_blank"
               href="https://gov.bc.ca/privacy"

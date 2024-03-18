@@ -8,7 +8,6 @@ const styles = {
     color: '#ffffff',
     backgroundColor: '#053662',
     borderBottom: '0.1em solid rgb(252, 186, 25) !important',
-    display: 'flex',
     zIndex: (theme: any) => theme.zIndex.drawer + 1,
   },
   toolbar: {
@@ -27,7 +26,7 @@ export default function Header() {
   return (
     <AppBar position="fixed" sx={styles.appBar}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <img style={{ maxHeight: '60px' }} alt="Logo" src={BCGovLogo} />
+        <img  alt="Logo" src={BCGovLogo} />
         <Typography >
           Organics Info
         </Typography>

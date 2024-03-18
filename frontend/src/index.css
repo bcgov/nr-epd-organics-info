@@ -27,11 +27,3 @@
     format('woff');
 }
 
-.MuiDrawer-paperAnchorLeft {
-  margin-top: 4.2em !important;
-}
-
-.map-container {
-  border-radius: 4px;
-  z-index: 1;
-}

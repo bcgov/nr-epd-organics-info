@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 const styles = {
   container: {
     minHeight: '100vh',
+
   },
   content: {
     flexGrow: 1,
@@ -32,8 +33,8 @@ export default function App() {
     dispatch(fetchOMRRData())
   }, [dispatch])
   return (
-    <Grid container spacing={2} xs={12} sx={styles.container}>
-      <Grid item xs={12}>
+    <Grid container  spacing={0} sx={styles.container}>
+      <Grid sx={{maxHeight:65}} item xs={12}>
         <Header />
       </Grid>
       <Grid item xs={12}>

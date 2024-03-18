@@ -2,12 +2,14 @@ import { ArrowDropDown, ArrowDropUp, MyLocation, Search } from '@mui/icons-mater
 import {
   Box,
   Button,
-  Card, CardActions,
+  Card,
+  CardActions,
   CardContent,
   Checkbox,
   Chip,
   Divider,
   FormControlLabel,
+  Grid,
   InputAdornment,
   Pagination,
   Radio,
@@ -72,6 +74,7 @@ export default function AuthorizationList() {
           fontWeight: 700,
           fontSize: 48,
           color: '#000000',
+          marginBottom: '0.5em',
         }}
         component="div"
       >
@@ -83,262 +86,230 @@ export default function AuthorizationList() {
     </CardContent>
   )
   return (
-    <Stack sx={{ margin: '2em' }}>
-      <Card
-        sx={{
-          padding: '2em',
-          marginTop: '0.1em',
-          backgroundColor: '#D1CFCD',
-          height: '10em',
-          width: '120em',
-        }}
-      >
-        {headerCard}
-      </Card>
-      <TextField
-        sx={{
-          margin: '2em',
-          color: '#9F9D9C',
-        }}
-        label="Search Authorizations"
-        value={globalTextSearchFilter}
-        onChange={(event) =>
-          dispatch(searchAuthorizationsByGlobalFilter(event.target.value))
-        }
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Search />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <Button
+    <Grid spacing={2} sx={{ marginTop: '3%' }}>
+      <Grid item xs={12}>
+        <Card
+          variant="outlined"
+          sx={{
+            padding: '2em',
+            marginTop: '0.1em',
+            backgroundColor: '#D1CFCD',
+          }}
+        >
+          {headerCard}
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container spacing={2} sx={{ paddingTop: '8vh', paddingLeft:'4vw', paddingBottom:'4vw' }}>
+          <Grid item xs={12}>
+            <TextField
               sx={{
+                minWidth: '90vw',
                 color: '#9F9D9C',
               }}
-              onClick={handleLocation}
-            >
-              <MyLocation />
-            </Button>
-          ),
-        }}
-      />
-      <Stack
-        sx={{
-          margin: '2em',
-          display: 'flex',
-          alignItems: 'left' /* Frame 1186 */,
-          flexDirection: 'row',
-          justifyContent: 'space-between', // Add this line
-        }}
-        direction="row"
-      >
-        <Box display="flex" alignItems="center">
-          <span>Search by: </span>
-          <RadioGroup
-            sx={{ marginLeft: '2em' }}
-            row
-            name="searchBy"
-            defaultValue="all"
-            value={searchBy}
-          >
-            <FormControlLabel
-              value="all"
-              control={<Radio />}
-              label="All"
-              onClick={() => dispatch(setSearchBy('all'))}
-            />
-            <FormControlLabel
-              value="active"
-              control={<Radio />}
-              label="Active"
-              onClick={() => dispatch(setSearchBy('active'))}
-            />
-            <FormControlLabel
-              value="inactive"
-              control={<Radio />}
-              label="Inactive"
-              onClick={() => dispatch(setSearchBy('inactive'))}
-            />
-          </RadioGroup>
-        </Box>
-
-        <Button
-          sx={{
-            background: '#053662',
-            color: '#ffffff',
-            borderRadius: '4px',
-            textTransform: 'none',
-            order: 1,
-            justifyContent: 'flex-end',
-            '&:hover': {
-              background: '#053662',
-              color: '#ffffff',
-              boxShadow: 'none',
-            },
-          }}
-          onClick={() => dispatch(setExpand(!expand))}
-        >
-          Filter by Facility Type {expand ? <ArrowDropUp /> : <ArrowDropDown />}
-        </Button>
-      </Stack>
-      {expand && (
-        <Stack sx={{ margin: '2em' }}>
-          <Stack
-            direction="row"
-            spacing={6}
-            sx={{
-              width: '100%', // Make the Stack take full width
-              justifyContent: 'space-between', // Add space between children
-            }}
-          >
-            <FormControlLabel
-              checked={omrrFilter}
-              control={<Checkbox />}
-              label="Organic Matter Recycling Regulation"
-              onClick={() => dispatch(setFilters('omrr'))}
-            />
-            <FormControlLabel
-              control={<Checkbox />}
-              checked={permitFilter}
-              label="Permit"
-              onClick={() => dispatch(setFilters('permit'))}
-            />
-            <FormControlLabel
-              checked={approvalFilter}
-              control={<Checkbox />}
-              label="Approval"
-              onClick={() => dispatch(setFilters('approval'))}
-            />
-            <FormControlLabel
-              checked={operationalCertificateFilter}
-              control={<Checkbox />}
-              label="Operational Certificate"
-              onClick={() => dispatch(setFilters('operationalCertificate'))}
-            />
-          </Stack>
-          <Stack
-            direction="row"
-            spacing={6}
-            sx={{
-              width: '49.7%', // Make the Stack take full width
-              justifyContent: 'space-between', // Add space between children
-            }}
-          >
-            <FormControlLabel
-              checked={compostFacilityFilter}
-              control={<Checkbox />}
-              label="Compost Production Facility"
-              onClick={() => dispatch(setFilters('compostFacility'))}
-            />
-            <FormControlLabel
-              checked={landApplicationBioSolidsFilter}
-              control={<Checkbox />}
-              label="Land Application Biosolids"
-              onClick={() => dispatch(setFilters('landApplicationBioSolids'))}
-            />
-          </Stack>
-          <Stack
-            direction="row"
-            sx={{
-              padding: '1em 0.6em',
-            }}
-            spacing={6}
-          >
-            <Button
-              sx={{
-                border: '1px solid #353433',
-                borderRadius: '4px',
-                textTransform: 'none',
-              }}
-              variant="contained"
-              color="secondary"
-              onClick={() => dispatch(resetFilters())}
-            >
-              Reset Filters
-            </Button>
-          </Stack>
-        </Stack>
-      )}
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          width: '98%', // Make the Box take full width
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Pagination
-          sx={{
-            marginLeft: '2em',
-            '& .MuiPagination-root': { color: '#053662' },
-          }}
-          variant="outlined"
-          shape="rounded"
-          count={Math.ceil(filteredValue.length / 10)}
-          page={page}
-          onChange={(event, value) => dispatch(setPage(value))}
-        />
-        <Typography>
-          Showing {(page - 1) * 10 + 1}-
-          {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}
-        </Typography>
-      </Box>
-      <Stack sx={{ margin: '2em' }} spacing={2}>
-        {filteredValue.slice((page - 1) * 10, page * 10).map((item, index) => (
-          <Card sx={{ background: '#E0DEDC', order: 5 }} key={index}>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                <span
-                  style={{
-                    fontFamily: 'BC Sans',
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                  }}
-                >
-                  {' '}
-                  Authorization #:
-                  <span
-                    style={{ textDecoration: 'underline', marginLeft: '0.5em' }}
-                  >
-                    {item['Authorization Number']}
-                  </span>
-                </span>
-              </Typography>
-              <br />
-              <Typography variant="h5" component="div">
-                <span
-                  style={{
-                    fontFamily: 'BC Sans',
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                  }}
-                >
-                  {item['Regulated Party']}
-                </span>
-              </Typography>
-              <br />
-              <Stack>
-                <Stack
-                  sx={{
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    display: 'flex',
-                  }}
-                  direction="row"
-                >
-                  <span
-                    style={{
-                      fontFamily: 'BC Sans',
-                      fontStyle: 'normal',
-                      fontWeight: 700,
+              label="Search Authorizations"
+              value={globalTextSearchFilter}
+              onChange={(event) =>
+                dispatch(searchAuthorizationsByGlobalFilter(event.target.value))
+              }
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <Button
+                    sx={{
+                      color: '#9F9D9C',
                     }}
+                    onClick={handleLocation}
                   >
-                    Location of Facility
-                  </span>
-                  {item['Operation Type'] && (
+                    <MyLocation />
+                  </Button>
+                ),
+              }}
+            ></TextField>
+          </Grid>
+          <Grid item xs={12} direction="row">
+            <Stack
+              sx={{
+                display: 'flex',
+                alignItems: 'left' /* Frame 1186 */,
+                flexDirection: 'row',
+                maxWidth: '90vw',
+                justifyContent: 'space-between', // Add this line
+              }}
+              direction="row"
+            >
+              <Box display="flex" alignItems="center">
+                <span>Search by: </span>
+                <RadioGroup
+                  sx={{ marginLeft: '2em' }}
+                  row
+                  name="searchBy"
+                  defaultValue="all"
+                  value={searchBy}
+                >
+                  <FormControlLabel
+                    value="all"
+                    control={<Radio />}
+                    label="All"
+                    onClick={() => dispatch(setSearchBy('all'))}
+                  />
+                  <FormControlLabel
+                    value="active"
+                    control={<Radio />}
+                    label="Active"
+                    onClick={() => dispatch(setSearchBy('active'))}
+                  />
+                  <FormControlLabel
+                    value="inactive"
+                    control={<Radio />}
+                    label="Inactive"
+                    onClick={() => dispatch(setSearchBy('inactive'))}
+                  />
+                </RadioGroup>
+              </Box>
+
+              <Button
+                sx={{
+                  background: '#053662',
+                  color: '#ffffff',
+                  borderRadius: '4px',
+                  textTransform: 'none',
+                  order: 1,
+                  '&:hover': {
+                    background: '#053662',
+                    color: '#ffffff',
+                    boxShadow: 'none',
+                  },
+                }}
+                onClick={() => dispatch(setExpand(!expand))}
+              >
+                Filter by Facility Type{' '}
+                {expand ? <ArrowDropUp /> : <ArrowDropDown />}
+              </Button>
+            </Stack>
+          </Grid>
+          {expand && (
+            <Grid item xs={12}>
+              <Stack
+                direction="row"
+                spacing={6}
+                sx={{
+                  width: '85vw', // Make the Stack take full width
+                  justifyContent: 'space-between', // Add space between children
+                }}
+              >
+                <FormControlLabel
+                  checked={omrrFilter}
+                  control={<Checkbox />}
+                  label="Organic Matter Recycling Regulation"
+                  onClick={() => dispatch(setFilters('omrr'))}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  checked={permitFilter}
+                  label="Permit"
+                  onClick={() => dispatch(setFilters('permit'))}
+                />
+                <FormControlLabel
+                  checked={approvalFilter}
+                  control={<Checkbox />}
+                  label="Approval"
+                  onClick={() => dispatch(setFilters('approval'))}
+                />
+                <FormControlLabel
+                  checked={operationalCertificateFilter}
+                  control={<Checkbox />}
+                  label="Operational Certificate"
+                  onClick={() => dispatch(setFilters('operationalCertificate'))}
+                />
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={6}
+                sx={{
+                  width: '44.1vw', // Make the Stack take full width
+                  marginTop: '1em',
+                  justifyContent: 'space-between', // Add space between children
+                }}
+              >
+                <FormControlLabel
+                  checked={compostFacilityFilter}
+                  control={<Checkbox />}
+                  label="Compost Production Facility"
+                  onClick={() => dispatch(setFilters('compostFacility'))}
+                />
+                <FormControlLabel
+                  checked={landApplicationBioSolidsFilter}
+                  control={<Checkbox />}
+                  label="Land Application Biosolids"
+                  onClick={() => dispatch(setFilters('landApplicationBioSolids'))}
+                />
+              </Stack>
+              <Stack
+                direction="row"
+                sx={{
+                  padding: '1em 0.6em',
+                }}
+                spacing={6}
+              >
+                <Button
+                  sx={{
+                    border: '1px solid #353433',
+                    borderRadius: '4px',
+                    textTransform: 'none',
+                  }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => dispatch(resetFilters())}
+                >
+                  Reset Filters
+                </Button>
+              </Stack>
+            </Grid>
+          )}
+          <Grid item xs={12}>
+            <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '90vw', // Make the Box take full width
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Pagination
+                sx={{
+                  '& .MuiPagination-root': { color: '#053662' },
+                }}
+                variant="outlined"
+                shape="rounded"
+                count={Math.ceil(filteredValue.length / 10)}
+                page={page}
+                onChange={(event, value) => dispatch(setPage(value))}
+              />
+              <Typography>
+                Showing {(page - 1) * 10 + 1}-
+                {Math.min(page * 10, filteredValue.length)} of{' '}
+                {filteredValue.length} results
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              {filteredValue
+                .slice((page - 1) * 10, page * 10)
+                .map((item, index) => (
+                  <Grid item xs={12} sx={{ width: '90vw' }}>
+                    <Card sx={{ background: '#E0DEDC', order: 5, width: '90vw' }} key={index}>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary">
                     <span
                       style={{
                         fontFamily: 'BC Sans',
@@ -346,120 +317,178 @@ export default function AuthorizationList() {
                         fontWeight: 700,
                       }}
                     >
-                      Type of Facility
+                      {' '}
+                      Authorization #:
+                      <span
+                        style={{
+                          textDecoration: 'underline',
+                          marginLeft: '0.5em',
+                        }}
+                      >
+                        {item['Authorization Number']}
+                      </span>
                     </span>
-                  )}
-                </Stack>
-                <Stack
-                  sx={{
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    display: 'flex',
-                  }}
-                  direction="row"
-                >
-                  <span
-                    style={{
-                      fontFamily: 'BC Sans',
-                      fontStyle: 'normal',
-                    }}
-                  >
-                    {item['Facility Location']}
-                  </span>
-                  {item['Operation Type'] && (
+                        </Typography>
+                        <br />
+                        <Typography variant="h5" component="div">
                     <span
                       style={{
                         fontFamily: 'BC Sans',
                         fontStyle: 'normal',
+                        fontWeight: 700,
                       }}
                     >
-                      {item['Operation Type']}
+                      {item['Regulated Party']}
                     </span>
-                  )}
-                </Stack>
-              </Stack>
-              <Stack
+                        </Typography>
+                        <br />
+                        <Stack>
+                          <Stack
+                            sx={{
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              display: 'flex',
+                            }}
+                            direction="row"
+                          >
+                      <span
+                        style={{
+                          fontFamily: 'BC Sans',
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Location of Facility
+                      </span>
+                            {item['Operation Type'] && (
+                              <span
+                                style={{
+                                  fontFamily: 'BC Sans',
+                                  fontStyle: 'normal',
+                                  fontWeight: 700,
+                                }}
+                              >
+                          Type of Facility
+                        </span>
+                            )}
+                          </Stack>
+                          <Stack
+                            sx={{
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              display: 'flex',
+                            }}
+                            direction="row"
+                          >
+                      <span
+                        style={{
+                          fontFamily: 'BC Sans',
+                          fontStyle: 'normal',
+                        }}
+                      >
+                        {item['Facility Location']}
+                      </span>
+                            {item['Operation Type'] && (
+                              <span
+                                style={{
+                                  fontFamily: 'BC Sans',
+                                  fontStyle: 'normal',
+                                }}
+                              >
+                          {item['Operation Type']}
+                        </span>
+                            )}
+                          </Stack>
+                        </Stack>
+                        <Stack
+                          sx={{
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            display: 'flex',
+                            marginTop: '1em',
+                          }}
+                          direction="row"
+                        >
+                          <Stack
+                            direction="row"
+                            sx={{
+                              alignItems: 'center',
+                              display: 'flex',
+
+                              marginTop: '1em',
+                            }}
+                            spacing={1}
+                          >
+                            <span>Status: </span>
+                            <Chip
+                              sx={{
+                                background:
+                                  item['Authorization Status'] === 'Active'
+                                    ? '#353433'
+                                    : '#605E5C',
+                                color: '#ffffff',
+                              }}
+                              label={item['Authorization Status']}
+                            />
+                          </Stack>
+                          <CardActions>
+                            <Button
+                              size="large"
+                              sx={{
+                                border: '1px solid #353433',
+                                borderRadius: '4px',
+                                color: '#000000',
+                                boxSizing: 'border-box',
+                                backgroundColor: '#D1CFCD',
+                                textTransform: 'none',
+                              }}
+                              onClick={() =>
+                                buttonClicked('/map', {
+                                  authorizationNumber: item['Authorization Number'],
+                                })
+                              }
+                            >
+                              View Facility Details
+                            </Button>
+                          </CardActions>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '90vw', // Make the Box take full width
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Pagination
                 sx={{
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  display: 'flex',
-                  marginTop: '1em',
+                  '& .MuiPagination-root': { color: '#053662' },
                 }}
-                direction="row"
-              >
-                <Stack
-                  direction="row"
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-
-                    marginTop: '1em',
-                  }}
-                  spacing={1}
-                >
-                  <span>Status: </span>
-                  <Chip
-                    sx={{
-                      background:
-                        item['Authorization Status'] === 'Active'
-                          ? '#353433'
-                          : '#605E5C',
-                      color: '#ffffff',
-                    }}
-                    label={item['Authorization Status']}
-                  />
-                </Stack>
-                <CardActions>
-                <Button
-                  size="large"
-                  sx={{
-                    border: '1px solid #353433',
-                    borderRadius: '4px',
-                    color: '#000000',
-                    boxSizing: 'border-box',
-                    backgroundColor: '#D1CFCD',
-                    textTransform: 'none',
-                  }}
-                  onClick={() =>
-                    buttonClicked('/map', {
-                      authorizationNumber: item['Authorization Number'],
-                    })
-                  }
-                >
-                  View Facility Details
-                </Button>
-                </CardActions>
-              </Stack>
-            </CardContent>
-          </Card>
-        ))}
-      </Stack>
-
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          width: '98%', // Make the Box take full width
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Pagination
-          sx={{
-            marginLeft: '2em',
-            '& .MuiPagination-root': { color: '#053662' },
-          }}
-          variant="outlined"
-          shape="rounded"
-          count={Math.ceil(filteredValue.length / 10)}
-          page={page}
-          onChange={(event, value) => dispatch(setPage(value))}
-        />
-        <Typography>
-          Showing {(page - 1) * 10 + 1}-
-          {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}
-        </Typography>
-      </Box>
-    </Stack>
+                variant="outlined"
+                shape="rounded"
+                count={Math.ceil(filteredValue.length / 10)}
+                page={page}
+                onChange={(event, value) => dispatch(setPage(value))}
+              />
+              <Typography>
+                Showing {(page - 1) * 10 + 1}-
+                {Math.min(page * 10, filteredValue.length)} of{' '}
+                {filteredValue.length} results
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }

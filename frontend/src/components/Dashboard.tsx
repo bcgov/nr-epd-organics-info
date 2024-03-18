@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, Link, Typography } from '@mui/material'
+import { Card, CardActions, CardContent, Grid, Link, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import * as React from 'react'
 import { Stack } from '@mui/system'
@@ -121,24 +121,11 @@ export default function Dashboard() {
     navigate(route, { state: { data: undefined } }) // reset the state
   }
   return (
-    <Stack>
+    <Stack sx={{marginTop:'-3.4em'}}>
       <Card
         sx={{
           padding: '1em 0.475em 0.5em',
           backgroundColor: '#D1CFCD',
-          height: '20em',
-          width: '100%',
-          marginRight: '-5em !important',
-          marginBottom: '-5em !important',
-          '@media (min-width: 600px)': {
-            width: '80em',
-          },
-          '@media (min-width: 900px)': {
-            width: '100em',
-          },
-          '@media (min-width: 1200px)': {
-            width: '120em',
-          },
         }}
       >
         {headerCard}
@@ -147,20 +134,6 @@ export default function Dashboard() {
         sx={{
           padding: '1em 0.475em 0.5em',
           backgroundColor: '#ECEAE8',
-          height: '30em',
-          marginTop: '5em !important',
-          marginRight: '-5em !important',
-          marginBottom: '-5em !important',
-          width: '100%',
-          '@media (min-width: 600px)': {
-            width: '80em',
-          },
-          '@media (min-width: 900px)': {
-            width: '100em',
-          },
-          '@media (min-width: 1200px)': {
-            width: '120em',
-          },
         }}
       >
         {infoCard}
