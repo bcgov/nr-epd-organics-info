@@ -33,11 +33,17 @@ export default function App() {
   }, [dispatch])
   return (
     <Grid xs={12} sx={styles.container}>
-      <Header />
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-      <Footer />
+      <Grid item xs={12}>
+        <Header />
+      </Grid>
+      <Grid item xs={12}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </Grid>
+      <Grid item xs={12}>
+        <Footer />
+      </Grid>
     </Grid>
   )
 }
