@@ -1,13 +1,8 @@
-import {
-  ArrowDropDown,
-  ArrowDropUp,
-  MyLocation,
-  Search,
-} from '@mui/icons-material'
+import { ArrowDropDown, ArrowDropUp, MyLocation, Search } from '@mui/icons-material'
 import {
   Box,
   Button,
-  Card,
+  Card, CardActions,
   CardContent,
   Checkbox,
   Chip,
@@ -32,8 +27,13 @@ import {
   setPage,
   setSearchBy,
 } from '@/features/omrr/omrr-slice'
+import { useNavigate } from 'react-router'
 
 export default function AuthorizationList() {
+  const navigate = useNavigate()
+  const buttonClicked = (route: any, data: any) => {
+    navigate(route, { state: { data: data } }) // reset the state
+  }
   const dispatch = useDispatch()
   const {
     filteredValue,
@@ -409,21 +409,26 @@ export default function AuthorizationList() {
                     label={item['Authorization Status']}
                   />
                 </Stack>
+                <CardActions>
                 <Button
+                  size="large"
                   sx={{
                     border: '1px solid #353433',
                     borderRadius: '4px',
-                    background: '#E0DEDC',
-                    fontFamily: 'BC Sans',
-                    fontStyle: 'normal',
-                    color: '#353433',
+                    color: '#000000',
+                    boxSizing: 'border-box',
+                    backgroundColor: '#D1CFCD',
                     textTransform: 'none',
                   }}
-                  variant="contained"
-                  onClick={() => dispatch(resetFilters())}
+                  onClick={() =>
+                    buttonClicked('/map', {
+                      authorizationNumber: item['Authorization Number'],
+                    })
+                  }
                 >
                   View Facility Details
                 </Button>
+                </CardActions>
               </Stack>
             </CardContent>
           </Card>
