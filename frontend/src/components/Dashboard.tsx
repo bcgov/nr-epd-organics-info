@@ -34,7 +34,7 @@ export default function Dashboard() {
             color: '#000000',
           }}
           onClick={() => {
-            buttonClicked('/map')
+            console.log('map');
           }}
         >
           Search on a map
