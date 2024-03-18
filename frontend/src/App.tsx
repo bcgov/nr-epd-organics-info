@@ -35,9 +35,7 @@ export default function App() {
     <Grid xs={12} sx={styles.container}>
       <Header />
       <BrowserRouter>
-        <Stack direction="row" spacing={2} sx={{ marginTop: '4em', marginBottom:'5em' }}>
-          <AppRoutes />
-        </Stack>
+        <AppRoutes />
       </BrowserRouter>
       <Footer />
     </Grid>
