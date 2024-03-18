@@ -222,6 +222,7 @@ export default function AuthorizationList() {
           </Grid>
           {expand && (
             <Grid item xs={12}>
+              <Grid item xs={12}>
               <Stack
                 direction="row"
                 spacing={6}
@@ -255,12 +256,15 @@ export default function AuthorizationList() {
                   onClick={() => dispatch(setFilters('operationalCertificate'))}
                 />
               </Stack>
+              </Grid>
+              <Grid item xs={5.68}>
               <Stack
                 direction="row"
-                spacing={46}
+                useFlexGap flexWrap="wrap"
                 sx={{
                   marginTop: '1em',
-                  justifyContent: 'normal', // Add space between children
+                  marginLeft:'0.7em',
+                  justifyContent: 'space-between', // Add space between children
                 }}
               >
                 <FormControlLabel
@@ -270,12 +274,14 @@ export default function AuthorizationList() {
                   onClick={() => dispatch(setFilters('compostFacility'))}
                 />
                 <FormControlLabel
+
                   checked={landApplicationBioSolidsFilter}
                   control={<Checkbox />}
                   label="Land Application Biosolids"
                   onClick={() => dispatch(setFilters('landApplicationBioSolids'))}
                 />
               </Stack>
+              </Grid>
               <Stack
                 direction="row"
                 sx={{
@@ -444,7 +450,7 @@ export default function AuthorizationList() {
                                 textTransform: 'none',
                               }}
                               onClick={() =>
-                                buttonClicked('/map', {
+                                buttonClicked(`/authorization/${item['Authorization Number']}`, {
                                   authorizationNumber: item['Authorization Number'],
                                 })
                               }
