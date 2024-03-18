@@ -53,7 +53,34 @@ export default function AuthorizationList() {
   } = useSelector((state: RootState) => state.omrr)
   /*const [expand, setExpand] = useState(false)
   const [location, setLocation] = useState<Location | null>(null)*/
-
+  const pagination = (
+    <Grid item xs={12}>
+    <Box
+      sx={{
+        display: 'flex',
+        width: '90vw', // Make the Box take full width
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      <Pagination
+        sx={{
+          '& .MuiPagination-root': { color: '#053662' },
+        }}
+        variant="outlined"
+        shape="rounded"
+        count={Math.ceil(filteredValue.length / 10)}
+        page={page}
+        onChange={(event, value) => dispatch(setPage(value))}
+      />
+      <Typography>
+        Showing {(page - 1) * 10 + 1}-
+        {Math.min(page * 10, filteredValue.length)} of{' '}
+        {filteredValue.length} results
+      </Typography>
+    </Box>
+  </Grid>
+  )
   const handleLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       dispatch(
@@ -86,7 +113,7 @@ export default function AuthorizationList() {
     </CardContent>
   )
   return (
-    <Grid spacing={2} sx={{ marginTop: '3%' }}>
+    <Grid container spacing={2} sx={{ marginTop: '4vh' }}>
       <Grid item xs={12}>
         <Card
           variant="outlined"
@@ -132,7 +159,7 @@ export default function AuthorizationList() {
               }}
             ></TextField>
           </Grid>
-          <Grid item xs={12} direction="row">
+          <Grid item xs={12}>
             <Stack
               sx={{
                 display: 'flex',
@@ -275,38 +302,13 @@ export default function AuthorizationList() {
           <Grid item xs={12}>
             <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
           </Grid>
-          <Grid item xs={12}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '90vw', // Make the Box take full width
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Pagination
-                sx={{
-                  '& .MuiPagination-root': { color: '#053662' },
-                }}
-                variant="outlined"
-                shape="rounded"
-                count={Math.ceil(filteredValue.length / 10)}
-                page={page}
-                onChange={(event, value) => dispatch(setPage(value))}
-              />
-              <Typography>
-                Showing {(page - 1) * 10 + 1}-
-                {Math.min(page * 10, filteredValue.length)} of{' '}
-                {filteredValue.length} results
-              </Typography>
-            </Box>
-          </Grid>
+          {pagination}
           <Grid item xs={12}>
             <Grid container spacing={2}>
-              {filteredValue
+              {filteredValue && filteredValue.length> 0 && filteredValue
                 .slice((page - 1) * 10, page * 10)
                 .map((item, index) => (
-                  <Grid item xs={12} sx={{ width: '90vw' }}>
+                  <Grid key={index} item xs={12} sx={{ width: '90vw' }}>
                     <Card sx={{ background: '#E0DEDC', order: 5, width: '90vw' }} key={index}>
                       <CardContent>
                         <Typography variant="body2" color="text.secondary">
@@ -461,32 +463,7 @@ export default function AuthorizationList() {
           <Grid item xs={12}>
             <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
           </Grid>
-          <Grid item xs={12}>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '90vw', // Make the Box take full width
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Pagination
-                sx={{
-                  '& .MuiPagination-root': { color: '#053662' },
-                }}
-                variant="outlined"
-                shape="rounded"
-                count={Math.ceil(filteredValue.length / 10)}
-                page={page}
-                onChange={(event, value) => dispatch(setPage(value))}
-              />
-              <Typography>
-                Showing {(page - 1) * 10 + 1}-
-                {Math.min(page * 10, filteredValue.length)} of{' '}
-                {filteredValue.length} results
-              </Typography>
-            </Box>
-          </Grid>
+          {pagination}
         </Grid>
       </Grid>
     </Grid>

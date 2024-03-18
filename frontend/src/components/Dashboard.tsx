@@ -121,7 +121,7 @@ export default function Dashboard() {
     navigate(route, { state: { data: undefined } }) // reset the state
   }
   return (
-    <Stack sx={{marginTop:'5vh'}}>
+    <Stack sx={{marginTop:'6vh'}}>
       <Card
         sx={{
           padding: '1em 0.475em 0.5em',
