@@ -32,7 +32,7 @@ export default function App() {
     dispatch(fetchOMRRData())
   }, [dispatch])
   return (
-    <Grid xs={12} sx={styles.container}>
+    <Grid container spacing={2} xs={12} sx={styles.container}>
       <Grid item xs={12}>
         <Header />
       </Grid>
