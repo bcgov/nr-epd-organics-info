@@ -24,7 +24,7 @@ const styles = {
 export default function Header() {
   return (
     <AppBar position="fixed" sx={styles.appBar}>
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }} id="back-to-top-anchor">
         <img  alt="Logo" src={BCGovLogo} />
         <Typography >
           Organics Info

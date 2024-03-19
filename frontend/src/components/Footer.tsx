@@ -1,6 +1,6 @@
+import { AppBar, Grid, Link, Toolbar } from '@mui/material'
+import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
-import { AppBar, Link, Toolbar, Grid, Button } from '@mui/material'
-import Typography from '@mui/material/Typography'
 
 const styles = {
   appBar: {
@@ -11,23 +11,19 @@ const styles = {
     backgroundColor: '#053662',
     display: 'flex'
   },
-  toolbar: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   footerButton: {
     margin: '0.2em',
     padding: '0.2em',
     color: '#ffffff',
   },
 }
+
 export default function Footer() {
   return (
-    <AppBar sx={styles.appBar} color="default">
-      <Toolbar sx={styles.toolbar}>
+    <AppBar position="relative" sx={styles.appBar} color="default">
+      <Toolbar>
         <Grid container spacing={2} justifyContent={'center'}>
-          <Grid item xs={12}>
+          <Grid item columns={12}>
             <Link
               sx={styles.footerButton}
               id="footer-home"

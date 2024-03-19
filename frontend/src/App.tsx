@@ -3,7 +3,6 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import { BrowserRouter } from 'react-router-dom'
-import { Stack } from '@mui/system'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOMRRData } from '@/features/omrr/omrr-slice'
 import { useEffect } from 'react'
@@ -25,7 +24,7 @@ export default function App() {
       <Grid item xs={12}>
         <Header />
       </Grid>
-      <Grid item style={{ flexGrow: 1 }} xs={12}>
+      <Grid item style={{ flexGrow: 1, minHeight:'93vh' }} xs={12}>
         {status === 'loading' ? (
           <CircularProgress />
         ) : status === 'failed' ? (
