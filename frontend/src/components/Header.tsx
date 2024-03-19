@@ -26,7 +26,25 @@ export default function Header() {
     <AppBar position="fixed" sx={styles.appBar}>
       <Toolbar sx={{ justifyContent: 'space-between' }} id="back-to-top-anchor">
         <img  alt="Logo" src={BCGovLogo} />
-        <Typography >
+        <Typography sx={{
+          /* Application Name */
+
+          width: '9.5em',
+          height: '2.25em',
+
+          /* regular/H4 */
+          fontFamily: 'BC Sans',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '1.5em',
+          lineHeight: '2.25em',
+          /* identical to box height, or 150% */
+
+          color:' #FFFFFF'
+
+
+
+        }}>
           Organics Info
         </Typography>
         <a href={'/'} target={'_self'}>

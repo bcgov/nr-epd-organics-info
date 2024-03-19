@@ -26,23 +26,20 @@ export default function AuthorizationDetails() {
   }
   const location = useLocation()
   const data = location?.state?.data
-  console.log(data)
   const facilityLocation: LatLngLiteral = { lat: data.Latitude, lng: data.Longitude }
   return (
 
-      <Grid container spacing={3} sx={{marginTop:'6vh', marginLeft:'2vw'}}>
-        <Grid item xs={10}>
+      <Grid container spacing={1} sx={{marginTop:'6em', marginLeft:'2em', maxWidth:'95%' }}>
+        <Grid item  xs={3} sm={6} md={12}>
           <Button sx={{
             background: '#8D8D8D',
             padding: '8px 16px',
             borderRadius: '6px;',
             color:'#000000',
-            width: '212px',
-            height: '40px;',
             textTransform: 'none',
           }} onClick={() => buttonClicked('/search')}>Back To Search</Button>
         </Grid>
-        <Grid item xs={10} >
+        <Grid item xs={3} sm={6} md={12} >
           <Stack direction="row" justifyContent="space-between">
             <span style={{
               color:'#000000',
@@ -122,8 +119,9 @@ export default function AuthorizationDetails() {
           <MapContainer
             id="map"
             center={facilityLocation}
-            zoom={13}
-            style={{ height: '30em', width: '30%', marginLeft: '4em' }}
+            scrollWheelZoom={false}
+            zoom={12}
+            style={{ height: '60em', marginLeft: '4em' }}
             className="map-container"
           >
             <TileLayer
