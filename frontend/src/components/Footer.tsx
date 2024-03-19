@@ -9,8 +9,7 @@ const styles = {
     bottom: 0,
     color: '#ffffff',
     backgroundColor: '#053662',
-    display: 'flex',
-    zIndex: (theme: any) => theme.zIndex.drawer + 1,
+    display: 'flex'
   },
   toolbar: {
     display: 'flex',
@@ -25,10 +24,10 @@ const styles = {
 }
 export default function Footer() {
   return (
-    <AppBar position="fixed" sx={styles.appBar} color="default">
+    <AppBar sx={styles.appBar} color="default">
       <Toolbar sx={styles.toolbar}>
         <Grid container spacing={2} justifyContent={'center'}>
-          <Grid item columns={12}>
+          <Grid item xs={12}>
             <Link
               sx={styles.footerButton}
               id="footer-home"
