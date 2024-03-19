@@ -26,4 +26,7 @@
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-BoldItalic.woff')
     format('woff');
 }
-
+.map-container {
+    border-radius: 4px;
+    z-index: 1;
+}

@@ -8,7 +8,6 @@ const styles = {
     color: '#ffffff',
     backgroundColor: '#053662',
     borderBottom: '0.1em solid rgb(252, 186, 25) !important',
-    zIndex: (theme: any) => theme.zIndex.drawer + 1,
   },
   toolbar: {
     display: 'flex',

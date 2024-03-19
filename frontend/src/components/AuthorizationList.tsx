@@ -451,7 +451,7 @@ export default function AuthorizationList() {
                               }}
                               onClick={() =>
                                 buttonClicked(`/authorization/${item['Authorization Number']}`, {
-                                  authorizationNumber: item['Authorization Number'],
+                                  ...item,
                                 })
                               }
                             >
