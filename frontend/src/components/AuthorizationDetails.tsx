@@ -115,13 +115,13 @@ export default function AuthorizationDetails() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{marginTop:'2em'}}>
           <MapContainer
             id="map"
             center={facilityLocation}
             scrollWheelZoom={false}
             zoom={12}
-            style={{ height: '60em', marginLeft: '4em' }}
+            style={{ height: '60em' }}
             className="map-container"
           >
             <TileLayer
