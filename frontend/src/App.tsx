@@ -25,7 +25,7 @@ export default function App() {
       <Grid item xs={12}>
         <Header />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item style={{ flexGrow: 1 }} xs={12}>
         {status === 'loading' ? (
           <CircularProgress />
         ) : status === 'failed' ? (
