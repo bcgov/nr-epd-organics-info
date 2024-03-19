@@ -26,12 +26,7 @@
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-BoldItalic.woff')
     format('woff');
 }
-
-.MuiDrawer-paperAnchorLeft {
-  margin-top: 4.2em !important;
-}
-
 .map-container {
-  border-radius: 4px;
-  z-index: 1;
+    border-radius: 4px;
+    z-index: 1;
 }

@@ -1,51 +1,51 @@
-import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import { BrowserRouter } from 'react-router-dom'
-import LeftDrawer from '@/components/LeftDrawer'
-import { Stack } from '@mui/system'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchOMRRData } from '@/features/omrr/omrr-slice'
 import { useEffect } from 'react'
-import apiService from '@/service/api-service'
-import { AxiosResponse } from '~/axios'
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-  content: {
-    flexGrow: 1,
-    marginTop: '5em',
-    marginRight: '1em',
-    marginLeft: '1em',
-    marginBottom: '5em',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-}
-
+import { RootState } from '@/app/store'
+import CircularProgress from '@mui/material/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css' // Import Leaflet CSS
 export default function App() {
+  const status: string = useSelector((state: RootState) => state.omrr.status)
   const dispatch = useDispatch()
   useEffect(() => {
     //@ts-expect-error
     dispatch(fetchOMRRData())
   }, [dispatch])
   return (
-    <Box sx={styles.container}>
-      <Header />
-      <BrowserRouter>
-        <Stack direction="row" spacing={2} sx={{ margin: '5em' }}>
-          <LeftDrawer />
-          <AppRoutes />
-        </Stack>
-      </BrowserRouter>
-      <Footer />
-    </Box>
+    <Grid container spacing={0}>
+      <Grid item xs={12}>
+        <Header />
+      </Grid>
+      <Grid item style={{ flexGrow: 1, minHeight:'93vh' }} xs={12}>
+        {status === 'loading' ? (
+          <CircularProgress />
+        ) : status === 'failed' ? (
+          <Snackbar
+            message="Loading Failed, Please try later refreshing the page"
+            sx={{ background: '#fffffff', backgroundColor: '#fffffff' }}
+            color="error"
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            autoHideDuration={6000}
+            draggable
+            open={true}
+          ></Snackbar>
+        ) : (
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        )}
+      </Grid>
+      <Grid item xs={12}>
+        <Footer />
+      </Grid>
+    </Grid>
   )
 }

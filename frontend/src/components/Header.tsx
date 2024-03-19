@@ -1,15 +1,13 @@
 // @ts-ignore
-import BCGovLogo from '@/assets/BCID_H_rgb_pos.png'
+import BCGovLogo from '@/assets/gov-bc-logo-horiz.png'
 import { AppBar, IconButton, Toolbar } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { HomeRounded } from '@mui/icons-material'
+import { HomeRounded, Menu } from '@mui/icons-material'
 const styles = {
   appBar: {
     color: '#ffffff',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#053662',
     borderBottom: '0.1em solid rgb(252, 186, 25) !important',
-    display: 'flex',
-    zIndex: (theme: any) => theme.zIndex.drawer + 1,
   },
   toolbar: {
     display: 'flex',
@@ -26,14 +24,32 @@ const styles = {
 export default function Header() {
   return (
     <AppBar position="fixed" sx={styles.appBar}>
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <img style={{ maxHeight: '60px' }} alt="Logo" src={BCGovLogo} />
-        <Typography sx={{ color: '#2a4679' }}>
-          OMRR Transparency (Alpha)
+      <Toolbar sx={{ justifyContent: 'space-between' }} id="back-to-top-anchor">
+        <img  alt="Logo" src={BCGovLogo} />
+        <Typography sx={{
+          /* Application Name */
+
+          width: '9.5em',
+          height: '2.25em',
+
+          /* regular/H4 */
+          fontFamily: 'BC Sans',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '1.5em',
+          lineHeight: '2.25em',
+          /* identical to box height, or 150% */
+
+          color:' #FFFFFF'
+
+
+
+        }}>
+          Organics Info
         </Typography>
         <a href={'/'} target={'_self'}>
-          <IconButton color="secondary">
-            <HomeRounded color="secondary"></HomeRounded>
+          <IconButton>
+            <Menu color="secondary"></Menu>
           </IconButton>
         </a>
       </Toolbar>
