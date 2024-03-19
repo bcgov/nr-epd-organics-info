@@ -65,7 +65,8 @@ export default function AuthorizationList() {
       >
         <Pagination
           sx={{
-            '& .MuiPagination-root': { color: '#053662' },
+            '& .MuiPaginationItem-root.Mui-selected': { backgroundColor: '#053662',color:'#ffffff' },
+            '& .MuiPaginationItem-root': { color: '#053662',backgroundColor:'#ffffff' },
           }}
           variant="outlined"
           shape="rounded"

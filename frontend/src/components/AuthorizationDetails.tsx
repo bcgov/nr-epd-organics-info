@@ -27,7 +27,6 @@ export default function AuthorizationDetails() {
   const location = useLocation()
   const data = location?.state?.data
   console.log(data)
-  const position = { lat: 53.7267, lng: -127.6476 }
   const facilityLocation: LatLngLiteral = { lat: data.Latitude, lng: data.Longitude }
   return (
 
