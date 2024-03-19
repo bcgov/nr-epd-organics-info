@@ -31,7 +31,7 @@ export default function Header() {
         </Typography>
         <a href={'/'} target={'_self'}>
           <IconButton>
-            <Menu color="primary"></Menu>
+            <Menu color="secondary"></Menu>
           </IconButton>
         </a>
       </Toolbar>
