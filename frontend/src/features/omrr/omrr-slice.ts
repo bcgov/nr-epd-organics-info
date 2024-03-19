@@ -90,7 +90,7 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
   }
   if (state.omrrFilter) {
     const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) => item['Authorization Type']?.toLowerCase() === 'omrr',
+      (item: OmrrData) => item['Authorization Type']?.toLowerCase() === 'Organic Matter Recycling Regulation'.toLowerCase(),
     )
     finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
   }
