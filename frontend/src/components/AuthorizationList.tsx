@@ -55,31 +55,31 @@ export default function AuthorizationList() {
   const [location, setLocation] = useState<Location | null>(null)*/
   const pagination = (
     <Grid item xs={12}>
-    <Box
-      sx={{
-        display: 'flex',
-        width: '90vw', // Make the Box take full width
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      <Pagination
+      <Box
         sx={{
-          '& .MuiPagination-root': { color: '#053662' },
+          display: 'flex',
+          width: '90vw', // Make the Box take full width
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
-        variant="outlined"
-        shape="rounded"
-        count={Math.ceil(filteredValue.length / 10)}
-        page={page}
-        onChange={(event, value) => dispatch(setPage(value))}
-      />
-      <Typography>
-        Showing {(page - 1) * 10 + 1}-
-        {Math.min(page * 10, filteredValue.length)} of{' '}
-        {filteredValue.length} results
-      </Typography>
-    </Box>
-  </Grid>
+      >
+        <Pagination
+          sx={{
+            '& .MuiPagination-root': { color: '#053662' },
+          }}
+          variant="outlined"
+          shape="rounded"
+          count={Math.ceil(filteredValue.length / 10)}
+          page={page}
+          onChange={(event, value) => dispatch(setPage(value))}
+        />
+        <Typography>
+          Showing {(page - 1) * 10 + 1}-
+          {Math.min(page * 10, filteredValue.length)} of{' '}
+          {filteredValue.length} results
+        </Typography>
+      </Box>
+    </Grid>
   )
   const handleLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -127,7 +127,7 @@ export default function AuthorizationList() {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={2} sx={{ paddingTop: '8vh', paddingLeft:'4vw', paddingBottom:'4vw' }}>
+        <Grid container spacing={2} sx={{ paddingTop: '8vh', paddingLeft: '4vw', paddingBottom: '4vw' }}>
           <Grid item xs={12}>
             <TextField
               sx={{
@@ -223,85 +223,79 @@ export default function AuthorizationList() {
           {expand && (
             <Grid item xs={12}>
               <Grid item xs={12}>
-              <Stack
-                direction="row"
-                spacing={6}
-                sx={{
-                  width: '85vw', // Make the Stack take full width
-                  justifyContent: 'space-between', // Add space between children
-                }}
-              >
-                <FormControlLabel
-                  checked={omrrFilter}
-                  control={<Checkbox />}
-                  label="Organic Matter Recycling Regulation"
-                  onClick={() => dispatch(setFilters('omrr'))}
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  checked={permitFilter}
-                  label="Permit"
-                  onClick={() => dispatch(setFilters('permit'))}
-                />
-                <FormControlLabel
-                  checked={approvalFilter}
-                  control={<Checkbox />}
-                  label="Approval"
-                  onClick={() => dispatch(setFilters('approval'))}
-                />
-                <FormControlLabel
-                  checked={operationalCertificateFilter}
-                  control={<Checkbox />}
-                  label="Operational Certificate"
-                  onClick={() => dispatch(setFilters('operationalCertificate'))}
-                />
-              </Stack>
+                <Grid container spacing={2} direction="row">
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      checked={omrrFilter}
+                      control={<Checkbox />}
+                      label="Organic Matter Recycling Regulation"
+                      onClick={() => dispatch(setFilters('omrr'))}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      checked={permitFilter}
+                      label="Permit"
+                      onClick={() => dispatch(setFilters('permit'))}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      checked={approvalFilter}
+                      control={<Checkbox />}
+                      label="Approval"
+                      onClick={() => dispatch(setFilters('approval'))}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      checked={operationalCertificateFilter}
+                      control={<Checkbox />}
+                      label="Operational Certificate"
+                      onClick={() => dispatch(setFilters('operationalCertificate'))}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={5.68}>
-              <Stack
-                direction="row"
-                useFlexGap flexWrap="wrap"
-                sx={{
-                  marginTop: '1em',
-                  marginLeft:'0.7em',
-                  justifyContent: 'space-between', // Add space between children
-                }}
-              >
-                <FormControlLabel
-                  checked={compostFacilityFilter}
-                  control={<Checkbox />}
-                  label="Compost Production Facility"
-                  onClick={() => dispatch(setFilters('compostFacility'))}
-                />
-                <FormControlLabel
-
-                  checked={landApplicationBioSolidsFilter}
-                  control={<Checkbox />}
-                  label="Land Application Biosolids"
-                  onClick={() => dispatch(setFilters('landApplicationBioSolids'))}
-                />
-              </Stack>
+              <Grid item xs={12}>
+                <Grid container spacing={2} direction="row">
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      checked={compostFacilityFilter}
+                      control={<Checkbox />}
+                      label="Compost Production Facility"
+                      onClick={() => dispatch(setFilters('compostFacility'))}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControlLabel
+                      checked={landApplicationBioSolidsFilter}
+                      control={<Checkbox />}
+                      label="Land Application Biosolids"
+                      onClick={() => dispatch(setFilters('landApplicationBioSolids'))}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Stack
-                direction="row"
-                sx={{
-                  padding: '1em 0.6em',
-                }}
-                spacing={6}
-              >
-                <Button
-                  sx={{
-                    border: '1px solid #353433',
-                    borderRadius: '4px',
-                    textTransform: 'none',
-                  }}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => dispatch(resetFilters())}
-                >
-                  Reset Filters
-                </Button>
-              </Stack>
+              <Grid item xs={12}>
+                <Grid container spacing={3} direction="row" sx={{ marginTop: '0.1em' }}>
+                  <Grid item xs={3}>
+                    <Button
+                      sx={{
+                        border: '1px solid #353433',
+                        borderRadius: '4px',
+                        textTransform: 'none',
+                      }}
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => dispatch(resetFilters())}
+                    >
+                      Reset Filters
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
           )}
           <Grid item xs={12}>
@@ -310,7 +304,7 @@ export default function AuthorizationList() {
           {pagination}
           <Grid item xs={12}>
             <Grid container spacing={2}>
-              {filteredValue && filteredValue.length> 0 && filteredValue
+              {filteredValue && filteredValue.length > 0 && filteredValue
                 .slice((page - 1) * 10, page * 10)
                 .map((item, index) => (
                   <Grid key={index} item xs={12} sx={{ width: '90vw' }}>
@@ -349,64 +343,53 @@ export default function AuthorizationList() {
                     </span>
                         </Typography>
                         <br />
-                        <Stack>
-                          <Stack
-                            sx={{
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              display: 'flex',
-                            }}
-                            direction="row"
-                          >
-                      <span
-                        style={{
-                          fontFamily: 'BC Sans',
-                          fontStyle: 'normal',
-                          fontWeight: 700,
-                        }}
-                      >
-                        Location of Facility
-                      </span>
-                            {item['Operation Type'] && (
-                              <span
-                                style={{
-                                  fontFamily: 'BC Sans',
-                                  fontStyle: 'normal',
-                                  fontWeight: 700,
-                                }}
-                              >
-                          Type of Facility
-                        </span>
-                            )}
-                          </Stack>
-                          <Stack
-                            sx={{
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              display: 'flex',
-                            }}
-                            direction="row"
-                          >
-                      <span
-                        style={{
-                          fontFamily: 'BC Sans',
-                          fontStyle: 'normal',
-                        }}
-                      >
-                        {item['Facility Location']}
-                      </span>
-                            {item['Operation Type'] && (
-                              <span
-                                style={{
-                                  fontFamily: 'BC Sans',
-                                  fontStyle: 'normal',
-                                }}
-                              >
-                          {item['Operation Type']}
-                        </span>
-                            )}
-                          </Stack>
-                        </Stack>
+                        <Grid container direction="row">
+                          <Grid item xs={6}>
+                            <span
+                              style={{
+                                fontFamily: 'BC Sans',
+                                fontStyle: 'normal',
+                                fontWeight: 700,
+                              }}
+                            >
+                              Location of Facility
+                            </span>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <span
+                              style={{
+                                fontFamily: 'BC Sans',
+                                fontStyle: 'normal',
+                                fontWeight: 700,
+                              }}
+                            >
+                              Type of Facility
+                            </span>
+                          </Grid>
+                        </Grid>
+                        <Grid container direction="row" sx={{ marginTop: '1em' }}>
+                          <Grid item xs={6}>
+                            <span
+                              style={{
+                                fontFamily: 'BC Sans',
+                                fontStyle: 'normal',
+                              }}
+                            >
+                              {item['Facility Location']}
+                            </span>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <span
+                              style={{
+                                fontFamily: 'BC Sans',
+                                fontStyle: 'normal',
+                              }}
+                            >
+                              {item['Authorization Type']},{item['Operation Type']}
+                            </span>
+                          </Grid>
+                        </Grid>
+
                         <Stack
                           sx={{
                             justifyContent: 'space-between',

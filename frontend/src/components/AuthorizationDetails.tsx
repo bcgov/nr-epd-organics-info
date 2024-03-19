@@ -123,7 +123,7 @@ export default function AuthorizationDetails() {
           <MapContainer
             id="map"
             center={facilityLocation}
-            zoom={6}
+            zoom={13}
             style={{ height: '30em', width: '30%', marginLeft: '4em' }}
             className="map-container"
           >

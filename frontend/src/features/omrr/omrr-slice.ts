@@ -132,6 +132,7 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
       state.omrrFilter ||
       state.permitFilter ||
       state.operationalCertificateFilter ||
+      state.landApplicationBioSolidsFilter ||
       state.compostFacilityFilter) &&
     finalFilteredOMRRList.length === 0
   ) {
