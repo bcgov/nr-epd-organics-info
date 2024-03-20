@@ -27,22 +27,6 @@ spec:
       securityContext:
         {{- toYaml .Values.backend.podSecurityContext | nindent 12 }}
       {{- end }}
-      initContainers:
-        - name: {{ include "backend.fullname" . }}-init
-          image: "{{.Values.global.registry}}/{{.Values.global.repository}}/migrations:{{ .Values.global.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ default "IfNotPresent" .Values.backend.imagePullPolicy }}
-          envFrom:
-            - secretRef:
-                name: {{.Release.Name}}
-          env:
-            - name: FLYWAY_BASELINE_ON_MIGRATE
-              value: "true"
-            - name: FLYWAY_DEFAULT_SCHEMA
-              value: "USERS"
-            - name: FLYWAY_CONNECT_RETRIES
-              value: "10"
-          resources:
-            {{- toYaml .Values.backend.initContainerResources | nindent 12 }}
       containers:
         - name: {{ include "backend.fullname" . }}
           {{- if .Values.backend.securityContext }}
