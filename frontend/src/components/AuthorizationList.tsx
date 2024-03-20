@@ -110,7 +110,7 @@ export default function AuthorizationList() {
       <Typography
         variant="h6"
         sx={{
-          fontFamily: 'BC Sans',
+          fontFamily: 'BCSans',
           fontWeight: 700,
           fontSize: 48,
           color: '#000000',
@@ -120,7 +120,7 @@ export default function AuthorizationList() {
       >
         Authorizations
       </Typography>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{fontFamily: 'BCSans',}}>
         Authorized compost and biosolid facilities in B.C.
       </Typography>
     </CardContent>
@@ -347,7 +347,7 @@ export default function AuthorizationList() {
                           <Typography variant="body2" color="text.secondary">
                             <span
                               style={{
-                                fontFamily: 'BC Sans',
+                                fontFamily: 'BCSans',
                                 fontStyle: 'normal',
                                 fontWeight: 700,
                               }}
@@ -368,7 +368,7 @@ export default function AuthorizationList() {
                           <Typography variant="h5" component="div">
                             <span
                               style={{
-                                fontFamily: 'BC Sans',
+                                fontFamily: 'BCSans',
                                 fontStyle: 'normal',
                                 fontWeight: 700,
                               }}
@@ -381,7 +381,7 @@ export default function AuthorizationList() {
                             <Grid item xs={6}>
                               <span
                                 style={{
-                                  fontFamily: 'BC Sans',
+                                  fontFamily: 'BCSans',
                                   fontStyle: 'normal',
                                   fontWeight: 700,
                                 }}
@@ -392,7 +392,7 @@ export default function AuthorizationList() {
                             <Grid item xs={6}>
                               <span
                                 style={{
-                                  fontFamily: 'BC Sans',
+                                  fontFamily: 'BCSans',
                                   fontStyle: 'normal',
                                   fontWeight: 700,
                                 }}
@@ -409,7 +409,7 @@ export default function AuthorizationList() {
                             <Grid item xs={6}>
                               <span
                                 style={{
-                                  fontFamily: 'BC Sans',
+                                  fontFamily: 'BCSans',
                                   fontStyle: 'normal',
                                 }}
                               >
@@ -419,7 +419,7 @@ export default function AuthorizationList() {
                             <Grid item xs={6}>
                               <span
                                 style={{
-                                  fontFamily: 'BC Sans',
+                                  fontFamily: 'BCSans',
                                   fontStyle: 'normal',
                                 }}
                               >
