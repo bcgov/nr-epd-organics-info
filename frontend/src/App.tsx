@@ -21,10 +21,10 @@ export default function App() {
   }, [dispatch])
   return (
     <Grid container spacing={0}>
-      <Grid item xs={12}>
+      <Grid item xs={3} md={6} lg={12}>
         <Header />
       </Grid>
-      <Grid item style={{ flexGrow: 1, minHeight:'93vh' }} xs={12}>
+      <Grid item style={{ flexGrow: 1, minHeight:'93vh' }} xs={3} md={6} lg={12}>
         {status === 'loading' ? (
           <CircularProgress />
         ) : status === 'failed' ? (
@@ -43,7 +43,7 @@ export default function App() {
           </BrowserRouter>
         )}
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={3} md={6} lg={12}>
         <Footer />
       </Grid>
     </Grid>
