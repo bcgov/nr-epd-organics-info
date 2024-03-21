@@ -23,7 +23,6 @@
       "cypress-file-upload",
       "@testing-library/cypress",
       "vite/client",
-      "vite-plugin-svgr/client",
     ],
     "baseUrl": "./",
     "paths": {
