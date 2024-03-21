@@ -43,7 +43,7 @@ export default function AuthorizationDetails() {
           <Stack direction="row" justifyContent="space-between">
             <span style={{
               color:'#000000',
-              fontFamily: 'BC Sans',
+              fontFamily: 'BCSans',
               fontStyle: 'bold',
               fontSize: '2em',
               lineHeight: '3em',
@@ -53,7 +53,7 @@ export default function AuthorizationDetails() {
               <Grid item xs={3}>
                  <span style={{
                    color: '#000000',
-                   fontFamily: 'BC Sans',
+                   fontFamily: 'BCSans',
                    fontStyle: 'normal',
                    fontWeight: 'bold',
                    fontSize: '1em',
@@ -63,7 +63,7 @@ export default function AuthorizationDetails() {
               <Grid item xs={3}>
                  <span style={{
                    color: '#000000',
-                   fontFamily: 'BC Sans',
+                   fontFamily: 'BCSans',
                    fontStyle: 'normal',
                    fontWeight: 'bold',
                    fontSize: '1em',
@@ -73,7 +73,7 @@ export default function AuthorizationDetails() {
               <Grid item xs={3}>
                  <span style={{
                    color: '#000000',
-                   fontFamily: 'BC Sans',
+                   fontFamily: 'BCSans',
                    fontStyle: 'normal',
                    fontWeight: 'bold',
                    fontSize: '1em',
@@ -83,7 +83,7 @@ export default function AuthorizationDetails() {
               <Grid item xs={3}>
                  <span style={{
                    color: '#000000',
-                   fontFamily: 'BC Sans',
+                   fontFamily: 'BCSans',
                    fontStyle: 'normal',
                    fontWeight: 'bold',
                    fontSize: '1em',

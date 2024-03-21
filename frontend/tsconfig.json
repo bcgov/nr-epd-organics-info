@@ -22,6 +22,7 @@
       "node",
       "cypress-file-upload",
       "@testing-library/cypress",
+      "vite/client",
     ],
     "baseUrl": "./",
     "paths": {

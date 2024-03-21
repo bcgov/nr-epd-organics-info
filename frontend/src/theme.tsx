@@ -19,6 +19,36 @@ const theme = createTheme({
       main: '#234720',
     },
   },
+  typography: {
+    fontFamily: 'BCSans !important',
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontFamily: 'BCSans',
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontFamily: 'BCSans',
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontFamily: 'BCSans',
+        },
+      },
+    },
+  },
+
 })
 
 export default theme
