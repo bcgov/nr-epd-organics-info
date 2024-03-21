@@ -1,13 +1,5 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  Link,
-  Typography,
-  CardHeader,
-} from '@mui/material'
+import { Card, CardActions, CardContent, CardHeader, CardMedia, Grid,
+  Link, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { Stack } from '@mui/system'
 import { useNavigate } from 'react-router'
@@ -16,8 +8,79 @@ import bcEarthImage from '@/assets/BC.svg'
 import identity from '@/assets/font-awesome-identity.svg'
 import govSvg from '@/assets/font-awesome-government.svg'
 import verification from '@/assets/font-awesome-verification.svg'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
+function informationTypography() {
+  return <>
+    <Grid container direction={{ xs: 'column', lg: 'row' }}>
+      <Grid item xs={12}>
+        <Typography
+          sx={{
+            fontFamily: 'BCSans',
+            fontWeight: 400,
+            fontSize: 28,
+            color: '#000000',
+          }}
+          component="div"
+        >
+          Organic Recycling in B.C.
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography component="div">
+          <Link
+            sx={{ color: '#000000' }}
+            href={
+              'https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines'
+            }
+            target={'_blank'}
+          >
+            {' '}
+            <span style={{ textDecoration: 'underline' }}>
+              British Columbia's Organic Matter Recycling Regulation (OMRR):
+            </span>
+          </Link>
+          <ul>
+            <li>
+              Governs the construction and operation of compost facilities
+            </li>
+            {' '}
+            <li>
+              Regulates the production, distribution, storage, sale and use of
+              biosolids and compost
+            </li>
+            {' '}
+            <li>Controls how compost facilities are built and operated</li>
+            {' '}
+          </ul>
+          The B.C. government has a plan to update the regulation to:
+          <ul>
+            <li>Better protect of human and environment health</li>
+            <li>Increase engagement with Indigenous communities</li>
+            <li> Improve transparency around organic matter management</li>
+          </ul>{' '}
+          Learn about the planned changes in the{' '}
+          <Link
+            sx={{ color: '#000000' }}
+            href={
+              'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
+            }
+            target={'_blank'}
+          >
+            <span style={{ textDecoration: 'underline' }}>
+              project update report
+            </span>
+          </Link>
+        </Typography>
+      </Grid>
+    </Grid>
+  </>
+}
 
 export default function Dashboard() {
+  const theme = useTheme()
+  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   const navigate = useNavigate()
   const buttonClicked = (route: string) => {
     navigate(route)
@@ -74,7 +137,7 @@ export default function Dashboard() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button
+          {/*<Button
             size="large"
             sx={{
               margin: '1em 0em 3em 3em',
@@ -89,7 +152,7 @@ export default function Dashboard() {
             }}
           >
             Search on a map
-          </Button>
+          </Button>*/}
           <Button
             size="large"
             sx={{
@@ -111,84 +174,41 @@ export default function Dashboard() {
     </Card>
   )
   const infoCard = (
-    <Card
-      sx={{
-        padding: '1em 0.475em 0.5em',
-        backgroundColor: '#FCC85D',
-        borderRadius: '0px',
-      }}
-    >
-      <CardMedia
-        component="div"
-        sx={{
-          position: 'absolute',
-          width: '80%',
-          height: '30%',
-          backgroundImage: `url(${bcEarthImage})`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'right',
-        }}
-      />
-      <CardContent
-        sx={{
-          margin: '0em 0em 0em 2em',
-        }}
-      >
-        <Typography
+    <Grid container direction={{ xs: 'column', lg: 'row' }}
           sx={{
-            fontFamily: 'BC Sans',
-            fontWeight: 400,
-            fontSize: 28,
-            color: '#000000',
+            margin: '0em 0em 0em 0em',
+            padding: '1em 3em 0.475em 3em',
+            backgroundColor: '#FCC85D',
+            borderRadius: '0px',
           }}
-          component="div"
-        >
-          Organic Recycling in B.C.
-        </Typography>
-        <Typography component="div">
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines'
-            }
-            target={'_blank'}
-          >
-            {' '}
-            <span style={{ textDecoration: 'underline' }}>
-              British Columbia's Organic Matter Recycling Regulation (OMRR):
-            </span>
-          </Link>
-          <ul>
-            <li>
-              Governs the construction and operation of compost facilities
-            </li>{' '}
-            <li>
-              Regulates the production, distribution, storage, sale and use of
-              biosolids and compost
-            </li>{' '}
-            <li>Controls how compost facilities are built and operated</li>{' '}
-          </ul>
-          The B.C. government has a plan to update the regulation to:
-          <ul>
-            <li>Better protect of human and environment health</li>
-            <li>Increase engagement with Indigenous communities</li>
-            <li> Improve transparency around organic matter management</li>
-          </ul>{' '}
-          Learn about the planned changes in the{' '}
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
-            }
-            target={'_blank'}
-          >
-            <span style={{ textDecoration: 'underline' }}>
-              project update report
-            </span>
-          </Link>
-        </Typography>
-      </CardContent>
-    </Card>
+    >
+      {mdMatches &&
+        <><CardMedia
+          image={bcEarthImage}
+          sx={{
+            position: 'absolute',
+            width: '80%',
+            height: '30%',
+            backgroundSize: 'contain',
+            backgroundPosition: 'right',
+          }}
+        />
+          {informationTypography()}
+        </>
+      }
+      {!mdMatches &&
+        <><Grid item xs={12}>
+         <img
+           src={bcEarthImage}  alt="BC Earth"/>
+        </Grid>
+          <Grid item xs={12}>
+            {informationTypography()}
+          </Grid>
+        </>
+      }
+
+
+    </Grid>
   )
 
   return (
@@ -196,7 +216,7 @@ export default function Dashboard() {
       {headerCard}
       {infoCard}
       <Grid container spacing={3}>
-        <Grid item xs={3} sx={{ margin: '3em 0em 0em 3em' }}>
+        <Grid item xs={12} sx={{ margin: '3em 0em 0em 3em' }}>
           <Typography
             sx={{
               fontSize: 28,
@@ -207,8 +227,8 @@ export default function Dashboard() {
             Learn more
           </Typography>
         </Grid>
-        <Grid item xs={11.3} sx={{ margin: '1em 0em 3em 3em' }}>
-          <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
+        <Grid item xs={12} sx={{ margin: '1em 2em 3em 3em' }}>
+          <Grid container spacing={1} direction={{ xs: 'column', md: 'row' }}>
             <Grid item xs={12} md={4}>
               <Card elevation={0}>
                 <CardHeader
@@ -261,7 +281,6 @@ export default function Dashboard() {
                       target={'_blank'}
                       href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
                     >
-                      {' '}
                       Process and procedures {'>'}
                     </Link>
                   }
@@ -305,7 +324,6 @@ export default function Dashboard() {
                       target={'_blank'}
                       href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
                     >
-                      {' '}
                       Compliance and enforcement {'>'}
                     </Link>
                   }
