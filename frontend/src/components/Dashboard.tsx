@@ -1,5 +1,13 @@
-import { Card, CardActions, CardContent, CardHeader, CardMedia, Grid,
-  Link, Typography } from '@mui/material'
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Grid,
+  Link,
+  Typography,
+} from '@mui/material'
 import Button from '@mui/material/Button'
 import { Stack } from '@mui/system'
 import { useNavigate } from 'react-router'
@@ -12,70 +20,65 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 function informationTypography() {
-  return <>
-    <Grid container direction={{ xs: 'column', lg: 'row' }}>
-      <Grid item xs={12}>
-        <Typography
-          sx={{
-            fontFamily: 'BCSans',
-            fontWeight: 400,
-            fontSize: 28,
-            color: '#000000',
-          }}
-          component="div"
-        >
-          Organic Recycling in B.C.
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography component="div">
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines'
-            }
-            target={'_blank'}
+  return (
+    <>
+      <Grid container direction={{ xs: 'column', lg: 'row' }}>
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              fontFamily: 'BCSans',
+              fontWeight: 400,
+              fontSize: 28,
+              color: '#000000',
+            }}
+            component="div"
           >
-            {' '}
-            <span style={{ textDecoration: 'underline' }}>
+            Organic Recycling in B.C.
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <div>
+            <a
+              href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#000000', textDecoration: 'underline' }}
+            >
               British Columbia's Organic Matter Recycling Regulation (OMRR):
-            </span>
-          </Link>
-          <ul>
-            <li>
-              Governs the construction and operation of compost facilities
-            </li>
-            {' '}
-            <li>
-              Regulates the production, distribution, storage, sale and use of
-              biosolids and compost
-            </li>
-            {' '}
-            <li>Controls how compost facilities are built and operated</li>
-            {' '}
-          </ul>
-          The B.C. government has a plan to update the regulation to:
-          <ul>
-            <li>Better protect of human and environment health</li>
-            <li>Increase engagement with Indigenous communities</li>
-            <li> Improve transparency around organic matter management</li>
-          </ul>{' '}
-          Learn about the planned changes in the{' '}
-          <Link
-            sx={{ color: '#000000' }}
-            href={
-              'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
-            }
-            target={'_blank'}
-          >
-            <span style={{ textDecoration: 'underline' }}>
-              project update report
-            </span>
-          </Link>
-        </Typography>
+            </a>
+            <ul>
+              <li>
+                Governs the construction and operation of compost facilities
+              </li>{' '}
+              <li>
+                Regulates the production, distribution, storage, sale and use of
+                biosolids and compost
+              </li>{' '}
+              <li>Controls how compost facilities are built and operated</li>{' '}
+            </ul>
+            The B.C. government has a plan to update the regulation to:
+            <ul>
+              <li>Better protect of human and environment health</li>
+              <li>Increase engagement with Indigenous communities</li>
+              <li> Improve transparency around organic matter management</li>
+            </ul>{' '}
+            Learn about the planned changes in the{' '}
+            <Link
+              sx={{ color: '#000000' }}
+              href={
+                'https://www2.gov.bc.ca/assets/gov/environment/waste-management/organic-waste/reports-and-papers/omrr-public-update-june-2022.pdf'
+              }
+              target={'_blank'}
+            >
+              <span style={{ textDecoration: 'underline' }}>
+                project update report
+              </span>
+            </Link>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-  </>
+    </>
+  )
 }
 
 export default function Dashboard() {
@@ -174,40 +177,42 @@ export default function Dashboard() {
     </Card>
   )
   const infoCard = (
-    <Grid container direction={{ xs: 'column', lg: 'row' }}
-          sx={{
-            margin: '0em 0em 0em 0em',
-            padding: '1em 3em 0.475em 3em',
-            backgroundColor: '#FCC85D',
-            borderRadius: '0px',
-          }}
+    <Grid
+      container
+      direction={{ xs: 'column', lg: 'row' }}
+      sx={{
+        margin: '0em 0em 0em 0em',
+        padding: '1em 3em 0.475em 3em',
+        backgroundColor: '#FCC85D',
+        borderRadius: '0px',
+      }}
     >
-      {mdMatches &&
-        <><CardMedia
-          image={bcEarthImage}
-          sx={{
-            position: 'absolute',
-            width: '80%',
-            height: '30%',
-            backgroundSize: 'contain',
-            backgroundPosition: 'right',
-          }}
-        />
+      {mdMatches && (
+        <>
+          <CardMedia
+            image={bcEarthImage}
+            sx={{
+              marginLeft:'40%',
+              position: 'absolute',
+              width: '50%',
+              height: '30%',
+              backgroundSize: 'contain',
+              backgroundPosition: 'right',
+            }}
+          />
           {informationTypography()}
         </>
-      }
-      {!mdMatches &&
-        <><Grid item xs={12}>
-         <img
-           src={bcEarthImage}  alt="BC Earth"/>
-        </Grid>
+      )}
+      {!mdMatches && (
+        <>
+          <Grid item xs={12}>
+            <img src={bcEarthImage} alt="BC Earth" />
+          </Grid>
           <Grid item xs={12}>
             {informationTypography()}
           </Grid>
         </>
-      }
-
-
+      )}
     </Grid>
   )
 
