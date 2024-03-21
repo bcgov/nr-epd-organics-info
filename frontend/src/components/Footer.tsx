@@ -3,6 +3,8 @@ import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const styles = {
   appBar: {
@@ -21,16 +23,18 @@ const styles = {
 }
 
 export default function Footer() {
+  const theme = useTheme()
+  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   return (
     <AppBar position="relative" sx={styles.appBar} color="default">
       <Toolbar>
-        <Grid container spacing={1} justifyContent="center">
+        <Grid container direction={{ xs: 'column', lg: 'row' }} justifyContent="center">
           <Grid item xs={10}>
             <Stack
-              direction="row"
+              direction={{ xs: 'column', lg: 'row' }}
               alignItems={'center'}
               justifyContent="center"
-              divider={<Divider sx={{
+              divider={mdMatches && <Divider sx={{
                 height: '1em', color: '#ffffff', borderColor: '#ffffff', alignContent: 'center'
                 , alignItems: 'center', alignSelf: 'center', justifyItems: 'center', justifyContent: 'center',
               }} orientation="vertical" flexItem />}
@@ -44,16 +48,15 @@ export default function Footer() {
               >
                 Home
               </Link>
-
               <Link
                 sx={styles.footerButton}
-                id="footer-about"
+                color="primary"
+                id="footer-copyright"
                 target="_blank"
-                href="https://www2.gov.bc.ca/gov/content/about-gov-bc-ca"
+                href="https://gov.bc.ca/copyright"
               >
-                About gov.bc.ca
+                Copyright
               </Link>
-
               <Link
                 sx={styles.footerButton}
                 id="footer-disclaimer"
@@ -81,27 +84,6 @@ export default function Footer() {
               >
                 Accessibility
               </Link>
-
-              <Link
-                sx={styles.footerButton}
-                color="primary"
-                id="footer-copyright"
-                target="_blank"
-                href="https://gov.bc.ca/copyright"
-              >
-                Copyright
-              </Link>
-
-              <Link
-                sx={styles.footerButton}
-                color="primary"
-                id="footer-contact"
-                target="_blank"
-                href="https://www2.gov.bc.ca/gov/content/home/contact-us"
-              >
-                Contact Us
-              </Link>
-
             </Stack>
           </Grid>
           <Grid item xs={1} justifyContent="end">

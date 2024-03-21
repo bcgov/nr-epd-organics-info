@@ -60,12 +60,11 @@ export default function AuthorizationList() {
   const [location, setLocation] = useState<Location | null>(null)*/
   const pagination = (
     <Grid item xs={12}>
-      <Box
+      <Grid container spacing={0} direction={{ xs: 'column', md: 'row' }}
         sx={{
           display: 'flex',
           width: '90vw', // Make the Box take full width
           justifyContent: 'space-between',
-          alignItems: 'center',
         }}
       >
         <Pagination
@@ -91,7 +90,7 @@ export default function AuthorizationList() {
           {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}{' '}
           results
         </Typography>
-      </Box>
+      </Grid>
     </Grid>
   )
   const handleLocation = () => {
@@ -145,6 +144,7 @@ export default function AuthorizationList() {
         <Grid
           container
           spacing={2}
+          direction={{ xs: 'column', md: 'row' }}
           sx={{ paddingTop: '8vh', paddingLeft: '4vw', paddingBottom: '4vw' }}
         >
           <Grid item xs={12}>
@@ -179,20 +179,22 @@ export default function AuthorizationList() {
             ></TextField>
           </Grid>
           <Grid item xs={12}>
+            <Grid container sx={{maxWidth: '90vw',}} justifyContent="space-between" spacing={0} direction={{ xs: 'column', md: 'row' }}>
             <Stack
               sx={{
                 display: 'flex',
-                alignItems: 'left' /* Frame 1186 */,
+                alignItems: 'left',
                 flexDirection: 'row',
-                maxWidth: '90vw',
-                justifyContent: 'space-between', // Add this line
+
+                justifyContent: 'left',
               }}
-              direction="row"
+              direction={{ xs: 'column', md: 'row' }}
             >
-              <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center" sx={{marginRight:'2em'}}>
                 <span>Search by: </span>
+              </Box>
+              <Box display="flex" alignItems="left">
                 <RadioGroup
-                  sx={{ marginLeft: '2em' }}
                   row
                   name="searchBy"
                   defaultValue="all"
@@ -218,7 +220,7 @@ export default function AuthorizationList() {
                   />
                 </RadioGroup>
               </Box>
-
+            </Stack>
               <Button
                 sx={{
                   background: '#053662',
@@ -237,12 +239,13 @@ export default function AuthorizationList() {
                 Filter by Facility Type{' '}
                 {expand ? <ArrowDropUp /> : <ArrowDropDown />}
               </Button>
-            </Stack>
+            </Grid>
+
           </Grid>
           {expand && (
             <Grid item xs={12}>
               <Grid item xs={12}>
-                <Grid container spacing={2} direction="row">
+                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
                   <Grid item xs={3}>
                     <FormControlLabel
                       checked={omrrFilter}
@@ -279,8 +282,8 @@ export default function AuthorizationList() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={2} direction="row">
+              <Grid sx={{marginTop:'1em'}} item xs={12}>
+                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
                   <Grid item xs={3}>
                     <FormControlLabel
                       checked={compostFacilityFilter}
@@ -308,7 +311,7 @@ export default function AuthorizationList() {
                   direction="row"
                   sx={{ marginTop: '0.1em' }}
                 >
-                  <Grid item xs={3}>
+                  <Grid item xs={12}>
                     <Button
                       sx={{
                         border: '1px solid #353433',

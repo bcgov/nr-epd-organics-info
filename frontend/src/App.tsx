@@ -9,9 +9,8 @@ import { useEffect } from 'react'
 import { RootState } from '@/app/store'
 import CircularProgress from '@mui/material/CircularProgress'
 import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css' // Import Leaflet CSS
+import 'leaflet/dist/leaflet.css'
+
 export default function App() {
   const status: string = useSelector((state: RootState) => state.omrr.status)
   const dispatch = useDispatch()
@@ -20,11 +19,11 @@ export default function App() {
     dispatch(fetchOMRRData())
   }, [dispatch])
   return (
-    <Grid container spacing={0}>
+    <Grid container sx={{ flexGrow: 1 }}>
       <Grid item xs={12}>
         <Header />
       </Grid>
-      <Grid item style={{ flexGrow: 1, minHeight: '93vh' }} xs={12}>
+      <Grid item xs={12}>
         {status === 'loading' ? (
           <CircularProgress />
         ) : status === 'failed' ? (
