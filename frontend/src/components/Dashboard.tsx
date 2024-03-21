@@ -11,17 +11,11 @@ import {
 import Button from '@mui/material/Button'
 import { Stack } from '@mui/system'
 import { useNavigate } from 'react-router'
-// @ts-ignore
-import homePageBanner from '../assets/homepage-banner-unsplash.jpg'
-// @ts-ignore
-import bcEarthImage from '../assets/BC.svg'
-// @ts-ignore
-import identity from '../assets/font-awesome-identity.svg'
-// @ts-ignore
-import govSvg from '../assets/font-awesome-government.svg'
-// @ts-ignore
-import verification from '../assets/font-awesome-verification.svg'
-import { i } from 'vitest/dist/reporters-rzC174PQ'
+import homePageBanner from '@/assets/homepage-banner-unsplash.jpg'
+import bcEarthImage from '@/assets/BC.svg'
+import identity from '@/assets/font-awesome-identity.svg'
+import govSvg from '@/assets/font-awesome-government.svg'
+import verification from '@/assets/font-awesome-verification.svg'
 
 export default function Dashboard() {
   const navigate = useNavigate()
