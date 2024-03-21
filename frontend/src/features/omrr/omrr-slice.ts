@@ -10,15 +10,11 @@ import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
 import { deepClone } from '~/@mui/x-data-grid/utils/utils'
-import { s } from 'vitest/dist/reporters-rzC174PQ'
-import { f } from 'msw/lib/core/RequestHandler-TRh8Eh4H'
 export interface OmrrSliceState {
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
-  mapValue: OmrrData[]
   filteredValue: OmrrData[]
-  mapPopupValue: any[]
   searchBy: string | null
   expand: boolean
   location: Location | null
@@ -45,8 +41,6 @@ export const initialState: OmrrSliceState = {
   // The data array
   value: [],
   filteredValue: [],
-  mapValue: [],
-  mapPopupValue: [],
   // The status of the API call
   status: 'idle',
   // The error message if any
@@ -266,22 +260,6 @@ export const omrrSlice = createSlice({
         omrrData.push(individualData)
       }
       state.value = omrrData
-      state.mapValue = state.value?.filter(
-        (item: OmrrData) => item.Latitude && item.Longitude,
-      )
-      state.mapPopupValue = state.mapValue?.map((item: OmrrData) => {
-        return {
-          position: [item?.Latitude, item?.Longitude],
-          details: {
-            'Authorization Number': item['Authorization Number'],
-            'Authorization Type': item['Authorization Type'],
-            'Operation Type': item['Operation Type'],
-            'Authorization Status': item['Authorization Status'],
-            'Regulated Party': item['Regulated Party'],
-            'Facility Location': item['Facility Location'],
-          },
-        }
-      })
       state.searchByFilteredValue = deepClone(state.value)
       state.filteredValue = deepClone(state.searchByFilteredValue)
     })

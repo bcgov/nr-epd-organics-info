@@ -9,8 +9,7 @@ export interface OmrrData {
   "Facility Location": string,
   "Latitude": number,
   "Longitude": number
-  "WDR Regulation"?: string,
-  "WDR Schedule One or Two"? : string,
+  "Waste Discharge Regulation"?: string,
   "Operation Type"? : string,
   "Material Land Applied"? : string,
   "Intended Dates of Land Applica"? : string,
