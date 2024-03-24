@@ -43,7 +43,7 @@ backend:
       memory: 100Mi
   containerResources:
     limits:
-      cpu: 100m
+      cpu: 60m
       memory: 200Mi
     requests:
       cpu: 30m
@@ -75,10 +75,10 @@ frontend:
   imagePullPolicy: Always
   containerResources:
     limits:
-      cpu: 60m
+      cpu: 150m
       memory: 100Mi
     requests:
-      cpu: 20m
+      cpu: 50m
       memory: 30Mi
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:

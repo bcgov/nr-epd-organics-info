@@ -3,13 +3,14 @@ import {
   createAsyncThunk,
   PayloadAction,
   ActionReducerMapBuilder,
+  createSlice
 } from '@reduxjs/toolkit'
-import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
-import { deepClone } from '~/@mui/x-data-grid/utils/utils'
+import rfdc from 'rfdc'
+const deepClone = rfdc({ circles: true })
 export interface OmrrSliceState {
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
