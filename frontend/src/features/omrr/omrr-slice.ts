@@ -9,7 +9,7 @@ import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
-import * as rfdc from 'rfdc'
+import rfdc from 'rfdc'
 const deepClone = rfdc({ circles: true })
 export interface OmrrSliceState {
   value: OmrrData[]
