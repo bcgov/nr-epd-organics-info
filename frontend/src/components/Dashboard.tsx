@@ -105,7 +105,7 @@ export default function Dashboard() {
           height: '100%',
           backgroundImage: `url(${homePageBanner})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'left',
+          backgroundPosition: 'center',
         }}
       />
       <Stack>

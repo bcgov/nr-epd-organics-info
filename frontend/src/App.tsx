@@ -8,8 +8,8 @@ import { fetchOMRRData } from '@/features/omrr/omrr-slice'
 import { useEffect } from 'react'
 import { RootState } from '@/app/store'
 import CircularProgress from '@mui/material/CircularProgress'
-import Snackbar from '@mui/material/Snackbar'
 import 'leaflet/dist/leaflet.css'
+import { Snackbar } from '@mui/material'
 
 export default function App() {
   const status: string = useSelector((state: RootState) => state.omrr.status)
@@ -20,31 +20,48 @@ export default function App() {
   }, [dispatch])
   return (
     <Grid container sx={{ flexGrow: 1 }}>
-      <Grid item xs={12}>
-        <Header />
-      </Grid>
-      <Grid item xs={12}>
-        {status === 'loading' ? (
-          <CircularProgress />
-        ) : status === 'failed' ? (
-          <Snackbar
-            message="Loading Failed, Please try later refreshing the page"
-            sx={{ background: '#fffffff', backgroundColor: '#fffffff' }}
-            color="error"
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            autoHideDuration={6000}
-            draggable
-            open={true}
-          ></Snackbar>
-        ) : (
-          <BrowserRouter>
+      {status === 'loading' ? (
+        <><Grid item xs={12}>
+          <Header />
+        </Grid>
+          <Grid item xs={12}>
+            <CircularProgress />
+          </Grid>
+          <Grid item xs={12}>
+            <Footer />
+          </Grid></>
+      ) : status === 'failed' ? (
+        <><Grid item xs={12}>
+          <Header />
+        </Grid>
+          <Grid item xs={12}>
+            <Snackbar
+              message="Loading Failed, Please try later refreshing the page"
+              sx={{ background: '#fffffff', backgroundColor: '#fffffff' }}
+              color="error"
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              autoHideDuration={6000}
+              draggable
+              open={true}
+            ></Snackbar>
+          </Grid>
+          <Grid item xs={12}>
+            <Footer />
+          </Grid></>
+      ) : (
+        <><BrowserRouter>
+          <Grid item xs={12}>
+            <Header />
+          </Grid>
+          <Grid item xs={12}>
             <AppRoutes />
-          </BrowserRouter>
-        )}
-      </Grid>
-      <Grid item xs={12}>
-        <Footer />
-      </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Footer />
+          </Grid>
+        </BrowserRouter></>
+      )}
+
     </Grid>
   )
 }
