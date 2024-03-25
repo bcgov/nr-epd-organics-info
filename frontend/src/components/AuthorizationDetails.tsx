@@ -162,10 +162,10 @@ export default function AuthorizationDetails() {
     //read from assets
     iconUrl: pin,
     shadowUrl: shadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconSize: [50, 82],
+    iconAnchor: [25, 82],
     popupAnchor: [1, -34],
-    shadowSize: [41, 41],
+    shadowSize: [82, 82],
   })
   const navigate = useNavigate()
   const buttonClicked = (route: any) => {
@@ -212,8 +212,8 @@ export default function AuthorizationDetails() {
             <MapContainer
               id="map"
               center={facilityLocation}
-              scrollWheelZoom={false}
-              zoom={12}
+              scrollWheelZoom={true}
+              zoom={14}
               style={{ height: '60em' }}
               className="map-container"
             >

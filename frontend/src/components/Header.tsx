@@ -1,7 +1,10 @@
 import BCGovLogo from '@/assets/gov-bc-logo-horiz.png'
 import { AppBar, IconButton, Toolbar } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import { HomeRounded, Menu } from '@mui/icons-material'
+import { Feed, Menu } from '@mui/icons-material'
+import Stack from '@mui/material/Stack'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 const styles = {
   appBar: {
     color: '#ffffff',
@@ -10,25 +13,41 @@ const styles = {
   },
 }
 export default function Header() {
+  const theme = useTheme()
+  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   return (
     <AppBar position="fixed" sx={styles.appBar}>
-      <Toolbar sx={{ justifyContent: 'space-between' }} id="back-to-top-anchor">
-        <img  alt="Logo" src={BCGovLogo} />
-        <Typography sx={{
-          fontFamily: 'BCSans',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          fontSize: '1.5em',
-          lineHeight: '2.25em',
-          color:' #FFFFFF'
-        }}>
-          Organics Info
-        </Typography>
-        <a href={'/'} target={'_self'}>
-          <IconButton>
-            <Menu color="secondary"></Menu>
-          </IconButton>
-        </a>
+      <Toolbar
+        sx={{ flexDirection: 'row', alignItems: 'center', alignContent: 'center', justifyContent: 'space-between' }}
+        id="back-to-top-anchor">
+        <Stack direction="row" id="logo_name">
+          <a href="/">
+            <img alt="Logo" src={BCGovLogo} />
+          </a>
+          <div>  <span style={{
+            fontFamily: 'BCSans', fontSize: '1.5em',
+            lineHeight: '2.25em', marginLeft: '1em', alignItems: 'center',
+          }}>
+            Organics Info
+          </span></div>
+        </Stack>
+        <Stack direction="row" id="nav">
+          {mdMatches && <div>
+            <a href={'/search'} target={'_self'}>
+              <IconButton>
+                <Feed color="secondary"></Feed>
+              </IconButton>
+              <span style={{ color: '#ffffff', textDecoration: 'none' }}> Text Search</span>
+            </a>
+          </div>}
+          {!mdMatches && <div><a href={'/search'} target={'_self'}>
+            <IconButton>
+              <Menu color="secondary"></Menu>
+            </IconButton>
+          </a>
+          </div>
+          }
+        </Stack>
       </Toolbar>
     </AppBar>
   )
