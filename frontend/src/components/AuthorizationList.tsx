@@ -400,7 +400,7 @@ export default function AuthorizationList() {
                                   fontWeight: 700,
                                 }}
                               >
-                                Type of Facility
+                                Authorization Type
                               </span>
                             </Grid>
                           </Grid>
