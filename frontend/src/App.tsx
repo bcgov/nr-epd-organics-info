@@ -10,6 +10,7 @@ import { RootState } from '@/app/store'
 import CircularProgress from '@mui/material/CircularProgress'
 import 'leaflet/dist/leaflet.css'
 import { Snackbar } from '@mui/material'
+import HeaderWithRouting from '@/components/HeaderWithRouting'
 
 export default function App() {
   const status: string = useSelector((state: RootState) => state.omrr.status)
@@ -51,7 +52,7 @@ export default function App() {
       ) : (
         <><BrowserRouter>
           <Grid item xs={12}>
-            <Header />
+            <HeaderWithRouting />
           </Grid>
           <Grid item xs={12}>
             <AppRoutes />

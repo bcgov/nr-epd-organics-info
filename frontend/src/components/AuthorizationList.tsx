@@ -35,8 +35,11 @@ import {
   setSearchBy,
 } from '@/features/omrr/omrr-slice'
 import { useNavigate } from 'react-router'
-
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 export default function AuthorizationList() {
+  const theme = useTheme()
+  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   const navigate = useNavigate()
   const buttonClicked = (route: any, data: any) => {
     navigate(route, { state: { data: data } }) // reset the state
@@ -45,7 +48,7 @@ export default function AuthorizationList() {
   const {
     filteredValue,
     expand,
-    omrrFilter,
+    notificationFilter,
     permitFilter,
     approvalFilter,
     compostFacilityFilter,
@@ -55,11 +58,13 @@ export default function AuthorizationList() {
     searchBy,
     page,
     globalTextSearchFilter,
+    compostFacilityFilterDisabled,
+    landApplicationBioSolidsFilterDisabled,
   } = useSelector((state: RootState) => state.omrr)
-  /*const [expand, setExpand] = useState(false)
-  const [location, setLocation] = useState<Location | null>(null)*/
   const pagination = (
-    <Grid item xs={12}>
+    <Grid sx={{
+      margin: mdMatches? '0em':'1em 0em 1em 0em',
+    }} item xs={12}>
       <Grid container spacing={0} direction={{ xs: 'column', md: 'row' }}
         sx={{
           display: 'flex',
@@ -69,6 +74,7 @@ export default function AuthorizationList() {
       >
         <Pagination
           sx={{
+            margin: mdMatches? '0em':'1em 0em 1em 0em',
             '& .MuiPaginationItem-root.Mui-selected': {
               backgroundColor: '#053662',
               color: '#ffffff',
@@ -93,17 +99,6 @@ export default function AuthorizationList() {
       </Grid>
     </Grid>
   )
-  const handleLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        }),
-      )
-      console.log(location)
-    })
-  }
   const headerCard = (
     <CardContent>
       <Typography
@@ -131,7 +126,7 @@ export default function AuthorizationList() {
           elevation={0}
           variant="outlined"
           sx={{
-            padding: '2em',
+            padding:  mdMatches? '2em':'.5em',
             marginTop: '0.1em',
             backgroundColor: '#FCC85D',
             borderRadius:'0'
@@ -223,6 +218,7 @@ export default function AuthorizationList() {
             </Stack>
               <Button
                 sx={{
+                  marginTop: mdMatches? '0em':'1em',
                   background: '#053662',
                   color: '#ffffff',
                   borderRadius: '4px',
@@ -248,10 +244,10 @@ export default function AuthorizationList() {
                 <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
                   <Grid item xs={3}>
                     <FormControlLabel
-                      checked={omrrFilter}
+                      checked={notificationFilter}
                       control={<Checkbox />}
-                      label="Organic Matter Recycling Regulation"
-                      onClick={() => dispatch(setFilters('omrr'))}
+                      label="Notification"
+                      onClick={() => dispatch(setFilters('notification'))}
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -288,6 +284,7 @@ export default function AuthorizationList() {
                     <FormControlLabel
                       checked={compostFacilityFilter}
                       control={<Checkbox />}
+                      disabled={compostFacilityFilterDisabled}
                       label="Compost Production Facility"
                       onClick={() => dispatch(setFilters('compostFacility'))}
                     />
@@ -296,6 +293,7 @@ export default function AuthorizationList() {
                     <FormControlLabel
                       checked={landApplicationBioSolidsFilter}
                       control={<Checkbox />}
+                      disabled={landApplicationBioSolidsFilterDisabled}
                       label="Land Application Biosolids"
                       onClick={() =>
                         dispatch(setFilters('landApplicationBioSolids'))
@@ -330,7 +328,7 @@ export default function AuthorizationList() {
             </Grid>
           )}
           <Grid item xs={12}>
-            <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
+            <Divider sx={{ margin:'1em 0em 1em 0em', width: '90vw', maxWidth: '90vw' }} />
           </Grid>
           {pagination}
           <Grid item xs={12}>
@@ -457,7 +455,7 @@ export default function AuthorizationList() {
                                 sx={{
                                   background:
                                     item['Authorization Status'] === 'Active'
-                                      ? '#353433'
+                                      ? '#42814A'
                                       : '#605E5C',
                                   color: '#ffffff',
                                 }}
