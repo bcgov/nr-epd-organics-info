@@ -1,16 +1,13 @@
 import OmrrData from '@/interfaces/omrr'
-import {
-  createAsyncThunk,
-  PayloadAction,
-  ActionReducerMapBuilder,
-  createSlice
-} from '@reduxjs/toolkit'
+import { ActionReducerMapBuilder, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
 import rfdc from 'rfdc'
+
 const deepClone = rfdc({ circles: true })
+
 export interface OmrrSliceState {
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
@@ -19,16 +16,19 @@ export interface OmrrSliceState {
   searchBy: string | null
   expand: boolean
   location: Location | null
-  omrrFilter: boolean
+  notificationFilter: boolean
   permitFilter: boolean
   approvalFilter: boolean
   operationalCertificateFilter: boolean
   compostFacilityFilter: boolean
+  compostFacilityFilterDisabled: boolean
   landApplicationBioSolidsFilter: boolean
+  landApplicationBioSolidsFilterDisabled: boolean
   page: number
   searchByFilteredValue: OmrrData[]
   globalTextSearchFilter: string
 }
+
 export const fetchOMRRData = createAsyncThunk(
   'data/fetchOMRRRecords',
   async () => {
@@ -49,7 +49,7 @@ export const initialState: OmrrSliceState = {
   searchBy: 'all',
   expand: false,
   location: null,
-  omrrFilter: false,
+  notificationFilter: false,
   permitFilter: false,
   approvalFilter: false,
   operationalCertificateFilter: false,
@@ -58,10 +58,13 @@ export const initialState: OmrrSliceState = {
   page: 1,
   searchByFilteredValue: [],
   globalTextSearchFilter: '',
+  compostFacilityFilterDisabled: true,
+  landApplicationBioSolidsFilterDisabled: true,
 }
 
 function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
   let finalFilteredOMRRList: OmrrData[] = []
+  let nestedFilterOMRRList: OmrrData[] = []
   if (
     state.globalTextSearchFilter &&
     state.globalTextSearchFilter?.length > 0
@@ -83,9 +86,9 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     )
     finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
   }
-  if (state.omrrFilter) {
+  if (state.notificationFilter) {
     const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) => item['Authorization Type']?.toLowerCase() === 'Organic Matter Recycling Regulation'.toLowerCase(),
+      (item: OmrrData) => item['Authorization Type']?.toLowerCase() === 'notification'.toLowerCase(),
     )
     finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
   }
@@ -103,36 +106,42 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     )
     finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
   }
+
+  if (finalFilteredOMRRList.length > 0) {
+    state.filteredValue = finalFilteredOMRRList
+  }
+  // below two filters are nested filters on notification filter
   if (state.compostFacilityFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() === 'compost facility',
+        item['Operation Type']?.toLowerCase() === 'compost production facility',
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
   }
   if (state.landApplicationBioSolidsFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() ===
-        'land application biosolids',
+        item['Operation Type']?.toLowerCase().includes('land application'),
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
   }
-  if (finalFilteredOMRRList.length > 0) {
-    state.filteredValue = finalFilteredOMRRList
+  if (nestedFilterOMRRList.length > 0) {
+    state.filteredValue = nestedFilterOMRRList
   }
   // if any of check boxes are checked and there is no data in the finalFilteredOMRRList then we need to show no data found
   if (
     (state.approvalFilter ||
-      state.omrrFilter ||
+      state.notificationFilter ||
       state.permitFilter ||
       state.operationalCertificateFilter ||
       state.landApplicationBioSolidsFilter ||
       state.compostFacilityFilter) &&
-    finalFilteredOMRRList.length === 0
-  ) {
+    (finalFilteredOMRRList.length === 0
+      || (state.landApplicationBioSolidsFilter && nestedFilterOMRRList.length === 0)
+      || (state.compostFacilityFilter && nestedFilterOMRRList.length === 0))) {
     state.filteredValue = []
   }
+  state.page = 1
 }
 
 export const omrrSlice = createSlice({
@@ -180,8 +189,17 @@ export const omrrSlice = createSlice({
     },
     setFilters: (state, action: PayloadAction<string>) => {
       state.filteredValue = state.searchByFilteredValue
-      if (action.payload === 'omrr') {
-        state.omrrFilter = !state.omrrFilter
+      if (action.payload === 'notification') {
+        state.notificationFilter = !state.notificationFilter
+        if (state.notificationFilter) {
+          state.compostFacilityFilterDisabled = false
+          state.landApplicationBioSolidsFilterDisabled = false
+        } else {
+          state.compostFacilityFilterDisabled = true
+          state.landApplicationBioSolidsFilterDisabled = true
+          state.landApplicationBioSolidsFilter = false
+          state.compostFacilityFilter = false
+        }
       }
       if (action.payload === 'permit') {
         state.permitFilter = !state.permitFilter
@@ -202,7 +220,7 @@ export const omrrSlice = createSlice({
       filterDataBasedOnDifferentFilters(state)
     },
     resetFilters: (state) => {
-      state.omrrFilter = false
+      state.notificationFilter = false
       state.permitFilter = false
       state.approvalFilter = false
       state.operationalCertificateFilter = false
@@ -231,7 +249,6 @@ export const omrrSlice = createSlice({
     })
     // Handle the fulfilled action
     builder.addCase(fetchOMRRData.fulfilled, (state, action) => {
-      console.log('received omrr data')
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state

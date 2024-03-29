@@ -27,6 +27,7 @@
     format('woff');
 }
 .map-container {
+    margin-top: 1em;
     border-radius: 4px;
     z-index: 1;
 }
