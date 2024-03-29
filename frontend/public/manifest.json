@@ -1,0 +1,13 @@
+{
+  "name": "Organics Info",
+  "short_name": "OMRR",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "62x55",
+      "type": "image/ico"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone"
+}
