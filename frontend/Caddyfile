@@ -24,12 +24,7 @@
 		}
 	}
 	rewrite @spa_router {http.matchers.file.relative}
-	# Proxy requests to API service
-	reverse_proxy /api/* {$BACKEND_URL} {
-		header_up Host {http.reverse_proxy.upstream.hostport}
-		header_up X-Real-IP {remote_host}
-		header_up X-Forwarded-For {remote_host}
-	}
+
 	header {
 		X-Frame-Options "SAMEORIGIN"
 		X-XSS-Protection "1;mode=block"
@@ -37,14 +32,16 @@
 		X-Content-Type-Options "nosniff"
 		Strict-Transport-Security "max-age=31536000"
 		Content-Security-Policy "
-		default-src 'self'  https://spt.apps.gov.bc.ca data: https://*.openstreetmap.org ;
-		script-src 'self' 'unsafe-inline' https://www2.gov.bc.ca https://*.openstreetmap.org;
-		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com https://*.openstreetmap.org;
-		font-src 'self' https://fonts.gstatic.com https://*.openstreetmap.org;
-		img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.openstreetmap.org"
+		    default-src 'self'  https://spt.apps.gov.bc.ca data: https://*.openstreetmap.org ;
+		    script-src 'self' 'unsafe-inline' https://www2.gov.bc.ca https://*.openstreetmap.org;
+		    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com https://*.openstreetmap.org;
+		    font-src 'self' https://fonts.gstatic.com https://*.openstreetmap.org;
+		    img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.openstreetmap.org"
 		Referrer-Policy "same-origin"
 		Feature-Policy "fullscreen 'self'; camera 'none'; microphone 'none'"
 	}
+    # Proxy requests to API service
+    reverse_proxy /api/* {$BACKEND_URL}
 }
 :3001 {
 	handle /health {
