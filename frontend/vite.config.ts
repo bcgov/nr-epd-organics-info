@@ -39,9 +39,16 @@ export default ({ mode }) => {
         '.svg',
         '.jpeg',
         '.jpg',
+        '.ico',
       ],
     },
-    assetsInclude: ['**/*.svg'],
+    assetsInclude: [
+      '**/*.svg',
+      '**/*.ico',
+      '**/*.png',
+      '**/*.jpg',
+      '**/*.jpeg',
+    ],
     build: {
       assetsInlineLimit: 0,
       // Build Target
@@ -66,8 +73,8 @@ export default ({ mode }) => {
             ],
             mui: ['@mui/material', '@mui/icons-material'],
             axios: ['axios'],
-            reactLeaflet: ['react-leaflet','react-leaflet-cluster'],
-            redux: ['@reduxjs/toolkit','react-redux'],
+            reactLeaflet: ['react-leaflet', 'react-leaflet-cluster'],
+            redux: ['@reduxjs/toolkit', 'react-redux'],
             leaflet: ['leaflet'],
             rfdc: ['rfdc'],
           },
