@@ -10,7 +10,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Dashboard />} />
       <Route path="/search" element={<AuthorizationList />} />
       <Route path="/authorization/:id" element={<AuthorizationDetails />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<Dashboard />} />
     </Routes>
   )
 }
