@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import OmrrData from '@/interfaces/omrr'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
+import { useEffect } from 'react'
 
 function authorizationSection(mdMatches: boolean, data: OmrrData) {
   return (
@@ -212,9 +213,10 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
 function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
   return (
     <>
-      {(data['Authorization Type']?.toLowerCase() === 'permit'
-        || data['Authorization Type']?.toLowerCase() === 'operational certificate'
-        || data['Authorization Type']?.toLowerCase() === 'approval') && (
+      {(data['Authorization Type']?.toLowerCase() === 'permit' ||
+        data['Authorization Type']?.toLowerCase() ===
+          'operational certificate' ||
+        data['Authorization Type']?.toLowerCase() === 'approval') && (
         <>
           <Grid sx={{ margin: '1em 0em 3em 1em' }} container spacing={0}>
             <Grid item xs={12}>
@@ -251,7 +253,10 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
               </span>
             </Grid>
             <Grid item xs={12}>
-              <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+              <Grid
+                container
+                direction={{ xs: 'column', md: 'column', lg: 'row' }}
+              >
                 <Grid item xs={6}>
                   <Grid container direction="column">
                     <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -329,7 +334,7 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
     <>
       {data['Authorization Type']?.toLowerCase() === 'notification' &&
         data['Operation Type']?.toLowerCase() ===
-        'compost production facility' && (
+          'compost production facility' && (
           <>
             <Grid sx={{ margin: '1em 0em 3em 1em' }} container spacing={0}>
               <Grid item xs={12}>
@@ -366,7 +371,10 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                 </span>
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                <Grid
+                  container
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -423,7 +431,10 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                <Grid
+                  container
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -496,7 +507,10 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                     </span>
                   </Grid>
                   <Grid sx={{ marginTop: '1em' }} item xs={12}>
-                    <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                    <Grid
+                      container
+                      direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                    >
                       <Grid item xs={3}>
                         <div
                           style={{
@@ -595,8 +609,15 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid sx={{ marginTop: mdMatches?'1em':'0em' }} item xs={12}>
-                    <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                  <Grid
+                    sx={{ marginTop: mdMatches ? '1em' : '0em' }}
+                    item
+                    xs={12}
+                  >
+                    <Grid
+                      container
+                      direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                    >
                       <Grid item xs={3}>
                         <div
                           style={{
@@ -695,8 +716,15 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid sx={{ marginTop: mdMatches?'1em':'0em' }} item xs={12}>
-                    <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                  <Grid
+                    sx={{ marginTop: mdMatches ? '1em' : '0em' }}
+                    item
+                    xs={12}
+                  >
+                    <Grid
+                      container
+                      direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                    >
                       <Grid item xs={3}>
                         <div
                           style={{
@@ -795,8 +823,15 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid sx={{ marginTop: mdMatches?'1em':'0em' }} item xs={12}>
-                    <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                  <Grid
+                    sx={{ marginTop: mdMatches ? '1em' : '0em' }}
+                    item
+                    xs={12}
+                  >
+                    <Grid
+                      container
+                      direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                    >
                       <Grid item xs={3}>
                         <div
                           style={{
@@ -873,7 +908,10 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                 </span>
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                <Grid
+                  container
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -930,7 +968,10 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                <Grid
+                  container
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -1011,7 +1052,10 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
                 </span>
               </Grid>
               <Grid item xs={12}>
-                <Grid container direction={{ xs: 'column', md:'column', lg: 'row' }}>
+                <Grid
+                  container
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid sx={{ margin: '2em 0em 0em 0em' }} item xs={6}>
@@ -1068,8 +1112,25 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
                 </Grid>
               </Grid>
               <Grid item xs={12} sx={{ margin: '2em 2em 3em 0em' }}>
-                <span style={{ color:'#000000', fontFamily: 'BCSans-Italic', fontSize: '1.1em' }}>
-                  Please note that authorizations issued prior to 2007 are currently categorized as historical data. The Authorization Management System (AMS), which houses authorization documentation, has constraints on the historical data it provides. <a style={{ color: '#000000' }} href="mailto:env.omrr.reg.reviews@gov.bc.ca"> For additional information, please contact us.</a>
+                <span
+                  style={{
+                    color: '#000000',
+                    fontFamily: 'BCSans-Italic',
+                    fontSize: '1.1em',
+                  }}
+                >
+                  Please note that authorizations issued prior to 2007 are
+                  currently categorized as historical data. The Authorization
+                  Management System (AMS), which houses authorization
+                  documentation, has constraints on the historical data it
+                  provides.{' '}
+                  <a
+                    style={{ color: '#000000' }}
+                    href="mailto:env.omrr.reg.reviews@gov.bc.ca"
+                  >
+                    {' '}
+                    For additional information, please contact us.
+                  </a>
                 </span>
               </Grid>
             </Grid>
@@ -1080,6 +1141,9 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
 }
 
 export default function AuthorizationDetails() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   const smMatches = useMediaQuery(theme.breakpoints.up('sm'))
@@ -1106,21 +1170,24 @@ export default function AuthorizationDetails() {
   if (data && data.Latitude && data.Longitude) {
     facilityLatLng = { lat: data.Latitude, lng: data.Longitude }
   }
-  let marginTop:string = '0em'
-  if(lgMatches || mdMatches){
+  let marginTop: string = '0em'
+  if (lgMatches || mdMatches) {
     marginTop = '5em'
-  }else if(smMatches){
+  } else if (smMatches) {
     marginTop = '4em'
-  }else if(xsMatches){
+  } else if (xsMatches) {
     marginTop = '5em'
   }
-
 
   return (
     <Grid
       container
       spacing={1}
-      sx={{ marginTop: marginTop, marginLeft: mdMatches? '2em':'0.5em', maxWidth: '95%' }}
+      sx={{
+        marginTop: marginTop,
+        marginLeft: mdMatches ? '2em' : '0.5em',
+        maxWidth: '95%',
+      }}
     >
       <Grid item xs={12}>
         <Button
@@ -1160,7 +1227,11 @@ export default function AuthorizationDetails() {
       <Grid
         item
         xs={12}
-        sx={{ height: '30em', marginTop: mdMatches? '2em':'1em', background: '#F1F8FE' }}
+        sx={{
+          height: '30em',
+          marginTop: mdMatches ? '2em' : '1em',
+          background: '#F1F8FE',
+        }}
       >
         <Grid
           justifyItems="center"
@@ -1205,7 +1276,11 @@ export default function AuthorizationDetails() {
                 </span>
               </Grid>
               <Grid sx={{ margin: '1em 0em 0em 1em' }} item xs={12}>
-                <Grid container spacing={0} direction={{ xs: 'column', md: 'column', lg: 'row' }}>
+                <Grid
+                  container
+                  spacing={0}
+                  direction={{ xs: 'column', md: 'column', lg: 'row' }}
+                >
                   <Grid item xs={6}>
                     <Grid container direction="column">
                       <Grid item>
@@ -1289,7 +1364,10 @@ export default function AuthorizationDetails() {
       <Grid
         item
         xs={12}
-        sx={{ margin: mdMatches? '2em 0em 3em 0em' : '15em 0em 3em 0em', background: '#F1F8FE' }}
+        sx={{
+          margin: mdMatches ? '2em 0em 3em 0em' : '15em 0em 3em 0em',
+          background: '#F1F8FE',
+        }}
       >
         {getAuthorizationGridOthersForMdAbove(data)}
         {getAuthorizationGridNotificationCompostForMdAbove(data)}
