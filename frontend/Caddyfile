@@ -36,9 +36,19 @@
 		    script-src 'self'  https://www2.gov.bc.ca https://*.openstreetmap.org;
 		    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com https://*.openstreetmap.org;
 		    font-src 'self' https://fonts.gstatic.com https://*.openstreetmap.org;
-		    img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.openstreetmap.org"
+		    img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.openstreetmap.org;
+			frame-ancestors 'none';
+			form-action 'self' {$BACKEND_URL};
+			frame-src 'none';
+			manifest-src 'self';
+			worker-src 'self';
+			upgrade-insecure-requests;
+			block-all-mixed-content;
+			"
 		Referrer-Policy "same-origin"
 		Feature-Policy "fullscreen 'self'; camera 'none'; microphone 'none'"
+		Permissions-Policy "geolocation=(), microphone=(), camera=(), speaker=(), usb=(), bluetooth=(), payment=(), interest-cohort=()"
+		-Server
 	}
     # Proxy requests to API service
     reverse_proxy /api* {$BACKEND_URL}
