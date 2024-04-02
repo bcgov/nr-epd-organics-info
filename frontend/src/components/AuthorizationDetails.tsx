@@ -312,7 +312,7 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} sx={{ margin: '2em 0em 3em 0em' }}>
+            <Grid item xs={11} sx={{ margin: '2em 0em 3em 0em' }}>
               <span style={{ fontFamily: 'BCSans-Italic', fontSize: '1.1em' }}>
                 Permits, Operational Certificates, and Approvals are necessary
                 for composting operations that handle 5,000 tonnes or more of
