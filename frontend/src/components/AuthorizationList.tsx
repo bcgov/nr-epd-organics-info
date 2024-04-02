@@ -37,7 +37,11 @@ import {
 import { useNavigate } from 'react-router'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useEffect } from 'react'
 export default function AuthorizationList() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   const navigate = useNavigate()
@@ -62,10 +66,17 @@ export default function AuthorizationList() {
     landApplicationBioSolidsFilterDisabled,
   } = useSelector((state: RootState) => state.omrr)
   const pagination = (
-    <Grid sx={{
-      margin: mdMatches? '0em':'1em 0em 1em 0em',
-    }} item xs={12}>
-      <Grid container spacing={0} direction={{ xs: 'column', md: 'row' }}
+    <Grid
+      sx={{
+        margin: mdMatches ? '0em' : '1em 0em 1em 0em',
+      }}
+      item
+      xs={12}
+    >
+      <Grid
+        container
+        spacing={0}
+        direction={{ xs: 'column', md: 'row' }}
         sx={{
           display: 'flex',
           width: '90vw', // Make the Box take full width
@@ -74,7 +85,7 @@ export default function AuthorizationList() {
       >
         <Pagination
           sx={{
-            margin: mdMatches? '0em':'1em 0em 1em 0em',
+            margin: mdMatches ? '0em' : '1em 0em 1em 0em',
             '& .MuiPaginationItem-root.Mui-selected': {
               backgroundColor: '#053662',
               color: '#ffffff',
@@ -114,7 +125,7 @@ export default function AuthorizationList() {
       >
         Authorizations
       </Typography>
-      <Typography variant="h6" gutterBottom sx={{fontFamily: 'BCSans',}}>
+      <Typography variant="h6" gutterBottom sx={{ fontFamily: 'BCSans' }}>
         Authorized compost and biosolid facilities in B.C.
       </Typography>
     </CardContent>
@@ -126,10 +137,10 @@ export default function AuthorizationList() {
           elevation={0}
           variant="outlined"
           sx={{
-            padding:  mdMatches? '2em':'.5em',
+            padding: mdMatches ? '2em' : '.5em',
             marginTop: '0.1em',
             backgroundColor: '#FCC85D',
-            borderRadius:'0'
+            borderRadius: '0',
           }}
         >
           {headerCard}
@@ -174,51 +185,61 @@ export default function AuthorizationList() {
             ></TextField>
           </Grid>
           <Grid item xs={12}>
-            <Grid container sx={{maxWidth: '90vw',}} justifyContent="space-between" spacing={0} direction={{ xs: 'column', md: 'row' }}>
-            <Stack
-              sx={{
-                display: 'flex',
-                alignItems: 'left',
-                flexDirection: 'row',
-
-                justifyContent: 'left',
-              }}
+            <Grid
+              container
+              sx={{ maxWidth: '90vw' }}
+              justifyContent="space-between"
+              spacing={0}
               direction={{ xs: 'column', md: 'row' }}
             >
-              <Box display="flex" alignItems="center" sx={{marginRight:'2em'}}>
-                <span>Search by: </span>
-              </Box>
-              <Box display="flex" alignItems="left">
-                <RadioGroup
-                  row
-                  name="searchBy"
-                  defaultValue="all"
-                  value={searchBy}
+              <Stack
+                sx={{
+                  display: 'flex',
+                  alignItems: 'left',
+                  flexDirection: 'row',
+
+                  justifyContent: 'left',
+                }}
+                direction={{ xs: 'column', md: 'row' }}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  sx={{ marginRight: '2em' }}
                 >
-                  <FormControlLabel
-                    value="all"
-                    control={<Radio />}
-                    label="All"
-                    onClick={() => dispatch(setSearchBy('all'))}
-                  />
-                  <FormControlLabel
-                    value="active"
-                    control={<Radio />}
-                    label="Active"
-                    onClick={() => dispatch(setSearchBy('active'))}
-                  />
-                  <FormControlLabel
-                    value="inactive"
-                    control={<Radio />}
-                    label="Inactive"
-                    onClick={() => dispatch(setSearchBy('inactive'))}
-                  />
-                </RadioGroup>
-              </Box>
-            </Stack>
+                  <span>Search by: </span>
+                </Box>
+                <Box display="flex" alignItems="left">
+                  <RadioGroup
+                    row
+                    name="searchBy"
+                    defaultValue="all"
+                    value={searchBy}
+                  >
+                    <FormControlLabel
+                      value="all"
+                      control={<Radio />}
+                      label="All"
+                      onClick={() => dispatch(setSearchBy('all'))}
+                    />
+                    <FormControlLabel
+                      value="active"
+                      control={<Radio />}
+                      label="Active"
+                      onClick={() => dispatch(setSearchBy('active'))}
+                    />
+                    <FormControlLabel
+                      value="inactive"
+                      control={<Radio />}
+                      label="Inactive"
+                      onClick={() => dispatch(setSearchBy('inactive'))}
+                    />
+                  </RadioGroup>
+                </Box>
+              </Stack>
               <Button
                 sx={{
-                  marginTop: mdMatches? '0em':'1em',
+                  marginTop: mdMatches ? '0em' : '1em',
                   background: '#053662',
                   color: '#ffffff',
                   borderRadius: '4px',
@@ -236,12 +257,15 @@ export default function AuthorizationList() {
                 {expand ? <ArrowDropUp /> : <ArrowDropDown />}
               </Button>
             </Grid>
-
           </Grid>
           {expand && (
             <Grid item xs={12}>
               <Grid item xs={12}>
-                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
+                <Grid
+                  container
+                  spacing={2}
+                  direction={{ xs: 'column', md: 'row' }}
+                >
                   <Grid item xs={3}>
                     <FormControlLabel
                       checked={notificationFilter}
@@ -278,8 +302,12 @@ export default function AuthorizationList() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid sx={{marginTop:'1em'}} item xs={12}>
-                <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
+              <Grid sx={{ marginTop: '1em' }} item xs={12}>
+                <Grid
+                  container
+                  spacing={2}
+                  direction={{ xs: 'column', md: 'row' }}
+                >
                   <Grid item xs={3}>
                     <FormControlLabel
                       checked={compostFacilityFilter}
@@ -328,7 +356,13 @@ export default function AuthorizationList() {
             </Grid>
           )}
           <Grid item xs={12}>
-            <Divider sx={{ margin:'1em 0em 1em 0em', width: '90vw', maxWidth: '90vw' }} />
+            <Divider
+              sx={{
+                margin: '1em 0em 1em 0em',
+                width: '90vw',
+                maxWidth: '90vw',
+              }}
+            />
           </Grid>
           {pagination}
           <Grid item xs={12}>

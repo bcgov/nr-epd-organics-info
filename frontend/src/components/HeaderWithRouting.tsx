@@ -1,10 +1,18 @@
 import BCGovLogo from '@/assets/gov-bc-logo-horiz.png'
-import { AppBar, IconButton, Link, Toolbar } from '@mui/material'
+import {
+  AppBar,
+  IconButton,
+  Link,
+  Toolbar,
+  MenuItem,
+  Menu as MenuComponent,
+} from '@mui/material'
 import { Feed, Menu } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router'
+import { useState } from 'react'
 
 const styles = {
   appBar: {
@@ -14,6 +22,15 @@ const styles = {
   },
 }
 export default function HeaderWithRouting() {
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
   const navigate = useNavigate()
   const buttonClicked = (route: string) => {
     navigate(route)
@@ -35,7 +52,7 @@ export default function HeaderWithRouting() {
           <a href="/">
             <img alt="Logo" src={BCGovLogo} />
           </a>
-          <div >
+          <div>
             {' '}
             <span
               style={{
@@ -53,10 +70,14 @@ export default function HeaderWithRouting() {
         <Stack direction="row" id="nav">
           {mdMatches && (
             <div>
-              <IconButton onClick={ ()=> buttonClicked('/search')}>
+              <IconButton onClick={() => buttonClicked('/search')}>
                 <Feed color="secondary"></Feed>
               </IconButton>
-              <Link sx={{textTransform:'none',textDecoration:'none'}} onClick={ ()=> buttonClicked('/search')} component="button">
+              <Link
+                sx={{ textTransform: 'none', textDecoration: 'none' }}
+                onClick={() => buttonClicked('/search')}
+                component="button"
+              >
                 <span
                   style={{
                     color: '#ffffff',
@@ -68,15 +89,51 @@ export default function HeaderWithRouting() {
                   Text Search
                 </span>
               </Link>
+              <a href="mailto:env.omrr.reg.reviews@gov.bc.ca">
+                <Link
+                  component="button"
+                  sx={{
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    textTransform: 'none',
+                    marginLeft: '1em',
+                  }}
+                >
+                  Contact Us
+                </Link>
+              </a>
             </div>
           )}
           {!mdMatches && (
             <div>
-              <Link onClick={ ()=> buttonClicked('/search')} component="button">
-                <IconButton>
-                  <Menu color="secondary"></Menu>
-                </IconButton>
-              </Link>
+              <IconButton onClick={handleClick}>
+                <Menu color="secondary"></Menu>
+              </IconButton>
+              <MenuComponent
+                id="headerMenu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Link
+                    sx={{ textTransform: 'none', textDecoration: 'none' }}
+                    onClick={() => buttonClicked('/search')}
+                    component="button"
+                  >
+                    Text Search
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a
+                    href="mailto:env.omrr.reg.reviews@gov.bc.ca"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    Contact Us
+                  </a>
+                </MenuItem>
+              </MenuComponent>
             </div>
           )}
         </Stack>
