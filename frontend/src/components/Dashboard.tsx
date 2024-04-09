@@ -138,7 +138,6 @@ export default function Dashboard() {
             variant="h6"
             component="h6"
             sx={{
-              // margin: '1em 0em 0.5em 2em',
               margin: {
                 xs: '1em .6em 0',
                 sm: '1em 1.6em 0',
@@ -172,7 +171,6 @@ export default function Dashboard() {
           <Button
             size="large"
             sx={{
-              // margin: '1em 0em 3em 3em',
               margin: {
                 sm: '0 2.2em 3em',
                 xs: '0 .9em 3em',
