@@ -213,7 +213,7 @@ export default function AuthorizationList() {
                   <RadioGroup
                     row
                     name="searchBy"
-                    defaultValue="all"
+                    defaultValue="active"
                     value={searchBy}
                   >
                     <FormControlLabel

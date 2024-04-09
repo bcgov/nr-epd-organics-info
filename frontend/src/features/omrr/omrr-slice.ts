@@ -46,7 +46,7 @@ export const initialState: OmrrSliceState = {
   status: 'idle',
   // The error message if any
   error: null,
-  searchBy: 'all',
+  searchBy: 'active',
   expand: false,
   location: null,
   notificationFilter: false,
@@ -279,7 +279,11 @@ export const omrrSlice = createSlice({
       }
       state.value = omrrData
       state.searchByFilteredValue = deepClone(state.value)
+      state.searchByFilteredValue = state.searchByFilteredValue.filter(
+        (item: OmrrData) => item['Authorization Status'] === 'Active',
+      )
       state.filteredValue = deepClone(state.searchByFilteredValue)
+
     })
     // Handle the rejected action
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
