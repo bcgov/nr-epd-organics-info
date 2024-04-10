@@ -66,26 +66,27 @@ export default function AuthorizationList() {
     landApplicationBioSolidsFilterDisabled,
   } = useSelector((state: RootState) => state.omrr)
   const pagination = (
-    <Grid
-      sx={{
-        margin: mdMatches ? '0em' : '1em 0em 1em 0em',
-      }}
-      item
-      xs={12}
-    >
+    <Grid item xs={12}>
       <Grid
         container
         spacing={0}
-        direction={{ xs: 'column', md: 'row' }}
+        direction={{ xs: 'column', sm: 'row' }}
         sx={{
           display: 'flex',
-          width: '90vw', // Make the Box take full width
+          width: '100%',
           justifyContent: 'space-between',
+          alignItems: {
+            xs: 'flex-start',
+            sm: 'center',
+          },
         }}
       >
         <Pagination
           sx={{
-            margin: mdMatches ? '0em' : '1em 0em 1em 0em',
+            margin: {
+              xs: '0 0 1em',
+              sm: '0',
+            },
             '& .MuiPaginationItem-root.Mui-selected': {
               backgroundColor: '#053662',
               color: '#ffffff',
@@ -99,10 +100,15 @@ export default function AuthorizationList() {
           variant="outlined"
           shape="rounded"
           count={Math.ceil(filteredValue.length / 10)}
+          siblingCount={mdMatches ? 1 : 0}
           page={page}
           onChange={(event, value) => dispatch(setPage(value))}
         />
-        <Typography>
+        <Typography
+          sx={{
+            display: 'block',
+          }}
+        >
           Showing {(page - 1) * 10 + 1}-
           {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}{' '}
           results
@@ -111,21 +117,17 @@ export default function AuthorizationList() {
     </Grid>
   )
   const headerCard = (
-    <CardContent>
+    <CardContent sx={{ padding: '0' }}>
       <Typography
-        variant="h6"
+        variant="h1"
         sx={{
-          fontFamily: 'BCSans',
-          fontWeight: 700,
-          fontSize: 48,
-          color: '#000000',
-          marginBottom: '0.5em',
+          margin: '0 0 .75em',
         }}
-        component="div"
+        component="h1"
       >
         Authorizations
       </Typography>
-      <Typography variant="h6" gutterBottom sx={{ fontFamily: 'BCSans' }}>
+      <Typography variant="h6">
         Authorized compost and biosolid facilities in B.C.
       </Typography>
     </CardContent>
@@ -137,10 +139,13 @@ export default function AuthorizationList() {
           elevation={0}
           variant="outlined"
           sx={{
-            padding: mdMatches ? '2em' : '.5em',
-            marginTop: '0.1em',
+            padding: {
+              xs: '7em 1.5em 5em',
+              sm: '5em 2.1em 2.5em',
+              md: '10em 2.25em 5em',
+            },
             backgroundColor: '#FCC85D',
-            borderRadius: '0',
+            border: '0',
           }}
         >
           {headerCard}
@@ -151,13 +156,26 @@ export default function AuthorizationList() {
           container
           spacing={2}
           direction={{ xs: 'column', md: 'row' }}
-          sx={{ paddingTop: '8vh', paddingLeft: '4vw', paddingBottom: '4vw' }}
+          sx={{
+            margin: '0',
+            padding: {
+              xs: '1.5em 1.5em 5em',
+              sm: '1.5em 2.1em 5em',
+              md: '4em 2.25em 10em',
+            },
+            width: '100%',
+            '& > .MuiGrid-item': {
+              padding: '0',
+              width: '100%',
+            },
+          }}
         >
           <Grid item xs={12}>
             <TextField
               sx={{
-                minWidth: '90vw',
+                minWidth: '100%',
                 color: '#9F9D9C',
+                marginBottom: '1.5em',
               }}
               label="Search Authorizations"
               value={globalTextSearchFilter}
@@ -187,10 +205,10 @@ export default function AuthorizationList() {
           <Grid item xs={12}>
             <Grid
               container
-              sx={{ maxWidth: '90vw' }}
+              sx={{ maxWidth: '100%' }}
               justifyContent="space-between"
               spacing={0}
-              direction={{ xs: 'column', md: 'row' }}
+              direction={{ xs: 'column', sm: 'row' }}
             >
               <Stack
                 sx={{
@@ -239,12 +257,22 @@ export default function AuthorizationList() {
               </Stack>
               <Button
                 sx={{
-                  marginTop: mdMatches ? '0em' : '1em',
+                  marginTop: {
+                    xs: '1.5em',
+                    sm: '0',
+                  },
+                  padding: '0.6em 1.125em',
                   background: '#053662',
                   color: '#ffffff',
                   borderRadius: '4px',
                   textTransform: 'none',
                   order: 1,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  alignSelf: {
+                    sm: 'center',
+                  },
                   '&:hover': {
                     background: '#053662',
                     color: '#ffffff',
@@ -264,9 +292,14 @@ export default function AuthorizationList() {
                 <Grid
                   container
                   spacing={2}
-                  direction={{ xs: 'column', md: 'row' }}
+                  direction={{ xs: 'column', sm: 'row' }}
+                  sx={{
+                    marginTop: {
+                      xs: '1.5em',
+                    },
+                  }}
                 >
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       checked={notificationFilter}
                       control={<Checkbox />}
@@ -274,7 +307,7 @@ export default function AuthorizationList() {
                       onClick={() => dispatch(setFilters('notification'))}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       control={<Checkbox />}
                       checked={permitFilter}
@@ -282,7 +315,7 @@ export default function AuthorizationList() {
                       onClick={() => dispatch(setFilters('permit'))}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       checked={approvalFilter}
                       control={<Checkbox />}
@@ -290,7 +323,7 @@ export default function AuthorizationList() {
                       onClick={() => dispatch(setFilters('approval'))}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       checked={operationalCertificateFilter}
                       control={<Checkbox />}
@@ -300,15 +333,7 @@ export default function AuthorizationList() {
                       }
                     />
                   </Grid>
-                </Grid>
-              </Grid>
-              <Grid sx={{ marginTop: '1em' }} item xs={12}>
-                <Grid
-                  container
-                  spacing={2}
-                  direction={{ xs: 'column', md: 'row' }}
-                >
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       checked={compostFacilityFilter}
                       control={<Checkbox />}
@@ -317,7 +342,7 @@ export default function AuthorizationList() {
                       onClick={() => dispatch(setFilters('compostFacility'))}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={4} md={3}>
                     <FormControlLabel
                       checked={landApplicationBioSolidsFilter}
                       control={<Checkbox />}
@@ -358,33 +383,57 @@ export default function AuthorizationList() {
           <Grid item xs={12}>
             <Divider
               sx={{
-                margin: '1em 0em 1em 0em',
-                width: '90vw',
-                maxWidth: '90vw',
+                margin: '2em 0em',
+                width: '100%',
+                maxWidth: '100%',
               }}
             />
           </Grid>
           {pagination}
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              margin: {
+                xs: '1.5em 0',
+                md: '2.5em 0',
+              },
+            }}
+          >
             <Grid container spacing={3}>
               {filteredValue &&
                 filteredValue.length > 0 &&
                 filteredValue
                   .slice((page - 1) * 10, page * 10)
                   .map((item, index) => (
-                    <Grid key={index} item xs={12} sx={{ width: '90vw' }}>
+                    <Grid key={index} item xs={12} sx={{ width: '100%' }}>
                       <Card
                         elevation={0}
-                        sx={{ background: '#F1F8FE', order: 5, width: '90vw' }}
+                        sx={{
+                          background: '#F1F8FE',
+                          order: 5,
+                          width: '100%',
+                          border: '1px solid #D8D8D8',
+                        }}
                         key={index}
                       >
-                        <CardContent>
-                          <Typography variant="body2" color="text.secondary">
+                        <CardContent
+                          sx={{
+                            padding: {
+                              xs: '1.5em 1.5em 2.5em !important',
+                              md: '1.5em 2.5em 2.5em !important',
+                            },
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ marginBottom: '0.6em' }}
+                          >
                             <span
                               style={{
                                 fontFamily: 'BCSans',
                                 fontStyle: 'normal',
-                                fontWeight: 700,
                               }}
                             >
                               {' '}
@@ -399,81 +448,87 @@ export default function AuthorizationList() {
                               </span>
                             </span>
                           </Typography>
-                          <br />
-                          <Typography variant="h5" component="div">
+                          <Typography
+                            variant="h5"
+                            component="h5"
+                            sx={{
+                              marginBottom: {
+                                xs: '1em',
+                                md: '.7em',
+                              },
+                            }}
+                          >
                             <span
                               style={{
-                                fontFamily: 'BCSans',
-                                fontStyle: 'normal',
-                                fontWeight: 700,
+                                fontFamily: 'BCSans-Bold',
                               }}
                             >
                               {item['Regulated Party']}
                             </span>
                           </Typography>
-                          <br />
                           <Grid container direction="row">
-                            <Grid item xs={6}>
-                              <span
-                                style={{
-                                  fontFamily: 'BCSans',
-                                  fontStyle: 'normal',
-                                  fontWeight: 700,
-                                }}
-                              >
-                                Location of Facility
-                              </span>
+                            <Grid
+                              item
+                              xs={12}
+                              md={6}
+                              sx={{ marginBottom: { xs: '1.5em', md: '0' } }}
+                            >
+                              <Box sx={{ marginBottom: '.5em' }}>
+                                <span
+                                  style={{
+                                    fontFamily: 'BCSans-Bold',
+                                  }}
+                                >
+                                  Location of Facility
+                                </span>
+                              </Box>
+                              <Box>
+                                <span
+                                  style={{
+                                    fontFamily: 'BCSans',
+                                    fontStyle: 'normal',
+                                  }}
+                                >
+                                  {item['Facility Location']}
+                                </span>
+                              </Box>
                             </Grid>
-                            <Grid item xs={6}>
-                              <span
-                                style={{
-                                  fontFamily: 'BCSans',
-                                  fontStyle: 'normal',
-                                  fontWeight: 700,
-                                }}
-                              >
-                                Authorization Type
-                              </span>
+                            <Grid item xs={12} md={6}>
+                              <Box sx={{ marginBottom: '.5em' }}>
+                                <span
+                                  style={{
+                                    fontFamily: 'BCSans-Bold',
+                                  }}
+                                >
+                                  Authorization Type
+                                </span>
+                              </Box>
+                              <Box>
+                                <span
+                                  style={{
+                                    fontFamily: 'BCSans',
+                                    fontStyle: 'normal',
+                                  }}
+                                >
+                                  {item['Authorization Type']}
+                                  {item['Operation Type']
+                                    ? `, ${item['Operation Type']}`
+                                    : ''}
+                                </span>
+                              </Box>
                             </Grid>
                           </Grid>
-                          <Grid
-                            container
-                            direction="row"
-                            sx={{ marginTop: '1em' }}
-                          >
-                            <Grid item xs={6}>
-                              <span
-                                style={{
-                                  fontFamily: 'BCSans',
-                                  fontStyle: 'normal',
-                                }}
-                              >
-                                {item['Facility Location']}
-                              </span>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <span
-                                style={{
-                                  fontFamily: 'BCSans',
-                                  fontStyle: 'normal',
-                                }}
-                              >
-                                {item['Authorization Type']}
-                                {item['Operation Type']
-                                  ? `, ${item['Operation Type']}`
-                                  : ''}
-                              </span>
-                            </Grid>
-                          </Grid>
-
                           <Stack
                             sx={{
                               justifyContent: 'space-between',
-                              alignItems: 'center',
+                              alignItems: {
+                                xs: 'flex-start',
+                                sm: 'center',
+                              },
                               display: 'flex',
                               marginTop: '1em',
                             }}
-                            direction="row"
+                            direction={{ xs: 'column', sm: 'row' }}
                           >
                             <Stack
                               direction="row"
@@ -496,7 +551,15 @@ export default function AuthorizationList() {
                                 label={item['Authorization Status']}
                               />
                             </Stack>
-                            <CardActions>
+                            <CardActions
+                              sx={{
+                                padding: '1em 0 0',
+                                width: {
+                                  xs: '100%',
+                                  sm: 'auto',
+                                },
+                              }}
+                            >
                               <Button
                                 size="large"
                                 sx={{
@@ -505,6 +568,10 @@ export default function AuthorizationList() {
                                   boxSizing: 'border-box',
                                   textTransform: 'none',
                                   color: '#255A90;',
+                                  width: {
+                                    xs: '100%',
+                                    sm: 'auto',
+                                  },
                                 }}
                                 onClick={() =>
                                   buttonClicked(
@@ -524,9 +591,6 @@ export default function AuthorizationList() {
                     </Grid>
                   ))}
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider sx={{ width: '90vw', maxWidth: '90vw' }} />
           </Grid>
           {pagination}
         </Grid>

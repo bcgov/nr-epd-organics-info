@@ -7,6 +7,7 @@ import {
   Grid,
   Link,
   Typography,
+  Box,
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import { Stack } from '@mui/system'
@@ -18,20 +19,26 @@ import govSvg from '@/assets/font-awesome-government.svg'
 import verification from '@/assets/font-awesome-verification.svg'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { ChevronRight } from '@mui/icons-material'
 
 function informationTypography() {
   return (
     <>
-      <Grid container direction={{ xs: 'column', lg: 'row' }}>
+      <Grid
+        container
+        direction={{ xs: 'column', lg: 'row' }}
+        sx={{ zIndex: 1 }}
+      >
         <Grid item xs={12}>
           <Typography
+            variant="h2"
+            component="h2"
             sx={{
               fontFamily: 'BCSans',
               fontWeight: 400,
-              fontSize: 28,
               color: '#000000',
+              marginBottom: '1em',
             }}
-            component="div"
           >
             Organic Recycling in B.C.
           </Typography>
@@ -46,7 +53,7 @@ function informationTypography() {
             >
               British Columbia's Organic Matter Recycling Regulation (OMRR):
             </a>
-            <ul>
+            <ul style={{ marginBottom: '2em' }}>
               <li>
                 Governs the construction and operation of compost facilities
               </li>{' '}
@@ -57,7 +64,7 @@ function informationTypography() {
               <li>Controls how compost facilities are built and operated</li>{' '}
             </ul>
             The B.C. government has a plan to update the regulation to:
-            <ul>
+            <ul style={{ marginBottom: '2em' }}>
               <li>Better protect of human and environment health</li>
               <li>Increase engagement with Indigenous communities</li>
               <li> Improve transparency around organic matter management</li>
@@ -92,7 +99,6 @@ export default function Dashboard() {
     <Card
       sx={{
         position: 'relative',
-        height: '35%',
         borderRadius: '0px',
         width: '100%',
       }}
@@ -112,11 +118,14 @@ export default function Dashboard() {
         <CardContent>
           <Typography
             gutterBottom
-            variant="h6"
-            component="h6"
+            variant="h1"
+            component="h1"
             sx={{
-              margin: '2em 0em 0em 1em',
-              fontSize: 42,
+              margin: {
+                xs: '2em .333em 0',
+                sm: '2.25em .7em 0',
+                md: '5em .7em 0',
+              },
               color: '#FFFFFF',
               backgroundColor: 'none',
               position: 'relative',
@@ -129,7 +138,10 @@ export default function Dashboard() {
             variant="h6"
             component="h6"
             sx={{
-              margin: '1em 0em 0.5em 2em',
+              margin: {
+                xs: '1em .6em 0',
+                sm: '1em 1.6em 0',
+              },
               color: '#FFFFFF',
               backgroundColor: 'none',
               position: 'relative',
@@ -159,7 +171,10 @@ export default function Dashboard() {
           <Button
             size="large"
             sx={{
-              margin: '1em 0em 3em 3em',
+              margin: {
+                sm: '0 2.2em 3em',
+                xs: '0 .9em 3em',
+              },
               boxSizing: 'border-box',
               border: '1px solid #FFFFFF',
               borderRadius: '4px',
@@ -181,32 +196,35 @@ export default function Dashboard() {
       container
       direction={{ xs: 'column', lg: 'row' }}
       sx={{
-        margin: '0em 0em 0em 0em',
-        padding: '1em 3em 0.475em 3em',
-        backgroundColor: '#FCC85D',
+        margin: '0',
+        padding: {
+          xs: '2.5em 1.8em 5em',
+          sm: '5em 3em',
+        },
         borderRadius: '0px',
+        backgroundColor: '#FCC85D',
+        backgroundImage: {
+          xs: 'none',
+          md: `url(${bcEarthImage})`,
+        },
+        backgroundPosition: 'right 4em top 50%',
+        backgroundSize: '25em',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      {mdMatches && (
-        <>
-          <CardMedia
-            image={bcEarthImage}
-            sx={{
-              marginLeft:'40%',
-              position: 'absolute',
-              width: '50%',
-              height: '30%',
-              backgroundSize: 'contain',
-              backgroundPosition: 'right',
-            }}
-          />
-          {informationTypography()}
-        </>
-      )}
+      {mdMatches && <>{informationTypography()}</>}
       {!mdMatches && (
         <>
-          <Grid item xs={12}>
-            <img src={bcEarthImage} alt="BC Earth" />
+          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box
+              component="img"
+              sx={{
+                content: `url(${bcEarthImage})`,
+                width: '100%',
+                maxWidth: 300,
+                marginBottom: '1.5em',
+              }}
+            />
           </Grid>
           <Grid item xs={12}>
             {informationTypography()}
@@ -217,34 +235,98 @@ export default function Dashboard() {
   )
 
   return (
-    <Grid item sx={{ marginTop: '6vh' }}>
+    <Grid item sx={{ marginTop: '3em' }}>
       {headerCard}
       {infoCard}
-      <Grid container spacing={3}>
-        <Grid item xs={12} sx={{ margin: '3em 0em 0em 3em' }}>
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          margin: 0,
+          padding: '1em',
+          maxWidth: '100%',
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          sx={{
+            padding: '0 !important',
+            margin: {
+              xs: '1.5em 0.7em 2.5em',
+              sm: '1.5em 1.9em 2.5em',
+              md: '4em 1.9em 3em',
+            },
+          }}
+        >
           <Typography
+            variant="h2"
+            component="h2"
             sx={{
-              fontSize: 28,
               color: '#000000',
+              marginTop: {
+                xs: '.5em',
+                md: '0',
+              },
             }}
-            component="div"
           >
             Learn more
           </Typography>
         </Grid>
-        <Grid item xs={12} sx={{ margin: '1em 2em 3em 3em' }}>
-          <Grid container spacing={1} direction={{ xs: 'column', md: 'row' }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            padding: '0 !important',
+            margin: {
+              xs: '0 0.7em',
+              sm: '0 1.9em',
+            },
+          }}
+        >
+          <Grid
+            container
+            spacing={3}
+            direction={{ xs: 'column', md: 'row' }}
+            sx={{
+              marginBottom: {
+                xs: '4em',
+                md: '9em',
+              },
+            }}
+          >
             <Grid item xs={12} md={4}>
               <Card elevation={0}>
                 <CardHeader
-                  sx={{ margin: '0em 0em 0em -1em' }}
+                  sx={{
+                    margin: '0em 0em 0em -1em',
+                    display: {
+                      xs: 'none',
+                      md: 'flex',
+                    },
+                  }}
                   title={
                     <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: {
+                          md: '1rem',
+                          lg: '1.25rem',
+                        },
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingBottom: '.4em',
+                      }}
                       target={'_blank'}
                       href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
                     >
                       {' '}
-                      Legislation {'>'}
+                      Legislation
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
                     </Link>
                   }
                 ></CardHeader>
@@ -269,24 +351,93 @@ export default function Dashboard() {
                     }}
                   />
                 </CardContent>
-
-                <CardActions sx={{ margin: '0em 0em 0em -0.5em' }}>
+                <CardHeader
+                  sx={{
+                    margin: '0',
+                    padding: '1.5em 0 .5em',
+                    display: {
+                      xs: 'flex',
+                      md: 'none',
+                    },
+                  }}
+                  title={
+                    <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: '1.25rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      target={'_blank'}
+                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+                    >
+                      {' '}
+                      Legislation
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
+                    </Link>
+                  }
+                ></CardHeader>
+                <CardActions
+                  sx={{
+                    margin: '0',
+                    padding: {
+                      xs: '.5em 0 1.5em',
+                      md: '1.5em 0 0',
+                    },
+                  }}
+                >
                   <span>
                     Learn about the laws that apply to recycling organic matter.
                   </span>
                 </CardActions>
+                <Box
+                  component="hr"
+                  sx={{
+                    display: {
+                      xs: 'block',
+                      md: 'none',
+                    },
+                    margin: '.5em 0 1.5em',
+                    borderColor: '#D8D8D8',
+                  }}
+                />
               </Card>
             </Grid>
             <Grid item xs={12} md={4}>
               <Card elevation={0}>
                 <CardHeader
-                  sx={{ margin: '0em 0em 0em -1em' }}
+                  sx={{
+                    margin: '0em 0em 0em -1em',
+                    display: {
+                      xs: 'none',
+                      md: 'flex',
+                    },
+                  }}
                   title={
                     <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: {
+                          md: '1rem',
+                          lg: '1.25rem',
+                        },
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingBottom: '.4em',
+                      }}
                       target={'_blank'}
                       href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
                     >
-                      Process and procedures {'>'}
+                      Process and procedures
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
                     </Link>
                   }
                 ></CardHeader>
@@ -311,25 +462,93 @@ export default function Dashboard() {
                     }}
                   />
                 </CardContent>
-
-                <CardActions sx={{ margin: '0em 0em 0em -0.5em' }}>
+                <CardHeader
+                  sx={{
+                    margin: '0',
+                    padding: '1.5em 0 .5em',
+                    display: {
+                      xs: 'flex',
+                      md: 'none',
+                    },
+                  }}
+                  title={
+                    <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: '1.25rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      target={'_blank'}
+                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
+                    >
+                      Process and procedures
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
+                    </Link>
+                  }
+                ></CardHeader>
+                <CardActions
+                  sx={{
+                    margin: '0',
+                    padding: {
+                      xs: '.5em 0 1.5em',
+                      md: '1.5em 0 0',
+                    },
+                  }}
+                >
                   <span>
                     Learn about how we administer the authorizations process for
                     compost and biosolids facilities.
                   </span>
                 </CardActions>
+                <Box
+                  component="hr"
+                  sx={{
+                    display: {
+                      xs: 'block',
+                      md: 'none',
+                    },
+                    margin: '.5em 0 1.5em',
+                    borderColor: '#D8D8D8',
+                  }}
+                />
               </Card>
             </Grid>
             <Grid item xs={12} md={4}>
               <Card elevation={0}>
                 <CardHeader
-                  sx={{ margin: '0em 0em 0em -1em' }}
+                  sx={{
+                    margin: '0em 0em 0em -1em',
+                    display: {
+                      xs: 'none',
+                      md: 'flex',
+                    },
+                  }}
                   title={
                     <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: {
+                          md: '1rem',
+                          lg: '1.25rem',
+                        },
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingBottom: '.4em',
+                      }}
                       target={'_blank'}
                       href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
                     >
-                      Compliance and enforcement {'>'}
+                      Compliance and enforcement
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
                     </Link>
                   }
                 ></CardHeader>
@@ -354,8 +573,44 @@ export default function Dashboard() {
                     }}
                   />
                 </CardContent>
-
-                <CardActions sx={{ margin: '0em 0em 0em -0.5em' }}>
+                <CardHeader
+                  sx={{
+                    margin: '0',
+                    padding: '1.5em 0 .5em',
+                    display: {
+                      xs: 'flex',
+                      md: 'none',
+                    },
+                  }}
+                  title={
+                    <Link
+                      sx={{
+                        fontFamily: 'BCSans-Bold',
+                        textDecoration: 'none',
+                        fontSize: '1.25rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      target={'_blank'}
+                      href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
+                    >
+                      Compliance and enforcement
+                      <ChevronRight
+                        color="primary"
+                        sx={{ position: 'relative', top: 2 }}
+                      ></ChevronRight>
+                    </Link>
+                  }
+                ></CardHeader>
+                <CardActions
+                  sx={{
+                    margin: '0',
+                    padding: {
+                      xs: '.5em 0 1.5em',
+                      md: '1.5em 0 0',
+                    },
+                  }}
+                >
                   <span>
                     Learn about how we coordinate oversight and ensure the
                     process is accountable. 
