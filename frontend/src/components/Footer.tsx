@@ -1,10 +1,18 @@
-import { AppBar, Grid, Link, Toolbar } from '@mui/material'
+import {
+  AppBar,
+  Grid,
+  Link,
+  Toolbar,
+  useScrollTrigger,
+  Fade,
+} from '@mui/material'
 import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useCallback, useEffect, useState } from 'react'
 
 const styles = {
   appBar: {
@@ -25,19 +33,94 @@ const styles = {
 export default function Footer() {
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+
+  // To Do: Build a check to see if user has scrolled to the bottom so we offset the button at the end of the page to not overlap the footer on mobile.
+  //
+
+  function ScrollToTop() {
+    const trigger = useScrollTrigger({
+      threshold: 100,
+    })
+
+    const ScrollToTop = useCallback(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [])
+
+    return (
+      <Fade in={trigger}>
+        <Button
+          sx={{
+            position: 'fixed',
+            bottom: {
+              xs: '1.8em',
+              sm: '0.8em',
+            },
+            right: {
+              xs: '2em',
+              sm: '3.3em',
+            },
+            width: '4.25em',
+            height: '4em',
+            minWidth: '4.25em',
+            background: ' #F8BA47',
+            borderRadius: '.5em',
+            zIndex: 9,
+          }}
+          onClick={() => {
+            ScrollToTop()
+          }}
+        >
+          <ArrowUpward />
+        </Button>
+      </Fade>
+    )
+  }
   return (
     <AppBar position="relative" sx={styles.appBar} color="default">
-      <Toolbar>
-        <Grid container direction={{ xs: 'column', lg: 'row' }} justifyContent="center">
+      <Toolbar
+        sx={{
+          padding: {
+            xs: '1.5em 1em',
+            md: '1.5em',
+          },
+          margin: {
+            xs: '0',
+            md: '0 auto',
+          },
+        }}
+      >
+        <Grid
+          container
+          direction={{ xs: 'column', lg: 'row' }}
+          justifyContent="center"
+        >
           <Grid item xs={10}>
             <Stack
-              direction={{ xs: 'column', lg: 'row' }}
-              alignItems={'center'}
+              direction="row"
+              alignItems="center"
               justifyContent="center"
-              divider={mdMatches && <Divider sx={{
-                height: '1em', color: '#ffffff', borderColor: '#ffffff', alignContent: 'center'
-                , alignItems: 'center', alignSelf: 'center', justifyItems: 'center', justifyContent: 'center',
-              }} orientation="vertical" flexItem />}
+              sx={{
+                flexWrap: {
+                  xs: 'wrap',
+                  md: 'nowrap',
+                },
+              }}
+              divider={
+                <Divider
+                  sx={{
+                    height: '1em',
+                    color: '#ffffff',
+                    borderColor: '#ffffff',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    justifyItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  orientation="vertical"
+                  flexItem
+                />
+              }
               spacing={2}
             >
               <Link
@@ -88,21 +171,7 @@ export default function Footer() {
           </Grid>
           <Grid item xs={1} justifyContent="end">
             <Grid container spacing={1} justifyContent="right">
-              <Button
-                style={{
-                  position: 'relative',
-                  bottom: '0.2em',
-                  width: '1em',
-                  height: '3em',
-                  background: ' #F8BA47',
-                  borderRadius: '0.2em',
-                }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-              >
-                <ArrowUpward />
-              </Button>
+              {ScrollToTop()}
             </Grid>
           </Grid>
         </Grid>
