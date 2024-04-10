@@ -347,7 +347,7 @@ export default function AuthorizationList() {
                       checked={landApplicationBioSolidsFilter}
                       control={<Checkbox />}
                       disabled={landApplicationBioSolidsFilterDisabled}
-                      label="Land Application Biosolids"
+                      label="Land Application of Biosolids"
                       onClick={() =>
                         dispatch(setFilters('landApplicationBioSolids'))
                       }

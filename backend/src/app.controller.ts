@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ObjectStoreService } from './v1/object-store/object.store.service'
-import { OmrrData } from './v1/types/omrr-data'
+import { OmrrResponse } from './v1/types/omrr-response'
 
 @Controller()
 export class AppController {
@@ -13,7 +13,7 @@ export class AppController {
     return this.appService.getHello();
   }
   @Get('/omrr')
-  async getAllOmrrRecords(): Promise<OmrrData[]> {
+  async getAllOmrrRecords(): Promise<OmrrResponse> {
     return this.objectStoreService.getLatestOMRRFileContents();
   }
 }
