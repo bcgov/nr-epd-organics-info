@@ -1,4 +1,5 @@
-import BCGovLogo from '@/assets/gov-bc-logo-horiz.png'
+import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
+import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
 import {
   AppBar,
   IconButton,
@@ -6,6 +7,9 @@ import {
   Toolbar,
   MenuItem,
   Menu as MenuComponent,
+  Box,
+  Typography,
+  Icon,
 } from '@mui/material'
 import { Feed, Menu } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
@@ -13,6 +17,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
+import { height } from '@mui/system'
 
 const styles = {
   appBar: {
@@ -49,32 +54,54 @@ export default function HeaderWithRouting() {
         id="back-to-top-anchor"
       >
         <Stack direction="row" justifyContent={'center'} id="logo_name">
-          <a href="/">
-            <img alt="Logo" src={BCGovLogo} />
+          <a href="/" style={{ display: 'inline-flex' }}>
+            <Box
+              component="img"
+              sx={{
+                alignContent: 'center',
+                content: {
+                  xs: `url(${BCGovLogoV})`,
+                  sm: `url(${BCGovLogoH})`,
+                },
+                height: '4em',
+                position: 'relative',
+                top: '-2px',
+              }}
+              alt="Logo"
+            />
           </a>
-          <div>
-            {' '}
-            <span
-              style={{
+          <div style={{ display: 'inline-flex' }}>
+            <Typography
+              sx={{
+                display: 'inline-flex',
                 fontFamily: 'BCSans',
-                fontSize: '1.5em',
-                lineHeight: '2.25em',
-                marginLeft: '1em',
+                fontSize: {
+                  xs: '1.25em',
+                  sm: '1.5em',
+                },
+                lineHeight: '100%',
                 alignItems: 'center',
+                marginLeft: {
+                  xs: '.25em',
+                  sm: '.5em',
+                },
               }}
             >
               Organics Info
-            </span>
+            </Typography>
           </div>
         </Stack>
         <Stack direction="row" id="nav">
           {mdMatches && (
             <div>
-              <IconButton onClick={() => buttonClicked('/search')}>
-                <Feed color="secondary"></Feed>
-              </IconButton>
               <Link
-                sx={{ textTransform: 'none', textDecoration: 'none' }}
+                sx={{
+                  textTransform: 'none',
+                  textDecoration: 'none',
+                  padding: '.5em 1em',
+                  display: 'inline-flex',
+                  justifyContent: 'center',
+                }}
                 onClick={() => buttonClicked('/search')}
                 component="button"
               >
@@ -83,9 +110,17 @@ export default function HeaderWithRouting() {
                     color: '#ffffff',
                     textDecoration: 'none',
                     textTransform: 'none',
+                    display: 'inline-flex',
                   }}
                 >
-                  {' '}
+                  <Icon
+                    sx={{
+                      display: 'inline-flex',
+                      marginRight: '.333em',
+                    }}
+                  >
+                    <Feed color="secondary"></Feed>
+                  </Icon>
                   Text Search
                 </span>
               </Link>
@@ -96,7 +131,7 @@ export default function HeaderWithRouting() {
                     color: '#ffffff',
                     textDecoration: 'none',
                     textTransform: 'none',
-                    marginLeft: '1em',
+                    padding: '.5em 1em',
                   }}
                 >
                   Contact Us
@@ -118,7 +153,11 @@ export default function HeaderWithRouting() {
               >
                 <MenuItem onClick={handleClose}>
                   <Link
-                    sx={{ textTransform: 'none', textDecoration: 'none' }}
+                    sx={{
+                      textTransform: 'none',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
                     onClick={() => buttonClicked('/search')}
                     component="button"
                   >
