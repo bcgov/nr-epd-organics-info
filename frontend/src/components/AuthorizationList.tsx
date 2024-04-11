@@ -64,6 +64,7 @@ export default function AuthorizationList() {
     globalTextSearchFilter,
     compostFacilityFilterDisabled,
     landApplicationBioSolidsFilterDisabled,
+    lastModified
   } = useSelector((state: RootState) => state.omrr)
   const pagination = (
     <Grid item xs={12}>
@@ -388,6 +389,18 @@ export default function AuthorizationList() {
                 maxWidth: '100%',
               }}
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{
+                margin: '2em 0em',
+                width: '100%',
+                maxWidth: '100%',
+                fontStyle: 'italic',
+              }}
+            >
+              Data Last Updated :  {lastModified}
+            </Typography>
           </Grid>
           {pagination}
           <Grid

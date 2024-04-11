@@ -254,7 +254,10 @@ export const omrrSlice = createSlice({
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state
-       state.lastModified = action.payload.lastModified
+      // format the date as MMM DD, YYYY
+      const lastModified = new Date(action.payload.lastModified)
+      const month = lastModified.toLocaleString('default', { month: 'short' });
+      state.lastModified = month + ' ' + lastModified.getDate() + ', ' + lastModified.getFullYear()
       let omrrData = []
       for (const item of action.payload.omrrData) {
         const individualData = {
