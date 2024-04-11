@@ -9,6 +9,7 @@ import rfdc from 'rfdc'
 const deepClone = rfdc({ circles: true })
 
 export interface OmrrSliceState {
+  lastModified: string
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
@@ -60,6 +61,7 @@ export const initialState: OmrrSliceState = {
   globalTextSearchFilter: '',
   compostFacilityFilterDisabled: true,
   landApplicationBioSolidsFilterDisabled: true,
+  lastModified: '',
 }
 
 function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
@@ -252,9 +254,12 @@ export const omrrSlice = createSlice({
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state
-
+      // format the date as MMM DD, YYYY
+      const lastModified = new Date(action.payload.lastModified)
+      const month = lastModified.toLocaleString('default', { month: 'short' });
+      state.lastModified = month + ' ' + lastModified.getDate() + ', ' + lastModified.getFullYear()
       let omrrData = []
-      for (const item of action.payload) {
+      for (const item of action.payload.omrrData) {
         const individualData = {
           ...item,
         }

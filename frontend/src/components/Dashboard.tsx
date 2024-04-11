@@ -592,7 +592,7 @@ export default function Dashboard() {
                         alignItems: 'center',
                       }}
                       target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
+                      href="https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/reporting/environmental-enforcement-reporting"
                     >
                       Compliance and enforcement
                       <ChevronRight

@@ -5,11 +5,13 @@ import { logger } from '../../logger'
 import { Readable } from 'stream'
 import Papa from 'papaparse'
 import { OmrrData } from '../types/omrr-data'
+import { OmrrResponse } from '../types/omrr-response'
 
 @Injectable()
 export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
   private readonly _s3Client: S3Client
   private _omrrData: OmrrData[] = []
+  private omrrResponse: OmrrResponse;
 
   constructor() {
     this._s3Client = new S3Client({
@@ -72,11 +74,11 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
     })
   }
 
-  async getLatestOMRRFileContents(): Promise<OmrrData[]> {
-    return this._omrrData
+  async getLatestOMRRFileContents(): Promise<OmrrResponse> {
+    return this.omrrResponse
   }
 
-  async getLatestOmrrDataFromObjectStore(): Promise<OmrrData[]> {
+  async getLatestOmrrDataFromObjectStore(): Promise<OmrrResponse> {
     try {
       const response = await this._s3Client.send(
         new ListObjectsCommand({ Bucket: process.env.OS_BUCKET }),
@@ -86,6 +88,7 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
         const modifiedDateB: any = new Date(b.LastModified)
         return modifiedDateB - modifiedDateA
       })
+      const lastModified = sortedData[0]?.LastModified
       const fileName = sortedData[0]?.Key
       logger.info(`fileName is ${fileName}`)
 
@@ -96,7 +99,12 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
       if (fileStream) {
         this._omrrData = await this.convertCSVToJson(fileStream)
 
-        return this._omrrData
+        this.omrrResponse = {
+          lastModified: lastModified,
+          omrrData: this._omrrData,
+
+        }
+        return this.omrrResponse
       }
     } catch (e) {
     }
