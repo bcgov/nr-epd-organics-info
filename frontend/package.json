@@ -4,14 +4,16 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "clean": "rimraf ./node_modules/.vite",
+    "build": "vite build",
     "build:analyze": "vite build --mode analyze",
     "build:clean": "rimraf dist",
+    "clean": "rimraf ./node_modules/.vite",
+    "dev": "vite --host",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
     "preview": "vite preview",
     "test:unit": "vitest --mode test",
-    "test:cov": "vitest run --mode test --coverage",
-    "build": "vite build"
+    "test:cov": "vitest run --mode test --coverage"
   },
   "dependencies": {
     "@bcgov/bc-sans": "^2.1.0",
