@@ -24,14 +24,6 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-dependencies:
-
-  - name: postgresql
-    condition: bitnami-pg.enabled
-    version: 15.2.8
-    repository: https://charts.bitnami.com/bitnami
-    alias: bitnami-pg
-
 maintainers:
   - name: Om Mishra
     email: omprakash.2.mishra@gov.bc.ca
