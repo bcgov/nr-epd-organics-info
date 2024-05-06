@@ -4,14 +4,12 @@ import * as process from 'process'
 import { logger } from '../../logger'
 import { Readable } from 'stream'
 import Papa from 'papaparse'
-import { OmrrData } from '../types/omrr-data'
 import { OmrrResponse } from '../types/omrr-response'
+let omrrResponse: OmrrResponse
 
 @Injectable()
 export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
   private readonly _s3Client: S3Client
-  private _omrrData: OmrrData[] = []
-  private omrrResponse: OmrrResponse;
 
   constructor() {
     this._s3Client = new S3Client({
@@ -75,7 +73,7 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
   }
 
   async getLatestOMRRFileContents(): Promise<OmrrResponse> {
-    return this.omrrResponse
+    return omrrResponse
   }
 
   async getLatestOmrrDataFromObjectStore(): Promise<OmrrResponse> {
@@ -97,14 +95,11 @@ export class ObjectStoreService implements OnModuleDestroy, OnModuleInit {
       )
       const fileStream: any = result?.Body
       if (fileStream) {
-        this._omrrData = await this.convertCSVToJson(fileStream)
-
-        this.omrrResponse = {
+        omrrResponse = {
           lastModified: lastModified,
-          omrrData: this._omrrData,
-
+          omrrData: await this.convertCSVToJson(fileStream),
         }
-        return this.omrrResponse
+        return omrrResponse
       }
     } catch (e) {
     }
