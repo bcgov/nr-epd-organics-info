@@ -14,7 +14,6 @@ export class TasksService {
   async refreshCache() {
     logger.info('refresh cache every 5 minutes')
     await this.objectStoreService.getLatestOmrrDataFromObjectStore()
-
   }
 
 }
