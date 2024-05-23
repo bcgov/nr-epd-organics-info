@@ -41,6 +41,13 @@ spec:
           env:
             - name: LOG_LEVEL
               value: info
+            - name: NR_ORACLE_SERVICE_URL
+              value: http://nr-oracle-service
+            - name: NR_ORACLE_SERVICE_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: nr-oracle-service
+                    key: apiKey
           ports:
             - name: http
               containerPort: {{ .Values.backend.service.targetPort }}

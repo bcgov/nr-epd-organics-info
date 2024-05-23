@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { ObjectStoreService } from './v1/object-store/object.store.service'
-import { OmrrResponse } from './v1/types/omrr-response'
+import {Controller, Get} from '@nestjs/common';
+import {AppService} from './app.service';
+import {OmrrResponse} from './v1/types/omrr-response'
+import {AmsOracleConnectorService} from "./v1/ams-oracle-connector/ams.oracle.connector.service";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
-              private readonly objectStoreService: ObjectStoreService) {}
+              private readonly amsOracleConnectorService: AmsOracleConnectorService) {}
 
   @Get()
   getHello(): string {
@@ -14,6 +14,6 @@ export class AppController {
   }
   @Get('/omrr')
   async getAllOmrrRecords(): Promise<OmrrResponse> {
-    return this.objectStoreService.getLatestOMRRFileContents();
+    return this.amsOracleConnectorService.getLatestOmrrDataFromCache();
   }
 }

@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.515.0",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/cli": "^10.1.16",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.0.0",
@@ -35,6 +36,7 @@
     "@nestjs/testing": "^10.0.0",
     "@nestjs/throttler": "^5.1.2",
     "@prisma/client": "^5.7.0",
+    "axios": "^1.7.2",
     "dotenv": "^16.0.1",
     "express-prom-bundle": "^7.0.0",
     "helmet": "^7.0.0",
