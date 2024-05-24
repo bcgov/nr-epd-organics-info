@@ -2,14 +2,14 @@ import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
 import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
 import {
   AppBar,
+  Box,
+  Icon,
   IconButton,
   Link,
-  Toolbar,
-  MenuItem,
   Menu as MenuComponent,
-  Box,
+  MenuItem,
+  Toolbar,
   Typography,
-  Icon,
 } from '@mui/material'
 import { Feed, Menu } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
@@ -17,7 +17,6 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
-import { height } from '@mui/system'
 
 const styles = {
   appBar: {

@@ -74,7 +74,7 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     state.filteredValue = state.searchByFilteredValue.filter(
       (item: OmrrData) => {
         return Object.values(item).some((value) => {
-          return value
+          return value?.toString()
             ?.toLowerCase()
             .includes(state.globalTextSearchFilter.toLowerCase())
         })
