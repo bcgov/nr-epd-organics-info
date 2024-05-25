@@ -1,17 +1,18 @@
-import {Injectable, OnModuleInit} from "@nestjs/common";
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
 import {HttpService} from "@nestjs/axios";
 import {OmrrResponse} from "../types/omrr-response";
 import {AxiosResponse} from "axios";
 import {OmrrData} from "../types/omrr-data";
 import {OMRR_QUERY} from "./omrr-query";
-import {logger} from "../../logger";
+import * as process from 'node:process'
 
-let omrrResponse: OmrrResponse;
+let omrrResponse: OmrrResponse | null = null
 const NR_ORACLE_SERVICE_URL = process.env.NR_ORACLE_SERVICE_URL;
 const NR_ORACLE_SERVICE_KEY = process.env.NR_ORACLE_SERVICE_KEY;
 
 @Injectable()
 export class AmsOracleConnectorService implements OnModuleInit {
+  private readonly logger = new Logger(AmsOracleConnectorService.name)
   constructor(private readonly httpService: HttpService) {
   }
 
@@ -34,7 +35,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
 
   async getOMRRDataFromAMS() {
-    logger.info('Getting OMRR data from AMS');
+    this.logger.verbose('Getting OMRR data from AMS')
     try {
       const response: AxiosResponse<OmrrData[]> = await this.httpService.axiosRef.post(
         NR_ORACLE_SERVICE_URL,
@@ -55,15 +56,18 @@ export class AmsOracleConnectorService implements OnModuleInit {
           lastModified: new Date().toISOString(),
           omrrData: response.data
         };
-        logger.info('Got OMRR data from AMS');
+        this.logger.verbose('Got OMRR data from AMS')
         return omrrResponse;
       } else {
-        logger.error('Error Getting OMRR data from AMS', response.status);
+        this.logger.error('Error Getting OMRR data from AMS', response.status)
+        throw new Error('Error Getting OMRR data from AMS')
       }
 
 
     } catch (error) {
-      logger.error(error);
+      this.logger.error(error)
+      throw new Error('Error Getting OMRR data from AMS')
+
     }
   }
 
@@ -73,8 +77,12 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async onModuleInit() {
     if(!omrrResponse){ // avoid multiple execution
-      logger.info('Initializing AmsOracleConnectorService');
-      await this.getOMRRDataFromAMS();
+      this.logger.verbose('Initializing AmsOracleConnectorService')
+      try {
+        await this.getOMRRDataFromAMS()
+      } catch (error) {
+        process.exit(128)
+      }
     }
 
   }
