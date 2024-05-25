@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { ObjectStoreService } from './object.store.service'
+import { Module } from '@nestjs/common';
+import { ObjectStoreService } from './object.store.service';
 
 @Module({
   providers: [ObjectStoreService],
-  exports: [ObjectStoreService],
+  exports: [ObjectStoreService]
 })
-export class ObjectStoreModule{
+export class ObjectStoreModule {
 
 }

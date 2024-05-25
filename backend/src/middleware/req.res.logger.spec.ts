@@ -1,19 +1,17 @@
-import {Test} from '@nestjs/testing';
-import {HTTPLoggerMiddleware} from './req.res.logger';
-import {Request, Response} from 'express';
-import {Logger} from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import { HTTPLoggerMiddleware } from './req.res.logger';
+import { Request, Response } from 'express';
+import { Logger } from '@nestjs/common';
 
 describe('HTTPLoggerMiddleware', () => {
   let middleware: HTTPLoggerMiddleware;
-  let logger: Logger;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [HTTPLoggerMiddleware, Logger],
+      providers: [HTTPLoggerMiddleware, Logger]
     }).compile();
 
     middleware = module.get<HTTPLoggerMiddleware>(HTTPLoggerMiddleware);
-    logger = module.get<Logger>(Logger);
   });
   it('should log the correct information', () => {
     const request: Request = {

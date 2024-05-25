@@ -1,7 +1,8 @@
-import { Controller, Get, Res } from "@nestjs/common";
-import { Response } from "express";
-import { register } from "./prom";
-@Controller("metrics")
+import { Controller, Get, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { register } from './prom';
+
+@Controller('metrics')
 export class MetricsController {
 
   @Get()

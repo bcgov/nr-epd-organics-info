@@ -1,4 +1,4 @@
-import { OmrrData } from './omrr-data'
+import { OmrrData } from './omrr-data';
 
 export interface OmrrResponse {
   lastModified: string;
