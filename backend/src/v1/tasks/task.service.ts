@@ -1,18 +1,17 @@
-import {Injectable} from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import {Cron} from '@nestjs/schedule'
-import {logger} from '../../logger'
 import {AmsOracleConnectorService} from "../ams-oracle-connector/ams.oracle.connector.service";
 
 @Injectable()
 export class TasksService {
-
+  private readonly logger = new Logger(TasksService.name)
   constructor(private readonly amsOracleConnectorService: AmsOracleConnectorService) {
 
   }
 
-  @Cron('0 0/5 * * * *')
+  @Cron('0 0 0/1 * * *')
   async refreshCache() {
-    logger.info('refresh cache every 5 minutes')
+    this.logger.log('refresh cache every hour')
     await this.amsOracleConnectorService.getOMRRDataFromAMS()
   }
 
