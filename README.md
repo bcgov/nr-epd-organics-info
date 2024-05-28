@@ -25,6 +25,26 @@ Here is high-level documentation on the development of applications, use of GitH
 - [DevHub DC Developer guide](https://developer.gov.bc.ca/docs/default/component/bc-developer-guide/)
 - [DevHub Openshift documentation](https://developer.gov.bc.ca/docs/default/component/platform-developer-docs)
 
+## Running the application in local development environment
+
+Pre-requisites:
+
+- Node.js installed on the machine
+- Access to OpenShift namespace for Organics Info (ORI) project
+- OC CLI installed.(https://console.apps.silver.devops.gov.bc.ca/command-line-tools)
+- .env file is created in the backend folder based on the .env.sample file, the values can be retrieved from secrets in
+  OpenShift namespace.
+
+Steps:
+
+1. Open terminal, do oc login and switch to the namespace where the application is deployed.
+2. Run the following command in terminal `oc port-forward service/nr-oracle-service 9080:80`, this enables access to nr
+   oracle service on port 9080 of local machine.
+3. Run the following command in terminal `cd backend && npm install && npm run start:debug`, this will start the backend
+   application on port 3000.
+4. Run the following command in terminal `cd frontend && npm install && npm run dev`, this will start the frontend
+   application on port 3001.
+
 # Contribution Guidelines
 
 Follow the steps outlined in this repository to contribute: [CONTRIBUTING.md](./CONTRIBUTING.md).
