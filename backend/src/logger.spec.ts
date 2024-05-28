@@ -4,7 +4,7 @@ import * as lodash from 'lodash';
 jest.mock('lodash', () => {
   return {
     __esModule: true,
-    ...jest.requireActual('lodash'),
+    ...jest.requireActual('lodash')
   };
 });
 describe('logger', () => {

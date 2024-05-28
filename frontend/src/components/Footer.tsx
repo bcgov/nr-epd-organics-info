@@ -1,18 +1,11 @@
-import {
-  AppBar,
-  Grid,
-  Link,
-  Toolbar,
-  useScrollTrigger,
-  Fade,
-} from '@mui/material'
+import { AppBar, Fade, Grid, Link, Toolbar, useScrollTrigger } from '@mui/material'
 import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 const styles = {
   appBar: {

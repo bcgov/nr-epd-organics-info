@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common'
-import { HealthCheck, HealthCheckService, PrismaHealthIndicator } from '@nestjs/terminus'
+import { Controller, Get } from '@nestjs/common';
+import { HealthCheck } from '@nestjs/terminus';
 
-@Controller("health")
+@Controller('health')
 export class HealthController {
 
   @Get()
   @HealthCheck()
   check() {
-    return "ok";
+    return 'ok';
   }
 }

@@ -74,7 +74,7 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     state.filteredValue = state.searchByFilteredValue.filter(
       (item: OmrrData) => {
         return Object.values(item).some((value) => {
-          return value
+          return value?.toString()
             ?.toLowerCase()
             .includes(state.globalTextSearchFilter.toLowerCase())
         })
@@ -251,6 +251,11 @@ export const omrrSlice = createSlice({
     })
     // Handle the fulfilled action
     builder.addCase(fetchOMRRData.fulfilled, (state, action) => {
+      if (action.payload === null || action.payload === undefined || action.payload.omrrData === null || action.payload.omrrData === undefined) {
+        state.status = 'failed'
+        state.error = 'No data found'
+        return
+      }
       // Set the status to succeeded
       state.status = 'succeeded'
       // Store the data in the state
@@ -278,6 +283,14 @@ export const omrrSlice = createSlice({
           )
         } else {
           individualData['Last Amendment Date'] = undefined
+        }
+        // convert all the boolean fields to boolean from string, if it contains Y or Yes true else false
+        for (const key in individualData) {
+          if (individualData[key] === 'Y' || individualData[key] === 'Yes') {
+            individualData[key] = true
+          } else if (individualData[key] === 'N' || individualData[key] === 'No') {
+            individualData[key] = false
+          }
         }
 
         omrrData.push(individualData)

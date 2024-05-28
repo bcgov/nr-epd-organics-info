@@ -1,5 +1,5 @@
-import {createLogger, format, transports} from "winston";
-import {omit} from "lodash";
+import { createLogger, format, transports } from 'winston';
+import { omit } from 'lodash';
 
 
 /**
@@ -12,21 +12,21 @@ function getDomainWinstonLoggerFormat(colors = true) {
   const colorize = colors ? format.colorize() : null;
   const loggingFormats = [
     format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss.SSS"
+      format: 'YYYY-MM-DD HH:mm:ss.SSS'
     }),
-    format.errors({stack: true}),
+    format.errors({ stack: true }),
     colorize,
     format.printf((info) => {
-      const stackTrace = info.stack ? `\n${info.stack}` : "";
+      const stackTrace = info.stack ? `\n${info.stack}` : '';
 
       // handle single object
       if (!info.message) {
-        const obj = omit(info, ["level", "timestamp", Symbol.for("level")]);
+        const obj = omit(info, ['level', 'timestamp', Symbol.for('level')]);
         return `${info.timestamp} - ${info.level}: ${obj}${stackTrace}`;
       }
-      const splatArgs = info[Symbol.for("splat")] || [];
-      const rest = splatArgs.join(" ");
-      if(typeof info.message === 'object') {
+      const splatArgs = info[Symbol.for('splat')] || [];
+      const rest = splatArgs.join(' ');
+      if (typeof info.message === 'object') {
         return `${info.timestamp} - ${info.level}: ${JSON.stringify(info.message)} ${rest}${stackTrace}`;
       }
       return `${info.timestamp} - ${info.level}: ${info.message} ${rest}${stackTrace}`;
@@ -37,10 +37,10 @@ function getDomainWinstonLoggerFormat(colors = true) {
 
 
 const logger = createLogger({
-  level: process.env.LOG_LEVEL || "silly",
+  level: process.env.LOG_LEVEL || 'silly',
   format: getDomainWinstonLoggerFormat(true),
   transports: [
     new transports.Console()
   ]
 });
-export {logger};
+export { logger };

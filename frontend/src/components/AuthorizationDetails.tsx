@@ -634,7 +634,7 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                             justifyContent: 'left',
                           }}
                         >
-                          {data['Untreated and Unprocessed Wood'] ? (
+                          {data['Untreated and Unprocessed Wood Residuals'] ? (
                             <CheckIcon style={{ color: '#42814A' }} />
                           ) : (
                             <CloseIcon style={{ color: '#605E5C' }} />
@@ -730,7 +730,7 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                             justifyContent: 'left',
                           }}
                         >
-                          {data['Brewary Waste/Wine Waste'] ? (
+                          {data['Brewery Waste/Wine Waste'] ? (
                             <CheckIcon style={{ color: '#42814A' }} />
                           ) : (
                             <CloseIcon style={{ color: '#605E5C' }} />
@@ -1042,7 +1042,7 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                             color: '#000000',
                           }}
                         >
-                          {data['Intended Dates of Land Applica']}
+                          {data['Intended Dates of Land Application']}
                         </span>
                       </Grid>
                     </Grid>

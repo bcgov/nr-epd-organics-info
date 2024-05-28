@@ -56,12 +56,15 @@ function informationTypography() {
             <ul style={{ marginBottom: '2em' }}>
               <li>
                 Governs the construction and operation of compost facilities
-              </li>{' '}
+              </li>
+              {' '}
               <li>
                 Regulates the production, distribution, storage, sale and use of
                 biosolids and compost
-              </li>{' '}
-              <li>Controls how compost facilities are built and operated</li>{' '}
+              </li>
+              {' '}
+              <li>Controls how compost facilities are built and operated</li>
+              {' '}
             </ul>
             The B.C. government has a plan to update the regulation to:
             <ul style={{ marginBottom: '2em' }}>
