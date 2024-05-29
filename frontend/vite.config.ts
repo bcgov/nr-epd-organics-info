@@ -82,6 +82,7 @@ export default ({ mode }) => {
       },
     },
     test: {
+      exclude: ['**/node_modules/**', '**/e2e/**'],
       environment: 'jsdom',
       globals: true,
       coverage: {
