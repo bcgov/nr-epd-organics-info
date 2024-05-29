@@ -39,11 +39,16 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: test
       params: --set backend.deploymentStrategy=RollingUpdate --set frontend.deploymentStrategy=RollingUpdate --set backend.pdb.enabled=false --set frontend.pdb.enabled=false
-
+  tests:
+    name: Tests
+    needs: [ deploy-test ]
+    uses: ./.github/workflows/.tests.yml
+    with:
+      target: test
 
   deploy-prod:
     name: Deploy (prod)
-    needs: [vars]
+    needs: [ vars,tests ]
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
     with:
