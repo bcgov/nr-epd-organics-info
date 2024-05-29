@@ -117,6 +117,7 @@ export default function Footer() {
               spacing={2}
             >
               <Link
+                data-testid="footer-home"
                 sx={styles.footerButton}
                 id="footer-home"
                 target="_blank"
@@ -125,6 +126,7 @@ export default function Footer() {
                 Home
               </Link>
               <Link
+                data-testid="footer-copyright"
                 sx={styles.footerButton}
                 color="primary"
                 id="footer-copyright"
@@ -134,6 +136,7 @@ export default function Footer() {
                 Copyright
               </Link>
               <Link
+                data-testid="footer-disclaimer"
                 sx={styles.footerButton}
                 id="footer-disclaimer"
                 target="_blank"
@@ -143,6 +146,7 @@ export default function Footer() {
               </Link>
 
               <Link
+                data-testid="footer-privacy"
                 sx={styles.footerButton}
                 id="footer-privacy"
                 target="_blank"
@@ -152,6 +156,7 @@ export default function Footer() {
               </Link>
 
               <Link
+                data-testid="footer-accessibility"
                 sx={styles.footerButton}
                 color="primary"
                 id="footer-accessibility"

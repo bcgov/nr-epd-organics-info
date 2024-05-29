@@ -120,6 +120,7 @@ export default function AuthorizationList() {
   const headerCard = (
     <CardContent sx={{ padding: '0' }}>
       <Typography
+        data-testid="auth-list-headin1"
         variant="h1"
         sx={{
           margin: '0 0 .75em',
@@ -128,7 +129,7 @@ export default function AuthorizationList() {
       >
         Authorizations
       </Typography>
-      <Typography variant="h6">
+      <Typography data-testid="auth-list-heading2" variant="h6">
         Authorized compost and biosolid facilities in B.C.
       </Typography>
     </CardContent>
@@ -179,6 +180,7 @@ export default function AuthorizationList() {
                 marginBottom: '1.5em',
               }}
               label="Search Authorizations"
+              data-testid="auth-list-search-authorizations-textfield"
               value={globalTextSearchFilter}
               onChange={(event) =>
                 dispatch(searchAuthorizationsByGlobalFilter(event.target.value))
@@ -574,6 +576,7 @@ export default function AuthorizationList() {
                               }}
                             >
                               <Button
+                                data-testid={`auth-list-view-facility-details-button-${item['Authorization Number']}`}
                                 size="large"
                                 sx={{
                                   border: '1px solid #053662;',

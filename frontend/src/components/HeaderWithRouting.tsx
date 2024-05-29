@@ -56,6 +56,7 @@ export default function HeaderWithRouting() {
           <a href="/" style={{ display: 'inline-flex' }}>
             <Box
               component="img"
+              data-testid="header-logo"
               sx={{
                 alignContent: 'center',
                 content: {
@@ -71,6 +72,7 @@ export default function HeaderWithRouting() {
           </a>
           <div style={{ display: 'inline-flex' }}>
             <Typography
+              data-testid="header-title"
               sx={{
                 display: 'inline-flex',
                 fontFamily: 'BCSans',
@@ -152,6 +154,7 @@ export default function HeaderWithRouting() {
               >
                 <MenuItem onClick={handleClose}>
                   <Link
+                    data-testid="header-text-search"
                     sx={{
                       textTransform: 'none',
                       textDecoration: 'none',
@@ -164,7 +167,7 @@ export default function HeaderWithRouting() {
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <a
+                  <a data-testid="header-contact-us"
                     href="mailto:env.omrr.reg.reviews@gov.bc.ca"
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >

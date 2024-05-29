@@ -31,6 +31,7 @@ function informationTypography() {
       >
         <Grid item xs={12}>
           <Typography
+            data-testid="dashboard_heading"
             variant="h2"
             component="h2"
             sx={{
@@ -44,7 +45,7 @@ function informationTypography() {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <div>
+          <div data-testid="recycling_regulation">
             <a
               href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
               target="_blank"
@@ -123,6 +124,7 @@ export default function Dashboard() {
             gutterBottom
             variant="h1"
             component="h1"
+            data-testid="dashboard_heading"
             sx={{
               margin: {
                 xs: '2em .333em 0',
@@ -138,6 +140,7 @@ export default function Dashboard() {
             Compost and Biosolids
           </Typography>
           <Typography
+            data-testid="dashboard_subheading"
             variant="h6"
             component="h6"
             sx={{
@@ -172,6 +175,7 @@ export default function Dashboard() {
             Search on a map
           </Button>*/}
           <Button
+            data-testid="list_all_authorizations"
             size="large"
             sx={{
               margin: {
