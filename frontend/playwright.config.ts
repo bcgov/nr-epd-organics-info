@@ -43,7 +43,6 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: baseURL,
-        storageState: 'user.json'
       }
     },
     {
@@ -60,7 +59,6 @@ export default defineConfig({
       use: {
         ...devices['Desktop Firefox'],
         baseURL: baseURL,
-        storageState: 'user.json'
       }
     },
 
