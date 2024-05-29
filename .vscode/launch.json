@@ -8,9 +8,8 @@
       "runtimeExecutable": "npm",
       "skipFiles": ["backend/<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/backend",
-      "preLaunchTask": "database"
-    }
+      "cwd": "${workspaceFolder}/backend"
+    },
     {
       "name": "Frontend",
       "request": "launch",
