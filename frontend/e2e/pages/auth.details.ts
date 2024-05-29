@@ -15,7 +15,7 @@ export const authorization_details_page = async (page: Page) => {
   await expect(page.getByTestId('auth-details-effactive-date')).toContainText('Effective/Issue Date');
   await expect(page.getByTestId('auth-details-effactive-date-value')).toContainText('1994-08-02');
   await expect(page.getByTestId('auth-details-last-ammendment-date')).toContainText('Last Amendment Date');
-  await expect(page.getByTestId('auth-details-last-ammendment-date-value')).toContainText('2020-08-17');
+  await expect(page.getByTestId('auth-details-last-ammendment-date-value')).toContainText('2020-08-18');
 
   await expect(page.getByTestId('auth-details-back-to-search')).toBeVisible();
   await expect(page.getByText('CONSOLIDATED ENVIROWASTE')).toBeVisible();
