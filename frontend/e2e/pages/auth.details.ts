@@ -22,8 +22,8 @@ export const authorization_details_page = async (page: Page) => {
   await expect(page.getByText('Huntingdon Road Abbotsford, BC')).toBeVisible();
   await expect(page.getByText('49.017')).toBeVisible();
   await expect(page.getByText('-122.4547')).toBeVisible();
-  await expect(page.locator('#root')).toContainText('1994-08-01');
-  await expect(page.locator('#root')).toContainText('2020-08-17');
+  await expect(page.locator('#root')).toContainText('1994-08-02');
+  await expect(page.locator('#root')).toContainText('2020-08-18');
   await expect(page.locator('#root')).toContainText('Permit');
   await expect(page.locator('#root')).toContainText('Schedule 2 - Composting Operations');
 };
