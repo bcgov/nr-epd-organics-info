@@ -48,7 +48,7 @@ jobs:
           dir: ${{ matrix.dir }}
           node_version: "20"
           sonar_args: >
-            -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts
+            -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts,**/e2e/**
             -Dsonar.organization=bcgov-sonarcloud
             -Dsonar.projectKey=nr-omrr-transparency-${{ matrix.dir }}
             -Dsonar.sources=src
