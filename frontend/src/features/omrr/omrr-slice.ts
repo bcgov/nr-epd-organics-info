@@ -2,7 +2,6 @@ import OmrrData from '@/interfaces/omrr'
 import { ActionReducerMapBuilder, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
-import { DateTimeFormatter, nativeJs } from '~/@js-joda/core'
 import { Location } from '@/interfaces/location'
 import rfdc from 'rfdc'
 
@@ -269,18 +268,14 @@ export const omrrSlice = createSlice({
           ...item,
         }
         if (individualData['Effective/Issue Date']) {
-          const date = new Date(item['Effective/Issue Date'])
-          individualData['Effective/Issue Date'] = nativeJs(date).format(
-            DateTimeFormatter.ISO_LOCAL_DATE,
-          )
+          const effDate = individualData['Effective/Issue Date'].substring(0, 10);
+          individualData['Effective/Issue Date'] = effDate;
         } else {
           individualData['Effective/Issue Date'] = undefined
         }
         if (item['Last Amendment Date']) {
-          const date = new Date(item['Last Amendment Date'])
-          individualData['Last Amendment Date'] = nativeJs(date).format(
-            DateTimeFormatter.ISO_LOCAL_DATE,
-          )
+          const lastAmendmentDate = individualData['Last Amendment Date'].substring(0, 10);
+          individualData['Last Amendment Date'] = lastAmendmentDate;
         } else {
           individualData['Last Amendment Date'] = undefined
         }

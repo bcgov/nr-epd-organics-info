@@ -13,7 +13,7 @@ export const authorization_details_page = async (page: Page) => {
   await expect(page.getByTestId('auth-details-auth-number')).toContainText('Authorization Number');
   await expect(page.getByTestId('auth-details-auth-number-value')).toContainText('12398');
   await expect(page.getByTestId('auth-details-effactive-date')).toContainText('Effective/Issue Date');
-  await expect(page.getByTestId('auth-details-effactive-date-value')).toContainText('1994-08-01');
+  await expect(page.getByTestId('auth-details-effactive-date-value')).toContainText('1994-08-02');
   await expect(page.getByTestId('auth-details-last-ammendment-date')).toContainText('Last Amendment Date');
   await expect(page.getByTestId('auth-details-last-ammendment-date-value')).toContainText('2020-08-17');
 
