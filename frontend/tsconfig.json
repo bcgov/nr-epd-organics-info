@@ -18,11 +18,8 @@
     "jsx": "react-jsx",
     "types": [
       "vitest/globals",
-      "cypress",
       "node",
-      "cypress-file-upload",
-      "@testing-library/cypress",
-      "vite/client",
+      "vite/client"
     ],
     "baseUrl": "./",
     "paths": {
@@ -30,10 +27,16 @@
       "test": ["test"],
       "test/*": ["test/*"],
       "@/*": ["src/*"],
-      "~/*": ["node_modules/*"],
-    },
+      "~/*": [
+        "node_modules/*"
+      ]
+    }
   },
   "include": ["src", "src/**/*", "src/**/*.tsx"],
   "exclude": ["**/*.png"], // Add this line to exclude PNG files
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

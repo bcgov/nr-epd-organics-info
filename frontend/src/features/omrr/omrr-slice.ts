@@ -1,5 +1,10 @@
 import OmrrData from '@/interfaces/omrr'
-import { ActionReducerMapBuilder, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  ActionReducerMapBuilder,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit';
 import { RootState } from '@/app/store'
 import apiService from '@/service/api-service'
 import { Location } from '@/interfaces/location'
@@ -73,7 +78,8 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     state.filteredValue = state.searchByFilteredValue.filter(
       (item: OmrrData) => {
         return Object.values(item).some((value) => {
-          return value?.toString()
+          return value
+            ?.toString()
             ?.toLowerCase()
             .includes(state.globalTextSearchFilter.toLowerCase())
         })
@@ -89,7 +95,9 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
   }
   if (state.notificationFilter) {
     const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) => item['Authorization Type']?.toLowerCase() === 'notification'.toLowerCase(),
+      (item: OmrrData) =>
+        item['Authorization Type']?.toLowerCase() ===
+        'notification'.toLowerCase()
     )
     finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
   }
@@ -120,9 +128,8 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
     nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
   }
   if (state.landApplicationBioSolidsFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Operation Type']?.toLowerCase().includes('land application'),
+    const filteredItems = state.filteredValue.filter((item: OmrrData) =>
+      item['Operation Type']?.toLowerCase().includes('land application')
     )
     nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
   }
@@ -137,9 +144,11 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
       state.operationalCertificateFilter ||
       state.landApplicationBioSolidsFilter ||
       state.compostFacilityFilter) &&
-    (finalFilteredOMRRList.length === 0
-      || (state.landApplicationBioSolidsFilter && nestedFilterOMRRList.length === 0)
-      || (state.compostFacilityFilter && nestedFilterOMRRList.length === 0))) {
+    (finalFilteredOMRRList.length === 0 ||
+      (state.landApplicationBioSolidsFilter &&
+        nestedFilterOMRRList.length === 0) ||
+      (state.compostFacilityFilter && nestedFilterOMRRList.length === 0))
+  ) {
     state.filteredValue = []
   }
   state.page = 1
@@ -250,7 +259,12 @@ export const omrrSlice = createSlice({
     })
     // Handle the fulfilled action
     builder.addCase(fetchOMRRData.fulfilled, (state, action) => {
-      if (action.payload === null || action.payload === undefined || action.payload.omrrData === null || action.payload.omrrData === undefined) {
+      if (
+        action.payload === null ||
+        action.payload === undefined ||
+        action.payload.omrrData === null ||
+        action.payload.omrrData === undefined
+      ) {
         state.status = 'failed'
         state.error = 'No data found'
         return
@@ -261,20 +275,26 @@ export const omrrSlice = createSlice({
       // format the date as MMM DD, YYYY
       const lastModified = new Date(action.payload.lastModified)
       const month = lastModified.toLocaleString('default', { month: 'short' });
-      state.lastModified = month + ' ' + lastModified.getDate() + ', ' + lastModified.getFullYear()
+      state.lastModified =
+        month + ' ' + lastModified.getDate() + ', ' + lastModified.getFullYear();
       let omrrData = []
       for (const item of action.payload.omrrData) {
         const individualData = {
           ...item,
         }
         if (individualData['Effective/Issue Date']) {
-          const effDate = individualData['Effective/Issue Date'].substring(0, 10);
+          const effDate = individualData['Effective/Issue Date'].substring(
+            0,
+            10
+          );
           individualData['Effective/Issue Date'] = effDate;
         } else {
           individualData['Effective/Issue Date'] = undefined
         }
         if (item['Last Amendment Date']) {
-          const lastAmendmentDate = individualData['Last Amendment Date'].substring(0, 10);
+          const lastAmendmentDate = individualData[
+            'Last Amendment Date'
+            ].substring(0, 10);
           individualData['Last Amendment Date'] = lastAmendmentDate;
         } else {
           individualData['Last Amendment Date'] = undefined
@@ -283,7 +303,10 @@ export const omrrSlice = createSlice({
         for (const key in individualData) {
           if (individualData[key] === 'Y' || individualData[key] === 'Yes') {
             individualData[key] = true
-          } else if (individualData[key] === 'N' || individualData[key] === 'No') {
+          } else if (
+            individualData[key] === 'N' ||
+            individualData[key] === 'No'
+          ) {
             individualData[key] = false
           }
         }
@@ -296,7 +319,6 @@ export const omrrSlice = createSlice({
         (item: OmrrData) => item['Authorization Status'] === 'Active',
       )
       state.filteredValue = deepClone(state.searchByFilteredValue)
-
     })
     // Handle the rejected action
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
