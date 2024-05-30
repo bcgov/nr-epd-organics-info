@@ -34,23 +34,23 @@ export class AmsOracleConnectorService implements OnModuleInit {
    * }
    */
 
-
   async getOMRRDataFromAMS() {
     this.logger.verbose('Getting OMRR data from AMS');
     try {
-      const response: AxiosResponse<OmrrData[]> = await this.httpService.axiosRef.post(
-        NR_ORACLE_SERVICE_URL,
-        {
-          'queryType': 'READ',
-          'sql': OMRR_QUERY
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': NR_ORACLE_SERVICE_KEY
+      const response: AxiosResponse<OmrrData[]> =
+        await this.httpService.axiosRef.post(
+          NR_ORACLE_SERVICE_URL,
+          {
+            queryType: 'READ',
+            sql: OMRR_QUERY
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-API-Key': NR_ORACLE_SERVICE_KEY
+            }
           }
-        }
-      );
+        );
 
       if (response.status === 200) {
         omrrResponse = {
@@ -63,12 +63,9 @@ export class AmsOracleConnectorService implements OnModuleInit {
         this.logger.error('Error Getting OMRR data from AMS', response.status);
         throw new Error('Error Getting OMRR data from AMS');
       }
-
-
     } catch (error) {
       this.logger.error(error);
       throw new Error('Error Getting OMRR data from AMS');
-
     }
   }
 
@@ -77,7 +74,8 @@ export class AmsOracleConnectorService implements OnModuleInit {
   }
 
   async onModuleInit() {
-    if (!omrrResponse) { // avoid multiple execution
+    if (!omrrResponse) {
+      // avoid multiple execution
       this.logger.verbose('Initializing AmsOracleConnectorService');
       try {
         await this.getOMRRDataFromAMS();
@@ -85,6 +83,5 @@ export class AmsOracleConnectorService implements OnModuleInit {
         process.exit(128);
       }
     }
-
   }
 }
