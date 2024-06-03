@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 env:
   DOMAIN: apps.silver.devops.gov.bc.ca
-  PREFIX: ${{ github.event.repository.name }}-${{ inputs.target }}
+  PREFIX: ${{ github.event.repository.name }}-test
 jobs:
   load-tests:
     name: Soak Tests

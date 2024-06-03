@@ -45,3 +45,10 @@ jobs:
     uses: ./.github/workflows/.tests.yml
     with:
       target: ${{ github.event.number }}
+  results:
+    name: PR Results
+    needs: [builds, deploys, tests]
+    if: always() && (!failure()) && (!cancelled())
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo "Success!"
