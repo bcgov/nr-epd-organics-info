@@ -1,4 +1,11 @@
-import { AppBar, Fade, Grid, Link, Toolbar, useScrollTrigger } from '@mui/material'
+import {
+  AppBar,
+  Fade,
+  Grid,
+  Link,
+  Toolbar,
+  useScrollTrigger,
+} from '@mui/material'
 import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
@@ -15,6 +22,7 @@ const styles = {
     color: '#ffffff',
     backgroundColor: '#053662',
     display: 'flex',
+    height: '4em',
   },
   footerButton: {
     margin: '0.2em',
@@ -69,7 +77,12 @@ export default function Footer() {
     )
   }
   return (
-    <AppBar position="relative" sx={styles.appBar} color="default">
+    <AppBar
+      position="relative"
+      sx={styles.appBar}
+      color="default"
+      component="footer"
+    >
       <Toolbar
         sx={{
           padding: {

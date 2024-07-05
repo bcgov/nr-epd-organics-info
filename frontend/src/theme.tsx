@@ -1,5 +1,15 @@
-import { createTheme, styled } from '@mui/material/styles'
-import { fontSize } from '@mui/system'
+import { createTheme } from '@mui/material/styles'
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true
+    sm: true
+    md: true
+    lg: true
+    xl: true
+    xxl: true
+  }
+}
 
 // A custom theme for this app
 const theme = createTheme({
@@ -18,6 +28,16 @@ const theme = createTheme({
     },
     success: {
       main: '#234720',
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+      xxl: 1320,
     },
   },
   typography: {
