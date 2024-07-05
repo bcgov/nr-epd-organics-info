@@ -1,3 +1,8 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 @font-face {
   font-family: 'BCSans';
   font-style: normal;
@@ -26,8 +31,23 @@
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-BoldItalic.woff')
     format('woff');
 }
+
 .map-container {
-    margin-top: 1em;
-    border-radius: 4px;
-    z-index: 1;
+  margin-top: 1em;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.map-view {
+  /* Map height is screen height minus footer height */
+  height: calc(100vh - 4em);
+  /* Header is fixed */
+  padding-top: 4em;
+  position: relative;
+}
+
+.map-view > .map-view-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
