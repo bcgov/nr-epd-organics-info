@@ -46,7 +46,7 @@ const blueIcon1x = new L.Icon({
 })
 
 // Set the position of the marker for center of BC
-const position: LatLngTuple = [53.7267, -127.6476]
+const CENTER_OF_BC: LatLngTuple = [53.7267, -127.6476]
 
 /**
  * Renders a map with a marker at the supplied location
@@ -59,12 +59,13 @@ function MapView() {
 
   const hasMarkers =
     status === 'succeeded' && Array.isArray(values) && values.length > 0
+  const markerIcon = isSmall ? blueIcon1x : blueIcon2x
 
   return (
-    <div className="map-view">
+    <div className="map-view" data-testid="map-view">
       <MapContainer
         id="map"
-        center={position}
+        center={CENTER_OF_BC}
         zoom={6}
         zoomControl={false}
         className="map-view-container"
@@ -75,16 +76,27 @@ function MapView() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {hasMarkers && (
-          <MarkerClusterGroup chunkedLoading>
-            {values.map((item: OmrrData, index: number) => (
-              <Marker
-                key={`Marker-${index}-${item['Regulated Party']}`}
-                position={[item.Latitude, item.Longitude]}
-                icon={isSmall ? blueIcon1x : blueIcon2x}
-              >
-                <Tooltip direction="top">{item['Regulated Party']}</Tooltip>
-              </Marker>
-            ))}
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={20}
+            spiderfyOnMaxZoom
+            showCoverageOnHover
+          >
+            {values.map((item: OmrrData, index: number) => {
+              const key = `Marker-${index}-${item['Regulated Party']}`
+              const title = item['Regulated Party']
+              return (
+                <Marker
+                  key={key}
+                  position={[item.Latitude, item.Longitude]}
+                  icon={markerIcon}
+                  alt="Authorization marker"
+                  title={title}
+                >
+                  <Tooltip direction="top">{title}</Tooltip>
+                </Marker>
+              )
+            })}
           </MarkerClusterGroup>
         )}
       </MapContainer>

@@ -1,6 +1,8 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
 
+import { isTest } from '@/constants/env'
+
 class APIService {
   private readonly client: AxiosInstance
 
@@ -13,11 +15,15 @@ class APIService {
     })
     this.client.interceptors.response.use(
       (config) => {
-        console.info(`received response status: ${config.status}`)
+        if (!isTest) {
+          console.info(`received response status: ${config.status}`)
+        }
         return config
       },
       (error) => {
-        console.error(error)
+        if (!isTest) {
+          console.error(error)
+        }
       },
     )
   }

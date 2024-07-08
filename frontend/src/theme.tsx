@@ -11,6 +11,15 @@ declare module '@mui/material/styles' {
   }
 }
 
+export const themeBreakpointValues = {
+  xs: 0,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1320,
+}
+
 // A custom theme for this app
 const theme = createTheme({
   palette: {
@@ -31,14 +40,7 @@ const theme = createTheme({
     },
   },
   breakpoints: {
-    values: {
-      xs: 0,
-      sm: 576,
-      md: 768,
-      lg: 992,
-      xl: 1200,
-      xxl: 1320,
-    },
+    values: themeBreakpointValues,
   },
   typography: {
     fontFamily: 'BCSans !important',

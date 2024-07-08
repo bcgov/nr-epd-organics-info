@@ -1,9 +1,8 @@
-import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
-import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
+import { MouseEvent, useState } from 'react'
+import { useNavigate } from 'react-router'
 import {
   AppBar,
   Box,
-  Icon,
   IconButton,
   Link,
   Menu as MenuComponent,
@@ -15,9 +14,11 @@ import { Feed, Map, Menu } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useNavigate } from 'react-router'
-import { useState } from 'react'
+
 import { HeaderIconButton } from '@/components/HeaderIconButton'
+
+import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
+import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
 
 const styles = {
   appBar: {
@@ -26,18 +27,51 @@ const styles = {
     borderBottom: '0.1em solid rgb(252, 186, 25) !important',
     height: '4em',
   },
+  toolbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+  },
+  logo: {
+    alignContent: 'center',
+    content: {
+      xs: `url(${BCGovLogoV})`,
+      sm: `url(${BCGovLogoH})`,
+    },
+    height: '4em',
+    position: 'relative',
+    top: '-2px',
+    cursor: 'pointer',
+  },
+  titleText: {
+    fontSize: {
+      xs: '1.3em',
+      sm: '1.5em',
+    },
+    marginLeft: {
+      xs: '.25em',
+      sm: '.5em',
+    },
+  },
+  menuLink: {
+    textTransform: 'none',
+    textDecoration: 'none',
+    color: 'inherit',
+  },
 }
+
 export default function Header() {
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined)
   const navigate = useNavigate()
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('lg'))
 
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget)
+  const handleMenuClick = (event: MouseEvent) => {
+    setAnchorEl(event.currentTarget as HTMLElement)
   }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleMenuClose = () => {
+    setAnchorEl(undefined)
   }
   const buttonClicked = (route: string) => {
     navigate(route)
@@ -45,16 +79,13 @@ export default function Header() {
 
   return (
     <AppBar position="fixed" sx={styles.appBar}>
-      <Toolbar
-        sx={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          alignContent: 'center',
-          justifyContent: 'space-between',
-        }}
-        id="back-to-top-anchor"
-      >
-        <Stack direction="row" justifyContent={'center'} id="logo_name">
+      <Toolbar sx={styles.toolbar} id="back-to-top-anchor">
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          id="logo_name"
+        >
           <Link
             style={{ display: 'inline-flex' }}
             onClick={() => buttonClicked('/')}
@@ -62,40 +93,13 @@ export default function Header() {
             <Box
               component="img"
               data-testid="header-logo"
-              sx={{
-                alignContent: 'center',
-                content: {
-                  xs: `url(${BCGovLogoV})`,
-                  sm: `url(${BCGovLogoH})`,
-                },
-                height: '4em',
-                position: 'relative',
-                top: '-2px',
-              }}
+              sx={styles.logo}
               alt="Logo"
             />
           </Link>
-          <div style={{ display: 'inline-flex' }}>
-            <Typography
-              data-testid="header-title"
-              sx={{
-                display: 'inline-flex',
-                fontFamily: 'BCSans',
-                fontSize: {
-                  xs: '1.25em',
-                  sm: '1.5em',
-                },
-                lineHeight: '100%',
-                alignItems: 'center',
-                marginLeft: {
-                  xs: '.25em',
-                  sm: '.5em',
-                },
-              }}
-            >
-              Organics Info
-            </Typography>
-          </div>
+          <Typography data-testid="header-title" sx={styles.titleText}>
+            Organics Info
+          </Typography>
         </Stack>
         <Stack direction="row" id="nav">
           {mdMatches && (
@@ -129,47 +133,40 @@ export default function Header() {
           )}
           {!mdMatches && (
             <div>
-              <IconButton onClick={handleClick}>
-                <Menu color="secondary"></Menu>
+              <IconButton
+                onClick={handleMenuClick}
+                aria-label="Menu"
+                title="Menu"
+              >
+                <Menu color="secondary" />
               </IconButton>
               <MenuComponent
                 id="headerMenu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClose={handleMenuClose}
               >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleMenuClose}>
                   <Link
-                    data-testid="header-map-search"
-                    sx={{
-                      textTransform: 'none',
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
+                    sx={styles.menuLink}
                     onClick={() => buttonClicked('/map')}
                     component="button"
                   >
                     Map Search
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleMenuClose}>
                   <Link
-                    data-testid="header-text-search"
-                    sx={{
-                      textTransform: 'none',
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
+                    sx={styles.menuLink}
                     onClick={() => buttonClicked('/search')}
                     component="button"
                   >
                     Text Search
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleMenuClose}>
                   <a
-                    data-testid="header-contact-us"
                     href="mailto:env.omrr.reg.reviews@gov.bc.ca"
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >

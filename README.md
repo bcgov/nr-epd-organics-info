@@ -55,10 +55,13 @@ Steps:
 ## Running Tests
 
 **End to end** tests are run using [Playwright](https://playwright.dev/).
+Here are the steps to follow to run the end to end tests:
 1. First install Playwright: `npx playwright install`
 2. Then run start the server and frontend as shown above in steps 1-4.
 3. Run Playwright with this command: `npm playwright test`
+4. To run a single test file: `npx playwright test map.test.ts`
 
+To configure playwright edit the `playwright.config.ts` file.
 End to end tests are located in the `/e2e` folder.
 
 **Unit tests** do not require the server or frontend to be running.

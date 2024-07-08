@@ -44,6 +44,10 @@ html, body {
   /* Header is fixed */
   padding-top: 4em;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .map-view > .map-view-container {
