@@ -19,6 +19,27 @@ vi.mock('react-leaflet-cluster', () => {
   }
 })
 
+/**
+ * Media Query support
+ * Call the setScreenWidth() function before a test to set the window width.
+ * @see https://mui.com/material-ui/react-use-media-query/#testing
+ * @see https://stackoverflow.com/questions/56180772/jest-material-ui-correctly-mocking-usemediaquery
+ */
+function createMatchMedia() {
+  return (query: string): any => {
+    const width = window.innerWidth
+    return {
+      matches: mediaQuery.match(query, { width }),
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      addEventListener: () => {},
+      removeListener: () => {},
+      removeEventListener: () => {},
+    }
+  }
+}
+
 // MSW Setup
 const baseUrl = 'http://localhost:3000/api'
 
@@ -45,23 +66,6 @@ export const errorHandlers = [
 ]
 
 export const mswServer = setupServer(...successHandlers)
-
-// Media Query support
-// Use the setScreenWidth() function before a test to set window.innerWidth
-function createMatchMedia() {
-  return (query: string): any => {
-    const width = window.innerWidth
-    return {
-      matches: mediaQuery.match(query, { width }),
-      media: query,
-      onchange: null,
-      addListener: () => {},
-      addEventListener: () => {},
-      removeListener: () => {},
-      removeEventListener: () => {},
-    }
-  }
-}
 
 // Start server before all tests
 beforeAll(() => {

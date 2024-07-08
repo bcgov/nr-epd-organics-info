@@ -67,8 +67,9 @@ End to end tests are located in the `/e2e` folder.
 **Unit tests** do not require the server or frontend to be running.
 You can run the unit tests with this command: `npm run test:unit`
 To generate a coverage report, use this command: `npm run test:cov`
-
-Unit tests are generally located in a `__tests__` child folder next to the component file. 
+The coverage report can be viewed in the `coverage` folder.
+Unit tests use [MSW](https://mswjs.io/) to mock API responses, see the
+`src/test-setup.ts` file where it is set up.
 
 # Contribution Guidelines
 
