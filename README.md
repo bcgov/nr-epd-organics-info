@@ -33,17 +33,42 @@ Pre-requisites:
 - Access to OpenShift namespace for Organics Info (ORI) project
 - OC CLI installed.(https://console.apps.silver.devops.gov.bc.ca/command-line-tools)
 - .env file is created in the backend folder based on the .env.sample file, the values can be retrieved from secrets in
-  OpenShift namespace.
+  OpenShift namespace: 
+  - `NR_ORACLE_SERVICE_URL=http://localhost:9080`
+  - `NR_ORACLE_SERVICE_KEY` value is the `apiKey` value in the [nr-oracle-service dev project](https://console.apps.silver.devops.gov.bc.ca/k8s/ns/d37bb7-dev/secrets/nr-oracle-service)
+  -  The `OS_` values can be found in the [nr-epd-organics-info-prod project](https://console.apps.silver.devops.gov.bc.ca/k8s/ns/d37bb7-prod/secrets/nr-epd-organics-info-prod)
 
 Steps:
 
-1. Open terminal, do oc login and switch to the namespace where the application is deployed.
+1. Open a terminal, run the oc login command and switch to the namespace where the application is deployed.
+   - The oc login command can be found by logging into [OpenShift](https://console.apps.silver.devops.gov.bc.ca/)
+   - Clicking on your name in the top right corner and choose `Copy login command` 
+   - Then choose `Developer Log In` and click `Display Token`
+   - Then copy the `oc login ...` command
 2. Run the following command in terminal `oc port-forward service/nr-oracle-service 9080:80`, this enables access to nr
    oracle service on port 9080 of local machine.
 3. Run the following command in terminal `cd backend && npm install && npm run start:debug`, this will start the backend
    application on port 3000.
 4. Run the following command in terminal `cd frontend && npm install && npm run dev`, this will start the frontend
    application on port 3001.
+
+## Running Frontend Tests
+
+**End to end** tests are run using [Playwright](https://playwright.dev/).
+Here are the steps to follow to run the end to end tests:
+1. First install Playwright: `npx playwright install`
+2. Then run start the server and frontend as shown above in steps 1-4.
+3. Run Playwright with this command: `npx playwright test` or `npm run test:e2e`
+
+To configure playwright edit the `playwright.config.ts` file.
+End to end tests are located in the `/e2e` folder.
+
+**Unit tests** do not require the server or frontend to be running.
+You can run the unit tests with this command: `npm run test:unit`
+To generate a coverage report, use this command: `npm run test:cov`
+The coverage report can be viewed in the `coverage` folder.
+Unit tests use [MSW](https://mswjs.io/) to mock API responses, see the
+`src/test-setup.ts` file where it is set up.
 
 # Contribution Guidelines
 

@@ -14,6 +14,6 @@ describe('NotFound', () => {
       useNavigate: useNavigateMock,
     }))
     render(<NotFound />)
-    const headingElement = screen.getByRole('heading', { name: /404/i })
+    screen.getByRole('heading', { name: /404/i })
   })
 })
