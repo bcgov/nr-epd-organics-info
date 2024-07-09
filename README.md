@@ -52,14 +52,13 @@ Steps:
 4. Run the following command in terminal `cd frontend && npm install && npm run dev`, this will start the frontend
    application on port 3001.
 
-## Running Tests
+## Running Frontend Tests
 
 **End to end** tests are run using [Playwright](https://playwright.dev/).
 Here are the steps to follow to run the end to end tests:
 1. First install Playwright: `npx playwright install`
 2. Then run start the server and frontend as shown above in steps 1-4.
-3. Run Playwright with this command: `npm playwright test`
-4. To run a single test file: `npx playwright test map.test.ts`
+3. Run Playwright with this command: `npx playwright test` or `npm run test:e2e`
 
 To configure playwright edit the `playwright.config.ts` file.
 End to end tests are located in the `/e2e` folder.

@@ -1,7 +1,8 @@
-import { test, expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
+import { Page } from 'playwright'
 
-test('Map page', async ({ page }) => {
+export const map_page = async (page: Page) => {
   await page.goto(baseURL)
 
   await page.getByRole('button', { name: 'Map Search' }).click()
@@ -13,4 +14,4 @@ test('Map page', async ({ page }) => {
   // Find map markers - expect there to be some
   const markers = await page.getByAltText('Authorization marker').all()
   expect(markers.length > 0).toBe(true)
-})
+}

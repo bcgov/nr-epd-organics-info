@@ -14,7 +14,8 @@
     "lint:fix": "npm run lint -- --fix",
     "preview": "vite preview",
     "test:unit": "vitest --mode test",
-    "test:cov": "vitest run --mode test --coverage"
+    "test:cov": "vitest run --mode test --coverage",
+    "test:e2e": "npx playwright test"
   },
   "dependencies": {
     "@bcgov/bc-sans": "^2.1.0",
