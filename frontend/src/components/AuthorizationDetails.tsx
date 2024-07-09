@@ -30,7 +30,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-auth-status"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '1em',
                   lineHeight: '1em',
                 }}
@@ -43,7 +44,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-auth-number"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '1em',
                   lineHeight: '1em',
                 }}
@@ -56,7 +58,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-effactive-date"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '1em',
                   lineHeight: '1em',
                 }}
@@ -69,7 +72,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-last-ammendment-date"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '1em',
                   lineHeight: '1em',
                 }}
@@ -128,7 +132,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-auth-status"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '.75em',
                   lineHeight: '1em',
                 }}
@@ -141,7 +146,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-auth-number"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '.75em',
                   lineHeight: '1em',
                 }}
@@ -181,7 +187,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-effactive-date"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '.75em',
                   lineHeight: '1em',
                 }}
@@ -194,7 +201,8 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
                 data-testid="auth-details-last-ammendment-date"
                 style={{
                   color: '#000000',
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '.75em',
                   lineHeight: '1em',
                 }}
@@ -239,7 +247,8 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
             <Grid item xs={12} sx={{ marginBottom: '2em' }}>
               <span
                 style={{
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '1.5em',
                   color: '#000000',
                 }}
@@ -250,7 +259,8 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
             <Grid sx={{ margin: '0 0 0.5em' }} item xs={12}>
               <span
                 style={{
-                  fontFamily: 'BCSans-Bold',
+                  fontFamily: 'BCSans',
+                  fontWeight: 700,
                   fontSize: '.75em',
                   color: '#000000',
                 }}
@@ -283,7 +293,8 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
                     <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                       <span
                         style={{
-                          fontFamily: 'BCSans-Bold',
+                          fontFamily: 'BCSans',
+                          fontWeight: 700,
                           fontSize: '.75em',
                           color: '#000000',
                         }}
@@ -314,7 +325,8 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
                     <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                       <span
                         style={{
-                          fontFamily: 'BCSans-Bold',
+                          fontFamily: 'BCSans',
+                          fontWeight: 700,
                           fontSize: '.75em',
                           color: '#000000',
                         }}
@@ -338,7 +350,13 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
               </Grid>
             </Grid>
             <Grid item xs={11} sx={{ margin: '0' }}>
-              <span style={{ fontFamily: 'BCSans-Italic', fontSize: '1.1em' }}>
+              <span
+                style={{
+                  fontFamily: 'BCSans',
+                  fontStyle: 'italic',
+                  fontSize: '1.1em',
+                }}
+              >
                 Permits, Operational Certificates, and Approvals are necessary
                 for composting operations that handle 5,000 tonnes or more of
                 finished compost per year from food waste or biosolids, as
@@ -365,7 +383,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
               <Grid item xs={12} sx={{ marginBottom: '2em' }}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '1.5em',
                     color: '#000000',
                   }}
@@ -376,7 +395,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
               <Grid sx={{ margin: '0 0 0.5em' }} item xs={12}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '.75em',
                     color: '#000000',
                   }}
@@ -409,7 +429,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -439,7 +460,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -477,7 +499,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -507,7 +530,8 @@ function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -910,7 +934,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
               <Grid item xs={12} sx={{ marginBottom: '2em' }}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '1.5em',
                     color: '#000000',
                   }}
@@ -921,7 +946,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
               <Grid sx={{ margin: '0 0 0.5em' }} item xs={12}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '.75em',
                     color: '#000000',
                   }}
@@ -951,7 +977,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -981,7 +1008,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1016,7 +1044,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1048,7 +1077,8 @@ function getAuthorizationGridNotificationLandApplication(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1088,7 +1118,8 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
               <Grid item xs={12} sx={{ marginBottom: '2em' }}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '1.5em',
                     color: '#000000',
                   }}
@@ -1106,7 +1137,8 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1136,7 +1168,8 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
                       <Grid sx={{ margin: '0 0 0.5em' }} item xs={6}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1164,7 +1197,8 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
                 <span
                   style={{
                     color: '#000000',
-                    fontFamily: 'BCSans-Italic',
+                    fontFamily: 'BCSans',
+                    fontStyle: 'italic',
                     fontSize: '1.1em',
                   }}
                 >
@@ -1270,7 +1304,8 @@ export default function AuthorizationDetails() {
             <span
               style={{
                 color: '#000000',
-                fontFamily: 'BCSans-Bold',
+                fontFamily: 'BCSans',
+                fontWeight: 700,
                 fontSize: '1.5em',
               }}
             >
@@ -1310,7 +1345,8 @@ export default function AuthorizationDetails() {
               >
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '1.5em',
                     color: '#000000',
                   }}
@@ -1321,7 +1357,8 @@ export default function AuthorizationDetails() {
               <Grid sx={{ margin: '0 0 0.5em' }} item xs={12}>
                 <span
                   style={{
-                    fontFamily: 'BCSans-Bold',
+                    fontFamily: 'BCSans',
+                    fontWeight: 700,
                     fontSize: '.75em',
                     color: '#000000',
                   }}
@@ -1355,7 +1392,8 @@ export default function AuthorizationDetails() {
                       <Grid item sx={{ margin: '0 0 0.5em' }}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}
@@ -1384,7 +1422,8 @@ export default function AuthorizationDetails() {
                       <Grid item sx={{ margin: '0 0 0.5em' }}>
                         <span
                           style={{
-                            fontFamily: 'BCSans-Bold',
+                            fontFamily: 'BCSans',
+                            fontWeight: 700,
                             fontSize: '.75em',
                             color: '#000000',
                           }}

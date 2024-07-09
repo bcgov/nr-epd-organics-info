@@ -81,7 +81,8 @@ const theme = createTheme({
 })
 
 theme.typography.h1 = {
-  fontFamily: 'BCSans-Bold',
+  fontFamily: 'BCSans',
+  fontWeight: 700,
   fontSize: '2rem',
   [theme.breakpoints.up('sm')]: {
     fontSize: '2.7rem',

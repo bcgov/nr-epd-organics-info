@@ -11,21 +11,21 @@ html, body {
 }
 
 @font-face {
-  font-family: 'BCSans-Italic';
+  font-family: 'BCSans';
   font-style: italic;
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-Italic.woff')
     format('woff');
 }
 
 @font-face {
-  font-family: 'BCSans-Bold';
+  font-family: 'BCSans';
   font-weight: 700;
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-Bold.woff')
     format('woff');
 }
 
 @font-face {
-  font-family: 'BCSans-BoldItalic';
+  font-family: 'BCSans';
   font-style: italic;
   font-weight: 700;
   src: url('../node_modules/@bcgov/bc-sans/fonts/BCSans-BoldItalic.woff')

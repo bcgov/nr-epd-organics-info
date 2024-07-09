@@ -20,6 +20,7 @@ import verification from '@/assets/font-awesome-verification.svg'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ChevronRight } from '@mui/icons-material'
+import LearnMoreCard from '@/components/LearnMoreCard'
 
 function informationTypography() {
   return (
@@ -57,15 +58,12 @@ function informationTypography() {
             <ul style={{ marginBottom: '2em' }}>
               <li>
                 Governs the construction and operation of compost facilities
-              </li>
-              {' '}
+              </li>{' '}
               <li>
                 Regulates the production, distribution, storage, sale and use of
                 biosolids and compost
-              </li>
-              {' '}
-              <li>Controls how compost facilities are built and operated</li>
-              {' '}
+              </li>{' '}
+              <li>Controls how compost facilities are built and operated</li>{' '}
             </ul>
             The B.C. government has a plan to update the regulation to:
             <ul style={{ marginBottom: '2em' }}>
@@ -158,39 +156,20 @@ export default function Dashboard() {
           </Typography>
         </CardContent>
         <CardActions>
-          {/*<Button
+          <Button
             size="large"
-            sx={{
-              margin: '1em 0em 3em 3em',
-              boxSizing: 'border-box',
-              border: '1px solid #FFFFFF',
-              borderRadius: '4px',
-              color: '#FFFFFF',
-              textTransform: 'none',
-            }}
-            onClick={() => {
-              console.log('map')
-            }}
+            color="secondary"
+            variant="contained"
+            onClick={() => buttonClicked('/map')}
           >
             Search on a map
-          </Button>*/}
+          </Button>
           <Button
             data-testid="list_all_authorizations"
             size="large"
-            sx={{
-              margin: {
-                sm: '0 2.2em 3em',
-                xs: '0 .9em 3em',
-              },
-              boxSizing: 'border-box',
-              border: '1px solid #FFFFFF',
-              borderRadius: '4px',
-              color: '#FFFFFF',
-              textTransform: 'none',
-            }}
-            onClick={() => {
-              buttonClicked('/search')
-            }}
+            color="secondary"
+            variant="contained"
+            onClick={() => buttonClicked('/search')}
           >
             List all authorizations
           </Button>
@@ -302,329 +281,27 @@ export default function Dashboard() {
               },
             }}
           >
-            <Grid item xs={12} md={4}>
-              <Card elevation={0}>
-                <CardHeader
-                  sx={{
-                    margin: '0em 0em 0em -1em',
-                    display: {
-                      xs: 'none',
-                      md: 'flex',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: {
-                          md: '1rem',
-                          lg: '1.25rem',
-                        },
-                        display: 'flex',
-                        alignItems: 'center',
-                        paddingBottom: '.4em',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
-                    >
-                      {' '}
-                      Legislation
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardContent
-                  sx={{
-                    background: '#D8EAFD',
-                    height: '15em',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      position: 'absolute',
-                      width: '3em',
-                      height: '3em',
-                      backgroundImage: `url(${govSvg})`,
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                </CardContent>
-                <CardHeader
-                  sx={{
-                    margin: '0',
-                    padding: '1.5em 0 .5em',
-                    display: {
-                      xs: 'flex',
-                      md: 'none',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: '1.25rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
-                    >
-                      {' '}
-                      Legislation
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardActions
-                  sx={{
-                    margin: '0',
-                    padding: {
-                      xs: '.5em 0 1.5em',
-                      md: '1.5em 0 0',
-                    },
-                  }}
-                >
-                  <span>
-                    Learn about the laws that apply to recycling organic matter.
-                  </span>
-                </CardActions>
-                <Box
-                  component="hr"
-                  sx={{
-                    display: {
-                      xs: 'block',
-                      md: 'none',
-                    },
-                    margin: '.5em 0 1.5em',
-                    borderColor: '#D8D8D8',
-                  }}
-                />
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card elevation={0}>
-                <CardHeader
-                  sx={{
-                    margin: '0em 0em 0em -1em',
-                    display: {
-                      xs: 'none',
-                      md: 'flex',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: {
-                          md: '1rem',
-                          lg: '1.25rem',
-                        },
-                        display: 'flex',
-                        alignItems: 'center',
-                        paddingBottom: '.4em',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
-                    >
-                      Process and procedures
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardContent
-                  sx={{
-                    background: '#D8EAFD',
-                    height: '15em',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      position: 'absolute',
-                      width: '3em',
-                      height: '3em',
-                      backgroundImage: `url(${verification})`,
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                </CardContent>
-                <CardHeader
-                  sx={{
-                    margin: '0',
-                    padding: '1.5em 0 .5em',
-                    display: {
-                      xs: 'flex',
-                      md: 'none',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: '1.25rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
-                    >
-                      Process and procedures
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardActions
-                  sx={{
-                    margin: '0',
-                    padding: {
-                      xs: '.5em 0 1.5em',
-                      md: '1.5em 0 0',
-                    },
-                  }}
-                >
-                  <span>
-                    Learn about how we administer the authorizations process for
-                    compost and biosolids facilities.
-                  </span>
-                </CardActions>
-                <Box
-                  component="hr"
-                  sx={{
-                    display: {
-                      xs: 'block',
-                      md: 'none',
-                    },
-                    margin: '.5em 0 1.5em',
-                    borderColor: '#D8D8D8',
-                  }}
-                />
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Card elevation={0}>
-                <CardHeader
-                  sx={{
-                    margin: '0em 0em 0em -1em',
-                    display: {
-                      xs: 'none',
-                      md: 'flex',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: {
-                          md: '1rem',
-                          lg: '1.25rem',
-                        },
-                        display: 'flex',
-                        alignItems: 'center',
-                        paddingBottom: '.4em',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
-                    >
-                      Compliance and enforcement
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardContent
-                  sx={{
-                    background: '#D8EAFD',
-                    height: '15em',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      position: 'absolute',
-                      width: '3em',
-                      height: '3em',
-                      backgroundImage: `url(${identity})`,
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center',
-                    }}
-                  />
-                </CardContent>
-                <CardHeader
-                  sx={{
-                    margin: '0',
-                    padding: '1.5em 0 .5em',
-                    display: {
-                      xs: 'flex',
-                      md: 'none',
-                    },
-                  }}
-                  title={
-                    <Link
-                      sx={{
-                        fontFamily: 'BCSans-Bold',
-                        textDecoration: 'none',
-                        fontSize: '1.25rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                      target={'_blank'}
-                      href="https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/reporting/environmental-enforcement-reporting"
-                    >
-                      Compliance and enforcement
-                      <ChevronRight
-                        color="primary"
-                        sx={{ position: 'relative', top: 2 }}
-                      ></ChevronRight>
-                    </Link>
-                  }
-                ></CardHeader>
-                <CardActions
-                  sx={{
-                    margin: '0',
-                    padding: {
-                      xs: '.5em 0 1.5em',
-                      md: '1.5em 0 0',
-                    },
-                  }}
-                >
-                  <span>
-                    Learn about how we coordinate oversight and ensure the
-                    process is accountable. 
-                  </span>
-                </CardActions>
-              </Card>
-            </Grid>
+            <LearnMoreCard
+              title="Legislation"
+              link="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+              icon={govSvg}
+              actions="Learn about the laws that apply to recycling organic matter."
+            />
+            <LearnMoreCard
+              title="Process and procedures"
+              link="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
+              icon={verification}
+              actions="Learn about how we administer the authorizations process for
+                    compost and biosolids facilities."
+            />
+            <LearnMoreCard
+              title="Compliance and enforcement"
+              link="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
+              icon={identity}
+              actions="Search the compliance and enforcement database and learn
+                    about how we coordinate oversight."
+              divider={false}
+            />
           </Grid>
         </Grid>
       </Grid>
