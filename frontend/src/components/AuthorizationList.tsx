@@ -1,9 +1,4 @@
-import {
-  ArrowDropDown,
-  ArrowDropUp,
-  MyLocation,
-  Search,
-} from '@mui/icons-material'
+import { ArrowDropDown, ArrowDropUp, Search } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -30,7 +25,6 @@ import {
   searchAuthorizationsByGlobalFilter,
   setExpand,
   setFilters,
-  setLocation,
   setPage,
   setSearchBy,
 } from '@/features/omrr/omrr-slice'
@@ -58,13 +52,12 @@ export default function AuthorizationList() {
     compostFacilityFilter,
     landApplicationBioSolidsFilter,
     operationalCertificateFilter,
-    location,
     searchBy,
     page,
     globalTextSearchFilter,
     compostFacilityFilterDisabled,
     landApplicationBioSolidsFilterDisabled,
-    lastModified
+    lastModified,
   } = useSelector((state: RootState) => state.omrr)
   const pagination = (
     <Grid item xs={12}>
@@ -401,7 +394,7 @@ export default function AuthorizationList() {
                 fontStyle: 'italic',
               }}
             >
-              Data Last Updated :  {lastModified}
+              Data Last Updated : {lastModified}
             </Typography>
           </Grid>
           {pagination}

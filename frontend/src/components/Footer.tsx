@@ -10,8 +10,6 @@ import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { useCallback } from 'react'
 
 const styles = {
@@ -32,18 +30,17 @@ const styles = {
 }
 
 export default function Footer() {
-  const theme = useTheme()
-  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+  // const theme = useTheme()
+  // const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
 
   // To Do: Build a check to see if user has scrolled to the bottom so we offset the button at the end of the page to not overlap the footer on mobile.
-  //
 
   function ScrollToTop() {
     const trigger = useScrollTrigger({
       threshold: 100,
     })
 
-    const ScrollToTop = useCallback(() => {
+    const scrollToTop = useCallback(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }, [])
 
@@ -67,9 +64,7 @@ export default function Footer() {
             borderRadius: '.5em',
             zIndex: 9,
           }}
-          onClick={() => {
-            ScrollToTop()
-          }}
+          onClick={() => scrollToTop()}
         >
           <ArrowUpward />
         </Button>

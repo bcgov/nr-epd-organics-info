@@ -98,14 +98,19 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
               />
             </Grid>
             <Grid item xs={3}>
-              <span data-testid="auth-details-auth-number-value">{data['Authorization Number']}</span>
+              <span data-testid="auth-details-auth-number-value">
+                {data['Authorization Number']}
+              </span>
             </Grid>
             <Grid item xs={3}>
-              <span data-testid="auth-details-effactive-date-value">{data['Effective/Issue Date']?.toString()}</span>
+              <span data-testid="auth-details-effactive-date-value">
+                {data['Effective/Issue Date']?.toString()}
+              </span>
             </Grid>
             <Grid item xs={3}>
-              <span
-                data-testid="auth-details-last-ammendment-date-value">{data['Last Amendment Date']?.toString()}</span>
+              <span data-testid="auth-details-last-ammendment-date-value">
+                {data['Last Amendment Date']?.toString()}
+              </span>
             </Grid>
           </Grid>
         </>
@@ -165,7 +170,9 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
               />
             </Grid>
             <Grid item xs={6}>
-              <span data-testid="auth-details-auth-number-value">{data['Authorization Number']}</span>
+              <span data-testid="auth-details-auth-number-value">
+                {data['Authorization Number']}
+              </span>
             </Grid>
           </Grid>
           <Grid container direction="row" sx={{ marginTop: '2em' }} spacing={0}>
@@ -204,10 +211,14 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             spacing={0}
           >
             <Grid item xs={6}>
-              <span data-testid="auth-details-effactive-date-valu">{data['Effective/Issue Date']?.toString()}</span>
+              <span data-testid="auth-details-effactive-date-valu">
+                {data['Effective/Issue Date']?.toString()}
+              </span>
             </Grid>
             <Grid item xs={6}>
-              <span data-testid="auth-details-last-ammendment-valu">{data['Last Amendment Date']?.toString()}</span>
+              <span data-testid="auth-details-last-ammendment-valu">
+                {data['Last Amendment Date']?.toString()}
+              </span>
             </Grid>
           </Grid>
         </>
@@ -342,8 +353,8 @@ function getAuthorizationGridOthersForMdAbove(data: OmrrData) {
 }
 
 function getAuthorizationGridNotificationCompostForMdAbove(data: OmrrData) {
-  const theme = useTheme()
-  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+  // const theme = useTheme()
+  // const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
   return (
     <>
       {data['Authorization Type']?.toLowerCase() === 'notification' &&
@@ -1178,32 +1189,34 @@ function getAuthorizationGridNotificationOthers(data: OmrrData) {
   )
 }
 
+// define red icon
+const redIcon = new L.Icon({
+  //read from assets
+  iconUrl: pin,
+  shadowUrl: shadow,
+  iconSize: [50, 82],
+  iconAnchor: [25, 82],
+  popupAnchor: [1, -34],
+  shadowSize: [82, 82],
+})
+
 export default function AuthorizationDetails() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
-  const smMatches = useMediaQuery(theme.breakpoints.up('sm'))
-  const xsMatches = useMediaQuery(theme.breakpoints.up('xs'))
-  const lgMatches = useMediaQuery(theme.breakpoints.up('lg'))
-  //define red icon
-  const redIcon = new L.Icon({
-    //read from assets
-    iconUrl: pin,
-    shadowUrl: shadow,
-    iconSize: [50, 82],
-    iconAnchor: [25, 82],
-    popupAnchor: [1, -34],
-    shadowSize: [82, 82],
-  })
+  // const smMatches = useMediaQuery(theme.breakpoints.up('sm'))
+  // const xsMatches = useMediaQuery(theme.breakpoints.up('xs'))
+  // const lgMatches = useMediaQuery(theme.breakpoints.up('lg'))
+
   const navigate = useNavigate()
   const buttonClicked = (route: any) => {
     navigate(route) // reset the state
   }
   const location = useLocation()
   const data = location?.state?.data
-  const authorizationType = data && data['Authorization Type']
+  // const authorizationType = data && data['Authorization Type']
   let facilityLatLng: LatLngLiteral | undefined = undefined
   if (data && data.Latitude && data.Longitude) {
     facilityLatLng = { lat: data.Latitude, lng: data.Longitude }

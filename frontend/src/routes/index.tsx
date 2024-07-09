@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import NotFound from '@/components/NotFound'
 import Dashboard from '@/components/Dashboard'
 import AuthorizationList from '@/components/AuthorizationList'
 import AuthorizationDetails from '@/components/AuthorizationDetails'

@@ -48,11 +48,6 @@ const omrrResponse: OmrrResponse = {
   lastModified: new Date().toISOString(),
 }
 
-const emptyResponse: OmrrResponse = {
-  omrrData: [],
-  lastModified: new Date().toISOString(),
-}
-
 const successHandlers = [
   http.get(`${baseUrl}/omrr`, () => {
     return HttpResponse.json(omrrResponse, { status: 200 })

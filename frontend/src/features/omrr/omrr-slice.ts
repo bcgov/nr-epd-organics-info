@@ -253,7 +253,7 @@ export const omrrSlice = createSlice({
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
     // Handle the pending action
-    builder.addCase(fetchOMRRData.pending, (state, action) => {
+    builder.addCase(fetchOMRRData.pending, (state, _action) => {
       // Set the status to loading
       state.status = 'loading'
     })

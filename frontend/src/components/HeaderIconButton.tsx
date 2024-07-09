@@ -8,7 +8,12 @@ interface Props {
   [key: string]: any
 }
 
-export function HeaderIconButton({ children, icon, onClick, ...rest }: Props) {
+export function HeaderIconButton({
+  children,
+  icon,
+  onClick,
+  ...rest
+}: Readonly<Props>) {
   return (
     <Link
       {...rest}

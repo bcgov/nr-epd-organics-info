@@ -10,7 +10,10 @@ interface TestRouterProps {
   withRouter?: boolean
 }
 
-function TestRouter({ children, withRouter = false }: TestRouterProps) {
+function TestRouter({
+  children,
+  withRouter = false,
+}: Readonly<TestRouterProps>) {
   if (withRouter) {
     return (
       <BrowserRouter>
@@ -33,7 +36,7 @@ function TestStateProvider({
   children,
   withStateProvider = false,
   initialState,
-}: TestStateProviderProps) {
+}: Readonly<TestStateProviderProps>) {
   if (withStateProvider) {
     const store = setupStore(initialState)
     return <Provider store={store}>{children}</Provider>

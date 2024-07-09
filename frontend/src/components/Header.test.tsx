@@ -1,6 +1,6 @@
 import { getByText, screen } from '@testing-library/react'
 import Header from '@/components/Header'
-import { render, setScreenWidth } from '@/test-utils'
+import { render } from '@/test-utils'
 import { themeBreakpointValues } from '@/theme'
 
 describe('Header suite', () => {
