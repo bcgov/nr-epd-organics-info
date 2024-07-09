@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom'
-import { afterAll, afterEach, beforeAll } from 'vitest'
+import '@testing-library/jest-dom/vitest'
+import * as matchers from '@testing-library/jest-dom/matchers'
+import { afterAll, afterEach, beforeAll, expect } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import mediaQuery from 'css-mediaquery'
@@ -7,6 +9,8 @@ import mediaQuery from 'css-mediaquery'
 import OmrrResponse from '@/interfaces/omrr-response'
 import { omrrTestData } from '@/mocks/omrr-data'
 import { cleanup } from '@testing-library/react'
+
+expect.extend(matchers)
 
 // Vitest Mocks
 

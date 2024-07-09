@@ -1,0 +1,66 @@
+import { Grid, Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
+
+import LearnMoreCard from './LearnMoreCard'
+
+import govSvg from '@/assets/font-awesome-government.svg'
+import verification from '@/assets/font-awesome-verification.svg'
+import identity from '@/assets/font-awesome-identity.svg'
+
+const styles = {
+  section: {
+    margin: '5em',
+    gap: '0.25em',
+  },
+  yellowDivider: {
+    width: '2em',
+    height: '4px',
+    backgroundColor: '#fcba19',
+  },
+  heading: {
+    color: 'black',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    lineHeight: '2.25em',
+    marginBottom: '1rem',
+  },
+}
+
+export function LearnMoreSection() {
+  return (
+    <Stack
+      direction="column"
+      component="section"
+      sx={styles.section}
+      className="learn-more-section"
+    >
+      <div style={styles.yellowDivider} />
+      <Typography variant="h2" component="h2" sx={styles.heading}>
+        Learn more
+      </Typography>
+      <Grid container spacing={3}>
+        <LearnMoreCard
+          title="Legislation"
+          link="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+          icon={govSvg}
+          actions="Learn about the laws that apply to recycling organic matter."
+        />
+        <LearnMoreCard
+          title="Process and procedures"
+          link="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
+          icon={verification}
+          actions="Learn about how we administer the authorizations process for
+                    compost and biosolids facilities."
+        />
+        <LearnMoreCard
+          title="Compliance and enforcement"
+          link="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
+          icon={identity}
+          actions="Search the compliance and enforcement database and learn
+                    about how we coordinate oversight."
+          divider={false}
+        />
+      </Grid>
+    </Stack>
+  )
+}

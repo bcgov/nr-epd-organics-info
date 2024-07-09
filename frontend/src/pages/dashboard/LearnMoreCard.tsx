@@ -5,10 +5,10 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  Grid,
   Link,
 } from '@mui/material'
 import { ChevronRight } from '@mui/icons-material'
+import Grid from '@mui/material/Grid'
 
 const styles = {
   card: {
@@ -17,6 +17,10 @@ const styles = {
   },
   header: {
     padding: 0,
+    marginBottom: {
+      xs: '0.75rem',
+      md: '1rem',
+    },
   },
   title: {
     fontWeight: 700,
@@ -25,6 +29,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
+    color: '#255a90',
   },
   content: {
     background: '#d8eafd',
@@ -32,26 +37,21 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '1em 0',
+    margin: '0 0 1.25em',
   },
   icon: {
-    width: '3em',
-    height: '3em',
-    backgroundSize: 'contain',
-    backgroundPosition: 'center',
+    width: 'auto',
+    height: '3rem',
   },
   actions: {
-    padding: {
-      xs: '0.25em 0 1em',
-      md: '0 0 1em',
-    },
+    padding: '0 0 1em',
   },
   divider: {
     display: {
       xs: 'block',
       md: 'none',
     },
-    margin: '0.5em 0',
+    margin: '0.75em 0 0.25em',
     borderColor: '#d8d8d8',
   },
 }
@@ -79,7 +79,7 @@ export function LearnMoreCard({
   )
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={4} component="section">
       <Card elevation={0} sx={styles.card}>
         <CardHeader
           sx={{
@@ -92,13 +92,7 @@ export function LearnMoreCard({
           title={titleElement}
         />
         <CardContent sx={styles.content}>
-          <CardMedia
-            component="div"
-            sx={{
-              ...styles.icon,
-              backgroundImage: `url(${icon})`,
-            }}
-          />
+          <CardMedia component="img" src={icon} sx={styles.icon} alt={title} />
         </CardContent>
         <CardHeader
           sx={{
