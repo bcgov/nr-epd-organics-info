@@ -468,7 +468,8 @@ export default function AuthorizationList() {
                           >
                             <span
                               style={{
-                                fontFamily: 'BCSans-Bold',
+                                fontFamily: 'BCSans',
+                                fontWeight: 700,
                               }}
                             >
                               {item['Regulated Party']}
@@ -484,7 +485,8 @@ export default function AuthorizationList() {
                               <Box sx={{ marginBottom: '.5em' }}>
                                 <span
                                   style={{
-                                    fontFamily: 'BCSans-Bold',
+                                    fontFamily: 'BCSans',
+                                    fontWeight: 700,
                                   }}
                                 >
                                   Location of Facility
@@ -505,7 +507,8 @@ export default function AuthorizationList() {
                               <Box sx={{ marginBottom: '.5em' }}>
                                 <span
                                   style={{
-                                    fontFamily: 'BCSans-Bold',
+                                    fontFamily: 'BCSans',
+                                    fontWeight: 700,
                                   }}
                                 >
                                   Authorization Type

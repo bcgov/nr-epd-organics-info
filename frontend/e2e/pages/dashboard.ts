@@ -10,32 +10,38 @@ export const dashboard_page = async (page: Page) => {
   await expect(page.getByRole('button', { name: 'Text Search' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Contact Us' })).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'Compost and Biosolids' }),
+    page.getByRole('heading', {
+      name: 'Find an authorized compost and biosolid facility in British Columbia',
+    }),
   ).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'Find an authorized compost' }),
+    page.getByRole('button', { name: 'Search on a map' }),
   ).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'List all authorizations' }),
   ).toBeVisible()
+
+  await expect(
+    page.getByRole('heading', {
+      name: 'Organic Recycling in B.C.',
+    }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', {
+      name: 'The B.C. government has a plan to update the regulation to',
+    }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: 'Project Update Report' }),
+  ).toBeVisible()
+  await expect(page.getByAltText('Information image')).toBeVisible()
+
+  await expect(page.getByText('Learn more')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Legislation' })).toBeVisible()
   await expect(
     page.getByRole('link', { name: 'Process and procedures' }),
   ).toBeVisible()
   await expect(
     page.getByRole('link', { name: 'Compliance and enforcement' }),
-  ).toBeVisible()
-  await expect(
-    page.locator('.MuiCardContent-root > .MuiCardMedia-root').first(),
-  ).toBeVisible()
-  await expect(
-    page.locator(
-      'div:nth-child(2) > .MuiPaper-root > .MuiCardContent-root > .MuiCardMedia-root',
-    ),
-  ).toBeVisible()
-  await expect(
-    page.locator(
-      'div:nth-child(3) > .MuiPaper-root > .MuiCardContent-root > .MuiCardMedia-root',
-    ),
   ).toBeVisible()
 }

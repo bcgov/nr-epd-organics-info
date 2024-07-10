@@ -25,6 +25,8 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#385a8a',
+      light: '#255A90',
+      dark: '#053662',
     },
     secondary: {
       main: '#ffffff',
@@ -81,7 +83,8 @@ const theme = createTheme({
 })
 
 theme.typography.h1 = {
-  fontFamily: 'BCSans-Bold',
+  fontFamily: 'BCSans',
+  fontWeight: 700,
   fontSize: '2rem',
   [theme.breakpoints.up('sm')]: {
     fontSize: '2.7rem',
