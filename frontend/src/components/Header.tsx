@@ -10,7 +10,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Feed, Map, Menu } from '@mui/icons-material'
+import { Feed, Menu } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -19,6 +19,8 @@ import { HeaderIconButton } from '@/components/HeaderIconButton'
 
 import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
 import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
+import MapIcon from '@/assets/svgs/fa-map.svg?react'
+import TextIcon from '@/assets/svgs/fa-text.svg?react'
 
 const styles = {
   appBar: {
@@ -106,13 +108,13 @@ export default function Header() {
             <>
               <HeaderIconButton
                 onClick={() => buttonClicked('/map')}
-                icon={<Map color="secondary" />}
+                icon={<MapIcon width="20px" height="24px" />}
               >
                 Map Search
               </HeaderIconButton>
               <HeaderIconButton
                 onClick={() => buttonClicked('/search')}
-                icon={<Feed color="secondary" />}
+                icon={<TextIcon width="14px" height="24px" />}
               >
                 Text Search
               </HeaderIconButton>

@@ -1,0 +1,46 @@
+
+.leaflet-touch .leaflet-bar {
+  border: 0;
+  border-radius: 0;
+}
+
+.map-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: calc(100vh - 5em);
+  transition: margin-bottom ease-in-out 0.3s;
+  position: relative;
+}
+
+.map-controls button.map-control-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: var(--surface-color-background-white);
+  color: var(--icons-color-secondary);
+  box-shadow: var(--box-shadow-small);
+  transition: all ease-in-out 0.3s;
+}
+
+.map-controls button.map-control-button:hover {
+  color: var(--icons-color-info);
+}
+
+.map-controls button.map-control-button:focus {
+  outline: 2px solid rgba(46, 93, 215, 0.5);
+}
+
+.map-controls button.map-control-button--active {
+  background-color: var(--surface-color-primary-active-border);
+  color: var(--surface-color-background-white);
+}
+
+.map-controls button.map-control-button--active:hover {
+  color: var(--surface-color-secondary-hover);
+}

@@ -1,0 +1,31 @@
+.my-location-marker {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.my-location-pulse {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 3s infinite;
+}
+
+.my-location-circle {
+  stroke: white;
+  stroke-opacity: 1;
+  stroke-width: 2px;
+  fill: #385a8a;
+  fill-opacity: 1;
+}
+
+.my-location-accuracy-circle {
+  stroke-width: 1px;
+  stroke: #385a8a;
+  stroke-opacity: 0.5;
+  fill: #385a8a;
+  fill-opacity: 0.15;
+}

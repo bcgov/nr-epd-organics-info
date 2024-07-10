@@ -3,6 +3,35 @@ html, body {
   width: 100%;
 }
 
+:root {
+  --layout-margin-xsmall: 4px;
+  --layout-margin-small: 8px;
+  --layout-margin-medium: 16px;
+  --layout-margin-large: 24px;
+  --layout-padding-xsmall: 4px;
+  --layout-padding-small: 8px;
+  --layout-padding-medium: 16px;
+  --layout-padding-large: 24px;
+  --layout-border-radius-medium: 4px;
+
+  --surface-color-primary-active-border: #2e5dd7;
+  --surface-color-primary-default: #053662;
+  --surface-color-secondary-hover: #edebe9;
+  --surface-color-background-white: #ffffff;
+  --surface-color-border-light: #d8d8d8;
+  --surface-color-border-hover: #b8b8b8;
+  --surface-color-border-dark: #353433;
+
+  --icons-color-info: #053662;
+  --icons-color-disabled: #9f9d9c;
+  --icons-color-secondary: #474543;
+
+  --typography-color-primary: #2d2d2d;
+  --typography-color-secondary: #474543;
+
+  --box-shadow-small: 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1), 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
+}
+
 @font-face {
   font-family: 'BCSans';
   font-style: normal;
@@ -32,26 +61,16 @@ html, body {
     format('woff');
 }
 
-.map-container {
+.authorization-map-container {
   margin-top: 1em;
   border-radius: 4px;
   z-index: 1;
 }
 
-.map-view {
-  /* Map height is screen height minus footer height */
-  height: calc(100vh - 4em);
-  /* Header is fixed */
-  padding-top: 4em;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
+.spacer {
+  flex: 1;
 }
 
-.map-view > .map-view-container {
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+.spacer--fill {
+  flex: 1 1 100%;
 }

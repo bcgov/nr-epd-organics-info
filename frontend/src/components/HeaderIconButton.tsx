@@ -1,6 +1,20 @@
 import { MouseEventHandler, ReactNode } from 'react'
 import { Icon, Link } from '@mui/material'
 
+const styles = {
+  link: {
+    textTransform: 'none',
+    textDecoration: 'none',
+    padding: '.5em 1em',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '0.5em',
+    color: '#ffffff',
+  },
+  icon: { display: 'inline-flex', justifyContent: 'center' },
+}
+
 interface Props {
   children?: ReactNode
   icon?: ReactNode
@@ -15,22 +29,8 @@ export function HeaderIconButton({
   ...rest
 }: Readonly<Props>) {
   return (
-    <Link
-      {...rest}
-      sx={{
-        textTransform: 'none',
-        textDecoration: 'none',
-        padding: '.5em 1em',
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '0.5em',
-        color: '#ffffff',
-      }}
-      onClick={onClick}
-      component="button"
-    >
-      {icon ? <Icon style={{ display: 'inline-flex' }}>{icon}</Icon> : null}
+    <Link {...rest} sx={styles.link} onClick={onClick} component="button">
+      {icon ? <Icon style={styles.icon}>{icon}</Icon> : null}
       {children}
     </Link>
   )

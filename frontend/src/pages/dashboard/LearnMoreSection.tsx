@@ -3,9 +3,9 @@ import Stack from '@mui/material/Stack'
 
 import LearnMoreCard from './LearnMoreCard'
 
-import govSvg from '@/assets/font-awesome-government.svg'
-import verification from '@/assets/font-awesome-verification.svg'
-import identity from '@/assets/font-awesome-identity.svg'
+import govSvg from '@/assets/svgs/fa-government.svg'
+import verification from '@/assets/svgs/fa-verification.svg'
+import identity from '@/assets/svgs/fa-identity.svg'
 
 const styles = {
   section: {
