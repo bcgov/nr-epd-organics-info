@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen, waitForElementToBeRemoved } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { DropdownButton } from './DropdownButton'

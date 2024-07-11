@@ -1,5 +1,5 @@
 import L, { LatLngTuple } from 'leaflet'
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import clsx from 'clsx'
@@ -33,7 +33,6 @@ function MapView() {
         zoomControl={false}
         className="map-container"
       >
-        {/*<ZoomControl position="bottomright" />*/}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

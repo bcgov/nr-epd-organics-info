@@ -1,9 +1,5 @@
-import React, { ReactNode, useRef } from 'react'
-import {
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react'
+import React from 'react'
+import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { HorizontalScroller } from './HorizontalScroller'
