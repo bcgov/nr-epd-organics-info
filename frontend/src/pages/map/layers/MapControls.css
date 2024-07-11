@@ -1,13 +1,10 @@
 
-.leaflet-touch .leaflet-bar {
-  border: 0;
-  border-radius: 0;
-}
-
 .map-controls {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  border: 0 !important;
+  border-radius: 0;
   max-height: calc(100vh - 5em);
   transition: margin-bottom ease-in-out 0.3s;
   position: relative;

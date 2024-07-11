@@ -10,7 +10,7 @@ import { useMyLocation } from '../hooks/useMyLocation'
 import './MyLocationMarker.css'
 
 export function myLocationIcon() {
-  const size = 20
+  const size = 24
   return L.divIcon({
     html: `<div class="my-location-pulse"></div>
     <svg width="${size}" height="${size}" viewBox="0 0 36 36" fill="none">
@@ -35,9 +35,9 @@ function MyLocationMarkerContent() {
   useEffect(() => {
     if (position && !hasZoomedToMyLocationRef.current) {
       hasZoomedToMyLocationRef.current = true
-      map.setView(position, Math.max(map.getZoom(), 14), {
+      map.flyTo(position, Math.max(map.getZoom(), 14), {
         animate: true,
-        duration: 1000,
+        duration: 1,
       })
     }
   }, [map, position])
@@ -51,7 +51,7 @@ function MyLocationMarkerContent() {
           className="my-location-accuracy-circle"
         />
       )}
-      <IconMarker position={position} icon={locationIcon}>
+      <IconMarker position={position} icon={locationIcon} zIndexOffset={1000}>
         <Tooltip direction="top">My location</Tooltip>
       </IconMarker>
     </>
