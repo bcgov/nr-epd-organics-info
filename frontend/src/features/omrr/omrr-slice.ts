@@ -14,6 +14,7 @@ const deepClone = rfdc({ circles: true })
 
 export interface OmrrSliceState {
   lastModified: string
+  // All results
   value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
@@ -68,13 +69,10 @@ export const initialState: OmrrSliceState = {
   lastModified: '',
 }
 
-function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
+function filterData(state: OmrrSliceState) {
   let finalFilteredOMRRList: OmrrData[] = []
   let nestedFilterOMRRList: OmrrData[] = []
-  if (
-    state.globalTextSearchFilter &&
-    state.globalTextSearchFilter?.length > 0
-  ) {
+  if (state.globalTextSearchFilter?.length > 0) {
     state.filteredValue = state.searchByFilteredValue.filter(
       (item: OmrrData) => {
         return Object.values(item).some((value) => {
@@ -91,47 +89,47 @@ function filterDataBasedOnDifferentFilters(state: OmrrSliceState) {
       (item: OmrrData) =>
         item['Authorization Type']?.toLowerCase() === 'approval',
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    finalFilteredOMRRList.push(...filteredItems)
   }
   if (state.notificationFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() ===
-        'notification'.toLowerCase(),
+        item['Authorization Type']?.toLowerCase() === 'notification',
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    finalFilteredOMRRList.push(...filteredItems)
   }
   if (state.permitFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
         item['Authorization Type']?.toLowerCase() === 'permit',
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    finalFilteredOMRRList.push(...filteredItems)
   }
   if (state.operationalCertificateFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
         item['Authorization Type']?.toLowerCase() === 'operational certificate',
     )
-    finalFilteredOMRRList = [...finalFilteredOMRRList, ...filteredItems]
+    finalFilteredOMRRList.push(...filteredItems)
   }
 
   if (finalFilteredOMRRList.length > 0) {
     state.filteredValue = finalFilteredOMRRList
   }
+
   // below two filters are nested filters on notification filter
   if (state.compostFacilityFilter) {
     const filteredItems = state.filteredValue.filter(
       (item: OmrrData) =>
         item['Operation Type']?.toLowerCase() === 'compost production facility',
     )
-    nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
+    nestedFilterOMRRList.push(...filteredItems)
   }
   if (state.landApplicationBioSolidsFilter) {
     const filteredItems = state.filteredValue.filter((item: OmrrData) =>
       item['Operation Type']?.toLowerCase().includes('land application'),
     )
-    nestedFilterOMRRList = [...nestedFilterOMRRList, ...filteredItems]
+    nestedFilterOMRRList.push(...filteredItems)
   }
   if (nestedFilterOMRRList.length > 0) {
     state.filteredValue = nestedFilterOMRRList
@@ -174,26 +172,26 @@ export const omrrSlice = createSlice({
         case 'all':
           state.searchByFilteredValue = state.value
           state.filteredValue = state.searchByFilteredValue
-          filterDataBasedOnDifferentFilters(state)
+          filterData(state)
           break
         case 'inactive':
           state.searchByFilteredValue = state.value.filter(
             (item: OmrrData) => item['Authorization Status'] === 'Inactive',
           )
           state.filteredValue = state.searchByFilteredValue
-          filterDataBasedOnDifferentFilters(state)
+          filterData(state)
           break
         case 'active':
           state.searchByFilteredValue = state.value.filter(
             (item: OmrrData) => item['Authorization Status'] === 'Active',
           )
           state.filteredValue = state.searchByFilteredValue
-          filterDataBasedOnDifferentFilters(state)
+          filterData(state)
           break
         default:
           state.searchByFilteredValue = deepClone(state.value)
           state.filteredValue = deepClone(state.searchByFilteredValue)
-          filterDataBasedOnDifferentFilters(state)
+          filterData(state)
           break
       }
     },
@@ -227,16 +225,19 @@ export const omrrSlice = createSlice({
         state.landApplicationBioSolidsFilter =
           !state.landApplicationBioSolidsFilter
       }
-      filterDataBasedOnDifferentFilters(state)
+      filterData(state)
     },
     resetFilters: (state) => {
+      state.filteredValue = state.searchByFilteredValue
       state.notificationFilter = false
       state.permitFilter = false
       state.approvalFilter = false
       state.operationalCertificateFilter = false
       state.compostFacilityFilter = false
       state.landApplicationBioSolidsFilter = false
-      filterDataBasedOnDifferentFilters(state)
+      state.compostFacilityFilterDisabled = true
+      state.landApplicationBioSolidsFilterDisabled = true
+      filterData(state)
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
@@ -248,7 +249,7 @@ export const omrrSlice = createSlice({
       state.globalTextSearchFilter = action.payload
       state.page = 1
       state.filteredValue = state.searchByFilteredValue
-      filterDataBasedOnDifferentFilters(state)
+      filterData(state)
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
