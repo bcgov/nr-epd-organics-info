@@ -9,7 +9,10 @@ interface Props {
   onClick?: MouseEventHandler
 }
 
-export function PolygonSearchButton({ isActive = false, onClick }: Props) {
+export function PolygonSearchButton({
+  isActive = false,
+  onClick,
+}: Readonly<Props>) {
   return (
     <Button
       color="secondary"

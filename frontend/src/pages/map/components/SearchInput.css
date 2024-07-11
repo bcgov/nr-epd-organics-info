@@ -11,16 +11,13 @@
   border-radius: var(--layout-border-radius-medium);
   border: 1px solid var(--surface-color-border-light);
   box-shadow: var(--box-shadow-small);
+  height: var(--map-button-height-large);
+  padding: var(--map-button-padding-large);
+  padding-right: 0.5rem;
 }
 
 .map-search-input > .MuiInputBase-root.Mui-focused {
   border-color: var(--surface-color-primary-active-border);
-}
-
-.map-search-input > .MuiInputBase-root {
-  height: var(--map-button-height-large);
-  padding: var(--map-button-padding-large);
-  padding-right: 0.5rem;
 }
 
 .map-search-input input {

@@ -9,7 +9,7 @@ interface Props {
   onClick?: MouseEventHandler
 }
 
-export function SearchButton({ isActive = false, onClick }: Props) {
+export function SearchButton({ isActive = false, onClick }: Readonly<Props>) {
   return (
     <Button
       variant="contained"

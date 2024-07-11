@@ -38,7 +38,7 @@ interface Props {
   isSmall: boolean
 }
 
-export function AuthorizationMarker({ item, isSmall }: Props) {
+export function AuthorizationMarker({ item, isSmall }: Readonly<Props>) {
   const title = item['Regulated Party']
   return (
     <IconMarker

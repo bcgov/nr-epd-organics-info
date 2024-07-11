@@ -1,4 +1,4 @@
-import L, { LatLngTuple } from 'leaflet'
+import { LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'

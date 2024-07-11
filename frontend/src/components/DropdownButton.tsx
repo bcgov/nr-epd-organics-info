@@ -36,10 +36,10 @@ export function DropdownButton({
   menuClassName,
   menuProps,
   ...rest
-}: ButtonDropdownProps) {
-  const [anchorElement, setAnchorEl] = useState<HTMLElement | null>(null)
+}: Readonly<ButtonDropdownProps>) {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
-  const isOpen = Boolean(anchorElement)
+  const isOpen = Boolean(anchorEl)
 
   const handleClick = (ev: MouseEvent<HTMLElement>) => {
     setAnchorEl(ev.currentTarget)
@@ -87,7 +87,7 @@ export function DropdownButton({
         {...menuProps}
         aria-labelledby={id}
         className={clsx('dropdown-button-menu', menuClassName)}
-        anchorEl={anchorElement}
+        anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
       >

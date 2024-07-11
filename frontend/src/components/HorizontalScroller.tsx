@@ -25,10 +25,10 @@ export function HorizontalScroller({
   className,
   scrollOffset = DEFAULT_SCROLL_OFFSET,
   ...rest
-}: Props) {
+}: Readonly<Props>) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [isScrollLeftVisible, setScrollLeftVisible] = useState<boolean>(false)
-  const [isScrollRightVisible, setScrollRightVisible] = useState<boolean>(false)
+  const [scrollLeftVisible, setScrollLeftVisible] = useState<boolean>(false)
+  const [scrollRightVisible, setScrollRightVisible] = useState<boolean>(false)
 
   useEffect(() => {
     if (isEnabled && ref.current) {
@@ -76,7 +76,7 @@ export function HorizontalScroller({
       >
         {children}
       </div>
-      {isScrollLeftVisible && (
+      {scrollLeftVisible && (
         <Button
           color="primary"
           variant="contained"
@@ -87,7 +87,7 @@ export function HorizontalScroller({
           <ChevronLeft color="secondary" />
         </Button>
       )}
-      {isScrollRightVisible && (
+      {scrollRightVisible && (
         <Button
           color="primary"
           variant="contained"
