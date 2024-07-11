@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux'
-import { Circle, Tooltip, useMap } from 'react-leaflet'
+import { useEffect, useRef } from 'react'
 import L from 'leaflet'
+import { Circle, Tooltip, useMap } from 'react-leaflet'
+import { useSelector } from 'react-redux'
 
 import { RootState } from '@/app/store'
 import { IconMarker } from './IconMarker'
 import { useMyLocation } from '../hooks/useMyLocation'
 
 import './MyLocationMarker.css'
-import { useEffect, useRef } from 'react'
 
 export function myLocationIcon() {
   const size = 20
@@ -26,31 +26,35 @@ export function myLocationIcon() {
 const locationIcon = myLocationIcon()
 
 function MyLocationMarkerContent() {
-  const { position: myLocation, accuracy = 0 } = useMyLocation()
   const map = useMap()
   const hasZoomedToMyLocationRef = useRef(false)
+  const { position, accuracy = 0 } = useMyLocation()
 
   // The first time my location changes - zoom to that location
   useEffect(() => {
-    if (myLocation && !hasZoomedToMyLocationRef.current) {
+    if (position && !hasZoomedToMyLocationRef.current) {
       hasZoomedToMyLocationRef.current = true
-      map.setView(myLocation, Math.max(map.getZoom(), 14), {
+      map.setView(position, Math.max(map.getZoom(), 14), {
         animate: true,
         duration: 1000,
       })
     }
-  }, [map, myLocation])
+  }, [map, position])
 
-  return myLocation ? (
+  return position ? (
     <>
       {Math.round(accuracy) >= 1 && (
         <Circle
-          center={myLocation}
+          center={position}
           radius={Math.round(accuracy / 2)}
           className="my-location-accuracy-circle"
         />
       )}
-      <IconMarker position={myLocation} icon={locationIcon}>
+      <IconMarker
+        position={position}
+        icon={locationIcon}
+        alt="My location marker"
+      >
         <Tooltip direction="top">My location</Tooltip>
       </IconMarker>
     </>

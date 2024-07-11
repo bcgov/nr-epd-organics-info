@@ -84,7 +84,7 @@ export function FilterByButton() {
   const showResetButton = items.some((item) => item.checked)
 
   const content = (
-    <FormGroup sx={{ gap: '0.5rem' }}>
+    <FormGroup sx={{ gap: '0.5rem', paddingLeft: '0.5em' }}>
       {items.map(({ value, label, checked, disabled }) => {
         return (
           <FormControlLabel
@@ -115,7 +115,7 @@ export function FilterByButton() {
       dropdownContent={content}
       showArrow={isLarge}
     >
-      <span>Filter by Facility Type</span>
+      Filter by Facility Type
     </DropdownButton>
   )
 }

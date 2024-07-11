@@ -63,9 +63,10 @@ export function DropdownButton({
           ...defaultButtonStyles,
           ...style,
         }}
+        aria-label={typeof children === 'string' ? children : undefined}
         endIcon={
           showArrow ? (
-            <img src={downArrow} alt="Down arrow icon" {...arrowProps} />
+            <img src={downArrow} alt="Down arrow" {...arrowProps} />
           ) : undefined
         }
         {...buttonProps}

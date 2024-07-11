@@ -9,8 +9,8 @@ import OmrrData from '@/interfaces/omrr'
 import { themeBreakpointValues } from '@/theme'
 
 describe('Test suite for MapView', () => {
-  it('should render the MapView with markers', () => {
-    render(<MapView />, {
+  it('should render the MapView with markers', async () => {
+    const { user } = render(<MapView />, {
       screenWidth: themeBreakpointValues.xxl,
       withStateProvider: true,
       initialState: {
@@ -18,6 +18,9 @@ describe('Test suite for MapView', () => {
           filteredValue: omrrTestData,
           status: 'succeeded',
         } as OmrrSliceState,
+        map: {
+          isMyLocationVisible: false,
+        },
       },
     })
 
@@ -40,6 +43,9 @@ describe('Test suite for MapView', () => {
           filteredValue: [] as OmrrData[],
           status: 'succeeded',
         } as OmrrSliceState,
+        map: {
+          isMyLocationVisible: true,
+        },
       },
     })
 
@@ -47,5 +53,10 @@ describe('Test suite for MapView', () => {
     expect(mapView).toHaveClass('map-view--small')
     const markers = screen.queryAllByAltText('Authorization marker')
     expect(markers).toHaveLength(0)
+
+    screen.getByTitle('Show the data layers')
+    const findMeControl = screen.getByTitle('Show my location on the map')
+    expect(findMeControl).toHaveClass('map-control-button--active')
+    // await screen.findByAltText('My location marker')
   })
 })

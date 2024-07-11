@@ -32,7 +32,7 @@ export function HorizontalScroller({
 
   useEffect(() => {
     if (isEnabled && ref.current) {
-      const { scrollLeft = 0, scrollWidth, clientWidth } = ref.current
+      const { scrollLeft, scrollWidth, clientWidth } = ref.current
       setScrollLeftVisible(scrollLeft > 0)
       setScrollRightVisible(scrollWidth > clientWidth)
     }
@@ -41,8 +41,6 @@ export function HorizontalScroller({
   if (!isEnabled) {
     return children
   }
-
-  const onScroll = () => {}
 
   const doScroll = (offset: number) => {
     if (ref.current) {
@@ -75,7 +73,6 @@ export function HorizontalScroller({
         {...rest}
         className={clsx('horizontal-scroller', className)}
         ref={ref}
-        onScroll={onScroll}
       >
         {children}
       </div>

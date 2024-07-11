@@ -22,6 +22,7 @@ export function SearchButton({ isActive = false, onClick }: Props) {
       )}
       startIcon={<img src={searchIcon} alt="Search icon" />}
       onClick={onClick}
+      aria-label="Search"
     >
       Search
     </Button>
