@@ -47,7 +47,7 @@
 			"
 		Referrer-Policy "same-origin"
 		Feature-Policy "fullscreen 'self';"
-		Permissions-Policy "geolocation=(), microphone=(), camera=(), speaker=(), usb=(), bluetooth=(), payment=(), interest-cohort=()"
+		Permissions-Policy "geolocation=(self), microphone=(), camera=(), speaker=(), usb=(), bluetooth=(), payment=(), interest-cohort=()"
 		-Server
 	}
     # Proxy requests to API service

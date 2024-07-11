@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { LatLngLiteral } from 'leaflet'
 
+const opts: PositionOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+}
+
 interface MyLocationData {
   position?: LatLngLiteral
   accuracy?: number
@@ -12,37 +17,22 @@ interface MyLocationData {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  * @returns position LatLngLiteral object
  */
-export function useMyLocation() {
+export function useMyLocation(): MyLocationData {
   const [data, setData] = useState<MyLocationData>({})
 
   useEffect(() => {
-    // Ask user for permission first
-    navigator.permissions.query({ name: 'geolocation' }).then(function (
-      result: PermissionStatus,
-    ) {
-      // Permission state is: ['granted', 'prompt', 'denied']
-      if (result.state !== 'denied') {
-        navigator.geolocation.getCurrentPosition(
-          (result) => {
-            const { coords } = result
-            const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
-            const newData: MyLocationData = { accuracy }
-            if (!isNaN(lat) && !isNaN(lng)) {
-              newData.position = { lat, lng }
-            }
-            setData(newData)
-          },
-          (error) => {
-            console.error('Watch my location error', error)
-            setData({})
-          },
-          {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-          },
-        )
+    const success = (result: GeolocationPosition) => {
+      const { coords } = result
+      const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
+      const newData: MyLocationData = { accuracy }
+      if (!isNaN(lat) && !isNaN(lng)) {
+        newData.position = { lat, lng }
       }
-    })
+      setData(newData)
+    }
+    const { geolocation } = navigator
+    // prettier-ignore Ignore Sonar error about geolocation - we need to allow this
+    geolocation.getCurrentPosition(success, null, opts) // NOSONAR
   }, [])
 
   return data
