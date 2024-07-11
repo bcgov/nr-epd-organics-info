@@ -21,7 +21,6 @@ export function useMyLocation() {
       result: PermissionStatus,
     ) {
       // Permission state is: ['granted', 'prompt', 'denied']
-      console.log('** Permission', result)
       if (result.state !== 'denied') {
         navigator.geolocation.getCurrentPosition(
           (result) => {
@@ -31,7 +30,6 @@ export function useMyLocation() {
             if (!isNaN(lat) && !isNaN(lng)) {
               newData.position = { lat, lng }
             }
-            console.log('** Pos', newData)
             setData(newData)
           },
           (error) => {

@@ -14,6 +14,7 @@ export function myLocationIcon() {
   return L.divIcon({
     html: `<div class="my-location-pulse"></div>
     <svg width="${size}" height="${size}" viewBox="0 0 36 36" fill="none">
+      <title>My location marker</title>
       <circle cx="18" cy="18" r="10" class="my-location-circle" />
     </svg>`,
     iconSize: [size, size],
@@ -50,11 +51,7 @@ function MyLocationMarkerContent() {
           className="my-location-accuracy-circle"
         />
       )}
-      <IconMarker
-        position={position}
-        icon={locationIcon}
-        alt="My location marker"
-      >
+      <IconMarker position={position} icon={locationIcon}>
         <Tooltip direction="top">My location</Tooltip>
       </IconMarker>
     </>

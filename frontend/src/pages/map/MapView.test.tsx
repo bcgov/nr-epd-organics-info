@@ -61,6 +61,6 @@ describe('Test suite for MapView', () => {
     screen.getByTitle('Show the data layers')
     const findMeControl = screen.getByTitle('Show my location on the map')
     expect(findMeControl).toHaveClass('map-control-button--active')
-    // await screen.findByAltText('My location marker')
+    await screen.findByTitle('My location marker')
   })
 })

@@ -31,6 +31,7 @@ Object.defineProperty(window, 'scrollTo', {
 Element.prototype.scrollIntoView = vi.fn()
 Element.prototype.scrollTo = vi.fn(() => {})
 
+// Define geolocation and permissions query
 const geoLocationResult: GeolocationPosition = {
   coords: {
     latitude: 48,
@@ -54,6 +55,17 @@ Object.defineProperty(navigator, 'geolocation', {
       return 0
     },
     clearWatch: () => {},
+  },
+})
+
+Object.defineProperty(navigator, 'permissions', {
+  value: {
+    query: ({ name }: PermissionDescriptor) => {
+      return Promise.resolve({
+        name,
+        state: 'granted',
+      } as PermissionStatus)
+    },
   },
 })
 
