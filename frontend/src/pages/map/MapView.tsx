@@ -7,10 +7,10 @@ import clsx from 'clsx'
 import { MapSearch } from './components/MapSearch'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
 import { MyLocationMarker } from './layers/MyLocationMarker'
+import { MapControls } from '@/pages/map/layers/MapControls'
 
 import 'leaflet/dist/leaflet.css'
 import './MapView.css'
-import { MapControls } from '@/pages/map/layers/MapControls'
 
 // Set the position of the marker for center of BC
 const CENTER_OF_BC: LatLngTuple = [53.7267, -127.6476]
