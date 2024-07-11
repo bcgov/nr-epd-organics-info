@@ -1,5 +1,5 @@
 import React from 'react'
-import { getByPlaceholderText, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import MapView from '@/pages/map/MapView'
 import { render } from '@/test-utils'
@@ -10,7 +10,7 @@ import { themeBreakpointValues } from '@/theme'
 
 describe('Test suite for MapView', () => {
   it('should render the MapView with markers', async () => {
-    const { user } = render(<MapView />, {
+    render(<MapView />, {
       screenWidth: themeBreakpointValues.xxl,
       withStateProvider: true,
       initialState: {
@@ -32,6 +32,10 @@ describe('Test suite for MapView', () => {
 
     screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Find Me' })
+    expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
+    expect(
+      screen.queryByTitle('Show my location on the map'),
+    ).not.toBeInTheDocument()
   })
 
   it('should render the MapView with no markers on a small screen', async () => {

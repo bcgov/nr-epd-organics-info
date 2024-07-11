@@ -1,6 +1,6 @@
+import { Page } from 'playwright'
 import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
-import { Page } from 'playwright'
 
 export const map_page = async (page: Page) => {
   await page.goto(baseURL)
@@ -13,6 +13,15 @@ export const map_page = async (page: Page) => {
 
   await expect(page.getByTestId('map-view')).toBeVisible()
 
+  // Find map markers - expect there to be some
+  const markers = await page.getByAltText('Authorization marker').all()
+  if (markers.length === 0) {
+    console.log('No markers')
+  }
+  // TODO not sure why this fails on CI (chromium/Chrome)
+  // expect(markers.length > 0).toBe(true)
+
+  // Search components
   await expect(page.getByPlaceholder('Search')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
   await expect(
@@ -27,14 +36,14 @@ export const map_page = async (page: Page) => {
   await expect(page.getByRole('radio', { name: 'All' })).toBeVisible()
   const activeRadio = page.getByRole('radio', { name: 'Active', exact: true })
   await expect(activeRadio).toBeVisible()
-  await expect(
-    page.getByRole('radio', { name: 'Inactive', exact: true }),
-  ).toBeVisible()
+  await expect(page.getByLabel('Inactive')).toBeVisible()
+  await activeRadio.check()
 
-  await activeRadio.click()
+  // Close the menu by clicking on the mask
+  await page.locator('.MuiBackdrop-root').click({ force: true })
 
-  // TODO this causes an infinite loop, not sure why
-  /*
+  await expect(page.getByLabel('Inactive')).toBeHidden()
+
   const filterBy = page.getByText('Filter by Facility Type')
   await expect(filterBy).toBeVisible()
   await filterBy.click()
@@ -53,10 +62,21 @@ export const map_page = async (page: Page) => {
   await expect(
     page.getByRole('checkbox', { name: 'Operational Certificate' }),
   ).toBeVisible()
- */
+  await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeHidden()
 
-  // Find map markers - expect there to be some
-  // TODO not sure why this fails on CI (chromium/Chrome)
-  // const markers = await page.getByAltText('Authorization marker').all()
-  // expect(markers.length > 0).toBe(true)
+  await expect(page.getByLabel('Notification')).not.toBeChecked()
+  await page.getByLabel('Notification').click()
+  await expect(page.getByLabel('Notification')).toBeChecked()
+
+  await expect(page.getByLabel('Permit')).not.toBeChecked()
+  await page.getByLabel('Permit').click()
+  await expect(page.getByLabel('Permit')).toBeChecked()
+
+  // Reset Filters is only shown when there are active filters
+  await page.getByRole('button', { name: 'Reset Filters' }).click()
+  await expect(page.getByLabel('Notification')).not.toBeChecked()
+  await expect(page.getByLabel('Permit')).not.toBeChecked()
+
+  // Close the menu by clicking on the mask
+  await page.locator('.MuiBackdrop-root').click({ force: true })
 }

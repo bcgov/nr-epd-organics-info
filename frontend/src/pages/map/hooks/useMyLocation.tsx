@@ -19,14 +19,11 @@ export function useMyLocation() {
       (result) => {
         const { coords } = result
         const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
+        const newData: MyLocationData = { accuracy }
         if (!isNaN(lat) && !isNaN(lng)) {
-          const position = { lat, lng }
-          setData({ position, accuracy })
-        } else {
-          console.error('Invalid location')
-          navigator.geolocation.clearWatch(watchId)
-          setData({})
+          newData.position = { lat, lng }
         }
+        setData(newData)
       },
       (error) => {
         console.error('Watch my location error', error)

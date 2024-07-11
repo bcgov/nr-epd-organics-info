@@ -85,17 +85,15 @@ export function FilterByButton() {
 
   const content = (
     <FormGroup sx={{ gap: '0.5rem', paddingLeft: '0.5em' }}>
-      {items.map(({ value, label, checked, disabled }) => {
-        return (
-          <FormControlLabel
-            key={`filterByCheckBox-${value}`}
-            disabled={disabled}
-            control={<Checkbox checked={checked} />}
-            label={label}
-            onChange={() => updateFilters(value)}
-          />
-        )
-      })}
+      {items.map(({ value, label, checked, disabled }) => (
+        <FormControlLabel
+          key={`filterByCheckBox-${value}`}
+          control={<Checkbox checked={checked} />}
+          label={label}
+          disabled={disabled}
+          onChange={() => updateFilters(value)}
+        />
+      ))}
       {showResetButton && (
         <Button variant="outlined" onClick={onReset} sx={styles.resetButton}>
           Reset Filters
