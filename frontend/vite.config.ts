@@ -1,6 +1,8 @@
 import { loadEnv, defineConfig } from 'vite'
+import { configDefaults } from 'vitest/config'
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
+import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -12,7 +14,7 @@ export default ({ mode }) => {
   }
 
   return defineConfig({
-    plugins: [react()],
+    plugins: [react(), svgr()],
     server: {
       port: 3001, //parseInt(process.env.PORT),
       fs: {
@@ -91,13 +93,26 @@ export default ({ mode }) => {
       },
     },
     define,
-    // @ts-ignore
     test: {
-      exclude: ['**/node_modules/**', '**/e2e/**'],
+      exclude: [
+        ...configDefaults.exclude,
+        '**/e2e/**',
+        '**/playwright.config.ts',
+        '**/playwright-report/**',
+      ],
+      include: ['./src/**/*.{test,spec}.{ts,tsx}'],
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/test-setup.ts',
       coverage: {
+        provider: 'v8',
+        exclude: [
+          ...configDefaults.coverage.exclude,
+          '**/e2e/**',
+          '**/playwright.config.ts',
+          '**/playwright-report/**',
+        ],
+        extension: ['.ts', '.tsx'],
         reporter: ['lcov', 'text-summary', 'text', 'json', 'html'],
       },
     },

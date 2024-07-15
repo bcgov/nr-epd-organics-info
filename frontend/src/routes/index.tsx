@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Dashboard from '@/pages/dashboard/Dashboard'
 import AuthorizationList from '@/components/AuthorizationList'
 import AuthorizationDetails from '@/components/AuthorizationDetails'
-import MapView from '@/components/MapView'
+import MapView from '@/pages/map/MapView'
 
 export default function AppRoutes() {
   return (

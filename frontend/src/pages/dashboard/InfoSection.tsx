@@ -66,7 +66,7 @@ const styles = {
   },
   image: {
     borderRadius: '8px',
-    maxWidth: '80vw',
+    maxWidth: 'calc(100vw - 3em)',
   },
   button: {
     fontWeight: 'bold',

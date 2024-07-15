@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { omrrSlice } from '@/features/omrr/omrr-slice'
+import { mapSlice } from '@/features/map/map-slice'
 
 const rootReducer = combineReducers({
   omrr: omrrSlice.reducer,
+  map: mapSlice.reducer,
 })
 
 export function setupStore(preloadedState?: Partial<RootState>) {

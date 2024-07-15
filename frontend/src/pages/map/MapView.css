@@ -1,0 +1,95 @@
+
+.map-view {
+  width: 100%;
+  height: calc(100vh - 4em);
+  /* Header is fixed */
+  padding-top: 4em;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  --map-button-height-large: 64px;
+  --map-button-height-medium: 40px;
+  --map-button-padding-large: 1rem 1.5rem;
+  --map-button-padding-medium: 0.5rem 1rem;
+  --map-button-font-size-large: 18px;
+  --map-button-font-size-medium: 16px;
+}
+
+/* No footer on small screens - so use full height */
+.map-view.map-view--small {
+  height: 100vh; /* for old browser */
+  /* Use dvh instead of vh otherwise on Chrome the address bar pushes map down */
+  /* https://stackoverflow.com/questions/52848856/100vh-height-when-address-bar-is-shown-chrome-mobile#70048720 */
+  height: 100dvh;
+}
+
+.map-view > .map-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.map-components {
+  position: absolute;
+  top: 4em;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.map-components > * {
+  pointer-events: auto;
+}
+
+button.map-button {
+  font-weight: 400;
+  line-height: 1.5rem;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  background-color: var(--surface-color-background-white);
+  box-sizing: border-box;
+  text-wrap: nowrap;
+  border-radius: var(--layout-border-radius-medium);
+  border: 1px solid var(--surface-color-border-light);
+  box-shadow: var(--box-shadow-small);
+}
+
+button.map-button:hover {
+  border-color: var(--surface-color-border-hover);
+}
+
+button.map-button.map-button--large {
+  height: var(--map-button-height-large);
+  font-size: var(--map-button-font-size-large);
+  padding: var(--map-button-padding-large);
+}
+
+button.map-button.map-button--medium {
+  height: var(--map-button-height-medium);
+  font-size: var(--map-button-font-size-medium);
+  padding: var(--map-button-padding-medium);
+}
+
+button.map-button--active {
+  background-color: var(--surface-color-secondary-hover);
+  border: 3px solid var(--surface-color-primary-active-border);
+}
+
+button.map-button--active:hover {
+  border-color: var(--surface-color-primary-active-border);
+}
+
+
+.data-layers-icon, .find-me-icon {
+  color: var(--typography-color-secondary);
+}
+
+.polygon-search-icon, .point-search-icon {
+  color: var(--typography-color-primary);
+}

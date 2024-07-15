@@ -23,6 +23,52 @@ vi.mock('react-leaflet-cluster', () => {
   }
 })
 
+// Define scrollTo and scrollIntoView
+Object.defineProperty(window, 'scrollTo', {
+  value: () => {},
+  writable: true,
+})
+Element.prototype.scrollIntoView = vi.fn()
+Element.prototype.scrollTo = vi.fn(() => {})
+
+// Define geolocation and permissions query
+const geoLocationResult: GeolocationPosition = {
+  coords: {
+    latitude: 48,
+    longitude: -123,
+    accuracy: 0,
+    heading: 0,
+    speed: 0,
+    altitude: 0,
+    altitudeAccuracy: 1,
+  },
+  timestamp: Date.now(),
+}
+
+Object.defineProperty(navigator, 'geolocation', {
+  value: {
+    getCurrentPosition: (success: (pos: GeolocationPosition) => void) => {
+      success(geoLocationResult)
+    },
+    watchPosition: (success: (pos: GeolocationPosition) => void) => {
+      success(geoLocationResult)
+      return 0
+    },
+    clearWatch: () => {},
+  },
+})
+
+Object.defineProperty(navigator, 'permissions', {
+  value: {
+    query: ({ name }: PermissionDescriptor) => {
+      return Promise.resolve({
+        name,
+        state: 'granted',
+      } as PermissionStatus)
+    },
+  },
+})
+
 /**
  * Media Query support
  * Call the setScreenWidth() function before a test to set the window width.

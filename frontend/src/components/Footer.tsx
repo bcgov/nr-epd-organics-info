@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import {
   AppBar,
   Fade,
@@ -10,7 +11,8 @@ import Button from '@mui/material/Button'
 import { ArrowUpward } from '@mui/icons-material'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
-import { useCallback } from 'react'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const styles = {
   appBar: {
@@ -30,47 +32,15 @@ const styles = {
 }
 
 export default function Footer() {
-  // const theme = useTheme()
-  // const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+  const location = useLocation()
+  const theme = useTheme()
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'))
 
-  // To Do: Build a check to see if user has scrolled to the bottom so we offset the button at the end of the page to not overlap the footer on mobile.
-
-  function ScrollToTop() {
-    const trigger = useScrollTrigger({
-      threshold: 100,
-    })
-
-    const scrollToTop = useCallback(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, [])
-
-    return (
-      <Fade in={trigger}>
-        <Button
-          sx={{
-            position: 'fixed',
-            bottom: {
-              xs: '1.8em',
-              sm: '0.8em',
-            },
-            right: {
-              xs: '2em',
-              sm: '3.3em',
-            },
-            width: '4.25em',
-            height: '4em',
-            minWidth: '4.25em',
-            background: ' #F8BA47',
-            borderRadius: '.5em',
-            zIndex: 9,
-          }}
-          onClick={() => scrollToTop()}
-        >
-          <ArrowUpward />
-        </Button>
-      </Fade>
-    )
+  // Don't show the footer on the map page
+  if (location.pathname === '/map' && isSmall) {
+    return null
   }
+
   return (
     <AppBar
       position="relative"
@@ -177,11 +147,49 @@ export default function Footer() {
           </Grid>
           <Grid item xs={1} justifyContent="end">
             <Grid container spacing={1} justifyContent="right">
-              {ScrollToTop()}
+              <ScrollToTop />
             </Grid>
           </Grid>
         </Grid>
       </Toolbar>
     </AppBar>
+  )
+}
+
+// To Do: Build a check to see if user has scrolled to the bottom so we offset the button at the end of the page to not overlap the footer on mobile.
+function ScrollToTop() {
+  const trigger = useScrollTrigger({
+    threshold: 100,
+  })
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  return (
+    <Fade in={trigger}>
+      <Button
+        sx={{
+          position: 'fixed',
+          bottom: {
+            xs: '1.8em',
+            sm: '0.8em',
+          },
+          right: {
+            xs: '2em',
+            sm: '3.3em',
+          },
+          width: '4.25em',
+          height: '4em',
+          minWidth: '4.25em',
+          background: ' #F8BA47',
+          borderRadius: '.5em',
+          zIndex: 9,
+        }}
+        onClick={() => scrollToTop()}
+      >
+        <ArrowUpward />
+      </Button>
+    </Fade>
   )
 }

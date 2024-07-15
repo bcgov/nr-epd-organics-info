@@ -1459,7 +1459,7 @@ export default function AuthorizationDetails() {
                 scrollWheelZoom={false}
                 zoom={14}
                 style={{ height: '35em', width: '100%' }}
-                className="map-container"
+                className="authorization-map-container"
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
