@@ -139,16 +139,9 @@ export function SearchInput() {
         typeof option === 'string' ? option : option.text
       }
       freeSolo
-      renderOption={(props, option, state) => {
+      renderOption={(props, option) => {
         const { key, ...optionProps } = props
-        return (
-          <SearchResultItem
-            key={`SearchResultItem-${option.id}`}
-            option={option}
-            inputValue={state.inputValue}
-            {...optionProps}
-          />
-        )
+        return <SearchResultItem key={key} option={option} {...optionProps} />
       }}
       componentsProps={componentProps}
       onChange={onAutocompleteChange}

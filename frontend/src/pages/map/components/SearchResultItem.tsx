@@ -36,17 +36,11 @@ function getLabel(matchType: MatchType, item: OmrrData | undefined): ReactNode {
 
 interface Props {
   option: SearchOption
-  inputValue: string
   className?: string
   [key: string]: any
 }
 
-export function SearchResultItem({
-  option,
-  inputValue,
-  className,
-  ...rest
-}: Props) {
+export function SearchResultItem({ option, className, ...rest }: Props) {
   const { matchType, text, item } = option
   return (
     <Box
