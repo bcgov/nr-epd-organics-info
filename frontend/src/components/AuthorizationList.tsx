@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { ArrowDropDown, ArrowDropUp, Search } from '@mui/icons-material'
 import {
   Box,
@@ -18,47 +21,43 @@ import {
   Typography,
 } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useDispatch, useSelector } from 'react-redux'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import { RootState } from '@/app/store'
 import {
   resetFilters,
-  searchAuthorizationsByGlobalFilter,
+  searchAuthorizationsByTextFilter,
   setExpand,
-  setFilters,
   setPage,
   setSearchBy,
+  updateFilter,
 } from '@/features/omrr/omrr-slice'
-import { useNavigate } from 'react-router'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useEffect } from 'react'
+import { OmrrFilter } from '@/interfaces/omrr-filter'
+
 export default function AuthorizationList() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const theme = useTheme()
+  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+
+  const {
+    filteredResults,
+    expand,
+    filters,
+    searchBy,
+    page,
+    searchTextFilter,
+    lastModified,
+  } = useSelector((state: RootState) => state.omrr)
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-  const theme = useTheme()
-  const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
-  const navigate = useNavigate()
+
   const buttonClicked = (route: any, data: any) => {
     navigate(route, { state: { data: data } }) // reset the state
   }
-  const dispatch = useDispatch()
-  const {
-    filteredValue,
-    expand,
-    notificationFilter,
-    permitFilter,
-    approvalFilter,
-    compostFacilityFilter,
-    landApplicationBioSolidsFilter,
-    operationalCertificateFilter,
-    searchBy,
-    page,
-    globalTextSearchFilter,
-    compostFacilityFilterDisabled,
-    landApplicationBioSolidsFilterDisabled,
-    lastModified,
-  } = useSelector((state: RootState) => state.omrr)
   const pagination = (
     <Grid item xs={12}>
       <Grid
@@ -93,7 +92,7 @@ export default function AuthorizationList() {
           }}
           variant="outlined"
           shape="rounded"
-          count={Math.ceil(filteredValue.length / 10)}
+          count={Math.ceil(filteredResults.length / 10)}
           siblingCount={mdMatches ? 1 : 0}
           page={page}
           onChange={(event, value) => dispatch(setPage(value))}
@@ -104,8 +103,8 @@ export default function AuthorizationList() {
           }}
         >
           Showing {(page - 1) * 10 + 1}-
-          {Math.min(page * 10, filteredValue.length)} of {filteredValue.length}{' '}
-          results
+          {Math.min(page * 10, filteredResults.length)} of{' '}
+          {filteredResults.length} results
         </Typography>
       </Grid>
     </Grid>
@@ -174,9 +173,9 @@ export default function AuthorizationList() {
               }}
               label="Search Authorizations"
               data-testid="auth-list-search-authorizations-textfield"
-              value={globalTextSearchFilter}
+              value={searchTextFilter}
               onChange={(event) =>
-                dispatch(searchAuthorizationsByGlobalFilter(event.target.value))
+                dispatch(searchAuthorizationsByTextFilter(event.target.value))
               }
               variant="outlined"
               InputProps={{
@@ -295,60 +294,23 @@ export default function AuthorizationList() {
                     },
                   }}
                 >
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      checked={notificationFilter}
-                      control={<Checkbox />}
-                      label="Notification"
-                      onClick={() => dispatch(setFilters('notification'))}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      checked={permitFilter}
-                      label="Permit"
-                      onClick={() => dispatch(setFilters('permit'))}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      checked={approvalFilter}
-                      control={<Checkbox />}
-                      label="Approval"
-                      onClick={() => dispatch(setFilters('approval'))}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      checked={operationalCertificateFilter}
-                      control={<Checkbox />}
-                      label="Operational Certificate"
-                      onClick={() =>
-                        dispatch(setFilters('operationalCertificate'))
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      checked={compostFacilityFilter}
-                      control={<Checkbox />}
-                      disabled={compostFacilityFilterDisabled}
-                      label="Compost Production Facility"
-                      onClick={() => dispatch(setFilters('compostFacility'))}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <FormControlLabel
-                      checked={landApplicationBioSolidsFilter}
-                      control={<Checkbox />}
-                      disabled={landApplicationBioSolidsFilterDisabled}
-                      label="Land Application of Biosolids"
-                      onClick={() =>
-                        dispatch(setFilters('landApplicationBioSolids'))
-                      }
-                    />
-                  </Grid>
+                  {filters.map((filter: OmrrFilter) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={4}
+                      md={3}
+                      key={`AuthListFilter-${filter.value}`}
+                    >
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        checked={filter.on}
+                        label={filter.label}
+                        disabled={filter.disabled}
+                        onChange={() => dispatch(updateFilter(filter))}
+                      />
+                    </Grid>
+                  ))}
                 </Grid>
               </Grid>
               <Grid item xs={12}>
@@ -409,9 +371,9 @@ export default function AuthorizationList() {
             }}
           >
             <Grid container spacing={3}>
-              {filteredValue &&
-                filteredValue.length > 0 &&
-                filteredValue
+              {filteredResults &&
+                filteredResults.length > 0 &&
+                filteredResults
                   .slice((page - 1) * 10, page * 10)
                   .map((item, index) => (
                     <Grid key={index} item xs={12} sx={{ width: '100%' }}>

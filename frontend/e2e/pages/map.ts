@@ -79,4 +79,19 @@ export const map_page = async (page: Page) => {
 
   // Close the menu by clicking on the mask
   await page.locator('.MuiBackdrop-root').click({ force: true })
+
+  // Enter 'Victoria' into the search field
+  const searchInput = page.getByPlaceholder('Search')
+  await searchInput.click({ force: true })
+  await searchInput.fill('Victoria')
+  // Autocomplete should be visible
+  await expect(page.getByText('17268')).toBeVisible()
+  const option = page.getByText(/City of Victoria/i)
+  await expect(option).toBeVisible()
+  await option.click()
+
+  // Autocomplete should be hidden
+  await expect(page.getByText('17268')).toBeHidden()
+  // Search input
+  await expect(searchInput).toHaveValue('CITY OF VICTORIA')
 }

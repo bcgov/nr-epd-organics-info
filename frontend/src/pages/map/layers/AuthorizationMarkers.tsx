@@ -8,7 +8,7 @@ import OmrrData from '@/interfaces/omrr'
 import AuthorizationMarker from './AuthorizationMarker'
 
 export function AuthorizationMarkers() {
-  const values = useSelector((state: RootState) => state.omrr.filteredValue)
+  const values = useSelector((state: RootState) => state.omrr.filteredResults)
   const status = useSelector((state: RootState) => state.omrr.status)
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
@@ -23,10 +23,13 @@ export function AuthorizationMarkers() {
       spiderfyOnMaxZoom
       showCoverageOnHover
     >
-      {values.map((item: OmrrData, index: number) => {
-        const key = `Marker-${index}-${item['Regulated Party']}`
-        return <AuthorizationMarker key={key} item={item} isSmall={isSmall} />
-      })}
+      {values.map((item: OmrrData) => (
+        <AuthorizationMarker
+          key={`AuthorizationMarker-${item['Authorization Number']}`}
+          item={item}
+          isSmall={isSmall}
+        />
+      ))}
     </MarkerClusterGroup>
   ) : null
 }

@@ -1,164 +1,78 @@
-import OmrrData from '@/interfaces/omrr'
 import {
   ActionReducerMapBuilder,
   createAsyncThunk,
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { RootState } from '@/app/store'
+
+import OmrrData from '@/interfaces/omrr'
 import apiService from '@/service/api-service'
 import { Location } from '@/interfaces/location'
-import rfdc from 'rfdc'
-
-const deepClone = rfdc({ circles: true })
+import {
+  AUTH_TYPE_COMPOST_FACILITY,
+  AUTH_TYPE_LAND_APPLICATION,
+  AUTH_TYPE_NOTIFICATION,
+  facilityTypeFilters,
+  OmrrFilter,
+} from '@/interfaces/omrr-filter'
+import { SEARCH_BY_ACTIVE } from '@/interfaces/types'
+import OmrrResponse from '@/interfaces/omrr-response'
+import {
+  convertData,
+  filterByAuthorizationState,
+  filterData,
+} from './omrr-utils'
+import { shortDateFormat } from '@/utils/utils'
 
 export interface OmrrSliceState {
   lastModified: string
-  // All results
-  value: OmrrData[]
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
-  filteredValue: OmrrData[]
-  searchBy: string | null
   expand: boolean
   location: Location | null
-  notificationFilter: boolean
-  permitFilter: boolean
-  approvalFilter: boolean
-  operationalCertificateFilter: boolean
-  compostFacilityFilter: boolean
-  compostFacilityFilterDisabled: boolean
-  landApplicationBioSolidsFilter: boolean
-  landApplicationBioSolidsFilterDisabled: boolean
   page: number
-  searchByFilteredValue: OmrrData[]
-  globalTextSearchFilter: string
+  searchBy: string
+  filters: OmrrFilter[]
+  allResults: OmrrData[]
+  searchByFilteredResults: OmrrData[]
+  filteredResults: OmrrData[]
+  searchTextFilter: string
 }
 
 export const fetchOMRRData = createAsyncThunk(
   'data/fetchOMRRRecords',
   async () => {
     const result = await apiService.getAxiosInstance().get('/omrr')
-
     return result?.data
   },
 )
 
 export const initialState: OmrrSliceState = {
-  // The data array
-  value: [],
-  filteredValue: [],
+  lastModified: '',
   // The status of the API call
   status: 'idle',
   // The error message if any
   error: null,
-  searchBy: 'active',
   expand: false,
   location: null,
-  notificationFilter: false,
-  permitFilter: false,
-  approvalFilter: false,
-  operationalCertificateFilter: false,
-  compostFacilityFilter: false,
-  landApplicationBioSolidsFilter: false,
   page: 1,
-  searchByFilteredValue: [],
-  globalTextSearchFilter: '',
-  compostFacilityFilterDisabled: true,
-  landApplicationBioSolidsFilterDisabled: true,
-  lastModified: '',
-}
-
-function filterData(state: OmrrSliceState) {
-  let finalFilteredOMRRList: OmrrData[] = []
-  let nestedFilterOMRRList: OmrrData[] = []
-  if (state.globalTextSearchFilter?.length > 0) {
-    state.filteredValue = state.searchByFilteredValue.filter(
-      (item: OmrrData) => {
-        return Object.values(item).some((value) => {
-          return value
-            ?.toString()
-            ?.toLowerCase()
-            .includes(state.globalTextSearchFilter.toLowerCase())
-        })
-      },
-    )
-  }
-  if (state.approvalFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() === 'approval',
-    )
-    finalFilteredOMRRList.push(...filteredItems)
-  }
-  if (state.notificationFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() === 'notification',
-    )
-    finalFilteredOMRRList.push(...filteredItems)
-  }
-  if (state.permitFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() === 'permit',
-    )
-    finalFilteredOMRRList.push(...filteredItems)
-  }
-  if (state.operationalCertificateFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Authorization Type']?.toLowerCase() === 'operational certificate',
-    )
-    finalFilteredOMRRList.push(...filteredItems)
-  }
-
-  if (finalFilteredOMRRList.length > 0) {
-    state.filteredValue = finalFilteredOMRRList
-  }
-
-  // below two filters are nested filters on notification filter
-  if (state.compostFacilityFilter) {
-    const filteredItems = state.filteredValue.filter(
-      (item: OmrrData) =>
-        item['Operation Type']?.toLowerCase() === 'compost production facility',
-    )
-    nestedFilterOMRRList.push(...filteredItems)
-  }
-  if (state.landApplicationBioSolidsFilter) {
-    const filteredItems = state.filteredValue.filter((item: OmrrData) =>
-      item['Operation Type']?.toLowerCase().includes('land application'),
-    )
-    nestedFilterOMRRList.push(...filteredItems)
-  }
-  if (nestedFilterOMRRList.length > 0) {
-    state.filteredValue = nestedFilterOMRRList
-  }
-  // if any of check boxes are checked and there is no data in the finalFilteredOMRRList then we need to show no data found
-  if (
-    (state.approvalFilter ||
-      state.notificationFilter ||
-      state.permitFilter ||
-      state.operationalCertificateFilter ||
-      state.landApplicationBioSolidsFilter ||
-      state.compostFacilityFilter) &&
-    (finalFilteredOMRRList.length === 0 ||
-      (state.landApplicationBioSolidsFilter &&
-        nestedFilterOMRRList.length === 0) ||
-      (state.compostFacilityFilter && nestedFilterOMRRList.length === 0))
-  ) {
-    state.filteredValue = []
-  }
-  state.page = 1
+  searchBy: SEARCH_BY_ACTIVE,
+  // Array of filters to keep track of which are on and which are disabled
+  filters: [...facilityTypeFilters],
+  // The data array containing all results
+  allResults: [],
+  // results filtered by the search by value
+  searchByFilteredResults: [],
+  // final filtered results
+  filteredResults: [],
+  // global search text value
+  searchTextFilter: '',
 }
 
 export const omrrSlice = createSlice({
   name: 'omrr',
   initialState,
   reducers: {
-    setOmrrData: (state, action: PayloadAction<OmrrData[]>) => {
-      state.value = action.payload
-    },
     setExpand: (state, action: PayloadAction<boolean>) => {
       state.expand = action.payload
     },
@@ -167,178 +81,106 @@ export const omrrSlice = createSlice({
     },
     setSearchBy: (state, action: PayloadAction<string>) => {
       state.searchBy = action.payload
+      // Save the search by filtered results to speed up filtering
+      state.searchByFilteredResults = filterByAuthorizationState(state)
+      state.filteredResults = filterData(state)
       state.page = 1
-      switch (action.payload) {
-        case 'all':
-          state.searchByFilteredValue = state.value
-          state.filteredValue = state.searchByFilteredValue
-          filterData(state)
-          break
-        case 'inactive':
-          state.searchByFilteredValue = state.value.filter(
-            (item: OmrrData) => item['Authorization Status'] === 'Inactive',
-          )
-          state.filteredValue = state.searchByFilteredValue
-          filterData(state)
-          break
-        case 'active':
-          state.searchByFilteredValue = state.value.filter(
-            (item: OmrrData) => item['Authorization Status'] === 'Active',
-          )
-          state.filteredValue = state.searchByFilteredValue
-          filterData(state)
-          break
-        default:
-          state.searchByFilteredValue = deepClone(state.value)
-          state.filteredValue = deepClone(state.searchByFilteredValue)
-          filterData(state)
-          break
-      }
     },
-    setFilters: (state, action: PayloadAction<string>) => {
-      state.filteredValue = state.searchByFilteredValue
-      if (action.payload === 'notification') {
-        state.notificationFilter = !state.notificationFilter
-        if (state.notificationFilter) {
-          state.compostFacilityFilterDisabled = false
-          state.landApplicationBioSolidsFilterDisabled = false
-        } else {
-          state.compostFacilityFilterDisabled = true
-          state.landApplicationBioSolidsFilterDisabled = true
-          state.landApplicationBioSolidsFilter = false
-          state.compostFacilityFilter = false
+    updateFilter: (state, action: PayloadAction<OmrrFilter>) => {
+      const filter = action.payload
+      const isNotification = filter.value === AUTH_TYPE_NOTIFICATION
+      const newOn = !filter.on
+
+      state.filters = state.filters.map((f) => {
+        // Update the one filter that changed - need to clone the object
+        if (filter.value === f.value) {
+          return {
+            ...f,
+            on: newOn,
+          }
         }
-      }
-      if (action.payload === 'permit') {
-        state.permitFilter = !state.permitFilter
-      }
-      if (action.payload === 'approval') {
-        state.approvalFilter = !state.approvalFilter
-      }
-      if (action.payload === 'operationalCertificate') {
-        state.operationalCertificateFilter = !state.operationalCertificateFilter
-      }
-      if (action.payload === 'compostFacility') {
-        state.compostFacilityFilter = !state.compostFacilityFilter
-      }
-      if (action.payload === 'landApplicationBioSolids') {
-        state.landApplicationBioSolidsFilter =
-          !state.landApplicationBioSolidsFilter
-      }
-      filterData(state)
+        // Update the two filters that depend on the notification filter changing
+        if (
+          isNotification &&
+          (f.value === AUTH_TYPE_COMPOST_FACILITY ||
+            f.value === AUTH_TYPE_LAND_APPLICATION)
+        ) {
+          return {
+            ...f,
+            // Turn it off if notification filter is off
+            on: newOn ? f.on : false,
+            // Disable it off if notification filter is off
+            disabled: !newOn,
+          }
+        }
+        return f
+      })
+
+      state.filteredResults = filterData(state)
+      state.page = 1
     },
     resetFilters: (state) => {
-      state.filteredValue = state.searchByFilteredValue
-      state.notificationFilter = false
-      state.permitFilter = false
-      state.approvalFilter = false
-      state.operationalCertificateFilter = false
-      state.compostFacilityFilter = false
-      state.landApplicationBioSolidsFilter = false
-      state.compostFacilityFilterDisabled = true
-      state.landApplicationBioSolidsFilterDisabled = true
-      filterData(state)
+      state.filters = [...facilityTypeFilters]
+      state.filteredResults = filterData(state)
+      state.page = 1
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
     },
-    searchAuthorizationsByGlobalFilter: (
+    searchAuthorizationsByTextFilter: (
       state,
       action: PayloadAction<string>,
     ) => {
-      state.globalTextSearchFilter = action.payload
+      state.searchTextFilter = action.payload
+      state.filteredResults = filterData(state)
       state.page = 1
-      state.filteredValue = state.searchByFilteredValue
-      filterData(state)
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
     // Handle the pending action
     builder.addCase(fetchOMRRData.pending, (state, _action) => {
-      // Set the status to loading
       state.status = 'loading'
     })
     // Handle the fulfilled action
-    builder.addCase(fetchOMRRData.fulfilled, (state, action) => {
-      if (
-        action.payload === null ||
-        action.payload === undefined ||
-        action.payload.omrrData === null ||
-        action.payload.omrrData === undefined
-      ) {
-        state.status = 'failed'
-        state.error = 'No data found'
-        return
-      }
-      // Set the status to succeeded
-      state.status = 'succeeded'
-      // Store the data in the state
-      // format the date as MMM DD, YYYY
-      const lastModified = new Date(action.payload.lastModified)
-      const month = lastModified.toLocaleString('default', { month: 'short' })
-      state.lastModified =
-        month + ' ' + lastModified.getDate() + ', ' + lastModified.getFullYear()
-      let omrrData = []
-      for (const item of action.payload.omrrData) {
-        const individualData = {
-          ...item,
-        }
-        if (individualData['Effective/Issue Date']) {
-          const effDate = individualData['Effective/Issue Date'].substring(
-            0,
-            10,
-          )
-          individualData['Effective/Issue Date'] = effDate
-        } else {
-          individualData['Effective/Issue Date'] = undefined
-        }
-        if (item['Last Amendment Date']) {
-          const lastAmendmentDate = individualData[
-            'Last Amendment Date'
-          ].substring(0, 10)
-          individualData['Last Amendment Date'] = lastAmendmentDate
-        } else {
-          individualData['Last Amendment Date'] = undefined
-        }
-        // convert all the boolean fields to boolean from string, if it contains Y or Yes true else false
-        for (const key in individualData) {
-          if (individualData[key] === 'Y' || individualData[key] === 'Yes') {
-            individualData[key] = true
-          } else if (
-            individualData[key] === 'N' ||
-            individualData[key] === 'No'
-          ) {
-            individualData[key] = false
-          }
-        }
+    builder.addCase(
+      fetchOMRRData.fulfilled,
+      (state, action: PayloadAction<OmrrResponse>) => {
+        // Make sure the data array is valid
+        const { lastModified, omrrData: data } = action.payload || {}
+        if (Array.isArray(data)) {
+          state.status = 'succeeded'
+          // format date as MMM D, YYYY
+          state.lastModified = shortDateFormat(new Date(lastModified))
 
-        omrrData.push(individualData)
-      }
-      state.value = omrrData
-      state.searchByFilteredValue = deepClone(state.value)
-      state.searchByFilteredValue = state.searchByFilteredValue.filter(
-        (item: OmrrData) => item['Authorization Status'] === 'Active',
-      )
-      state.filteredValue = deepClone(state.searchByFilteredValue)
-    })
+          // Cleanup the data and store in the state
+          state.allResults = convertData(data)
+          state.searchBy = SEARCH_BY_ACTIVE
+          state.searchByFilteredResults = filterByAuthorizationState(state)
+          state.filteredResults = filterData(state)
+          state.page = 1
+        } else {
+          state.status = 'failed'
+          state.error = 'No data found'
+        }
+      },
+    )
     // Handle the rejected action
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
-      // Set the status to failed
       state.status = 'failed'
-      // Store the error message in the state
       state.error = action.error.message
+      state.allResults = []
     })
   },
 })
-export const omrrData = (state: RootState) => state.omrr.value
+
 export const {
-  setOmrrData,
-  setFilters,
+  updateFilter,
   setExpand,
   setLocation,
   setSearchBy,
   resetFilters,
   setPage,
-  searchAuthorizationsByGlobalFilter,
+  searchAuthorizationsByTextFilter,
 } = omrrSlice.actions
+
 export default omrrSlice.reducer

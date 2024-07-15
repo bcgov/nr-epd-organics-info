@@ -1,0 +1,39 @@
+.search-result-item {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-result-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  color: var(--typography-color-primary);
+  margin: 0.5rem;
+}
+
+.search-result-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: flex-start;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+div.search-result-label {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+div.search-result-value {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 27px;
+  width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
