@@ -9,7 +9,10 @@ import identity from '@/assets/svgs/fa-identity.svg'
 
 const styles = {
   section: {
-    margin: '5em',
+    margin: {
+      xs: '1.5em',
+      md: '5em',
+    },
     gap: '0.25em',
   },
   yellowDivider: {
