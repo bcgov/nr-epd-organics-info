@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { OmrrResponse } from './v1/types/omrr-response';
 import { AmsOracleConnectorService } from './v1/ams-oracle-connector/ams.oracle.connector.service';
+import { OmrrApplicationStatusResponse } from './v1/types/omrr-application-status'
 
 @Controller()
 export class AppController {
@@ -17,5 +18,9 @@ export class AppController {
   @Get('/omrr')
   async getAllOmrrRecords(): Promise<OmrrResponse> {
     return this.amsOracleConnectorService.getLatestOmrrDataFromCache();
+  }
+  @Get('/omrr/application-status')
+  async getOmrrApplicationStatus(): Promise<OmrrApplicationStatusResponse[]> {
+    return this.amsOracleConnectorService.getLatestOmrrApplicationStatusFromCache();
   }
 }

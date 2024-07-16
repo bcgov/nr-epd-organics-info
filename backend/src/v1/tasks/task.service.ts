@@ -14,6 +14,7 @@ export class TasksService {
   async refreshCache() {
     this.logger.log('refresh cache every hour');
     await this.amsOracleConnectorService.getOMRRDataFromAMS();
+    await this.amsOracleConnectorService.getOMRRApplicationStatusFromAMS();
   }
 
 }
