@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 
@@ -8,20 +8,19 @@ import {
   SEARCH_BY_ACTIVE,
   SEARCH_BY_ALL,
   SEARCH_BY_INACTIVE,
-  SearchByType,
 } from '@/interfaces/types'
 import DropdownButton from '@/components/DropdownButton'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { RootState } from '@/app/store'
 
 export function SearchByButton() {
   const dispatch = useDispatch()
-  const [value, setValue] = useState<SearchByType>(SEARCH_BY_ALL)
+  const { searchBy } = useSelector((state: RootState) => state.omrr)
   const theme = useTheme()
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
 
   const onChange = (_ev: ChangeEvent<HTMLInputElement>, newValue: string) => {
-    setValue(newValue as SearchByType)
     dispatch(setSearchBy(newValue))
   }
 
@@ -29,7 +28,7 @@ export function SearchByButton() {
     <RadioGroup
       defaultValue={SEARCH_BY_ALL}
       name="search-by-group"
-      value={value}
+      value={searchBy}
       onChange={onChange}
       sx={{ gap: '0.25rem', paddingLeft: '0.5rem' }}
     >
@@ -59,7 +58,7 @@ export function SearchByButton() {
       showArrow={isLarge}
     >
       <span>
-        Search By: <b style={{ textTransform: 'capitalize' }}>{value}</b>
+        Search By: <b style={{ textTransform: 'capitalize' }}>{searchBy}</b>
       </span>
     </DropdownButton>
   )
