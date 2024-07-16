@@ -28,14 +28,17 @@ export function usePlaceNames(): PlaceNamesResult {
 
   useEffect(() => {
     setLoading(true)
+    setError(undefined)
     loadPlaces()
       .then((places: Place[]) => {
         setPlaces(places)
-        setLoading(false)
       })
       .catch((ex: any) => {
         console.error('Failed to load places', ex.message)
         setError(ex.message)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [])
 
