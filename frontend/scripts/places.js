@@ -35,6 +35,7 @@ const featureTypes = [
   'First Nation Village',
   'Landing (1)',
   'Locality',
+  'Indian Reserve-Réserve indienne',
   'Mountain Resort Municipality',
   'Recreational Community',
   'Resort Municipality',
@@ -53,7 +54,7 @@ const lines = parse(data, {
 if (Array.isArray(lines)) {
   const output = []
   // There are duplicates place names - some are the same place and some
-  // are different places - so only keep ones that are far enough apart
+  // are different places - so only keep ones that are far apart
   const seen = new Map()
   const names = new Map()
   let excludedCount = 0
