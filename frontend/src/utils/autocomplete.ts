@@ -39,6 +39,7 @@ function getMatchingPostalCodes(
     const { 'Postal Code': postalCode = '' } = item
     const id = `postalCode-${postalCode}`
     if (postalCode && !seen.has(id)) {
+      seen.add(id)
       options.push({
         id,
         text: postalCode,

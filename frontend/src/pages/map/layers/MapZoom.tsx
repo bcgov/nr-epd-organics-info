@@ -20,7 +20,7 @@ export function MapZoom() {
     if (zoomPosition) {
       const { zoom = map.getZoom(), position } = zoomPosition
       map.flyTo(position, zoom, OPTIONS)
-    } else if (zoomBounds && zoomBounds.isValid()) {
+    } else if (zoomBounds?.isValid()) {
       map.flyToBounds(zoomBounds, OPTIONS)
     }
   }, [map, zoomPosition, zoomBounds])
