@@ -2,6 +2,8 @@ import { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { setSearchBy } from '@/features/omrr/omrr-slice'
 import {
@@ -10,8 +12,6 @@ import {
   SEARCH_BY_INACTIVE,
 } from '@/interfaces/types'
 import DropdownButton from '@/components/DropdownButton'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { RootState } from '@/app/store'
 
 export function SearchByButton() {
