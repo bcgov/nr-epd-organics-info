@@ -38,6 +38,45 @@ describe('AmsOracleConnectorService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+  describe('onModuleInit', () => {
+    it('should initialize AmsOracleConnectorService and call getOMRRDataFromAMS and getOMRRApplicationStatusFromAMS', async () => {
+      const getOMRRDataFromAMS = jest
+        .spyOn(service, 'getOMRRDataFromAMS')
+        .mockResolvedValue(undefined);
+      const getOMRRApplicationStatusFromAMS = jest
+        .spyOn(service, 'getOMRRApplicationStatusFromAMS')
+        .mockResolvedValue(undefined);
+
+      await service.onModuleInit();
+
+      expect(getOMRRDataFromAMS).toHaveBeenCalled();
+      expect(getOMRRApplicationStatusFromAMS).toHaveBeenCalled();
+    });
+
+    it('should exit the process with code 128 if there is an error calling getOMRRDataFromAMS', async () => {
+      jest
+        .spyOn(service, 'getOMRRDataFromAMS')
+        .mockRejectedValue(new Error('Error'));
+
+      const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
+
+      await service.onModuleInit();
+
+      expect(exitSpy).toHaveBeenCalledWith(128);
+    });
+
+    it('should exit the process with code 128 if there is an error calling getOMRRApplicationStatusFromAMS', async () => {
+      jest
+        .spyOn(service, 'getOMRRApplicationStatusFromAMS')
+        .mockRejectedValue(new Error('Error'));
+
+      const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
+
+      await service.onModuleInit();
+
+      expect(exitSpy).toHaveBeenCalledWith(128);
+    });
+  });
 
   describe('getOMRRDataFromAMS', () => {
     it('should get OMRR data from AMS', async () => {
@@ -54,7 +93,6 @@ describe('AmsOracleConnectorService', () => {
         lastModified: expect.any(String),
         omrrData,
       });
-
     });
 
     it('should throw an error if there is an error getting OMRR data from AMS', async () => {
@@ -94,14 +132,15 @@ describe('AmsOracleConnectorService', () => {
       const result = await service.getOMRRApplicationStatusFromAMS();
 
       expect(result).toEqual(omrrApplicationStatus);
-
     });
 
     it('should throw an error if there is an error getting OMRR application status from AMS', async () => {
       const error = new Error('Error Getting OMRR Application Status from AMS');
       jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
 
-      await expect(service.getOMRRApplicationStatusFromAMS()).rejects.toThrowError(error);
+      await expect(
+        service.getOMRRApplicationStatusFromAMS(),
+      ).rejects.toThrowError(error);
     });
   });
 
@@ -115,4 +154,6 @@ describe('AmsOracleConnectorService', () => {
       expect(result).toEqual(omrrApplicationStatus);
     });
   });
+
+
 });
