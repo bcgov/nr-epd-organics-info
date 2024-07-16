@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { initialState } from '@/features/omrr/omrr-slice'
-import { omrrTestData } from '@/mocks/omrr-data'
+import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
 import MapView from './MapView'
 
@@ -15,9 +15,9 @@ describe('Test suite for MapView', () => {
       initialState: {
         omrr: {
           ...initialState,
-          allResults: omrrTestData,
-          searchByFilteredResults: omrrTestData,
-          filteredResults: omrrTestData,
+          allResults: mockOmrrData,
+          searchByFilteredResults: mockOmrrData,
+          filteredResults: mockOmrrData,
           status: 'succeeded',
         },
         map: {
@@ -57,6 +57,13 @@ describe('Test suite for MapView', () => {
 
     const clearBtn = screen.getByTitle('Clear')
     await user.click(clearBtn)
+
+    expect(input).toHaveValue('')
+    await user.type(input, 'Vancouver')
+    const places = await screen.findAllByText('City')
+    expect(places).toHaveLength(3)
+    screen.getByText('North Vancouver')
+    screen.getByText('West Vancouver')
   })
 
   it('should render the MapView with no markers on a small screen', async () => {

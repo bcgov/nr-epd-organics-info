@@ -1,13 +1,16 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Autocomplete, InputAdornment, TextField } from '@mui/material'
+import { LatLngTuple } from 'leaflet'
 
 import { RootState } from '@/app/store'
 import { searchAuthorizationsByTextFilter } from '@/features/omrr/omrr-slice'
 import { MIN_SEARCH_LENGTH } from '@/features/omrr/omrr-utils'
+import { setZoomPosition } from '@/features/map/map-slice'
 import { SearchOption } from '@/interfaces/search-option'
 import { getAutocompleteOptions } from '@/utils/autocomplete'
 import { SearchResultItem } from './SearchResultItem'
+import { usePlaceNames } from '../hooks/usePlaceNames'
 
 import SearchIcon from '@/assets/svgs/fa-search.svg?react'
 
@@ -26,16 +29,13 @@ const componentProps = {
     modifiers: [
       {
         name: 'offset',
-        options: {
-          offset: [0, 6],
-        },
+        options: { offset: [0, 6] },
       },
     ],
   },
 }
 
 const SEARCH_DELAY = 300
-const MAX_RESULTS = 5
 
 export function SearchInput() {
   const dispatch = useDispatch()
@@ -45,16 +45,13 @@ export function SearchInput() {
   const [value, setValue] = useState<string>(searchTextFilter)
   const timeoutRef = useRef<any>(0)
   const [options, setOptions] = useState<SearchOption[]>([])
-  const [loading] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
   const currentValueRef = useRef<string>(value)
   const lastValueRef = useRef<string>(value)
+  const { loading, places } = usePlaceNames()
 
   // When the filtered results change - then update the autocomplete options
   useEffect(() => {
-    // TODO also need to autocomplete on city names
-    // setLoading(true)
-
     const currentText = currentValueRef.current
     const lastText = lastValueRef.current
     const textChanged = currentText !== lastText
@@ -63,8 +60,8 @@ export function SearchInput() {
     // convert the filtered results into autocomplete options
     const newOptions: SearchOption[] = getAutocompleteOptions(
       filteredResults,
+      places,
       currentText,
-      MAX_RESULTS,
     )
     setOptions(newOptions)
 
@@ -98,7 +95,17 @@ export function SearchInput() {
       if (typeof value === 'string') {
         setOptions([])
       } else {
-        setOptions([value as SearchOption])
+        const option: SearchOption = value
+        // Zoom to the facility or place's location on the map
+        let latlng: LatLngTuple | undefined
+        if (option.place) {
+          latlng = option.place.pos
+        } else if (option.item) {
+          latlng = [option.item.Latitude, option.item.Longitude]
+        }
+        if (latlng) {
+          dispatch(setZoomPosition({ position: latlng, zoom: 13 }))
+        }
       }
     }
   }

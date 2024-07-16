@@ -7,8 +7,9 @@ import { setupServer } from 'msw/node'
 import mediaQuery from 'css-mediaquery'
 
 import OmrrResponse from '@/interfaces/omrr-response'
-import { omrrTestData } from '@/mocks/omrr-data'
 import { cleanup } from '@testing-library/react'
+import { mockOmrrData } from '@/mocks/mock-omrr-data'
+import { mockPlaces } from '@/mocks/mock-places'
 
 expect.extend(matchers)
 
@@ -91,21 +92,24 @@ function createMatchMedia() {
 }
 
 // MSW Setup
-const baseUrl = 'http://localhost:3000/api'
+const baseUrl = 'http://localhost:3000'
 
 const omrrResponse: OmrrResponse = {
-  omrrData: omrrTestData,
+  omrrData: mockOmrrData,
   lastModified: new Date().toISOString(),
 }
 
 const successHandlers = [
-  http.get(`${baseUrl}/omrr`, () => {
+  http.get(`${baseUrl}/api/omrr`, () => {
     return HttpResponse.json(omrrResponse, { status: 200 })
+  }),
+  http.get(`${baseUrl}/places.json`, () => {
+    return HttpResponse.json(mockPlaces, { status: 200 })
   }),
 ]
 
 export const errorHandlers = [
-  http.get(`${baseUrl}/omrr`, () => {
+  http.get(`${baseUrl}/api/omrr`, () => {
     return new HttpResponse(null, { status: 500 })
   }),
 ]

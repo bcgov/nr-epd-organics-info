@@ -1,6 +1,6 @@
 import OmrrData from '@/interfaces/omrr'
 
-export const omrrTestData: OmrrData[] = [
+export const mockOmrrData: OmrrData[] = [
   {
     Manure: false,
     'Untreated and Unprocessed Wood Residuals': false,

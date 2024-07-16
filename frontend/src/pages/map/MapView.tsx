@@ -7,7 +7,8 @@ import clsx from 'clsx'
 import { MapSearch } from './components/MapSearch'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
 import { MyLocationMarker } from './layers/MyLocationMarker'
-import { MapControls } from '@/pages/map/layers/MapControls'
+import { MapControls } from './layers/MapControls'
+import { MapZoom } from './layers/MapZoom'
 
 import 'leaflet/dist/leaflet.css'
 import './MapView.css'
@@ -40,6 +41,7 @@ function MapView() {
         <MapControls />
         <AuthorizationMarkers />
         <MyLocationMarker />
+        <MapZoom />
       </MapContainer>
       <div className="map-components">
         <MapSearch />

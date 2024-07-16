@@ -10,17 +10,31 @@ import NoteIcon from '@/assets/svgs/fa-memo.svg?react'
 
 import './SearchResultItem.css'
 
+const PostalCodeIcon = (
+  <MarkerIcon className="search-result-icon" title="Postal code icon" />
+)
+const PlaceIcon = (
+  <MarkerIcon className="search-result-icon" title="Place icon" />
+)
+const FacilityIcon = (
+  <NoteIcon className="search-result-icon" title="Facility icon" />
+)
 function getIcon(matchType: MatchType): ReactElement {
-  if (matchType === 'postalCode' || matchType === 'city') {
-    return <MarkerIcon className="search-result-icon" />
+  switch (matchType) {
+    case 'postalCode':
+      return PostalCodeIcon
+    case 'place':
+      return PlaceIcon
+    default:
+      return FacilityIcon
   }
-  return <NoteIcon className="search-result-icon" />
 }
 
 function getLabel(matchType: MatchType, item: OmrrData | undefined): ReactNode {
   if (matchType === 'postalCode') {
     return 'Postal Code'
-  } else if (matchType === 'city') {
+  } else if (matchType === 'place') {
+    // Perhaps this should be Place as well?
     return 'City'
   }
   if (item) {
@@ -40,7 +54,11 @@ interface Props {
   [key: string]: any
 }
 
-export function SearchResultItem({ option, className, ...rest }: Props) {
+export function SearchResultItem({
+  option,
+  className,
+  ...rest
+}: Readonly<Props>) {
   const { matchType, text, item } = option
   return (
     <Box
