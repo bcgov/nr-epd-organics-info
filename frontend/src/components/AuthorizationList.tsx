@@ -34,6 +34,7 @@ import {
   updateFilter,
 } from '@/features/omrr/omrr-slice'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
+import { flattenFilters } from '@/features/omrr/omrr-utils'
 
 export default function AuthorizationList() {
   const dispatch = useDispatch()
@@ -50,6 +51,8 @@ export default function AuthorizationList() {
     searchTextFilter,
     lastModified,
   } = useSelector((state: RootState) => state.omrr)
+
+  const flatFilters = flattenFilters(filters)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -294,7 +297,7 @@ export default function AuthorizationList() {
                     },
                   }}
                 >
-                  {filters.map((filter: OmrrFilter) => (
+                  {flatFilters.map((filter: OmrrFilter) => (
                     <Grid
                       item
                       xs={12}

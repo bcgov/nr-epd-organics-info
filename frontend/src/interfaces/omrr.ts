@@ -8,8 +8,6 @@ export default interface OmrrData {
   'Facility Location': string
   Latitude: number
   Longitude: number
-  // Extracted from Facility Location - not all facilities will have this set
-  'Postal Code'?: string
   'Waste Discharge Regulation'?: string
   'Operation Type'?: string
   'Material Land Applied'?: string
@@ -29,4 +27,24 @@ export default interface OmrrData {
   'Hatchery Waste'?: boolean
   Manure?: boolean
   'Milk Processing Waste'?: boolean
+
+  // Extracted from Facility Location - not all facilities will have this set
+  'Postal Code'?: string
 }
+
+// Contains all the boolean fields
+export const omrrDataBooleanFields: (keyof OmrrData)[] = [
+  'Yard Waste',
+  'Biosolids',
+  'Whey',
+  'Untreated and Unprocessed Wood Residuals',
+  'Poultry Carcasses',
+  'Fish Wastes',
+  'Food Waste',
+  'Brewery Waste/Wine Waste',
+  'Animal Bedding',
+  'Domestic Septic Tank Sludge',
+  'Hatchery Waste',
+  'Manure',
+  'Milk Processing Waste',
+]

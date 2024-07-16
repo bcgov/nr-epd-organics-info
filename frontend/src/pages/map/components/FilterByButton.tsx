@@ -8,6 +8,7 @@ import { RootState } from '@/app/store'
 import { resetFilters, updateFilter } from '@/features/omrr/omrr-slice'
 import DropdownButton from '@/components/DropdownButton'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
+import { flattenFilters } from '@/features/omrr/omrr-utils'
 
 const styles = {
   resetButton: {
@@ -32,11 +33,12 @@ export function FilterByButton() {
     dispatch(resetFilters())
   }
 
-  const showResetButton = filters.some((f) => f.on)
+  const flatFilters = flattenFilters(filters)
+  const showResetButton = flatFilters.some((f) => f.on)
 
   const content = (
     <FormGroup sx={{ gap: '0.5rem', paddingLeft: '0.5em' }}>
-      {filters.map((filter: OmrrFilter) => (
+      {flatFilters.map((filter: OmrrFilter) => (
         <FormControlLabel
           key={`filterByCheckBox-${filter.value}`}
           control={<Checkbox />}

@@ -1,6 +1,6 @@
 import { matchSorter, MatchSorterOptions } from 'match-sorter'
 
-import OmrrData from '@/interfaces/omrr'
+import OmrrData, { omrrDataBooleanFields } from '@/interfaces/omrr'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
 import { OmrrSliceState } from '@/features/omrr/omrr-slice'
 import { extractPostalCode, isDigits, isPostalCodeStart } from '@/utils/utils'
@@ -66,14 +66,25 @@ function filterByTextSearch(
 /**
  * Filters items based on one field in the OmrrData object.
  */
-const ommrDataFieldFilter = (
+function dataFieldFilter(
   item: OmrrData,
   field: keyof OmrrData,
   value: string,
-): boolean => item[field]?.toString()?.toLowerCase() === value
+  startsWith: boolean,
+  ignoreCase = true,
+): boolean {
+  let string = item[field]?.toString() ?? ''
+  if (ignoreCase) {
+    string = string.toLowerCase()
+    value = value.toLowerCase()
+  }
+  return startsWith ? string.startsWith(value) : string === value
+}
 
 /**
  * Applies all the filters that are currently on.
+ * If no filters are on, then true is returned.
+ * Also applies any nested filters.
  */
 function applyFilters(item: OmrrData, filters: OmrrFilter[]): boolean {
   // Only include enabled and active filters
@@ -83,8 +94,15 @@ function applyFilters(item: OmrrData, filters: OmrrFilter[]): boolean {
     return true
   }
   // Test if the item passes the filter
-  return activeFilters.some(({ field, value }: OmrrFilter) =>
-    ommrDataFieldFilter(item, field, value),
+  return activeFilters.some(
+    ({ field, value, startsWith = false, nestedFilters }: OmrrFilter) => {
+      let pass = dataFieldFilter(item, field, value, startsWith)
+      // Iterate over nested filters too
+      if (pass && Array.isArray(nestedFilters)) {
+        pass = applyFilters(item, nestedFilters)
+      }
+      return pass
+    },
   )
 }
 
@@ -155,14 +173,31 @@ export function convertData(data: OmrrData[]): OmrrData[] {
       const value = item[key]
       if (value === undefined || value === null) {
         delete item[key]
-      } else if (value === 'Y' || value === 'Yes') {
-        // @ts-ignore
-        item[key] = true
-      } else if (value === 'N' || value === 'No') {
-        // @ts-ignore
-        item[key] = false
+      } else if (
+        omrrDataBooleanFields.includes(key) &&
+        typeof value === 'string'
+      ) {
+        // @ts-ignore convert Yes and No values into booleans
+        item[key] = value === 'Yes'
       }
     }
     return item
   })
+}
+
+/**
+ * Creates a flat array of filters that includes any nested filters
+ * (only one level deep).
+ */
+export function flattenFilters(filters: OmrrFilter[]): OmrrFilter[] {
+  const allFilters: OmrrFilter[] = []
+  filters.forEach((f) => {
+    allFilters.push(f)
+    if (Array.isArray(f.nestedFilters)) {
+      f.nestedFilters.forEach((nf) => {
+        allFilters.push(nf)
+      })
+    }
+  })
+  return allFilters
 }

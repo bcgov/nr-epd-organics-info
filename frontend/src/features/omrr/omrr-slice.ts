@@ -4,25 +4,24 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
+import rfdc from 'rfdc'
 
 import OmrrData from '@/interfaces/omrr'
 import apiService from '@/service/api-service'
 import { Location } from '@/interfaces/location'
-import {
-  AUTH_TYPE_COMPOST_FACILITY,
-  AUTH_TYPE_LAND_APPLICATION,
-  AUTH_TYPE_NOTIFICATION,
-  facilityTypeFilters,
-  OmrrFilter,
-} from '@/interfaces/omrr-filter'
+import { facilityTypeFilters, OmrrFilter } from '@/interfaces/omrr-filter'
 import { SEARCH_BY_ACTIVE } from '@/interfaces/types'
 import OmrrResponse from '@/interfaces/omrr-response'
 import {
   convertData,
   filterByAuthorizationState,
   filterData,
+  flattenFilters,
 } from './omrr-utils'
 import { shortDateFormat } from '@/utils/utils'
+import { flatten } from '~/@reduxjs/toolkit/dist/query/utils'
+
+const deepClone = rfdc({ circles: true })
 
 export interface OmrrSliceState {
   lastModified: string
@@ -88,34 +87,32 @@ export const omrrSlice = createSlice({
     },
     updateFilter: (state, action: PayloadAction<OmrrFilter>) => {
       const filter = action.payload
-      const isNotification = filter.value === AUTH_TYPE_NOTIFICATION
       const newOn = !filter.on
 
-      state.filters = state.filters.map((f) => {
-        // Update the one filter that changed - need to clone the object
-        if (filter.value === f.value) {
-          return {
-            ...f,
-            on: newOn,
+      // Need to deep clone the filters since one or more are changing
+      const newFilters = deepClone(state.filters)
+
+      // New array but same filter objects
+      const flatFilters = flattenFilters(newFilters)
+      // Go through all filters to find the one that is changing
+      flatFilters.some((f) => {
+        if (f.value === filter.value) {
+          f.on = newOn
+          // Update any nested filters - set the on and disabled fields
+          if (Array.isArray(f.nestedFilters)) {
+            f.nestedFilters.forEach((nf) => {
+              // Turn it off if parent filter is off
+              if (!newOn) {
+                nf.on = false
+              }
+              // Disable it off if parent filter is off
+              nf.disabled = !newOn
+            })
           }
         }
-        // Update the two filters that depend on the notification filter changing
-        if (
-          isNotification &&
-          (f.value === AUTH_TYPE_COMPOST_FACILITY ||
-            f.value === AUTH_TYPE_LAND_APPLICATION)
-        ) {
-          return {
-            ...f,
-            // Turn it off if notification filter is off
-            on: newOn ? f.on : false,
-            // Disable it off if notification filter is off
-            disabled: !newOn,
-          }
-        }
-        return f
       })
 
+      state.filters = newFilters
       state.filteredResults = filterData(state)
       state.page = 1
     },
