@@ -19,7 +19,6 @@ import {
   flattenFilters,
 } from './omrr-utils'
 import { shortDateFormat } from '@/utils/utils'
-import { flatten } from '~/@reduxjs/toolkit/dist/query/utils'
 
 const deepClone = rfdc({ circles: true })
 
