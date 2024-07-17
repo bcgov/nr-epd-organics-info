@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Autocomplete, InputAdornment, TextField } from '@mui/material'
 import { LatLngTuple } from 'leaflet'
@@ -79,8 +79,7 @@ export function SearchInput() {
     }, delay)
   }
 
-  const onTextChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    const newValue = ev.target.value
+  const onTextChange = (_ev: any, newValue: string) => {
     setValue(newValue)
     currentValueRef.current = newValue
     delayedSearch(newValue)
@@ -112,32 +111,31 @@ export function SearchInput() {
 
   return (
     <Autocomplete
-      renderInput={(params) => {
-        return (
-          <TextField
-            {...params}
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon title="Search icon" className="map-search-icon" />
-                </InputAdornment>
-              ),
-            }}
-            placeholder="Search"
-            variant="outlined"
-            className="map-search-input"
-            sx={styles}
-            value={value}
-            onChange={onTextChange}
-          />
-        )
-      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon title="Search icon" className="map-search-icon" />
+              </InputAdornment>
+            ),
+          }}
+          placeholder="Search"
+          variant="outlined"
+          className="map-search-input"
+          sx={styles}
+          value={value}
+        />
+      )}
       options={options}
       loading={loading}
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
+      onInputChange={onTextChange}
+      onChange={onAutocompleteChange}
       filterOptions={(options: SearchOption[]) => options}
       getOptionKey={(option: string | SearchOption) =>
         typeof option === 'string' ? option : option.id
@@ -151,7 +149,6 @@ export function SearchInput() {
         return <SearchResultItem key={key} option={option} {...optionProps} />
       }}
       componentsProps={componentProps}
-      onChange={onAutocompleteChange}
     />
   )
 }
