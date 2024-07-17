@@ -1,23 +1,25 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import MapView from '@/pages/map/MapView'
 import { render } from '@/test-utils'
-import { OmrrSliceState } from '@/features/omrr/omrr-slice'
-import { omrrTestData } from '@/mocks/omrr-data'
-import OmrrData from '@/interfaces/omrr'
+import { initialState } from '@/features/omrr/omrr-slice'
+import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
+import MapView from './MapView'
 
 describe('Test suite for MapView', () => {
   it('should render the MapView with markers', async () => {
-    render(<MapView />, {
+    const { user } = render(<MapView />, {
       screenWidth: themeBreakpointValues.xxl,
       withStateProvider: true,
       initialState: {
         omrr: {
-          filteredValue: omrrTestData,
+          ...initialState,
+          allResults: mockOmrrData,
+          searchByFilteredResults: mockOmrrData,
+          filteredResults: mockOmrrData,
           status: 'succeeded',
-        } as OmrrSliceState,
+        },
         map: {
           isMyLocationVisible: false,
         },
@@ -30,12 +32,38 @@ describe('Test suite for MapView', () => {
     const markers = screen.getAllByAltText('Authorization marker')
     expect(markers.length > 0).toBe(true)
 
-    screen.getByPlaceholderText('Search')
+    const input = screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Find Me' })
     expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
     expect(
       screen.queryByTitle('Show my location on the map'),
     ).not.toBeInTheDocument()
+
+    await user.type(input, 'waste')
+    await screen.findByText(/WYNDLOW WOOD WASTE/i)
+    screen.getByText('11123')
+    screen.getByText(/BIOWASTE MANAGEMENT/i)
+    screen.getByText('11475')
+
+    await user.clear(input)
+    await user.type(input, 'V9N')
+    await screen.findByText('14517')
+    screen.getByText(/RIVER MEADOW FARMS/i)
+    screen.getByText('Postal Code')
+    const text = screen.getByText('V9N 7J3')
+
+    await user.click(text)
+    expect(input).toHaveValue('V9N 7J3')
+
+    const clearBtn = screen.getByTitle('Clear')
+    await user.click(clearBtn)
+
+    expect(input).toHaveValue('')
+    await user.type(input, 'Vancouver')
+    const places = await screen.findAllByText('City')
+    expect(places).toHaveLength(3)
+    screen.getByText('North Vancouver')
+    screen.getByText('West Vancouver')
   })
 
   it('should render the MapView with no markers on a small screen', async () => {
@@ -44,9 +72,9 @@ describe('Test suite for MapView', () => {
       withStateProvider: true,
       initialState: {
         omrr: {
-          filteredValue: [] as OmrrData[],
+          ...initialState,
           status: 'succeeded',
-        } as OmrrSliceState,
+        },
         map: {
           isMyLocationVisible: true,
         },

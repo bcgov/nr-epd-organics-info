@@ -133,7 +133,9 @@
     "overrides": [
       {
         "files": [
-          "*.spec.ts"
+          "*.spec.ts",
+          "*.test.ts",
+          "*.test.tsx"
         ],
         "plugins": [
           "jest"

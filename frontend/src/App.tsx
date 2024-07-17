@@ -1,16 +1,15 @@
 import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Stack } from '@mui/system'
+import { Box, CircularProgress } from '@mui/material'
 
-import Grid from '@mui/material/Grid'
-import CircularProgress from '@mui/material/CircularProgress'
-
+import { RootState } from '@/app/store'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import AppError from '@/components/AppError'
 import { fetchOMRRData } from '@/features/omrr/omrr-slice'
-import { RootState } from '@/app/store'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -34,19 +33,19 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Grid container sx={{ flexGrow: 1, minHeight: '100vh' }}>
-        <Grid item xs={12}>
-          <Header />
-        </Grid>
-        <Grid item xs={12} style={isLoading ? loadingStyle : undefined}>
+      <Stack direction="column" sx={{ flexGrow: 1, minHeight: '100vh' }}>
+        <Header />
+        <Box
+          component="div"
+          flex={1}
+          style={isLoading ? loadingStyle : undefined}
+        >
           {isLoading && <CircularProgress />}
           {isError && <AppError />}
           {isReady && <AppRoutes />}
-        </Grid>
-        <Grid item xs={12}>
-          <Footer />
-        </Grid>
-      </Grid>
+        </Box>
+        <Footer />
+      </Stack>
     </BrowserRouter>
   )
 }
