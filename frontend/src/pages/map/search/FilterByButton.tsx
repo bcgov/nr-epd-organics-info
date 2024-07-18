@@ -4,8 +4,11 @@ import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { RootState } from '@/app/store'
-import { resetFilters, updateFilter } from '@/features/omrr/omrr-slice'
+import {
+  resetFilters,
+  selectFilters,
+  updateFilter,
+} from '@/features/omrr/omrr-slice'
 import DropdownButton from '@/components/DropdownButton'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
 import { flattenFilters } from '@/features/omrr/omrr-utils'
@@ -21,7 +24,7 @@ const styles = {
 
 export function FilterByButton() {
   const dispatch = useDispatch()
-  const { filters } = useSelector((state: RootState) => state.omrr)
+  const filters = useSelector(selectFilters)
   const theme = useTheme()
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
 

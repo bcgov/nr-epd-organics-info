@@ -1,18 +1,21 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
-import { Button, Chip, Grid } from '@mui/material'
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import L, { LatLngLiteral } from 'leaflet'
-import pin from '../assets/marker-icon-2x-red.png'
-import shadow from '../assets/marker-shadow.png'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import OmrrData from '@/interfaces/omrr'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
-import { useEffect } from 'react'
 import { ChevronLeft } from '@mui/icons-material'
+import { Button, Grid } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
+import OmrrData from '@/interfaces/omrr'
+import { formatLatOrLng, truncateDate } from '@/utils/utils'
+import { AuthorizationStatusChip } from './AuthorizationStatusChip'
+
+import pin from '../assets/marker-icon-2x-red.png'
+import shadow from '../assets/marker-shadow.png'
 
 function authorizationSection(mdMatches: boolean, data: OmrrData) {
   return (
@@ -27,7 +30,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
           >
             <Grid item xs={3}>
               <span
-                data-testid="auth-details-auth-status"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -41,7 +43,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             </Grid>
             <Grid item xs={3}>
               <span
-                data-testid="auth-details-auth-number"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -55,7 +56,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             </Grid>
             <Grid item xs={3}>
               <span
-                data-testid="auth-details-effactive-date"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -69,7 +69,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             </Grid>
             <Grid item xs={3}>
               <span
-                data-testid="auth-details-last-ammendment-date"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -89,32 +88,16 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             sx={{ marginTop: '0.2em' }}
           >
             <Grid item xs={3}>
-              <Chip
-                data-testid="auth-details-auth-status-value"
-                sx={{
-                  background:
-                    data['Authorization Status'] === 'Active'
-                      ? '#42814A'
-                      : '#605E5C',
-                  color: '#ffffff',
-                }}
-                label={data['Authorization Status']}
-              />
+              <AuthorizationStatusChip status={data['Authorization Status']} />
             </Grid>
             <Grid item xs={3}>
-              <span data-testid="auth-details-auth-number-value">
-                {data['Authorization Number']}
-              </span>
+              {data['Authorization Number']}
             </Grid>
             <Grid item xs={3}>
-              <span data-testid="auth-details-effactive-date-value">
-                {data['Effective/Issue Date']?.toString()}
-              </span>
+              {truncateDate(data['Effective/Issue Date'])}
             </Grid>
             <Grid item xs={3}>
-              <span data-testid="auth-details-last-ammendment-date-value">
-                {data['Last Amendment Date']?.toString()}
-              </span>
+              {truncateDate(data['Last Amendment Date'])}
             </Grid>
           </Grid>
         </>
@@ -129,7 +112,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
           >
             <Grid item xs={6}>
               <span
-                data-testid="auth-details-auth-status"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -143,7 +125,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             </Grid>
             <Grid item xs={6}>
               <span
-                data-testid="auth-details-auth-number"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -163,17 +144,7 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             spacing={0}
           >
             <Grid item xs={6}>
-              <Chip
-                data-testid="auth-details-auth-status-value"
-                sx={{
-                  background:
-                    data['Authorization Status'] === 'Active'
-                      ? '#42814A'
-                      : '#605E5C',
-                  color: '#ffffff',
-                }}
-                label={data['Authorization Status']}
-              />
+              <AuthorizationStatusChip status={data['Authorization Status']} />
             </Grid>
             <Grid item xs={6}>
               <span data-testid="auth-details-auth-number-value">
@@ -184,7 +155,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
           <Grid container direction="row" sx={{ marginTop: '2em' }} spacing={0}>
             <Grid item xs={6}>
               <span
-                data-testid="auth-details-effactive-date"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -198,7 +168,6 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             </Grid>
             <Grid item xs={6}>
               <span
-                data-testid="auth-details-last-ammendment-date"
                 style={{
                   color: '#000000',
                   fontFamily: 'BCSans',
@@ -219,14 +188,10 @@ function authorizationSection(mdMatches: boolean, data: OmrrData) {
             spacing={0}
           >
             <Grid item xs={6}>
-              <span data-testid="auth-details-effactive-date-valu">
-                {data['Effective/Issue Date']?.toString()}
-              </span>
+              {truncateDate(data['Effective/Issue Date'])}
             </Grid>
             <Grid item xs={6}>
-              <span data-testid="auth-details-last-ammendment-valu">
-                {data['Last Amendment Date']?.toString()}
-              </span>
+              {truncateDate(data['Last Amendment Date'])}
             </Grid>
           </Grid>
         </>
@@ -1278,7 +1243,6 @@ export default function AuthorizationDetails() {
     >
       <Grid item xs={12}>
         <Button
-          data-testid="auth-details-back-to-search"
           sx={{
             background: '#053662',
             color: '#ffffff',
@@ -1412,7 +1376,7 @@ export default function AuthorizationDetails() {
                             color: '#000000',
                           }}
                         >
-                          {facilityLatLng?.lat}{' '}
+                          {formatLatOrLng(facilityLatLng?.lat)}{' '}
                         </span>
                       </Grid>
                     </Grid>
@@ -1442,7 +1406,7 @@ export default function AuthorizationDetails() {
                             color: '#000000',
                           }}
                         >
-                          {facilityLatLng?.lng}{' '}
+                          {formatLatOrLng(facilityLatLng?.lng)}{' '}
                         </span>
                       </Grid>
                     </Grid>

@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router'
-import { Typography } from '@mui/material'
-import { Stack } from '@mui/system'
+import { Stack, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import homePageBanner from '@/assets/homepage-banner-unsplash.jpg'
@@ -62,7 +61,6 @@ export function TopSection() {
           Search on a map
         </Button>
         <Button
-          data-testid="list_all_authorizations"
           size="large"
           color="secondary"
           variant="contained"

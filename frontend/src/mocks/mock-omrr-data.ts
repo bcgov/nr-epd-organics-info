@@ -13,7 +13,7 @@ export const mockOmrrData: OmrrData[] = [
     Biosolids: false,
     'Hatchery Waste': false,
     'Last Amendment Date': '1996-04-11T00:00:00.000+00:00',
-    'Authorization Status': 'Inactive',
+    'Authorization Status': 'Active',
     'Authorization Number': 11123,
     'Milk Processing Waste': false,
     'Poultry Carcasses': false,

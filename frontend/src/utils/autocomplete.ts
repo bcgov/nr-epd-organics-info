@@ -1,9 +1,10 @@
+import { matchSorter } from 'match-sorter'
+
 import OmrrData from '@/interfaces/omrr'
 import { SearchOption } from '@/interfaces/search-option'
-import { MIN_SEARCH_LENGTH } from '@/features/omrr/omrr-utils'
-import { isDigits, isPostalCodeStart } from '@/utils/utils'
 import { Place } from '@/interfaces/place'
-import { matchSorter } from 'match-sorter'
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import { isDigits, isPostalCodeStart } from '@/utils/utils'
 
 const PLACE_SORT_OPTIONS = {
   keys: ['name'],

@@ -1,5 +1,4 @@
-import { Grid, Typography } from '@mui/material'
-import Stack from '@mui/material/Stack'
+import { Grid, Stack, Typography } from '@mui/material'
 
 import LearnMoreCard from './LearnMoreCard'
 

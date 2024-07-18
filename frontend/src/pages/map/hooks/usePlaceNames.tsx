@@ -12,7 +12,7 @@ async function loadPlaces() {
     const data = await response.json()
     if (data && Array.isArray(data)) {
       cachedPlaces = data as Place[]
-      console.log(`Loaded ${cachedPlaces.length} places`)
+      // console.log(`Loaded ${cachedPlaces.length} places`)
     }
   }
   return cachedPlaces

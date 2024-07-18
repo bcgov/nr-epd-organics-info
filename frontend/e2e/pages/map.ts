@@ -84,14 +84,33 @@ export const map_page = async (page: Page) => {
   const searchInput = page.getByPlaceholder('Search')
   await searchInput.click({ force: true })
   await searchInput.fill('Victoria')
-  // Autocomplete should be visible
-  await expect(page.getByText('17268')).toBeVisible()
-  const option = page.getByText(/City of Victoria/i)
-  await expect(option).toBeVisible()
-  await option.click()
 
-  // Autocomplete should be hidden
-  await expect(page.getByText('17268')).toBeHidden()
+  // Autocomplete and search results list should be visible
+  let autocompleteOption = page.getByRole('option').filter({ hasText: '17268' })
+  await expect(autocompleteOption).toBeVisible()
+
+  const searchResultItem = page
+    .getByRole('listitem')
+    .filter({ hasText: '17268' })
+  await expect(searchResultItem).toBeVisible()
+
+  autocompleteOption = page
+    .getByRole('option')
+    .filter({ hasText: 'CITY OF VICTORIA' })
+  await expect(autocompleteOption).toBeVisible()
+  await autocompleteOption.click()
+
   // Search input
   await expect(searchInput).toHaveValue('CITY OF VICTORIA')
+
+  // Search results should be expanded
+  await expect(page.getByText('Search Results')).toBeVisible()
+
+  const hideResultsBtn = page.getByRole('button', { name: 'Hide Results' })
+  await expect(hideResultsBtn).toBeVisible()
+  await hideResultsBtn.click()
+
+  const showResultsBtn = page.getByRole('button', { name: 'Show Results' })
+  await expect(showResultsBtn).toBeVisible()
+  await showResultsBtn.click()
 }

@@ -1,11 +1,11 @@
-.search-result-item {
+.autocomplete-item {
   height: 66px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.search-result-icon {
+.autocomplete-icon {
   width: 24px;
   height: 24px;
   flex: 0 0 auto;
@@ -13,7 +13,7 @@
   margin: 0.5rem;
 }
 
-.search-result-column {
+.autocomplete-column {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,12 +23,12 @@
   overflow: hidden;
 }
 
-div.search-result-label {
+div.autocomplete-label {
   font-size: 14px;
   line-height: 21px;
 }
 
-div.search-result-value {
+div.autocomplete-value {
   font-size: 16px;
   font-weight: bold;
   line-height: 27px;

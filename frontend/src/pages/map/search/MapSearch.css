@@ -1,0 +1,83 @@
+.map-search {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: right 0.5s ease-in-out;
+}
+
+.map-search-container {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em 0.5rem;
+}
+
+.map-search-container .map-button,
+.map-search-container .search-autocomplete {
+  pointer-events: auto;
+}
+
+.map-search-scroller {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.map-search-row {
+  flex: 1 1 100%;
+  gap: 0.5rem;
+}
+
+button.map-button {
+  font-weight: 400;
+  line-height: 1.5rem;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  background-color: var(--surface-color-background-white);
+  box-sizing: border-box;
+  text-wrap: nowrap;
+  border-radius: var(--layout-border-radius-medium);
+  border: 1px solid var(--surface-color-border-light);
+  box-shadow: var(--box-shadow-small);
+}
+
+button.map-button:hover {
+  border-color: var(--surface-color-border-hover);
+}
+
+button.map-button.map-button--large {
+  height: var(--map-button-height-large);
+  font-size: var(--map-button-font-size-large);
+  padding: var(--map-button-padding-large);
+}
+
+button.map-button.map-button--medium {
+  height: var(--map-button-height-medium);
+  font-size: var(--map-button-font-size-medium);
+  padding: var(--map-button-padding-medium);
+}
+
+button.map-button--active {
+  background-color: var(--surface-color-secondary-hover);
+  border: 3px solid var(--surface-color-primary-active-border);
+}
+
+button.map-button--active:hover {
+  border-color: var(--surface-color-primary-active-border);
+}
+
+
+.data-layers-icon, .find-me-icon {
+  color: var(--typography-color-secondary);
+}
+
+.polygon-search-icon, .point-search-icon {
+  color: var(--typography-color-primary);
+}

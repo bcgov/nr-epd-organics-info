@@ -8,16 +8,16 @@ import { MatchType, SearchOption } from '@/interfaces/search-option'
 import MarkerIcon from '@/assets/svgs/fa-marker.svg?react'
 import NoteIcon from '@/assets/svgs/fa-memo.svg?react'
 
-import './SearchResultItem.css'
+import './AutocompleteItem.css'
 
 const PostalCodeIcon = (
-  <MarkerIcon className="search-result-icon" title="Postal code icon" />
+  <MarkerIcon className="autocomplete-icon" title="Postal code icon" />
 )
 const PlaceIcon = (
-  <MarkerIcon className="search-result-icon" title="Place icon" />
+  <MarkerIcon className="autocomplete-icon" title="Place icon" />
 )
 const FacilityIcon = (
-  <NoteIcon className="search-result-icon" title="Facility icon" />
+  <NoteIcon className="autocomplete-icon" title="Facility icon" />
 )
 function getIcon(matchType: MatchType): ReactElement {
   switch (matchType) {
@@ -54,7 +54,7 @@ interface Props {
   [key: string]: any
 }
 
-export function SearchResultItem({
+export function AutocompleteItem({
   option,
   className,
   ...rest
@@ -64,14 +64,14 @@ export function SearchResultItem({
     <Box
       {...rest}
       component="li"
-      className={clsx('search-result-item', className)}
+      className={clsx('autocomplete-item', className)}
     >
       {getIcon(matchType)}
-      <div className="search-result-column">
-        <Typography component="div" className="search-result-label">
+      <div className="autocomplete-column">
+        <Typography component="div" className="autocomplete-label">
           {getLabel(matchType, item)}
         </Typography>
-        <Typography component="div" className="search-result-value">
+        <Typography component="div" className="autocomplete-value">
           {text}
         </Typography>
       </div>

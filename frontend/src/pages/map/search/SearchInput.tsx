@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Autocomplete, InputAdornment, TextField } from '@mui/material'
-import { LatLngTuple } from 'leaflet'
 
-import { RootState } from '@/app/store'
-import { searchAuthorizationsByTextFilter } from '@/features/omrr/omrr-slice'
-import { MIN_SEARCH_LENGTH } from '@/features/omrr/omrr-utils'
-import { setZoomPosition } from '@/features/map/map-slice'
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import {
+  setSearchTextFilter,
+  useFilteredResults,
+  useSearchTextFilter,
+} from '@/features/omrr/omrr-slice'
 import { SearchOption } from '@/interfaces/search-option'
 import { getAutocompleteOptions } from '@/utils/autocomplete'
-import { SearchResultItem } from './SearchResultItem'
+import { AutocompleteItem } from './AutocompleteItem'
 import { usePlaceNames } from '../hooks/usePlaceNames'
+import { useSetSelectedItem } from '../hooks/useSetSelectedItem'
+import { useSetSelectedPlace } from '../hooks/useSetSelectedPlace'
 
 import SearchIcon from '@/assets/svgs/fa-search.svg?react'
 
@@ -39,9 +42,8 @@ const SEARCH_DELAY = 300
 
 export function SearchInput() {
   const dispatch = useDispatch()
-  const { filteredResults, searchTextFilter } = useSelector(
-    (state: RootState) => state.omrr,
-  )
+  const filteredResults = useFilteredResults()
+  const searchTextFilter = useSearchTextFilter()
   const [value, setValue] = useState<string>(searchTextFilter)
   const timeoutRef = useRef<any>(0)
   const [options, setOptions] = useState<SearchOption[]>([])
@@ -49,6 +51,13 @@ export function SearchInput() {
   const currentValueRef = useRef<string>(value)
   const lastValueRef = useRef<string>(value)
   const { loading, places } = usePlaceNames()
+  const selectItem = useSetSelectedItem()
+  const selectPlace = useSetSelectedPlace()
+
+  // If the search text gets cleared or changed elsewhere - keep it in sync
+  useEffect(() => {
+    setValue(searchTextFilter)
+  }, [searchTextFilter])
 
   // When the filtered results change - then update the autocomplete options
   useEffect(() => {
@@ -75,7 +84,7 @@ export function SearchInput() {
     // Search immediately when text is cleared
     const delay = newText ? SEARCH_DELAY : 0
     timeoutRef.current = setTimeout(() => {
-      dispatch(searchAuthorizationsByTextFilter(newText))
+      dispatch(setSearchTextFilter(newText))
     }, delay)
   }
 
@@ -95,15 +104,11 @@ export function SearchInput() {
         setOptions([])
       } else {
         const option: SearchOption = value
-        // Zoom to the facility or place's location on the map
-        let latlng: LatLngTuple | undefined
+        // Zoom to the authorization or place's location on the map
         if (option.place) {
-          latlng = option.place.pos
+          selectPlace(option.place)
         } else if (option.item) {
-          latlng = [option.item.Latitude, option.item.Longitude]
-        }
-        if (latlng) {
-          dispatch(setZoomPosition({ position: latlng, zoom: 13 }))
+          selectItem(option.item)
         }
       }
     }
@@ -126,9 +131,9 @@ export function SearchInput() {
           variant="outlined"
           className="map-search-input"
           sx={styles}
-          value={value}
         />
       )}
+      value={value}
       options={options}
       loading={loading}
       open={open}
@@ -146,9 +151,10 @@ export function SearchInput() {
       freeSolo
       renderOption={(props, option) => {
         const { key, ...optionProps } = props
-        return <SearchResultItem key={key} option={option} {...optionProps} />
+        return <AutocompleteItem key={key} option={option} {...optionProps} />
       }}
       componentsProps={componentProps}
+      className="search-autocomplete"
     />
   )
 }

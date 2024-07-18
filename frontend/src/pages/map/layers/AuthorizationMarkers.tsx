@@ -3,13 +3,13 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { RootState } from '@/app/store'
+import { selectStatus, useFilteredResults } from '@/features/omrr/omrr-slice'
 import OmrrData from '@/interfaces/omrr'
-import AuthorizationMarker from './AuthorizationMarker'
+import { AuthorizationMarker } from './AuthorizationMarker'
 
 export function AuthorizationMarkers() {
-  const values = useSelector((state: RootState) => state.omrr.filteredResults)
-  const status = useSelector((state: RootState) => state.omrr.status)
+  const values = useFilteredResults()
+  const status = useSelector(selectStatus)
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
 

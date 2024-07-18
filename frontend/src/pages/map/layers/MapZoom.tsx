@@ -1,7 +1,8 @@
-import { useSelector } from 'react-redux'
-import { RootState } from '@/app/store'
-import { useMap } from 'react-leaflet'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useMap } from 'react-leaflet'
+
+import { selectZoomBounds, selectZoomPosition } from '@/features/map/map-slice'
 
 const OPTIONS = { animate: true, duration: 1 }
 
@@ -12,14 +13,13 @@ const OPTIONS = { animate: true, duration: 1 }
  */
 export function MapZoom() {
   const map = useMap()
-  const { zoomPosition, zoomBounds } = useSelector(
-    (state: RootState) => state.map,
-  )
+  const zoomPosition = useSelector(selectZoomPosition)
+  const zoomBounds = useSelector(selectZoomBounds)
 
   useEffect(() => {
     if (zoomPosition) {
       const { zoom = map.getZoom(), position } = zoomPosition
-      map.flyTo(position, zoom, OPTIONS)
+      map.flyTo(position, Math.max(zoom, map.getZoom()), OPTIONS)
     } else if (zoomBounds?.isValid()) {
       map.flyToBounds(zoomBounds, OPTIONS)
     }

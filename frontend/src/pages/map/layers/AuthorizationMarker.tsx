@@ -1,7 +1,8 @@
 import L from 'leaflet'
 import { Tooltip } from 'react-leaflet'
-import OmrrData from '@/interfaces/omrr'
 
+import OmrrData from '@/interfaces/omrr'
+import { useSetSelectedItem } from '../hooks/useSetSelectedItem'
 import { IconMarker } from './IconMarker'
 
 import markerIcon2x from '@/assets/marker-icon-2x-blue.png'
@@ -39,6 +40,12 @@ interface Props {
 }
 
 export function AuthorizationMarker({ item, isSmall }: Readonly<Props>) {
+  const selectItem = useSetSelectedItem()
+
+  const onClick = () => {
+    selectItem(item)
+  }
+
   const title = item['Regulated Party']
   return (
     <IconMarker
@@ -47,10 +54,9 @@ export function AuthorizationMarker({ item, isSmall }: Readonly<Props>) {
       alt="Authorization marker"
       title={title}
       riseOnHover
+      onClick={onClick}
     >
       <Tooltip direction="top">{title}</Tooltip>
     </IconMarker>
   )
 }
-
-export default AuthorizationMarker

@@ -17,9 +17,8 @@ export function isValidDate(date?: Date) {
  * Truncates the date string to only include the date portion
  * @param {string} dateString the ISO date string
  */
-export const truncateDate = (
-  dateString: string | undefined,
-): string | undefined => (dateString ? dateString.substring(0, 10) : undefined)
+export const truncateDate = (dateString: string): string =>
+  dateString ? dateString.substring(0, 10) : ''
 
 /**
  * Formats the date in MMM D, YYYY format
@@ -59,4 +58,23 @@ export function extractPostalCode(address: string): string | undefined {
     return postalCode.toUpperCase()
   }
   return undefined
+}
+
+export function toNumber(input: any, defaultValue = NaN): number {
+  if (typeof input === 'number') {
+    return input
+  }
+  if (typeof input === 'string') {
+    return parseFloat(input)
+  }
+  return defaultValue
+}
+
+export function formatLatOrLng(input: number | undefined, digits = 4): string {
+  const num = toNumber(input)
+  if (isNaN(num)) {
+    return ''
+  }
+  // Limit the number of digits, and remove trailing zeroes
+  return String(Number(num.toFixed(digits)))
 }
