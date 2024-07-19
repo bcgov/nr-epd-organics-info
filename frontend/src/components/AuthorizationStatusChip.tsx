@@ -4,7 +4,7 @@ interface Props {
   status: string
 }
 
-export function AuthorizationStatusChip({ status }: Props) {
+export function AuthorizationStatusChip({ status }: Readonly<Props>) {
   const isActive = status === 'Active'
   return (
     <Chip

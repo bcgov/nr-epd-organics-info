@@ -1,4 +1,6 @@
 import { useDispatch } from 'react-redux'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { setDrawerExpanded } from '@/features/map/map-slice'
 import { useMapDrawerState } from '../hooks/useMapDrawerState'
@@ -8,12 +10,11 @@ import { SearchResultsList } from './SearchResultsList'
 
 import './MapDrawer.css'
 
-interface Props {
-  isSmallScreen: boolean
-}
-
-export function MapDrawer({ isSmallScreen }: Props) {
+export function MapDrawer() {
   const dispatch = useDispatch()
+  const theme = useTheme()
+  // If the screen width is small or medium - shown drawer below
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('lg'))
   const { isVisible, isDrawerExpanded } = useMapDrawerState(isSmallScreen)
 
   if (!isVisible) {

@@ -20,7 +20,7 @@ export function MapSidebar({
   children,
   isExpanded = false,
   setExpanded,
-}: Props) {
+}: Readonly<Props>) {
   const selectedItem = useSelectedItem()
   // This hook calculates the sidebar width based on screen size
   // It also updates the sidebarWidth state which other components use
@@ -43,7 +43,7 @@ export function MapSidebar({
         <div className="map-sidebar-titlebar">
           <div className="map-sidebar-title">
             {selectedItem ? (
-              <ZoomToButton item={selectedItem} />
+              <ZoomToButton items={[selectedItem]} />
             ) : (
               'Search Results'
             )}

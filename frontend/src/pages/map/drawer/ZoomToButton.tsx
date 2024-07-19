@@ -1,19 +1,21 @@
+import { ReactNode } from 'react'
 import { Button } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
-import { useZoomToAuthorization } from '../hooks/useZoomTo'
+import { useZoomToAuthorizations } from '../hooks/useZoomTo'
 
 import ZoomInIcon from '@/assets/svgs/fa-magnifying-glass-plus.svg?react'
 
 interface Props {
-  item: OmrrData
+  items: OmrrData[]
+  children?: ReactNode
 }
 
-export function ZoomToButton({ item }: Props) {
-  const zoomTo = useZoomToAuthorization()
+export function ZoomToButton({ items, children = 'Zoom To' }: Readonly<Props>) {
+  const zoomTo = useZoomToAuthorizations()
 
   const onZoomIn = () => {
-    zoomTo(item)
+    zoomTo(items)
   }
 
   return (
@@ -24,7 +26,7 @@ export function ZoomToButton({ item }: Props) {
       startIcon={<ZoomInIcon className="zoom-to-icon" />}
       sx={{ color: '#2d2d2d' }}
     >
-      Zoom To
+      {children}
     </Button>
   )
 }

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LatLngBounds, LatLngTuple } from 'leaflet'
+import { LatLngBoundsLiteral, LatLngTuple } from 'leaflet'
 
 import { RootState } from '@/app/store'
 import OmrrData from '@/interfaces/omrr'
@@ -13,7 +13,7 @@ export interface ZoomPosition {
 export interface MapSliceState {
   isMyLocationVisible: boolean
   zoomPosition?: ZoomPosition
-  zoomBounds?: LatLngBounds
+  zoomBounds?: LatLngBoundsLiteral
   // Whether the search results sidebar OR bottom drawer is expanded
   isDrawerExpanded?: boolean
   // The right sidebar width
@@ -41,7 +41,7 @@ export const mapSlice = createSlice({
     setZoomPosition: (state, action: PayloadAction<ZoomPosition>) => {
       state.zoomPosition = action.payload
     },
-    setZoomBounds: (state, action: PayloadAction<LatLngBounds>) => {
+    setZoomBounds: (state, action: PayloadAction<LatLngBoundsLiteral>) => {
       state.zoomBounds = action.payload
     },
     setDrawerExpanded: (state, action: PayloadAction<boolean>) => {

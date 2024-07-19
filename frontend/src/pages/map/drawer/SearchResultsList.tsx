@@ -13,8 +13,9 @@ import {
   useHasSearchTextFilter,
   useLastSearchTime,
 } from '@/features/omrr/omrr-slice'
+import { InfiniteScrollingList } from '@/components/InfiniteScrollingList'
 import { SearchResultListItem } from './SearchResultsListItem'
-import { SearchResultsPagination } from './SearchResultsPagination'
+import { ZoomToButton } from './ZoomToButton'
 
 import './SearchResultsList.css'
 
@@ -23,21 +24,16 @@ interface Props {
   scrollBars?: boolean
 }
 
-export function SearchResultsList({ pageSize = 10, scrollBars = true }: Props) {
+export function SearchResultsList({
+  pageSize = 10,
+  scrollBars = true,
+}: Readonly<Props>) {
   const dispatch = useDispatch()
-  const [page, setPage] = useState<number>(1)
   const filteredResults = useFilteredResults()
   const selectedItem = useSelectedItem()
   const hasFiltersOn = useHasFiltersOn()
   const hasSearchText = useHasSearchTextFilter()
   const lastSearchTime = useLastSearchTime()
-
-  useEffect(() => {
-    if (lastSearchTime) {
-      // Reset page back to start
-      setPage(1)
-    }
-  }, [lastSearchTime])
 
   const onResetFilters = () => {
     dispatch(resetFilters())
@@ -48,54 +44,56 @@ export function SearchResultsList({ pageSize = 10, scrollBars = true }: Props) {
   }
 
   let results = selectedItem ? [selectedItem] : filteredResults
-  const isPaging = results.length > pageSize
   const noResults = results.length === 0
-  if (isPaging) {
-    const start = (page - 1) * pageSize
-    results = results.slice(start, Math.min(start + pageSize, results.length))
+  const hasSelectedItem = Boolean(selectedItem)
+  const showButtonBar = !hasSelectedItem && filteredResults.length > 0
+
+  if (noResults) {
+    return (
+      <>
+        <Typography color="textSecondary">
+          There are no matching authorizations.
+        </Typography>
+        <Stack direction="row" gap="1rem">
+          {hasFiltersOn && (
+            <Button variant="outlined" onClick={onResetFilters}>
+              Reset Filters
+            </Button>
+          )}
+          {hasSearchText && (
+            <Button variant="outlined" onClick={onClearSearchText}>
+              Clear Search Text
+            </Button>
+          )}
+        </Stack>
+      </>
+    )
   }
 
+  const resultsText = `${results.length} matching result${results.length === 1 ? '' : 's'}`
   return (
-    <div
-      className={clsx(
-        'search-results-list',
-        !scrollBars && 'search-results-list--no-scrollbars',
+    <>
+      {showButtonBar && (
+        <div className="search-results-bar">
+          {resultsText}
+          <ZoomToButton items={results}>Zoom To Results</ZoomToButton>
+        </div>
       )}
-      role="list"
-    >
-      {noResults && (
-        <>
-          <Typography color="textSecondary">
-            There are no matching authorizations.
-          </Typography>
-          <Stack direction="row" gap="1rem">
-            {hasFiltersOn && (
-              <Button variant="outlined" onClick={onResetFilters}>
-                Reset Filters
-              </Button>
-            )}
-            {hasSearchText && (
-              <Button variant="outlined" onClick={onClearSearchText}>
-                Clear Search Text
-              </Button>
-            )}
-          </Stack>
-        </>
-      )}
-      {results.map((item: OmrrData) => (
-        <SearchResultListItem
-          key={`SearchResultListItem-${item['Authorization Number']}`}
-          item={item}
-          fullDetails={Boolean(selectedItem)}
-        />
-      ))}
-      {isPaging && (
-        <SearchResultsPagination
-          page={page}
-          setPage={setPage}
-          pageCount={Math.ceil(filteredResults.length / pageSize)}
-        />
-      )}
-    </div>
+      <InfiniteScrollingList
+        items={results}
+        initialCount={pageSize}
+        className={clsx(
+          'search-results-list',
+          !scrollBars && 'search-results-list--no-scrollbars',
+        )}
+        itemRenderer={(item: OmrrData) => (
+          <SearchResultListItem
+            key={`SearchResultListItem-${item['Authorization Number']}`}
+            item={item}
+            fullDetails={Boolean(selectedItem)}
+          />
+        )}
+      />
+    </>
   )
 }

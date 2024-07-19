@@ -11,7 +11,8 @@
   align-items: center;
 }
 
-.search-results-pagination .MuiPaginationItem-page:hover {
+.search-results-pagination .MuiPaginationItem-page:hover,
+.search-results-pagination .MuiPaginationItem-previousNext:hover {
   background-color: #155691;
   color: #ffffff;
 }

@@ -7,7 +7,7 @@ interface Props {
   item: OmrrData
 }
 
-export function ViewFacilityDetailsButton({ item }: Props) {
+export function ViewFacilityDetailsButton({ item }: Readonly<Props>) {
   const navigate = useNavigate()
 
   const onClick = (route: string) => {

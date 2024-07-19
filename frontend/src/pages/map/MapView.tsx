@@ -45,7 +45,7 @@ function MapView() {
         <MapZoom />
       </MapContainer>
       <MapSearch />
-      <MapDrawer isSmallScreen={isSmall} />
+      <MapDrawer />
     </div>
   )
 }

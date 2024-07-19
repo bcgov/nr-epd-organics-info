@@ -19,7 +19,11 @@ interface Props {
  * When isExpanded is false - it is hidden.
  * It can be toggled to be full height.
  */
-export function MapBottomDrawer({ children, isExpanded, setExpanded }: Props) {
+export function MapBottomDrawer({
+  children,
+  isExpanded,
+  setExpanded,
+}: Readonly<Props>) {
   const [fullHeight, setFullHeight] = useState<boolean>(false)
   const lastSearchTime = useLastSearchTime()
 

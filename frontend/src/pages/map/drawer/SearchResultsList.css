@@ -5,6 +5,8 @@
   justify-content: flex-start;
   align-items: stretch;
   gap: 24px;
+  padding: 0;
+  margin: 0;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #4e4e4e transparent;
@@ -23,21 +25,30 @@
   background: #555;
 }
 
-.search-results-list.search-results-list--no-scrollbars {
+.search-results-list--no-scrollbars {
   scrollbar-width: none;
 }
 
-.search-results-list.search-results-list--no-scrollbars::-webkit-scrollbar {
+.search-results-list--no-scrollbars::-webkit-scrollbar {
   display: none;
 }
 
-div.search-result-list-item {
+.search-results-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+li.search-result-list-item {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   padding: 24px;
+  margin: 0;
   gap: 0;
   background-color: var(--surface-color-background-light);
   border: 1px solid var(--surface-color-border-light);

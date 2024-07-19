@@ -6,7 +6,7 @@
   padding-top: 4em;
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   overflow: hidden;
@@ -25,7 +25,6 @@
   /* Use dvh instead of vh otherwise on Chrome the address bar pushes map down */
   /* https://stackoverflow.com/questions/52848856/100vh-height-when-address-bar-is-shown-chrome-mobile#70048720 */
   height: 100dvh;
-  flex-direction: column;
 }
 
 .map-view > .map-container {

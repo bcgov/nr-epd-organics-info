@@ -8,7 +8,11 @@ interface Props {
   pageCount: number
 }
 
-export function SearchResultsPagination({ page, setPage, pageCount }: Props) {
+export function SearchResultsPagination({
+  page,
+  setPage,
+  pageCount,
+}: Readonly<Props>) {
   return (
     <Pagination
       count={pageCount}

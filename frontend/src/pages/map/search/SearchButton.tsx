@@ -24,7 +24,7 @@ export function SearchButton({ isActive = false, onClick }: Readonly<Props>) {
       onClick={onClick}
       aria-label="Search"
     >
-      Search
+      Text Search
     </Button>
   )
 }

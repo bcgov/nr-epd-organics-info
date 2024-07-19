@@ -15,7 +15,7 @@ export function SidebarToggleButton({
   children,
   isExpanded,
   setExpanded,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <Button
       color="primary"

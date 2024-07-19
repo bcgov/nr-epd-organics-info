@@ -10,7 +10,10 @@ interface Props {
   fullDetails?: boolean
 }
 
-export function SearchResultListItem({ item, fullDetails = false }: Props) {
+export function SearchResultListItem({
+  item,
+  fullDetails = false,
+}: Readonly<Props>) {
   const {
     'Authorization Number': number,
     'Regulated Party': name,
@@ -19,11 +22,7 @@ export function SearchResultListItem({ item, fullDetails = false }: Props) {
   } = item
 
   return (
-    <Card
-      className="search-result-list-item"
-      variant="outlined"
-      role="listitem"
-    >
+    <Card className="search-result-list-item" variant="outlined" component="li">
       <Typography component="div" fontSize={14} marginBottom="8px">
         Authorization #: <u>{number}</u>
       </Typography>
