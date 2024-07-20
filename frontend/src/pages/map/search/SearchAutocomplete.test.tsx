@@ -2,14 +2,14 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
-import { SearchInput } from './SearchInput'
 import { initialState } from '@/features/omrr/omrr-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { SEARCH_BY_ALL } from '@/interfaces/types'
+import { SearchAutocomplete } from './SearchAutocomplete'
 
-describe('Test suite for SearchInput', () => {
-  it('should render SearchInput', async () => {
-    const { user } = render(<SearchInput />, {
+describe('Test suite for SearchAutocomplete', () => {
+  it('should render SearchAutocomplete', async () => {
+    const { user } = render(<SearchAutocomplete />, {
       withStateProvider: true,
       initialState: {
         omrr: {
@@ -31,9 +31,15 @@ describe('Test suite for SearchInput', () => {
     const input = screen.getByPlaceholderText('Search')
     // This should match 2 results
     await user.type(input, 'waste')
-    await screen.findByText(/WYNDLOW WOOD WASTE/i)
-    const options = screen.getAllByRole('option')
+    const options = await screen.findAllByRole(
+      'option',
+      {},
+      {
+        timeout: 1000,
+      },
+    )
     expect(options).toHaveLength(2)
+    await screen.findByText(/WYNDLOW WOOD WASTE/i)
     screen.getByText('11123')
     screen.getByText(/BIOWASTE MANAGEMENT/i)
     screen.getByText('11475')

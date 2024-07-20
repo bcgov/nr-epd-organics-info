@@ -20,7 +20,6 @@ export function InfiniteScrollingList<T>({
   itemRenderer,
   initialCount = 10,
   increment = initialCount,
-  scrollThreshold = 90,
   offset = 30,
   component = 'ul',
   className,

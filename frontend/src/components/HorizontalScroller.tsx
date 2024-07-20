@@ -101,5 +101,3 @@ export function HorizontalScroller({
     </div>
   )
 }
-
-export default HorizontalScroller

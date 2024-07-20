@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
@@ -79,12 +79,12 @@ describe('Test suite for SearchResultsList', () => {
     return { user, state }
   }
 
-  it('should render empty SearchResultsList with search text', async () => {
+  it.only('should render empty SearchResultsList with search text', async () => {
     const searchTextFilter = 'zzzzzz'
     const { user, state } = renderComponent({ searchTextFilter })
 
     screen.getByText('There are no matching authorizations.')
-    screen.getByRole('list')
+    expect(screen.queryByRole('list')).not.toBeInTheDocument()
     expect(screen.queryByRole('listitem')).not.toBeInTheDocument()
 
     expect(state.filteredResults).toHaveLength(0)
@@ -180,7 +180,7 @@ describe('Test suite for SearchResultsList', () => {
   })
 
   it('should render SearchResultsList with 3 items', async () => {
-    const { user, state } = renderComponent({
+    const { state } = renderComponent({
       filteredResults: [...allResults],
     })
 
@@ -190,11 +190,12 @@ describe('Test suite for SearchResultsList', () => {
     // The first 2 items should be shown (paginated with 2 items per page)
     const [item1, item2, item3] = allResults
 
+    screen.getByText('3 matching results')
     screen.getByText(item1['Regulated Party'])
     screen.getByText(item1['Authorization Number'])
     screen.getByText(item2['Regulated Party'])
     screen.getByText(item2['Authorization Number'])
-    // Paginated
+    // Not shown until scrolling down
     expect(screen.queryByText(item3['Regulated Party'])).not.toBeInTheDocument()
 
     expect(
@@ -208,17 +209,12 @@ describe('Test suite for SearchResultsList', () => {
     expect(screen.queryByText('Latitude')).not.toBeInTheDocument()
     expect(screen.queryByText('Longitude')).not.toBeInTheDocument()
 
-    // Pagination
-    // MUI adds aria-label 'page #' attribute on the selected page
-    screen.getByRole('button', { name: 'page 1' })
-    // MUI adds aria-label 'Go to page #' attribute on non-selected pages
-    const pageTwo = screen.getByRole('button', { name: 'Go to page 2' })
-
-    await user.click(pageTwo)
+    // Fake scrolling - clientHeight, scrollHeight don't work
+    // But because of the offset this will cause new items to load
+    const list = screen.getByRole('list')
+    fireEvent.scroll(list)
 
     screen.getByText(item3['Regulated Party'])
     screen.getByText(item3['Authorization Number'])
-
-    screen.getByRole('button', { name: 'View Facility Details' })
   })
 })

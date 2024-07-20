@@ -2,15 +2,20 @@
   height: 66px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 16px;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.autocomplete-item:hover {
+  background-color: var(--surface-color-brand-gray-20);
 }
 
 .autocomplete-icon {
   width: 24px;
   height: 24px;
-  flex: 0 0 auto;
+  flex: 0 0 24px;
   color: var(--typography-color-primary);
-  margin: 0.5rem;
 }
 
 .autocomplete-column {

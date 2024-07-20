@@ -1,12 +1,13 @@
 import { MouseEvent, ReactNode } from 'react'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
 
 import { useSelectedItem } from '@/features/map/map-slice'
 import { useCalculateSidebarWidth } from '../hooks/useCalculateSidebarWidth'
 import { SidebarToggleButton } from './SidebarToggleButton'
 import { ZoomToButton } from './ZoomToButton'
+
+import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapSidebar.css'
 

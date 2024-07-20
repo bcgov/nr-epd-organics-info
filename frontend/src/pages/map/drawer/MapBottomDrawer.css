@@ -40,15 +40,21 @@
   font-weight: 700;
 }
 
-.map-bottom-drawer-button {
+button.map-bottom-drawer-button {
   width: 45px;
   height: 45px;
+  padding: 0;
+  color: var(--typography-color-primary);
 }
 
 svg.map-bottom-drawer-icon {
   width: 28px;
   height: 28px;
-  color: var(--typography-color-primary);
+}
+
+.map-bottom-close-icon {
+  width: 32px;
+  height: 32px;
 }
 
 .map-bottom-drawer-handle {

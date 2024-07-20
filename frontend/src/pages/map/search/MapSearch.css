@@ -4,21 +4,19 @@
   left: 0;
   right: 0;
   z-index: 2;
+  margin-top: 16px;
   pointer-events: none;
-  transition: right 0.5s ease-in-out;
-}
-
-.map-search-container {
-  position: absolute;
+  transition: all 0.5s ease-in-out;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-wrap: nowrap;
   gap: 1em 0.5rem;
 }
 
-.map-search-container .MuiButton-root,
-.map-search-container .map-button,
-.map-search-container .search-autocomplete {
+.map-search .MuiButton-root,
+.map-search .map-button,
+.map-search .search-autocomplete {
   pointer-events: auto;
 }
 

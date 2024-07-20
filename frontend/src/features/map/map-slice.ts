@@ -40,8 +40,10 @@ export const mapSlice = createSlice({
     },
     setZoomPosition: (state, action: PayloadAction<ZoomPosition>) => {
       state.zoomPosition = action.payload
+      state.zoomBounds = undefined
     },
     setZoomBounds: (state, action: PayloadAction<LatLngBoundsLiteral>) => {
+      state.zoomPosition = undefined
       state.zoomBounds = action.payload
     },
     setDrawerExpanded: (state, action: PayloadAction<boolean>) => {

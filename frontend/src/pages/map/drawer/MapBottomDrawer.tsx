@@ -1,9 +1,11 @@
 import { ReactNode, useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
-import { Close, KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
+import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
 
 import { useLastSearchTime } from '@/features/omrr/omrr-slice'
+
+import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapBottomDrawer.css'
 
@@ -62,7 +64,7 @@ export function MapBottomDrawer({
         <div className="map-bottom-drawer-title">{title}</div>
 
         <IconButton onClick={onClose} className="map-bottom-drawer-button">
-          <Close className="map-bottom-drawer-icon" />
+          <CloseIcon className="map-bottom-close-icon" />
         </IconButton>
 
         <div className="map-bottom-drawer-handle" />

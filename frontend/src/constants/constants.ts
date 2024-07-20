@@ -4,6 +4,10 @@
 export const MIN_SEARCH_LENGTH = 3
 
 /**
+ * How long to wait before performing a search.
+ */
+export const SEARCH_DELAY = 300
+/**
  * The zoom level when zooming to a place.
  */
 export const DEFAULT_PLACE_ZOOM = 13

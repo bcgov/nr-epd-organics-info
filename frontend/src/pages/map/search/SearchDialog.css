@@ -1,0 +1,53 @@
+.search-dialog .MuiPaper-root {
+  width: 450px;
+  height: 640px;
+}
+
+.search-dialog-titlebar {
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border-bottom: 1px solid var(--surface-color-border-light);
+}
+
+button.search-dialog-back-button {
+  min-width: 40px;
+  width: var(--map-button-height-medium);
+  height: var(--map-button-height-medium);
+  border-color: var(--surface-color-border-dark);
+  color: var(--typography-color-primary);
+}
+
+.search-dialog-back-icon {
+  width: 10px;
+  height: 15px;
+}
+
+.search-dialog-input {
+  flex: 1;
+  height: var(--map-button-height-medium);
+}
+
+div.search-dialog-input div.MuiInputBase-root {
+  box-shadow: none;
+}
+
+.search-dialog-input  input.MuiInputBase-input {
+  padding: 0;
+}
+
+.search-dialog .search-input-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.search-dialog .search-input-icon--close {
+  width: 14px;
+  height: 14px;
+}
+
+.search-dialog-list {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}

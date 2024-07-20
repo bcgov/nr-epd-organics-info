@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { LatLngBounds, LatLngBoundsLiteral, LatLngTuple } from 'leaflet'
+import { LatLngBoundsLiteral, LatLngTuple } from 'leaflet'
 
 import { DEFAULT_AUTHORIZATION_ZOOM } from '@/constants/constants'
 import { setZoomBounds, setZoomPosition } from '@/features/map/map-slice'

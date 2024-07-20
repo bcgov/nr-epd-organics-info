@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { Button, Stack, Typography } from '@mui/material'
@@ -11,7 +10,6 @@ import {
   useFilteredResults,
   useHasFiltersOn,
   useHasSearchTextFilter,
-  useLastSearchTime,
 } from '@/features/omrr/omrr-slice'
 import { InfiniteScrollingList } from '@/components/InfiniteScrollingList'
 import { SearchResultListItem } from './SearchResultsListItem'
@@ -33,7 +31,6 @@ export function SearchResultsList({
   const selectedItem = useSelectedItem()
   const hasFiltersOn = useHasFiltersOn()
   const hasSearchText = useHasSearchTextFilter()
-  const lastSearchTime = useLastSearchTime()
 
   const onResetFilters = () => {
     dispatch(resetFilters())

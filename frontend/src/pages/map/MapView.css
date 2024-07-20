@@ -10,13 +10,6 @@
   justify-content: flex-start;
   align-items: stretch;
   overflow: hidden;
-
-  --map-button-height-large: 64px;
-  --map-button-height-medium: 40px;
-  --map-button-padding-large: 1rem 1.5rem;
-  --map-button-padding-medium: 0.5rem 1rem;
-  --map-button-font-size-large: 18px;
-  --map-button-font-size-medium: 16px;
 }
 
 /* No footer on small screens - so use full height */

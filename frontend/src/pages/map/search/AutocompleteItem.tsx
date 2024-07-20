@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 import clsx from 'clsx'
 
 import OmrrData from '@/interfaces/omrr'
-import { MatchType, SearchOption } from '@/interfaces/search-option'
+import { MatchType, AutocompleteOption } from '@/interfaces/autocomplete-option'
 
 import MarkerIcon from '@/assets/svgs/fa-marker.svg?react'
 import NoteIcon from '@/assets/svgs/fa-memo.svg?react'
@@ -49,7 +49,7 @@ function getLabel(matchType: MatchType, item: OmrrData | undefined): ReactNode {
 }
 
 interface Props {
-  option: SearchOption
+  option: AutocompleteOption
   className?: string
   [key: string]: any
 }

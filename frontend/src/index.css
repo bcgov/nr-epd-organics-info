@@ -19,6 +19,7 @@ html, body {
   --surface-color-secondary-hover: #edebe9;
   --surface-color-background-white: #ffffff;
   --surface-color-background-light: #faf9f8;
+  --surface-color-brand-gray-20: #f3f2f1;
   --surface-color-border-light: #d8d8d8;
   --surface-color-border-hover: #b8b8b8;
   --surface-color-border-dark: #353433;
@@ -37,6 +38,13 @@ html, body {
 
   --header-height: 4em;
   --footer-height: 4em;
+
+  --map-button-height-large: 64px;
+  --map-button-height-medium: 40px;
+  --map-button-padding-large: 16px 24px;
+  --map-button-padding-medium: 8px 16px;
+  --map-button-font-size-large: 18px;
+  --map-button-font-size-medium: 16px;
 }
 
 @font-face {
