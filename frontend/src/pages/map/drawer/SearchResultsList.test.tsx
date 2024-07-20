@@ -79,7 +79,7 @@ describe('Test suite for SearchResultsList', () => {
     return { user, state }
   }
 
-  it.only('should render empty SearchResultsList with search text', async () => {
+  it('should render empty SearchResultsList with search text', async () => {
     const searchTextFilter = 'zzzzzz'
     const { user, state } = renderComponent({ searchTextFilter })
 
