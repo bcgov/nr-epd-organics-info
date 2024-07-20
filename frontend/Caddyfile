@@ -18,7 +18,7 @@
         header {
           Content-Type text/javascript
         }
-        respond `window.config={"VITE_AMS_URL":"{$AMS_URL}"};`
+        respond `window.config={"VITE_AMS_URL":"{$VITE_AMS_URL}"};`
     }
 	root * /srv
 	encode zstd gzip
