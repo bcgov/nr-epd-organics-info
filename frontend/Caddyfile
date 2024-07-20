@@ -14,11 +14,17 @@
 		}
 		level {$LOG_LEVEL}
 	}
+    handle /env.js {
+        header {
+          Content-Type text/javascript
+        }
+        respond `window.config={"VITE_AMS_URL":"{$AMS_URL}"};`
+    }
 	root * /srv
 	encode zstd gzip
 	file_server
 	@spa_router {
-		not path /api/*
+		not path /api/* /env.js
 		file {
 			try_files {path} /index.html
 		}

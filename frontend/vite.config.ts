@@ -24,7 +24,7 @@ export default ({ mode }) => {
       proxy: {
         // Proxy API requests to the backend
         '/api': {
-          target: 'http://localhost:3000',
+          target: process.env.VITE_API_URL,
           changeOrigin: true,
         },
       },
