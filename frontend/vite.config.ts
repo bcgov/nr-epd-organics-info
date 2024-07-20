@@ -16,7 +16,7 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [react(), svgr()],
     server: {
-      port: 3001, //parseInt(process.env.PORT),
+      port: parseInt(process.env.VITE_PORT) || 3001,
       fs: {
         // Allow serving files from one level up to the project root
         allow: ['..'],
