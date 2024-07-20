@@ -32,7 +32,7 @@ export function SearchInput({
   className,
   size,
   ...rest
-}: Props) {
+}: Readonly<Props>) {
   return (
     <TextField
       {...rest}

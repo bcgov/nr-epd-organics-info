@@ -92,7 +92,7 @@ function SearchResultLabel({
   label,
   value,
   fullWidth = false,
-}: SearchResultLabelProps) {
+}: Readonly<SearchResultLabelProps>) {
   // Don't display if the value isn't valid
   if (
     value === undefined ||
