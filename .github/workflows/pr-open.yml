@@ -39,9 +39,9 @@ jobs:
       release: ${{ github.event.number }}
       triggers: ('backend/' 'frontend/' 'migrations/' 'charts/' '.github/')
       params: |
-        --set backend.pdb.enabled=false
-        --set frontend.pdb.enabled=false
-        --set global.amsURL=https://test.j200.gov.bc.ca/pub/ams/
+        --set backend.pdb.enabled=false \
+        --set frontend.pdb.enabled=false \
+        --set global.amsURL=https://test.j200.gov.bc.ca/pub/ams/ \
   tests:
     name: Tests
     if: needs.deploys.outputs.triggered == 'true'
