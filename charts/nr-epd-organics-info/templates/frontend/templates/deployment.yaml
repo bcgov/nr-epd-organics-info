@@ -39,6 +39,8 @@ spec:
               value: "http://{{ .Release.Name }}-backend"
             - name: LOG_LEVEL
               value: "info"
+            - name: VITE_AMS_URL
+              value: {{ .Values.global.amsURL }}
           ports:
             - name: http
               containerPort: 3000

@@ -1,4 +1,4 @@
-import { loadEnv, defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { configDefaults } from 'vitest/config'
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
@@ -14,9 +14,30 @@ export default ({ mode }) => {
   }
 
   return defineConfig({
-    plugins: [react(), svgr()],
+    plugins: [
+      {
+        name: 'build-html',
+        apply: 'build',
+        transformIndexHtml: (html) => {
+          return {
+            html,
+            tags: [
+              {
+                tag: 'script',
+                attrs: {
+                  src: '/env.js',
+                },
+                injectTo: 'head',
+              },
+            ],
+          }
+        },
+      },
+      react(),
+      svgr()
+    ],
     server: {
-      port: 3001, //parseInt(process.env.PORT),
+      port: parseInt(process.env.VITE_PORT) || 3001,
       fs: {
         // Allow serving files from one level up to the project root
         allow: ['..'],
@@ -24,7 +45,7 @@ export default ({ mode }) => {
       proxy: {
         // Proxy API requests to the backend
         '/api': {
-          target: 'http://localhost:3000',
+          target: process.env.VITE_API_URL,
           changeOrigin: true,
         },
       },
