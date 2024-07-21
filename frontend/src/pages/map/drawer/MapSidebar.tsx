@@ -13,13 +13,13 @@ import './MapSidebar.css'
 
 interface Props {
   children?: ReactNode
-  isExpanded?: boolean
+  isExpanded: boolean
   setExpanded: (expanded: boolean, ev: MouseEvent) => void
 }
 
 export function MapSidebar({
   children,
-  isExpanded = false,
+  isExpanded,
   setExpanded,
 }: Readonly<Props>) {
   const selectedItem = useSelectedItem()
@@ -36,6 +36,7 @@ export function MapSidebar({
     <div
       className={clsx('map-sidebar', isExpanded && 'map-sidebar--expanded')}
       style={style}
+      data-testid="map-sidebar"
     >
       <div
         className="map-sidebar-container"

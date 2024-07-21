@@ -15,7 +15,7 @@ export interface MapSliceState {
   zoomPosition?: ZoomPosition
   zoomBounds?: LatLngBoundsLiteral
   // Whether the search results sidebar OR bottom drawer is expanded
-  isDrawerExpanded?: boolean
+  isDrawerExpanded: boolean
   // The right sidebar width
   sidebarWidth: number
   // Keep track of if a single item has been selected

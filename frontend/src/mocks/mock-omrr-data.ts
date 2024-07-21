@@ -1,4 +1,5 @@
 import OmrrData from '@/interfaces/omrr'
+import { SEARCH_BY_ACTIVE, SEARCH_BY_INACTIVE } from '@/interfaces/types'
 
 export const mockOmrrData: OmrrData[] = [
   {
@@ -63,3 +64,11 @@ export const mockOmrrData: OmrrData[] = [
     'Food Waste': false,
   },
 ]
+
+export const mockActiveOmrrData = mockOmrrData.filter(
+  (item) => item['Authorization Status'].toLowerCase() === SEARCH_BY_ACTIVE,
+)
+
+export const mockInactiveOmrrData = mockOmrrData.filter(
+  (item) => item['Authorization Status'].toLowerCase() === SEARCH_BY_INACTIVE,
+)

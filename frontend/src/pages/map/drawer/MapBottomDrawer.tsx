@@ -11,7 +11,7 @@ import './MapBottomDrawer.css'
 
 interface Props {
   children?: ReactNode
-  isExpanded?: boolean
+  isExpanded: boolean
   setExpanded: (expanded: boolean) => void
 }
 
@@ -48,11 +48,13 @@ export function MapBottomDrawer({
         isExpanded && 'map-bottom-drawer--expanded',
         fullHeight && 'map-bottom-drawer--full-height',
       )}
+      data-testid="map-bottom-drawer"
     >
       <div className="map-bottom-drawer-titlebar">
         <IconButton
           onClick={() => setFullHeight(!fullHeight)}
           className="map-bottom-drawer-button"
+          title={fullHeight ? 'Collapse' : 'Expand'}
         >
           {fullHeight ? (
             <KeyboardArrowDown className="map-bottom-drawer-icon" />
@@ -63,7 +65,11 @@ export function MapBottomDrawer({
 
         <div className="map-bottom-drawer-title">{title}</div>
 
-        <IconButton onClick={onClose} className="map-bottom-drawer-button">
+        <IconButton
+          onClick={onClose}
+          title="Close"
+          className="map-bottom-drawer-button"
+        >
           <CloseIcon className="map-bottom-close-icon" />
         </IconButton>
 
