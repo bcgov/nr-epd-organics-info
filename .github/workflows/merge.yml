@@ -43,7 +43,7 @@ jobs:
         --set frontend.deploymentStrategy=RollingUpdate \
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
-        --set-string global.amsURL=https://j200.gov.bc.ca/pub/ams/
+        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
   tests:
     name: Tests
     needs: [ deploy-test ]
@@ -65,7 +65,7 @@ jobs:
         --set frontend.deploymentStrategy=RollingUpdate \
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
-        --set-string global.amsURL=https://j200.gov.bc.ca/pub/ams/
+        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
 
   promote:
     name: Promote Images
