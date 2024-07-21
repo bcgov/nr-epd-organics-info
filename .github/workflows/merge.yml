@@ -39,11 +39,11 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: test
       params: |
-        --set backend.deploymentStrategy=RollingUpdate \
-        --set frontend.deploymentStrategy=RollingUpdate \
-        --set backend.pdb.enabled=false \
-        --set frontend.pdb.enabled=false \
-        --set-string global.amsURL=https://j200.gov.bc.ca/pub/ams/
+        --set backend.deploymentStrategy=RollingUpdate
+        --set frontend.deploymentStrategy=RollingUpdate
+        --set backend.pdb.enabled=false
+        --set frontend.pdb.enabled=false
+        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/
   tests:
     name: Tests
     needs: [ deploy-test ]
@@ -61,11 +61,11 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: prod
       params: |
-        --set backend.deploymentStrategy=RollingUpdate \
-        --set frontend.deploymentStrategy=RollingUpdate \
-        --set backend.pdb.enabled=false \
-        --set frontend.pdb.enabled=false \
-        --set-string global.amsURL=https://j200.gov.bc.ca/pub/ams/
+        --set backend.deploymentStrategy=RollingUpdate
+        --set frontend.deploymentStrategy=RollingUpdate
+        --set backend.pdb.enabled=false
+        --set frontend.pdb.enabled=false
+        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/
 
   promote:
     name: Promote Images
