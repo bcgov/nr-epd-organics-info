@@ -67,6 +67,14 @@ export function SearchResultsList({
     )
   }
 
+  const itemRenderer = (item: OmrrData) => (
+    <SearchResultListItem
+      key={`SearchResultListItem-${item['Authorization Number']}`}
+      item={item}
+      fullDetails={hasSelectedItem}
+    />
+  )
+
   const resultsText = `${results.length} matching result${results.length === 1 ? '' : 's'}`
   return (
     <>
@@ -83,13 +91,7 @@ export function SearchResultsList({
           'search-results-list',
           !scrollBars && 'search-results-list--no-scrollbars',
         )}
-        itemRenderer={(item: OmrrData) => (
-          <SearchResultListItem
-            key={`SearchResultListItem-${item['Authorization Number']}`}
-            item={item}
-            fullDetails={Boolean(selectedItem)}
-          />
-        )}
+        itemRenderer={itemRenderer}
       />
     </>
   )
