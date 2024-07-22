@@ -49,7 +49,7 @@ spec:
                     name: nr-oracle-service
                     key: apiKey
             - name: OMRR_AUTHZ_DOCS_FLAG
-              value: {{ .Values.backend.env.omrrAuthzDocsFlag }}
+              value: {{ .Values.backend.env.omrrAuthzDocsFlag | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.backend.service.targetPort }}
