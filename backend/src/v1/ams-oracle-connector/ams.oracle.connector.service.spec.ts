@@ -7,7 +7,7 @@ import { AmsOracleConnectorService } from './ams.oracle.connector.service';
 import { HttpService } from '@nestjs/axios';
 import { OmrrData } from '../types/omrr-data';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
-import { omrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response'
+import { OmrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response'
 import * as process from 'node:process'
 
 describe('AmsOracleConnectorService', () => {
@@ -161,7 +161,7 @@ describe('AmsOracleConnectorService', () => {
 
   describe('getOMRRAuthorizationDocumentsFromAMS', () => {
     it('should get OMRR authorization documents from AMS', async () => {
-      const omrrAuthzDocs: omrrAuthzDocsQueryResponse[] = [
+      const omrrAuthzDocs: OmrrAuthzDocsQueryResponse[] = [
         {
           'Authorization Number': 123,
           DocumentObjectID: 124,

@@ -7,7 +7,7 @@ import { OMRR_QUERY } from './omrr-query'
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status'
 import { OMRR_APP_STATUS_QUERY } from './omrr-application-status-query'
 import { OMRR_AUTHZ_DOCS_QUERY } from './omrr-authz-docs-query'
-import { omrrAuthzDocsQueryResponse, OmrrAuthzDocsResponse } from '../types/omrr-authz-docs-response'
+import { OmrrAuthzDocsQueryResponse, OmrrAuthzDocsResponse } from '../types/omrr-authz-docs-response'
 
 let omrrResponse: OmrrResponse | null = null
 let omrrApplicationStatusResponse: OmrrApplicationStatusResponse[] | null = null
@@ -143,7 +143,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
   async getOMRRAuthorizationDocumentsFromAMS() {
     this.logger.verbose('Getting OMRR Authorization Documents from AMS')
     try {
-      const response: AxiosResponse<omrrAuthzDocsQueryResponse[]> =
+      const response: AxiosResponse<OmrrAuthzDocsQueryResponse[]> =
         await this.httpService.axiosRef.post(
           NR_ORACLE_SERVICE_URL,
           {
@@ -159,7 +159,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         )
 
       if (response.status === 200) {
-        const result: omrrAuthzDocsQueryResponse[] = response.data
+        const result: OmrrAuthzDocsQueryResponse[] = response.data
         // iterate over the results, if Authorization Number exists in the array, add the documents to the existing array,
         // else create a new document array and add it to the authorization number
         const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = []

@@ -8,7 +8,7 @@ export interface OmrrAuthzDocs{
   'Publiclyviewable': string
 }
 
-export interface omrrAuthzDocsQueryResponse {
+export interface OmrrAuthzDocsQueryResponse {
   'Authorization Number': number,
   'DocumentObjectID': number,
   'Description': string,
