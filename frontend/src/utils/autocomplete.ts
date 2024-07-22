@@ -8,6 +8,9 @@ import { isDigits, isPostalCodeStart } from '@/utils/utils'
 
 const PLACE_SORT_OPTIONS = {
   keys: ['name'],
+  // Remove simple matches and acronyms for places to make it less confusing
+  // otherwise 'waste' matches 'Newcastle' for example
+  threshold: matchSorter.rankings.CONTAINS,
 }
 
 function getMatchingPlaces(

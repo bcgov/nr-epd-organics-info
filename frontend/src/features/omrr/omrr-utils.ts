@@ -26,6 +26,9 @@ type OmrrSortOptions = MatchSorterOptions<OmrrData> & {
 }
 const DEFAULT_SORT_OPTIONS: OmrrSortOptions = {
   keys: ['Regulated Party', 'Facility Location'],
+  // Remove simple matches and acronyms as they are a bit too
+  // confusing to understand why something matches
+  threshold: matchSorter.rankings.CONTAINS,
 }
 
 /**
