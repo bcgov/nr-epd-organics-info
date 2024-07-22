@@ -73,10 +73,14 @@ export function useAutocompleteSearch() {
           } else if (option.item) {
             selectItem(option.item)
           }
+          // Also ensure that the search text is set the the value
+          if (option.text !== currentValueRef.current) {
+            performSearch(option.text)
+          }
         }
       }
     },
-    [setOptions, selectPlace, selectItem],
+    [setOptions, selectPlace, selectItem, performSearch],
   )
 
   return {
