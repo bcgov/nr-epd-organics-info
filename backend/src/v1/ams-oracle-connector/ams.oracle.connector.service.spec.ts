@@ -7,6 +7,7 @@ import { AmsOracleConnectorService } from './ams.oracle.connector.service';
 import { HttpService } from '@nestjs/axios';
 import { OmrrData } from '../types/omrr-data';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
+import { OmrrAuthzDocsResponse } from '../types/omrr-authz-docs-response'
 
 describe('AmsOracleConnectorService', () => {
   let service: AmsOracleConnectorService;
@@ -155,5 +156,28 @@ describe('AmsOracleConnectorService', () => {
     });
   });
 
+  describe('getOMRRAuthorizationDocumentsFromAMS', () => {
+    it('should get OMRR authorization documents from AMS', async () => {
+      const omrrAuthzDocs: OmrrAuthzDocsResponse[] = []; // Mocked OMRR authorization documents
+      const response = {
+        status: 200,
+        data: omrrAuthzDocs,
+      };
+      jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
+
+      const result = await service.getOMRRAuthorizationDocumentsFromAMS();
+
+      expect(result).toEqual(omrrAuthzDocs);
+    });
+
+    it('should throw an error if there is an error getting OMRR authorization documents from AMS', async () => {
+      const error = new Error('Error Getting OMRR Authorization Documents from AMS');
+      jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
+
+      await expect(
+        service.getOMRRAuthorizationDocumentsFromAMS(),
+      ).rejects.toThrow(error);
+    });
+  });
 
 });

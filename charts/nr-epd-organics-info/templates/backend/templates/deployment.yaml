@@ -48,6 +48,8 @@ spec:
                   secretKeyRef:
                     name: nr-oracle-service
                     key: apiKey
+            - name: OMRR_AUTHZ_DOCS_FLAG
+              value: {{ .Values.backend.env.omrrAuthzDocsFlag }}
           ports:
             - name: http
               containerPort: {{ .Values.backend.service.targetPort }}

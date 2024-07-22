@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { OmrrResponse } from './v1/types/omrr-response';
 import { AmsOracleConnectorService } from './v1/ams-oracle-connector/ams.oracle.connector.service';
 import { OmrrApplicationStatusResponse } from './v1/types/omrr-application-status'
+import { OmrrAuthzDocsResponse } from './v1/types/omrr-authz-docs-response'
 
 @Controller()
 export class AppController {
@@ -22,5 +23,9 @@ export class AppController {
   @Get('/omrr/application-status')
   async getOmrrApplicationStatus(): Promise<OmrrApplicationStatusResponse[]> {
     return this.amsOracleConnectorService.getLatestOmrrApplicationStatusFromCache();
+  }
+  @Get('/omrr/authorization-docs')
+  async getOmrrAuthorizationDocs(): Promise<OmrrAuthzDocsResponse[]> {
+    return this.amsOracleConnectorService.getLatestOmrrAuthzDocsFromCache();
   }
 }
