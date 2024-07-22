@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { AmsOracleConnectorService } from '../ams-oracle-connector/ams.oracle.connector.service';
-import process from 'node:process'
 const OMRR_AUTHZ_DOCS_FLAG = process.env.OMRR_AUTHZ_DOCS_FLAG // put the code behind this feature flag to control hitting NR Oracle Service
 @Injectable()
 export class TasksService {
