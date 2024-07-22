@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux'
 import {
   ActionReducerMapBuilder,
   createAsyncThunk,
@@ -6,19 +7,20 @@ import {
 } from '@reduxjs/toolkit'
 import rfdc from 'rfdc'
 
+import { RootState } from '@/app/store'
 import OmrrData from '@/interfaces/omrr'
-import apiService from '@/service/api-service'
-import { Location } from '@/interfaces/location'
 import { facilityTypeFilters, OmrrFilter } from '@/interfaces/omrr-filter'
 import { SEARCH_BY_ACTIVE } from '@/interfaces/types'
 import OmrrResponse from '@/interfaces/omrr-response'
+import apiService from '@/service/api-service'
+import { shortDateFormat } from '@/utils/utils'
 import {
   convertData,
-  filterByAuthorizationState,
+  filterByAuthorizationStatus,
   filterData,
   flattenFilters,
 } from './omrr-utils'
-import { shortDateFormat } from '@/utils/utils'
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
 
 const deepClone = rfdc({ circles: true })
 
@@ -26,8 +28,6 @@ export interface OmrrSliceState {
   lastModified: string
   status: 'idle' | 'loading' | 'failed' | 'succeeded'
   error: string | null | undefined | object
-  expand: boolean
-  location: Location | null
   page: number
   searchBy: string
   filters: OmrrFilter[]
@@ -35,6 +35,8 @@ export interface OmrrSliceState {
   searchByFilteredResults: OmrrData[]
   filteredResults: OmrrData[]
   searchTextFilter: string
+  // The timestamp when the user last performed a search or filter
+  lastSearchTime?: number
 }
 
 export const fetchOMRRData = createAsyncThunk(
@@ -51,8 +53,6 @@ export const initialState: OmrrSliceState = {
   status: 'idle',
   // The error message if any
   error: null,
-  expand: false,
-  location: null,
   page: 1,
   searchBy: SEARCH_BY_ACTIVE,
   // Array of filters to keep track of which are on and which are disabled
@@ -67,22 +67,23 @@ export const initialState: OmrrSliceState = {
   searchTextFilter: '',
 }
 
+function performSearch(state: OmrrSliceState, setSearchTime = true) {
+  state.filteredResults = filterData(state)
+  state.page = 1
+  if (setSearchTime) {
+    state.lastSearchTime = Date.now()
+  }
+}
+
 export const omrrSlice = createSlice({
   name: 'omrr',
   initialState,
   reducers: {
-    setExpand: (state, action: PayloadAction<boolean>) => {
-      state.expand = action.payload
-    },
-    setLocation: (state, action: PayloadAction<Location>) => {
-      state.location = action.payload
-    },
     setSearchBy: (state, action: PayloadAction<string>) => {
       state.searchBy = action.payload
       // Save the search by filtered results to speed up filtering
-      state.searchByFilteredResults = filterByAuthorizationState(state)
-      state.filteredResults = filterData(state)
-      state.page = 1
+      state.searchByFilteredResults = filterByAuthorizationStatus(state)
+      performSearch(state)
     },
     updateFilter: (state, action: PayloadAction<OmrrFilter>) => {
       const filter = action.payload
@@ -112,24 +113,18 @@ export const omrrSlice = createSlice({
       })
 
       state.filters = newFilters
-      state.filteredResults = filterData(state)
-      state.page = 1
+      performSearch(state)
     },
     resetFilters: (state) => {
       state.filters = [...facilityTypeFilters]
-      state.filteredResults = filterData(state)
-      state.page = 1
+      performSearch(state)
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
     },
-    searchAuthorizationsByTextFilter: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
+    setSearchTextFilter: (state, action: PayloadAction<string>) => {
       state.searchTextFilter = action.payload
-      state.filteredResults = filterData(state)
-      state.page = 1
+      performSearch(state)
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
@@ -151,9 +146,9 @@ export const omrrSlice = createSlice({
           // Cleanup the data and store in the state
           state.allResults = convertData(data)
           state.searchBy = SEARCH_BY_ACTIVE
-          state.searchByFilteredResults = filterByAuthorizationState(state)
-          state.filteredResults = filterData(state)
-          state.page = 1
+          state.searchByFilteredResults = filterByAuthorizationStatus(state)
+          // Don't set the last search time since this is the initial load
+          performSearch(state, false)
         } else {
           state.status = 'failed'
           state.error = 'No data found'
@@ -164,19 +159,48 @@ export const omrrSlice = createSlice({
     builder.addCase(fetchOMRRData.rejected, (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
-      state.allResults = []
     })
   },
 })
 
 export const {
   updateFilter,
-  setExpand,
-  setLocation,
   setSearchBy,
   resetFilters,
   setPage,
-  searchAuthorizationsByTextFilter,
+  setSearchTextFilter,
 } = omrrSlice.actions
 
 export default omrrSlice.reducer
+
+// Selectors
+export const selectStatus = (state: RootState) => state.omrr.status
+export const selectError = (state: RootState) => state.omrr.error
+export const selectSearchBy = (state: RootState) => state.omrr.searchBy
+export const useSearchBy = () => useSelector(selectSearchBy)
+
+export const selectFilters = (state: RootState) => state.omrr.filters
+export const useFilters = () => useSelector(selectFilters)
+export const useHasFiltersOn = () =>
+  flattenFilters(useFilters()).some(({ on, disabled }) => on && !disabled)
+
+export const selectSearchTextFilter = (state: RootState) =>
+  state.omrr.searchTextFilter
+export const useSearchTextFilter = () => useSelector(selectSearchTextFilter)
+export const useHasSearchTextFilter = () =>
+  useSearchTextFilter().length >= MIN_SEARCH_LENGTH
+
+const selectAllResults = (state: RootState) => state.omrr.allResults
+
+export const selectFilteredResults = (state: RootState) =>
+  state.omrr.filteredResults
+export const useFilteredResults = () => useSelector(selectFilteredResults)
+
+export const useAllResultsShowing = () => {
+  const allResults = useSelector(selectAllResults)
+  const filteredResults = useSelector(selectFilteredResults)
+  return filteredResults.length === allResults.length
+}
+
+const selectLastSearchTime = (state: RootState) => state.omrr.lastSearchTime
+export const useLastSearchTime = () => useSelector(selectLastSearchTime)

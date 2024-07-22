@@ -1,10 +1,11 @@
+import { useSelector } from 'react-redux'
 import { Snackbar } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/app/store'
+
+import { selectError } from '@/features/omrr/omrr-slice'
 
 export default function AppError() {
-  const error = useSelector((state: RootState) => state.omrr.error)
+  const error = useSelector(selectError)
   const theme = useTheme()
   const errorStyle = {
     backgroundColor: theme.palette.error.main,

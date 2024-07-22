@@ -1,19 +1,23 @@
-import OmrrData from '@/interfaces/omrr'
-import { SearchOption } from '@/interfaces/search-option'
-import { MIN_SEARCH_LENGTH } from '@/features/omrr/omrr-utils'
-import { isDigits, isPostalCodeStart } from '@/utils/utils'
-import { Place } from '@/interfaces/place'
 import { matchSorter } from 'match-sorter'
+
+import OmrrData from '@/interfaces/omrr'
+import { AutocompleteOption } from '@/interfaces/autocomplete-option'
+import { Place } from '@/interfaces/place'
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import { isDigits, isPostalCodeStart } from '@/utils/utils'
 
 const PLACE_SORT_OPTIONS = {
   keys: ['name'],
+  // Remove simple matches and acronyms for places to make it less confusing
+  // otherwise 'waste' matches 'Newcastle' for example
+  threshold: matchSorter.rankings.CONTAINS,
 }
 
 function getMatchingPlaces(
   places: Place[],
   searchText: string,
   maxPlaces: number,
-): SearchOption[] {
+): AutocompleteOption[] {
   const matchingPlaces: Place[] = matchSorter(
     places,
     searchText,
@@ -31,10 +35,10 @@ function getMatchingPlaces(
 function getMatchingPostalCodes(
   data: OmrrData[],
   maxOptions: number,
-): SearchOption[] {
+): AutocompleteOption[] {
   // Convert into search options, remove duplicates
   const seen = new Set<string>()
-  let options: SearchOption[] = []
+  let options: AutocompleteOption[] = []
   data.some((item) => {
     const { 'Postal Code': postalCode = '' } = item
     const id = `postalCode-${postalCode}`
@@ -56,10 +60,10 @@ function getMatchingPostalCodes(
 function getMatchingFacilities(
   data: OmrrData[],
   maxOptions: number,
-): SearchOption[] {
+): AutocompleteOption[] {
   // Convert into search options, remove duplicates
   const seen = new Set<string>()
-  let options: SearchOption[] = []
+  let options: AutocompleteOption[] = []
   data.some((item) => {
     const { 'Authorization Number': number, 'Regulated Party': name } = item
     const id = `name-${number}`
@@ -91,8 +95,8 @@ export function getAutocompleteOptions(
   maxOptions = 6,
   maxPostalCodes = 3,
   maxPlaces = 3,
-): SearchOption[] {
-  let options: SearchOption[] = []
+): AutocompleteOption[] {
+  let options: AutocompleteOption[] = []
   const filterText = searchText.trim().toLowerCase()
   if (filterText.length >= MIN_SEARCH_LENGTH) {
     const isPostalCode = isPostalCodeStart(filterText)
@@ -100,8 +104,8 @@ export function getAutocompleteOptions(
 
     // Collect the 3 kinds of options - facilities, postal codes, and places
     const matchingFacilities = getMatchingFacilities(data, maxOptions)
-    let matchingPostalCodes: SearchOption[] = []
-    let matchingPlaces: SearchOption[] = []
+    let matchingPostalCodes: AutocompleteOption[] = []
+    let matchingPlaces: AutocompleteOption[] = []
     if (isPostalCode) {
       matchingPostalCodes = getMatchingPostalCodes(data, maxPostalCodes)
     } else if (!isAuthNumber) {

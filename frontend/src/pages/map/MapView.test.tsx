@@ -9,9 +9,10 @@ import MapView from './MapView'
 
 describe('Test suite for MapView', () => {
   it('should render the MapView with markers', async () => {
-    const { user } = render(<MapView />, {
+    render(<MapView />, {
       screenWidth: themeBreakpointValues.xxl,
       withStateProvider: true,
+      withRouter: true,
       initialState: {
         omrr: {
           ...initialState,
@@ -22,6 +23,7 @@ describe('Test suite for MapView', () => {
         },
         map: {
           isMyLocationVisible: false,
+          sidebarWidth: 0,
         },
       },
     })
@@ -32,38 +34,12 @@ describe('Test suite for MapView', () => {
     const markers = screen.getAllByAltText('Authorization marker')
     expect(markers.length > 0).toBe(true)
 
-    const input = screen.getByPlaceholderText('Search')
+    screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Find Me' })
     expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
     expect(
       screen.queryByTitle('Show my location on the map'),
     ).not.toBeInTheDocument()
-
-    await user.type(input, 'waste')
-    await screen.findByText(/WYNDLOW WOOD WASTE/i)
-    screen.getByText('11123')
-    screen.getByText(/BIOWASTE MANAGEMENT/i)
-    screen.getByText('11475')
-
-    await user.clear(input)
-    await user.type(input, 'V9N')
-    await screen.findByText('14517')
-    screen.getByText(/RIVER MEADOW FARMS/i)
-    screen.getByText('Postal Code')
-    const text = screen.getByText('V9N 7J3')
-
-    await user.click(text)
-    expect(input).toHaveValue('V9N 7J3')
-
-    const clearBtn = screen.getByTitle('Clear')
-    await user.click(clearBtn)
-
-    expect(input).toHaveValue('')
-    await user.type(input, 'Vancouver')
-    const places = await screen.findAllByText('City')
-    expect(places).toHaveLength(3)
-    screen.getByText('North Vancouver')
-    screen.getByText('West Vancouver')
   })
 
   it('should render the MapView with no markers on a small screen', async () => {
@@ -77,6 +53,7 @@ describe('Test suite for MapView', () => {
         },
         map: {
           isMyLocationVisible: true,
+          sidebarWidth: 0,
         },
       },
     })

@@ -1,4 +1,5 @@
 import OmrrData from '@/interfaces/omrr'
+import { SEARCH_BY_ACTIVE, SEARCH_BY_INACTIVE } from '@/interfaces/types'
 
 export const mockOmrrData: OmrrData[] = [
   {
@@ -13,7 +14,7 @@ export const mockOmrrData: OmrrData[] = [
     Biosolids: false,
     'Hatchery Waste': false,
     'Last Amendment Date': '1996-04-11T00:00:00.000+00:00',
-    'Authorization Status': 'Inactive',
+    'Authorization Status': 'Active',
     'Authorization Number': 11123,
     'Milk Processing Waste': false,
     'Poultry Carcasses': false,
@@ -63,3 +64,11 @@ export const mockOmrrData: OmrrData[] = [
     'Food Waste': false,
   },
 ]
+
+export const mockActiveOmrrData = mockOmrrData.filter(
+  (item) => item['Authorization Status'].toLowerCase() === SEARCH_BY_ACTIVE,
+)
+
+export const mockInactiveOmrrData = mockOmrrData.filter(
+  (item) => item['Authorization Status'].toLowerCase() === SEARCH_BY_INACTIVE,
+)

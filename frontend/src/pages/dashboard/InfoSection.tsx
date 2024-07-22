@@ -1,5 +1,4 @@
-import { Typography, Button, Box } from '@mui/material'
-import { Stack } from '@mui/system'
+import { Typography, Button, Box, Stack } from '@mui/material'
 
 import infoImage from '@/assets/homepage-info.png'
 

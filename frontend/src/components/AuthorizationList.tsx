@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
 import { ArrowDropDown, ArrowDropUp, Search } from '@mui/icons-material'
 import {
   Box,
@@ -9,7 +8,6 @@ import {
   CardActions,
   CardContent,
   Checkbox,
-  Chip,
   Divider,
   FormControlLabel,
   Grid,
@@ -17,34 +15,34 @@ import {
   Pagination,
   Radio,
   RadioGroup,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material'
-import { Stack } from '@mui/system'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { RootState } from '@/app/store'
 import {
   resetFilters,
-  searchAuthorizationsByTextFilter,
-  setExpand,
+  setSearchTextFilter,
   setPage,
   setSearchBy,
   updateFilter,
 } from '@/features/omrr/omrr-slice'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
 import { flattenFilters } from '@/features/omrr/omrr-utils'
+import { AuthorizationStatusChip } from './AuthorizationStatusChip'
+import { ViewFacilityDetailsButton } from './ViewFacilityDetailsButton'
 
 export default function AuthorizationList() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('md'))
+  const [expanded, setExpanded] = useState<boolean>(false)
 
   const {
     filteredResults,
-    expand,
     filters,
     searchBy,
     page,
@@ -58,9 +56,6 @@ export default function AuthorizationList() {
     window.scrollTo(0, 0)
   }, [])
 
-  const buttonClicked = (route: any, data: any) => {
-    navigate(route, { state: { data: data } }) // reset the state
-  }
   const pagination = (
     <Grid item xs={12}>
       <Grid
@@ -98,7 +93,7 @@ export default function AuthorizationList() {
           count={Math.ceil(filteredResults.length / 10)}
           siblingCount={mdMatches ? 1 : 0}
           page={page}
-          onChange={(event, value) => dispatch(setPage(value))}
+          onChange={(_ev, value) => dispatch(setPage(value))}
         />
         <Typography
           sx={{
@@ -175,10 +170,9 @@ export default function AuthorizationList() {
                 marginBottom: '1.5em',
               }}
               label="Search Authorizations"
-              data-testid="auth-list-search-authorizations-textfield"
               value={searchTextFilter}
               onChange={(event) =>
-                dispatch(searchAuthorizationsByTextFilter(event.target.value))
+                dispatch(setSearchTextFilter(event.target.value))
               }
               variant="outlined"
               InputProps={{
@@ -277,14 +271,14 @@ export default function AuthorizationList() {
                     boxShadow: 'none',
                   },
                 }}
-                onClick={() => dispatch(setExpand(!expand))}
+                onClick={() => setExpanded(!expanded)}
               >
                 Filter by Facility Type{' '}
-                {expand ? <ArrowDropUp /> : <ArrowDropDown />}
+                {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
               </Button>
             </Grid>
           </Grid>
-          {expand && (
+          {expanded && (
             <Grid item xs={12}>
               <Grid item xs={12}>
                 <Grid
@@ -516,15 +510,8 @@ export default function AuthorizationList() {
                               spacing={1}
                             >
                               <span>Status: </span>
-                              <Chip
-                                sx={{
-                                  background:
-                                    item['Authorization Status'] === 'Active'
-                                      ? '#42814A'
-                                      : '#605E5C',
-                                  color: '#ffffff',
-                                }}
-                                label={item['Authorization Status']}
+                              <AuthorizationStatusChip
+                                status={item['Authorization Status']}
                               />
                             </Stack>
                             <CardActions
@@ -536,31 +523,7 @@ export default function AuthorizationList() {
                                 },
                               }}
                             >
-                              <Button
-                                data-testid={`auth-list-view-facility-details-button-${item['Authorization Number']}`}
-                                size="large"
-                                sx={{
-                                  border: '1px solid #053662;',
-                                  borderRadius: '4px',
-                                  boxSizing: 'border-box',
-                                  textTransform: 'none',
-                                  color: '#255A90;',
-                                  width: {
-                                    xs: '100%',
-                                    sm: 'auto',
-                                  },
-                                }}
-                                onClick={() =>
-                                  buttonClicked(
-                                    `/authorization/${item['Authorization Number']}`,
-                                    {
-                                      ...item,
-                                    },
-                                  )
-                                }
-                              >
-                                View Facility Details
-                              </Button>
+                              <ViewFacilityDetailsButton item={item} />
                             </CardActions>
                           </Stack>
                         </CardContent>

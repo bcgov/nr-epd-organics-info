@@ -1,8 +1,9 @@
 import { matchSorter, MatchSorterOptions } from 'match-sorter'
 
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import { OmrrSliceState } from '@/features/omrr/omrr-slice'
 import OmrrData, { omrrDataBooleanFields } from '@/interfaces/omrr'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
-import { OmrrSliceState } from '@/features/omrr/omrr-slice'
 import { extractPostalCode, isDigits, isPostalCodeStart } from '@/utils/utils'
 
 /**
@@ -15,18 +16,19 @@ const authorizationStatusFilter = (item: OmrrData, status: string): boolean => {
   return true
 }
 
-export function filterByAuthorizationState(state: OmrrSliceState): OmrrData[] {
+export function filterByAuthorizationStatus(state: OmrrSliceState): OmrrData[] {
   const { allResults, searchBy } = state
   return allResults.filter((item) => authorizationStatusFilter(item, searchBy))
 }
 
-export const MIN_SEARCH_LENGTH = 3
-
-export type OmrrSortOptions = MatchSorterOptions<OmrrData> & {
+type OmrrSortOptions = MatchSorterOptions<OmrrData> & {
   keys: (keyof OmrrData)[]
 }
-export const DEFAULT_SORT_OPTIONS: OmrrSortOptions = {
+const DEFAULT_SORT_OPTIONS: OmrrSortOptions = {
   keys: ['Regulated Party', 'Facility Location'],
+  // Remove simple matches and acronyms as they are a bit too
+  // confusing to understand why something matches
+  threshold: matchSorter.rankings.CONTAINS,
 }
 
 /**

@@ -26,4 +26,8 @@ export const mockPlaces: Place[] = [
     name: 'West Vancouver',
     pos: [49.331111, -123.159722],
   },
+  {
+    name: 'Farmington',
+    pos: [55.904167, -120.505556],
+  },
 ]

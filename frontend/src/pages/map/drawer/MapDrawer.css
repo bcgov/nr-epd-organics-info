@@ -1,0 +1,11 @@
+.map-drawer {
+  position: relative;
+}
+
+.map-drawer.map-drawer--closed {
+  width: 0 !important;
+}
+
+.map-drawer .MuiPaper-root {
+  position: static;
+}

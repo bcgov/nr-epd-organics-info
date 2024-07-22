@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react'
 import L from 'leaflet'
 import { Circle, Tooltip, useMap } from 'react-leaflet'
-import { useSelector } from 'react-redux'
 
-import { RootState } from '@/app/store'
+import { useMyLocationVisible } from '@/features/map/map-slice'
 import { IconMarker } from './IconMarker'
 import { useMyLocation } from '../hooks/useMyLocation'
 
@@ -59,8 +58,6 @@ function MyLocationMarkerContent() {
 }
 
 export function MyLocationMarker() {
-  const isVisible = useSelector(
-    (state: RootState) => state.map.isMyLocationVisible,
-  )
+  const isVisible = useMyLocationVisible()
   return isVisible ? <MyLocationMarkerContent /> : null
 }

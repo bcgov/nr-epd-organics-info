@@ -7,11 +7,11 @@ import {
   Link,
   Menu as MenuComponent,
   MenuItem,
+  Stack,
   Toolbar,
   Typography,
 } from '@mui/material'
 import { Menu } from '@mui/icons-material'
-import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 

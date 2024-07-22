@@ -1,0 +1,60 @@
+.search-input {
+  display: flex;
+  min-width: 350px;
+  max-width: 632px;
+  transition: width ease-in-out 0.3s;
+}
+
+div.search-input > div.MuiInputBase-root {
+  background-color: var(--surface-color-background-white);
+  box-sizing: border-box;
+  border-radius: var(--layout-border-radius-medium);
+  border: 1px solid var(--surface-color-border-light);
+  outline: 2px solid transparent;
+  transition: all ease-in-out 0.2s;
+  box-shadow: var(--box-shadow-small);
+  height: var(--map-button-height-large);
+  padding: var(--map-button-padding-large);
+}
+
+div.search-input--small > div.MuiInputBase-root {
+  height: var(--map-button-height-medium);
+  min-height: var(--map-button-height-medium);
+  padding: var(--layout-padding-small) var(--layout-padding-medium);
+  padding-right: 12px;
+}
+
+div.search-input > .MuiInputBase-root.Mui-focused {
+  border-color: var(--surface-color-primary-active-border);
+  outline-color: var(--surface-color-primary-active-border);
+}
+
+div.search-input input {
+  font-size: var(--map-button-font-size-large);
+}
+
+.search-input > .MuiInputBase-root fieldset {
+  border: none;
+  display: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000000s ease-in-out 0s;
+  background-color: transparent !important;
+}
+
+.search-input-icon {
+  color: var(--icons-color-disabled);
+}
+
+.search-input-icon--small {
+  width: 18px;
+  height: 18px;
+}
+
+.Mui-focused .search-input-icon {
+  color: var(--icons-color-info);
+}

@@ -1,9 +1,13 @@
 import DropdownButton from '@/components/DropdownButton'
+import { useDrawerExpanded } from '@/features/map/map-slice'
 
 import layersIcon from '@/assets/svgs/fa-layers.svg'
 
 export function DataLayersButton() {
-  return (
+  const isDrawerExpanded = useDrawerExpanded()
+
+  // Hide the data layers button when the sidebar drawer is expanded
+  return isDrawerExpanded ? null : (
     <DropdownButton
       id="mapDataLayersButton"
       variant="contained"

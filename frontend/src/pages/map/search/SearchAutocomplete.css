@@ -1,0 +1,8 @@
+div.search-autocomplete.MuiAutocomplete-hasClearIcon .MuiInputBase-root {
+  padding-right: 16px;
+}
+
+.search-autocomplete .search-input-clear-button > .search-input-icon {
+  width: 16px;
+  height: 16px;
+}

@@ -1,15 +1,13 @@
 import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Stack } from '@mui/system'
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, Stack } from '@mui/material'
 
-import { RootState } from '@/app/store'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AppRoutes from '@/routes'
 import AppError from '@/components/AppError'
-import { fetchOMRRData } from '@/features/omrr/omrr-slice'
+import { fetchOMRRData, selectStatus } from '@/features/omrr/omrr-slice'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -19,9 +17,9 @@ const loadingStyle = {
 }
 
 export default function App() {
-  const status: string = useSelector((state: RootState) => state.omrr.status)
-
   const dispatch = useDispatch()
+  const status: string = useSelector(selectStatus)
+
   useEffect(() => {
     //@ts-expect-error
     dispatch(fetchOMRRData())

@@ -1,4 +1,4 @@
-import { Stack } from '@mui/system'
+import { Stack } from '@mui/material'
 
 import { InfoSection } from './InfoSection'
 import { LearnMoreSection } from './LearnMoreSection'

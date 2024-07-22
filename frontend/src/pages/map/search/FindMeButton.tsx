@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 
-import { RootState } from '@/app/store'
-import { setMyLocationVisible } from '@/features/map/map-slice'
+import {
+  setMyLocationVisible,
+  useMyLocationVisible,
+} from '@/features/map/map-slice'
 
 import FindMeIcon from '@/assets/svgs/fa-gps.svg?react'
 
 export function FindMeButton() {
   const dispatch = useDispatch()
-  const isMarkerVisible = useSelector(
-    (state: RootState) => state.map.isMyLocationVisible,
-  )
+  const isMarkerVisible = useMyLocationVisible()
 
   const onClick = () => {
     dispatch(setMyLocationVisible(!isMarkerVisible))

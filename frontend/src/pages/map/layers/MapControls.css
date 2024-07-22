@@ -6,7 +6,7 @@
   border: 0 !important;
   border-radius: 0;
   max-height: calc(100vh - 5em);
-  transition: margin-bottom ease-in-out 0.3s;
+  transition: margin ease-in-out 0.5s;
   position: relative;
 }
 

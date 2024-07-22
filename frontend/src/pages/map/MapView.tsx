@@ -4,7 +4,8 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import clsx from 'clsx'
 
-import { MapSearch } from './components/MapSearch'
+import { MapSearch } from './search/MapSearch'
+import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
 import { MyLocationMarker } from './layers/MyLocationMarker'
 import { MapControls } from './layers/MapControls'
@@ -43,9 +44,8 @@ function MapView() {
         <MyLocationMarker />
         <MapZoom />
       </MapContainer>
-      <div className="map-components">
-        <MapSearch />
-      </div>
+      <MapSearch />
+      <MapDrawer />
     </div>
   )
 }
