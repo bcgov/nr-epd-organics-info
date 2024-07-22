@@ -14,7 +14,6 @@ let omrrApplicationStatusResponse: OmrrApplicationStatusResponse[] | null = null
 let omrrAuthzDocsResponse: OmrrAuthzDocsResponse[] | null = [] // initialize to empty array
 const NR_ORACLE_SERVICE_URL = process.env.NR_ORACLE_SERVICE_URL
 const NR_ORACLE_SERVICE_KEY = process.env.NR_ORACLE_SERVICE_KEY
-const OMRR_AUTHZ_DOCS_FLAG = process.env.OMRR_AUTHZ_DOCS_FLAG // put the code behind this feature flag to control hitting NR Oracle Service
 
 @Injectable()
 export class AmsOracleConnectorService implements OnModuleInit {
@@ -96,7 +95,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         process.exit(128)
       }
     }
-    if (!omrrAuthzDocsResponse && OMRR_AUTHZ_DOCS_FLAG === 'true') {
+    if (omrrAuthzDocsResponse.length === 0 && process.env.OMRR_AUTHZ_DOCS_FLAG === 'true') {
       try {
         await this.getOMRRAuthorizationDocumentsFromAMS()
       } catch (error) {

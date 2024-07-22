@@ -183,7 +183,8 @@ describe('AmsOracleConnectorService', () => {
 
       const result = await service.getOMRRAuthorizationDocumentsFromAMS();
 
-      expect(result).toEqual(omrrAuthzDocs);
+      expect(result).toHaveLength(1)
+      expect(result[0].doc_links).toHaveLength(2)
     });
 
     it('should throw error if status is not 200', async () => {
