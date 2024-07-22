@@ -4,12 +4,14 @@ import { OmrrResponse } from '../types/omrr-response'
 import { AxiosResponse } from 'axios'
 import { OmrrData } from '../types/omrr-data'
 import { OMRR_QUERY } from './omrr-query'
-import * as process from 'node:process'
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status'
 import { OMRR_APP_STATUS_QUERY } from './omrr-application-status-query'
+import { OMRR_AUTHZ_DOCS_QUERY } from './omrr-authz-docs-query'
+import { OmrrAuthzDocsQueryResponse, OmrrAuthzDocsResponse } from '../types/omrr-authz-docs-response'
 
 let omrrResponse: OmrrResponse | null = null
 let omrrApplicationStatusResponse: OmrrApplicationStatusResponse[] | null = null
+let omrrAuthzDocsResponse: OmrrAuthzDocsResponse[] | null = [] // initialize to empty array
 const NR_ORACLE_SERVICE_URL = process.env.NR_ORACLE_SERVICE_URL
 const NR_ORACLE_SERVICE_KEY = process.env.NR_ORACLE_SERVICE_KEY
 
@@ -86,9 +88,16 @@ export class AmsOracleConnectorService implements OnModuleInit {
         process.exit(128)
       }
     }
-    if(!omrrApplicationStatusResponse) {
+    if (!omrrApplicationStatusResponse) {
       try {
         await this.getOMRRApplicationStatusFromAMS()
+      } catch (error) {
+        process.exit(128)
+      }
+    }
+    if (omrrAuthzDocsResponse.length === 0 && process.env.OMRR_AUTHZ_DOCS_FLAG === 'true') {
+      try {
+        await this.getOMRRAuthorizationDocumentsFromAMS()
       } catch (error) {
         process.exit(128)
       }
@@ -129,5 +138,68 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async getLatestOmrrApplicationStatusFromCache(): Promise<OmrrApplicationStatusResponse[]> {
     return omrrApplicationStatusResponse
+  }
+
+  async getOMRRAuthorizationDocumentsFromAMS() {
+    this.logger.verbose('Getting OMRR Authorization Documents from AMS')
+    try {
+      const response: AxiosResponse<OmrrAuthzDocsQueryResponse[]> =
+        await this.httpService.axiosRef.post(
+          NR_ORACLE_SERVICE_URL,
+          {
+            queryType: 'READ',
+            sql: OMRR_AUTHZ_DOCS_QUERY,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-API-Key': NR_ORACLE_SERVICE_KEY,
+            },
+          },
+        )
+
+      if (response.status === 200) {
+        const result: OmrrAuthzDocsQueryResponse[] = response.data
+        // iterate over the results, if Authorization Number exists in the array, add the documents to the existing array,
+        // else create a new document array and add it to the authorization number
+        const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = []
+        for (const row of result) {
+          const authNum = row['Authorization Number']
+          const doc = {
+            DocumentObjectID: row['DocumentObjectID'],
+            Description: row['Description'],
+            Publiclyviewable: row['Publiclyviewable'],
+          }
+          if(omrrAuthzDocsResponseScoped?.length > 0) {
+            const authNumIndex = omrrAuthzDocsResponseScoped.findIndex((auth) => auth['Authorization Number'] === authNum)
+            if (authNumIndex === -1) {
+              omrrAuthzDocsResponseScoped.push({
+                'Authorization Number': authNum,
+                doc_links: [doc],
+              })
+            } else {
+              omrrAuthzDocsResponseScoped[authNumIndex].doc_links.push(doc)
+            }
+          }else{
+            omrrAuthzDocsResponseScoped.push({
+              'Authorization Number': authNum,
+              doc_links: [doc],
+            })
+          }
+        }
+        this.logger.verbose('Got OMRR Authorization Documents from AMS')
+        omrrAuthzDocsResponse = omrrAuthzDocsResponseScoped // replace the in memory cache with the scoped response.
+        return omrrAuthzDocsResponse
+      } else {
+        this.logger.error('Error Getting OMRR Authorization Documents from AMS', response.status)
+        throw new Error('Error Getting OMRR Authorization Documents from AMS')
+      }
+    } catch (error) {
+      this.logger.error(error)
+      throw new Error('Error Getting OMRR Authorization Documents from AMS')
+    }
+  }
+  async getLatestOmrrAuthzDocsFromCache(): Promise<OmrrAuthzDocsResponse[]> {
+    return omrrAuthzDocsResponse
   }
 }
