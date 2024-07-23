@@ -3,9 +3,9 @@ export default interface OmrrData {
   'Authorization Type': string
   'Regulated Party': string
   'Authorization Status': string
-  'Effective/Issue Date': string // ISO date string
-  'Last Amendment Date': string // ISO date string
   'Facility Location': string
+  'Effective/Issue Date': string // ISO date string
+  'Last Amendment Date'?: string // ISO date string
   Latitude: number
   Longitude: number
   'Waste Discharge Regulation'?: string

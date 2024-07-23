@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { omrrSlice } from '@/features/omrr/omrr-slice'
 import { mapSlice } from '@/features/map/map-slice'
+import { applicationStatusSlice } from '@/features/omrr/application-status-slice'
 
 const rootReducer = combineReducers({
   omrr: omrrSlice.reducer,
+  applicationStatus: applicationStatusSlice.reducer,
   map: mapSlice.reducer,
 })
 

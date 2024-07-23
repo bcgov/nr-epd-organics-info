@@ -69,7 +69,6 @@ const styles = {
   },
   button: {
     fontWeight: 'bold',
-    backgroundColor: '#053662',
     padding: '0.5rem 2rem',
   },
 }

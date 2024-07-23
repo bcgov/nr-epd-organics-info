@@ -22,6 +22,7 @@ describe('Test suite for SearchAutocomplete', () => {
           status: 'succeeded',
         },
         map: {
+          isDrawerExpanded: false,
           isMyLocationVisible: false,
           sidebarWidth: 0,
         },
@@ -29,16 +30,10 @@ describe('Test suite for SearchAutocomplete', () => {
     })
 
     const input = screen.getByPlaceholderText('Search')
-    // This should match 2 results
+    // This should match 4 results
     await user.type(input, 'waste')
-    const options = await screen.findAllByRole(
-      'option',
-      {},
-      {
-        timeout: 1000,
-      },
-    )
-    expect(options).toHaveLength(2)
+    const options = await screen.findAllByRole('option')
+    expect(options).toHaveLength(4)
     await screen.findByText(/WYNDLOW WOOD WASTE/i)
     screen.getByText('11123')
     screen.getByText(/BIOWASTE MANAGEMENT/i)

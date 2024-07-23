@@ -1,18 +1,11 @@
-import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
-import { Button, Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
 import { useSelectedItem } from '@/features/map/map-slice'
-import {
-  resetFilters,
-  setSearchTextFilter,
-  useFilteredResults,
-  useHasFiltersOn,
-  useHasSearchTextFilter,
-} from '@/features/omrr/omrr-slice'
+import { useFilteredResults } from '@/features/omrr/omrr-slice'
 import { InfiniteScrollingList } from '@/components/InfiniteScrollingList'
-import { SearchResultListItem } from './SearchResultsListItem'
+import { NoResults } from '@/components/NoResults'
+import { AuthorizationListItem } from '@/components/AuthorizationListItem'
 import { ZoomToButton } from './ZoomToButton'
 
 import './SearchResultsList.css'
@@ -26,19 +19,8 @@ export function SearchResultsList({
   pageSize = 10,
   scrollBars = true,
 }: Readonly<Props>) {
-  const dispatch = useDispatch()
   const filteredResults = useFilteredResults()
   const selectedItem = useSelectedItem()
-  const hasFiltersOn = useHasFiltersOn()
-  const hasSearchText = useHasSearchTextFilter()
-
-  const onResetFilters = () => {
-    dispatch(resetFilters())
-  }
-
-  const onClearSearchText = () => {
-    dispatch(setSearchTextFilter(''))
-  }
 
   let results = selectedItem ? [selectedItem] : filteredResults
   const noResults = results.length === 0
@@ -46,32 +28,15 @@ export function SearchResultsList({
   const showButtonBar = !hasSelectedItem && filteredResults.length > 0
 
   if (noResults) {
-    return (
-      <>
-        <Typography color="textSecondary">
-          There are no matching authorizations.
-        </Typography>
-        <Stack direction="row" gap="1rem">
-          {hasFiltersOn && (
-            <Button variant="outlined" onClick={onResetFilters}>
-              Reset Filters
-            </Button>
-          )}
-          {hasSearchText && (
-            <Button variant="outlined" onClick={onClearSearchText}>
-              Clear Search Text
-            </Button>
-          )}
-        </Stack>
-      </>
-    )
+    return <NoResults />
   }
 
   const itemRenderer = (item: OmrrData) => (
-    <SearchResultListItem
+    <AuthorizationListItem
       key={`SearchResultListItem-${item['Authorization Number']}`}
+      className="search-results-list-item"
       item={item}
-      fullDetails={hasSelectedItem}
+      fullDetails={Boolean(selectedItem)}
     />
   )
 

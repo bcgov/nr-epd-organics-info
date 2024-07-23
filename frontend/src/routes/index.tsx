@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Dashboard from '@/pages/dashboard/Dashboard'
-import AuthorizationList from '@/components/AuthorizationList'
-import AuthorizationDetails from '@/components/AuthorizationDetails'
+import AuthorizationList from '@/pages/authorizationList/AuthorizationList'
+import AuthorizationDetails from '@/pages/authorizationDetails/AuthorizationDetails'
 import MapView from '@/pages/map/MapView'
 
 export default function AppRoutes() {
@@ -9,8 +9,8 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/search" element={<AuthorizationList />} />
-      <Route path="/map" element={<MapView />} />
       <Route path="/authorization/:id" element={<AuthorizationDetails />} />
+      <Route path="/map" element={<MapView />} />
       <Route path="*" element={<Dashboard />} />
     </Routes>
   )

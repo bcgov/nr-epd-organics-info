@@ -1,0 +1,48 @@
+.list-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.list-pagination-control .MuiPagination-ul {
+  min-width: min(90vw, 350px);
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+
+.list-pagination-control .MuiPaginationItem-root {
+  color: #053662;
+  background-color: #ffffff;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-pagination-control .MuiPaginationItem-page:hover,
+.list-pagination-control .MuiPaginationItem-previousNext:hover {
+  background-color: #385a8a;
+  color: #ffffff;
+}
+
+.list-pagination-control .MuiPaginationItem-page.Mui-selected,
+.list-pagination-control .MuiPaginationItem-page.Mui-selected:hover {
+  background-color: #053662;
+  color: #ffffff;
+  cursor: default;
+}
+
+.list-pagination-last-updated-text {
+  color: #000;
+  font-style: italic;
+}
+
+.list-pagination-results-text {
+  color: #000;
+  white-space: nowrap;
+}

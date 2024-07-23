@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react'
-import { LatLngLiteral } from 'leaflet'
 
-const opts: PositionOptions = {
-  enableHighAccuracy: true,
-  maximumAge: 0,
-}
-
-interface MyLocationData {
-  position?: LatLngLiteral
-  accuracy?: number
-}
+import { MyLocationData } from '@/interfaces/location'
+import { getMyLocation } from '@/utils/utils'
 
 /**
  * Uses the navigator geolocation to find the GPS location of the user.
@@ -21,18 +13,7 @@ export function useMyLocation(): MyLocationData {
   const [data, setData] = useState<MyLocationData>({})
 
   useEffect(() => {
-    const success = (result: GeolocationPosition) => {
-      const { coords } = result
-      const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
-      const newData: MyLocationData = { accuracy }
-      if (!isNaN(lat) && !isNaN(lng)) {
-        newData.position = { lat, lng }
-      }
-      setData(newData)
-    }
-    const { geolocation } = navigator
-    // prettier-ignore Ignore Sonar error about geolocation - we need to allow this
-    geolocation.getCurrentPosition(success, null, opts) // NOSONAR
+    getMyLocation(setData)
   }, [])
 
   return data

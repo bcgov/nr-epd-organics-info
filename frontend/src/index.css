@@ -1,50 +1,8 @@
+@import url('properties.css');
+
 html, body {
   height: 100%;
   width: 100%;
-}
-
-:root {
-  --layout-margin-xsmall: 4px;
-  --layout-margin-small: 8px;
-  --layout-margin-medium: 16px;
-  --layout-margin-large: 24px;
-  --layout-padding-xsmall: 4px;
-  --layout-padding-small: 8px;
-  --layout-padding-medium: 16px;
-  --layout-padding-large: 24px;
-  --layout-border-radius-medium: 4px;
-
-  --surface-color-primary-active-border: #2e5dd7;
-  --surface-color-primary-default: #053662;
-  --surface-color-secondary-hover: #edebe9;
-  --surface-color-background-white: #ffffff;
-  --surface-color-background-light: #faf9f8;
-  --surface-color-brand-gray-20: #f3f2f1;
-  --surface-color-border-light: #d8d8d8;
-  --surface-color-border-hover: #b8b8b8;
-  --surface-color-border-dark: #353433;
-  --surface-color-brand-gray-60: #c6c5c3;
-
-  --icons-color-info: #053662;
-  --icons-color-disabled: #9f9d9c;
-  --icons-color-secondary: #474543;
-
-  --typography-color-primary: #2d2d2d;
-  --typography-color-secondary: #474543;
-
-  --support-borderColor-success: #42814a;
-
-  --box-shadow-small: 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1), 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
-
-  --header-height: 4em;
-  --footer-height: 4em;
-
-  --map-button-height-large: 64px;
-  --map-button-height-medium: 40px;
-  --map-button-padding-large: 16px 24px;
-  --map-button-padding-medium: 8px 16px;
-  --map-button-font-size-large: 18px;
-  --map-button-font-size-medium: 16px;
 }
 
 @font-face {
@@ -76,16 +34,38 @@ html, body {
     format('woff');
 }
 
-.authorization-map-container {
-  margin-top: 1em;
-  border-radius: 4px;
-  z-index: 1;
-}
-
 .spacer {
   flex: 1;
 }
 
 .spacer--fill {
   flex: 1 1 100%;
+}
+
+button.MuiButton-sizeMedium {
+  display: flex;
+  align-items: center;
+  padding: var(--layout-padding-small) var(--layout-padding-medium);
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+button.MuiButton-sizeMedium.button--square-padding {
+  padding: var(--layout-padding-small);
+}
+
+button.MuiButton-outlinedPrimary {
+  border: 1px solid var(--surface-color-primary-default);
+  color: var(--surface-color-primary-default);
+}
+
+button.MuiButton-containedPrimary {
+  background-color: var(--surface-color-primary-default);
+  color: white;
+}
+
+button.MuiButton-containedPrimary:hover {
+  background-color: #385a8a;
+  color: white;
 }

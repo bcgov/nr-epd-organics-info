@@ -20,6 +20,7 @@ export function SidebarToggleButton({
     <Button
       color="primary"
       variant="contained"
+      size="medium"
       onClick={(ev) => setExpanded(!isExpanded, ev)}
       className={clsx(
         'sidebar-toggle-button',

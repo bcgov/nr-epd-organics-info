@@ -8,17 +8,29 @@ import { RootState, setupStore } from '@/app/store'
 interface TestRouterProps {
   children: ReactNode
   withRouter?: boolean
+  route?: string
+  path?: string
 }
 
 function TestRouter({
   children,
   withRouter = false,
+  route,
+  path,
 }: Readonly<TestRouterProps>) {
   if (withRouter) {
+    window.history.replaceState({}, '', route ?? '/')
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={children} />
+          {path ? (
+            <>
+              <Route path={path} element={children} />
+              <Route path="*" element={<span />} />
+            </>
+          ) : (
+            <Route path="*" element={children} />
+          )}
         </Routes>
       </BrowserRouter>
     )
@@ -47,6 +59,8 @@ function TestStateProvider({
 type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
   screenWidth?: number
   withRouter?: boolean
+  route?: string
+  path?: string
   withStateProvider?: boolean
   initialState?: Partial<RootState>
 }
@@ -56,6 +70,8 @@ function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
   const {
     screenWidth,
     withRouter,
+    route,
+    path,
     withStateProvider,
     initialState,
     ...restOptions
@@ -66,7 +82,7 @@ function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
 
   const renderValues = render(ui, {
     wrapper: ({ children }: { children: ReactNode }) => (
-      <TestRouter withRouter={withRouter}>
+      <TestRouter withRouter={withRouter} route={route} path={path}>
         <TestStateProvider
           withStateProvider={withStateProvider}
           initialState={initialState}

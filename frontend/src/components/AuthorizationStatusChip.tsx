@@ -2,9 +2,13 @@ import { Chip } from '@mui/material'
 
 interface Props {
   status: string
+  size?: 'medium' | 'small'
 }
 
-export function AuthorizationStatusChip({ status }: Readonly<Props>) {
+export function AuthorizationStatusChip({
+  status,
+  size = 'medium',
+}: Readonly<Props>) {
   const isActive = status === 'Active'
   return (
     <Chip
@@ -12,7 +16,8 @@ export function AuthorizationStatusChip({ status }: Readonly<Props>) {
         color: '#ffffff',
         backgroundColor: isActive ? '#42814a' : '#9f9d9c',
         display: 'inline-flex',
-        height: '40px',
+        height: size === 'small' ? '24px' : '40px',
+        fontSize: size === 'small' ? '14px' : '16px',
         padding: '0 12px',
         borderRadius: '24px',
         justifyContent: 'center',

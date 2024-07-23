@@ -1,48 +1,22 @@
-import { ChangeEvent } from 'react'
-import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { setSearchBy, useSearchBy } from '@/features/omrr/omrr-slice'
-import {
-  SEARCH_BY_ACTIVE,
-  SEARCH_BY_ALL,
-  SEARCH_BY_INACTIVE,
-} from '@/interfaces/types'
+import { useSearchBy } from '@/features/omrr/omrr-slice'
 import DropdownButton from '@/components/DropdownButton'
+import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 
 export function SearchByButton() {
-  const dispatch = useDispatch()
   const searchBy = useSearchBy()
   const theme = useTheme()
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
 
-  const onChange = (_ev: ChangeEvent<HTMLInputElement>, newValue: string) => {
-    dispatch(setSearchBy(newValue))
-  }
-
   const content = (
-    <RadioGroup
-      defaultValue={SEARCH_BY_ALL}
-      name="search-by-group"
-      value={searchBy}
-      onChange={onChange}
+    <SearchByRadioGroup
+      name="map-search-by-group"
+      row={false}
       sx={{ gap: '0.25rem', paddingLeft: '0.5rem' }}
-    >
-      <FormControlLabel value={SEARCH_BY_ALL} control={<Radio />} label="All" />
-      <FormControlLabel
-        value={SEARCH_BY_ACTIVE}
-        control={<Radio />}
-        label="Active"
-      />
-      <FormControlLabel
-        value={SEARCH_BY_INACTIVE}
-        control={<Radio />}
-        label="Inactive"
-      />
-    </RadioGroup>
+    />
   )
 
   return (

@@ -1,0 +1,52 @@
+.authorization-list .list-search-input > div.MuiInputBase-root {
+  box-shadow: none
+}
+
+.list-search-by-group {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.list-search-filter-by-row {
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s linear;
+}
+
+.list-search-filter-by-row--expanded {
+  opacity: 1;
+  max-height: 420px;
+}
+
+.list-search-checkbox-group {
+  gap: 12px 0;
+}
+
+.list-search-checkbox-group .MuiFormControlLabel-root {
+  flex: 0 1 300px;
+  margin: 0;
+}
+
+.list-search-checkbox-group .MuiFormControlLabel-label {
+  text-wrap: nowrap;
+}
+
+.list-last-updated {
+  border-top: 1px solid var(--surface-color-border-light);
+  padding: 40px 0 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-search-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0;
+  margin: 16px 0 0;
+}

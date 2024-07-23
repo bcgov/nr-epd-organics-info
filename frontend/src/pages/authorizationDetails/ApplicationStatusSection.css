@@ -1,0 +1,29 @@
+.application-status-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: black;
+}
+
+.application-status-box {
+  border-radius: 4px;
+  border: 1px solid var(--support-border-color-info);
+  background-color: var(--support-surface-color-info);
+  color: var(--typography-color-primary);
+  font-size: 16px;
+  gap: 8px 24px;
+  padding: var(--layout-padding-large) var(--layout-margin-large);
+}
+
+.application-status-label {
+  font-weight: 700;
+}
+
+.application-status-label--light {
+  color: var(--typography-color-secondary);
+}
+
+.application-status-guidance {
+  font-style: italic;
+  color: var(--typography-color-secondary);
+}

@@ -1,63 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
-import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import {
-  resetFilters,
-  selectFilters,
-  updateFilter,
-} from '@/features/omrr/omrr-slice'
 import DropdownButton from '@/components/DropdownButton'
-import { OmrrFilter } from '@/interfaces/omrr-filter'
-import { flattenFilters } from '@/features/omrr/omrr-utils'
-
-const styles = {
-  resetButton: {
-    alignSelf: 'flex-start',
-    marginTop: '0.75rem',
-    color: 'var(--typography-color-primary)',
-    borderColor: 'var(--surface-color-border-dark)',
-  },
-}
+import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 
 export function FilterByButton() {
-  const dispatch = useDispatch()
-  const filters = useSelector(selectFilters)
   const theme = useTheme()
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
-
-  const onChange = (filter: OmrrFilter) => {
-    dispatch(updateFilter(filter))
-  }
-
-  const onReset = () => {
-    dispatch(resetFilters())
-  }
-
-  const flatFilters = flattenFilters(filters)
-  const showResetButton = flatFilters.some((f) => f.on)
-
-  const content = (
-    <FormGroup sx={{ gap: '0.5rem', paddingLeft: '0.5em' }}>
-      {flatFilters.map((filter: OmrrFilter) => (
-        <FormControlLabel
-          key={`filterByCheckBox-${filter.value}`}
-          control={<Checkbox />}
-          checked={filter.on}
-          label={filter.label}
-          disabled={filter.disabled}
-          onChange={() => onChange(filter)}
-        />
-      ))}
-      {showResetButton && (
-        <Button variant="outlined" onClick={onReset} sx={styles.resetButton}>
-          Reset Filters
-        </Button>
-      )}
-    </FormGroup>
-  )
 
   return (
     <DropdownButton
@@ -67,7 +17,9 @@ export function FilterByButton() {
       size="medium"
       className={clsx('map-button', 'map-button--medium')}
       openClassName="map-button--active"
-      dropdownContent={content}
+      dropdownContent={
+        <FilterByCheckboxGroup sx={{ gap: '8px', paddingLeft: '8px' }} />
+      }
       showArrow={isLarge}
     >
       Filter by Facility Type

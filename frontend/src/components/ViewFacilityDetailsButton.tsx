@@ -12,25 +12,26 @@ export function ViewFacilityDetailsButton({ item }: Readonly<Props>) {
 
   const onClick = (route: string) => {
     // Navigate to the details page, including the item as state
-    navigate(route, { state: { data: { ...item } } })
+    navigate(route, {
+      state: { data: { ...item }, previousPath: location.pathname },
+    })
   }
 
   const { 'Authorization Number': number } = item
   return (
     <Button
-      size="large"
+      color="primary"
+      variant="outlined"
+      size="medium"
       sx={{
-        border: '1px solid #053662',
-        borderRadius: '4px',
-        boxSizing: 'border-box',
-        textTransform: 'none',
-        color: '#255a90',
+        whiteSpace: 'nowrap',
         width: {
           xs: '100%',
           sm: 'auto',
         },
       }}
       onClick={() => onClick(`/authorization/${number}`)}
+      className="button--square-padding"
     >
       View Facility Details
     </Button>

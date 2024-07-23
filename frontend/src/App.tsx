@@ -5,9 +5,11 @@ import { Box, CircularProgress, Stack } from '@mui/material'
 
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import AppRoutes from '@/routes'
 import AppError from '@/components/AppError'
+import AppRoutes from '@/routes'
+import { LoadingStatusType } from '@/interfaces/loading-status'
 import { fetchOMRRData, selectStatus } from '@/features/omrr/omrr-slice'
+import { fetchOmrrApplicationStatus } from '@/features/omrr/application-status-slice'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -18,12 +20,20 @@ const loadingStyle = {
 
 export default function App() {
   const dispatch = useDispatch()
-  const status: string = useSelector(selectStatus)
+  const status: LoadingStatusType = useSelector(selectStatus)
 
   useEffect(() => {
     //@ts-expect-error
     dispatch(fetchOMRRData())
   }, [dispatch])
+
+  // Load application status after OMRR data has been loaded
+  useEffect(() => {
+    if (status === 'succeeded') {
+      //@ts-expect-error
+      dispatch(fetchOmrrApplicationStatus())
+    }
+  }, [dispatch, status])
 
   const isLoading = status === 'loading'
   const isError = status === 'failed'
