@@ -82,7 +82,7 @@ export function NotificationCompostGridItems({ item }: Readonly<Props>) {
         label="Facility Design Capacity (tonnes per year)"
         md={6}
       >
-        {item['Facility Design Capacity (t/y)'] || 'Unknown'}
+        {item['Facility Design Capacity (t/y)'] ?? 'Unknown'}
       </DetailsGridLabel>
       <OrganicMatterGridItem item={item} />
     </>
@@ -104,7 +104,7 @@ export function NotificationLandApplicationGridItems({
         {item['Material Land Applied'] ?? ''}
       </DetailsGridLabel>
       <DetailsGridLabel label="Intended Dates of Land Application" md={6}>
-        {item['Intended Dates of Land Application'] || ''}
+        {item['Intended Dates of Land Application'] ?? ''}
       </DetailsGridLabel>
     </>
   )

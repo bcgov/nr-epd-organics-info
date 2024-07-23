@@ -33,7 +33,7 @@ export function downloadFileFromUrl(
   link.style.position = 'absolute'
   link.style.display = 'none'
   link.setAttribute('href', url)
-  link.setAttribute('download', fileName || getFileName(url) || 'file')
+  link.setAttribute('download', fileName ?? (getFileName(url) || 'file'))
   // Required for Firefox - element must be in the DOM?
   document.body.appendChild(link)
   link.click()

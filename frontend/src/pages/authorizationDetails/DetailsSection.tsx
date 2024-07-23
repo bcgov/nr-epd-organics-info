@@ -29,7 +29,7 @@ export function DetailsSection({ item }: Readonly<Props>) {
   } = item
 
   const authTypeLower = authorizationType.toLowerCase()
-  const opTypeLower = (operationType || '').toLowerCase()
+  const opTypeLower = (operationType ?? '').toLowerCase()
 
   const isNotification = authTypeLower === AUTHORIZATION_TYPE_NOTIFICATION
   const isPermit = authTypeLower === AUTHORIZATION_TYPE_PERMIT

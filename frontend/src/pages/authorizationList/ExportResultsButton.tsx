@@ -12,7 +12,6 @@ export function ExportResultsButton() {
 
   const onExport = () => {
     const csv = omrrDataToCsv(filteredResults)
-    // TODO file name?
     downloadCsvFile(csv, `authorizations.csv`)
   }
 
