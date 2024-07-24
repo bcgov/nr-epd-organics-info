@@ -26,7 +26,7 @@ export function DataLayersToggleGroup({
   group,
   onLayerToggle,
   isSmall,
-}: Props) {
+}: Readonly<Props>) {
   const [expanded, setExpanded] = useState<boolean>(true)
   const isDataLayerChecked = useIsDataLayerOn()
 
