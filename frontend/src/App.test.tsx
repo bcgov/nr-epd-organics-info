@@ -5,8 +5,42 @@ import { render } from '@/test-utils'
 import { initialState } from '@/features/omrr/omrr-slice'
 
 describe('App suite', () => {
+  test('renders the App with idle state', () => {
+    render(<App />, {
+      withStateProvider: true,
+    })
+
+    screen.getByAltText('Logo')
+    screen.getByText('Organics Info')
+    screen.getByTitle('Loading...')
+  })
+
+  test('renders the App with loading state', () => {
+    render(<App />, {
+      withStateProvider: true,
+      initialState: {
+        omrr: {
+          ...initialState,
+          status: 'loading',
+        },
+      },
+    })
+
+    screen.getByAltText('Logo')
+    screen.getByText('Organics Info')
+    screen.getByTitle('Loading...')
+  })
+
   test('renders the App with successful data load', () => {
-    render(<App />, { withStateProvider: true })
+    render(<App />, {
+      withStateProvider: true,
+      initialState: {
+        omrr: {
+          ...initialState,
+          status: 'succeeded',
+        },
+      },
+    })
 
     screen.getByAltText('Logo')
     screen.getByText('Organics Info')

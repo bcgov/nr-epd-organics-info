@@ -21,9 +21,9 @@ const loadingStyle = {
 export default function App() {
   const status: LoadingStatusType = useSelector(selectStatus)
 
-  const isLoading = status === 'loading'
+  const isLoading = status === 'loading' || status === 'idle'
   const isError = status === 'failed'
-  const isReady = !isLoading && !isError
+  const isReady = status === 'succeeded'
 
   return (
     <BrowserRouter>
@@ -34,7 +34,7 @@ export default function App() {
           flex={1}
           style={isLoading ? loadingStyle : undefined}
         >
-          {isLoading && <CircularProgress />}
+          {isLoading && <CircularProgress title="Loading..." />}
           {isError && <AppError />}
           {isReady && <AppRoutes />}
         </Box>
