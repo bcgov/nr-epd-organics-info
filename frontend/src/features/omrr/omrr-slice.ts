@@ -19,14 +19,18 @@ import {
   filterByAuthorizationStatus,
   filterData,
   flattenFilters,
+  sortDataByPosition,
 } from './omrr-utils'
 import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import { LatLngLiteral } from 'leaflet'
+import { useLocation } from 'react-router-dom'
+import { LoadingStatusType } from '@/interfaces/loading-status'
 
 const deepClone = rfdc({ circles: true })
 
 export interface OmrrSliceState {
   lastModified: string
-  status: 'idle' | 'loading' | 'failed' | 'succeeded'
+  status: LoadingStatusType
   error: string | null | undefined | object
   page: number
   searchBy: string
@@ -119,6 +123,17 @@ export const omrrSlice = createSlice({
       state.filters = [...facilityTypeFilters]
       performSearch(state)
     },
+    sortFilteredResultsByPosition: (
+      state,
+      action: PayloadAction<LatLngLiteral>,
+    ) => {
+      state.filteredResults = sortDataByPosition(
+        state.filteredResults,
+        action.payload,
+      )
+      state.page = 1
+      state.lastSearchTime = Date.now()
+    },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
     },
@@ -167,6 +182,7 @@ export const {
   updateFilter,
   setSearchBy,
   resetFilters,
+  sortFilteredResultsByPosition,
   setPage,
   setSearchTextFilter,
 } = omrrSlice.actions
@@ -176,6 +192,8 @@ export default omrrSlice.reducer
 // Selectors
 export const selectStatus = (state: RootState) => state.omrr.status
 export const selectError = (state: RootState) => state.omrr.error
+export const selectLastModified = (state: RootState) => state.omrr.lastModified
+export const selectPage = (state: RootState) => state.omrr.page
 export const selectSearchBy = (state: RootState) => state.omrr.searchBy
 export const useSearchBy = () => useSelector(selectSearchBy)
 
@@ -191,15 +209,38 @@ export const useHasSearchTextFilter = () =>
   useSearchTextFilter().length >= MIN_SEARCH_LENGTH
 
 const selectAllResults = (state: RootState) => state.omrr.allResults
+const selectAllResultsCount = (state: RootState) => state.omrr.allResults.length
 
 export const selectFilteredResults = (state: RootState) =>
   state.omrr.filteredResults
+export const selectFilteredResultsCount = (state: RootState) =>
+  state.omrr.filteredResults.length
 export const useFilteredResults = () => useSelector(selectFilteredResults)
 
-export const useAllResultsShowing = () => {
+export const useFindByAuthorizationNumber = (
+  authorizationNumber: number,
+): OmrrData | undefined => {
+  const location = useLocation()
   const allResults = useSelector(selectAllResults)
-  const filteredResults = useSelector(selectFilteredResults)
-  return filteredResults.length === allResults.length
+  if (authorizationNumber > 0) {
+    // Try to find it in the location state data first
+    const locationData = location.state?.data
+    if (locationData?.['Authorization Number'] === authorizationNumber) {
+      return locationData
+    }
+    // Fallback to finding the matching item in all the results
+    // If someone bookmarks the page then the above state won't be set
+    return allResults.find(
+      (item: OmrrData) => item['Authorization Number'] === authorizationNumber,
+    )
+  }
+  return undefined
+}
+
+export const useAllResultsShowing = () => {
+  const allResultsCount = useSelector(selectAllResultsCount)
+  const filteredResultsCount = useSelector(selectFilteredResultsCount)
+  return filteredResultsCount === allResultsCount
 }
 
 const selectLastSearchTime = (state: RootState) => state.omrr.lastSearchTime

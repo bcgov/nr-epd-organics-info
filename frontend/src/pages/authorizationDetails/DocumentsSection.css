@@ -1,0 +1,28 @@
+.documents-table {
+  border-radius: 4px 4px 0 0;
+  border: 1px solid var(--surface-color-border-light);
+}
+
+.documents-table-cell {
+  background-color: var(--surface-color-background-white);
+  border-bottom: 1px solid var(--surface-color-border-medium);
+  padding: 8px;
+  font-size: 12px;
+  color: var(--typography-color-secondary);
+}
+
+.documents-table-cell:last-child {
+  border-bottom: none;
+}
+
+.documents-table-cell--header {
+  border-bottom-color: var(--surface-color-border-medium);
+  background-color: var(--surface-color-brand-gray-20);
+  border-radius: 4px 4px 0 0;
+  font-weight: 700;
+}
+
+.document-table-link {
+  color: var(--typography-color-link, #255A90);
+  text-decoration-line: underline;
+}

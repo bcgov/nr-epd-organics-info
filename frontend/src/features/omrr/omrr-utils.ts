@@ -4,7 +4,13 @@ import { MIN_SEARCH_LENGTH } from '@/constants/constants'
 import { OmrrSliceState } from '@/features/omrr/omrr-slice'
 import OmrrData, { omrrDataBooleanFields } from '@/interfaces/omrr'
 import { OmrrFilter } from '@/interfaces/omrr-filter'
-import { extractPostalCode, isDigits, isPostalCodeStart } from '@/utils/utils'
+import {
+  extractPostalCode,
+  isDigits,
+  isPostalCodeStart,
+  truncateDate,
+} from '@/utils/utils'
+import { LatLng, LatLngLiteral } from 'leaflet'
 
 /**
  * Filters items by authorization status (all, active, inactive)
@@ -156,6 +162,36 @@ function filterByAuthorizationNumberStart(
 }
 
 /**
+ * Creates a new array and sorts it by the distance away from the given position,
+ * the closest items are first in the array.
+ */
+export function sortDataByPosition(
+  data: OmrrData[],
+  position: LatLngLiteral,
+): OmrrData[] {
+  const latlng = new LatLng(position.lat, position.lng)
+  const newData: OmrrData[] = [...data]
+
+  // Cache the distance calculations
+  const map = new Map<OmrrData, number>()
+  const getDistance = (item: OmrrData) => {
+    let distance = map.get(item)
+    if (distance === undefined) {
+      distance = Math.round(latlng.distanceTo([item.Latitude, item.Longitude]))
+      map.set(item, distance)
+    }
+    return distance
+  }
+
+  newData.sort((item1, item2) => {
+    const dist1 = getDistance(item1)
+    const dist2 = getDistance(item2)
+    return dist1 - dist2
+  })
+  return newData
+}
+
+/**
  * Converts all string [Yes|Y|No|N] values into proper booleans.
  * Removes null and undefined values.
  * Attempts to extract the postal code from the Facility Location field.
@@ -163,8 +199,14 @@ function filterByAuthorizationNumberStart(
 export function convertData(data: OmrrData[]): OmrrData[] {
   return data.map((original) => {
     const address = original['Facility Location']
+    const lastAmendmentDate = original['Last Amendment Date']
     const item: OmrrData = {
       ...original,
+      // Remove the time portion of the dates
+      'Effective/Issue Date': truncateDate(original['Effective/Issue Date']),
+      'Last Amendment Date': lastAmendmentDate
+        ? truncateDate(lastAmendmentDate)
+        : undefined,
       // Extract postal code from the address if possible
       'Postal Code': extractPostalCode(address),
     }

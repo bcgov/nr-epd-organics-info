@@ -27,6 +27,8 @@ describe('Test suite for utils', () => {
     expect(truncateDate('2023-10-24T12:34:56.123Z')).toBe('2023-10-24')
     expect(truncateDate('')).toBe('')
     expect(truncateDate(undefined as any)).toBe('')
+    expect(truncateDate(null as any)).toBe('')
+    expect(truncateDate(123 as any)).toBe('')
   })
 
   it('should test isPostalCodeStart()', () => {

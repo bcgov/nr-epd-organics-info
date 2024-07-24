@@ -1,4 +1,4 @@
-button.sidebar-toggle-button {
+button.sidebar-toggle-button.MuiButton-root {
   position: absolute;
   left: -37px;
   top: 50%;

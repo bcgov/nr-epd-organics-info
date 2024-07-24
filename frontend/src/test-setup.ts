@@ -10,6 +10,7 @@ import OmrrResponse from '@/interfaces/omrr-response'
 import { cleanup } from '@testing-library/react'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { mockPlaces } from '@/mocks/mock-places'
+import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
 
 expect.extend(matchers)
 
@@ -31,6 +32,18 @@ Object.defineProperty(window, 'scrollTo', {
 })
 Element.prototype.scrollIntoView = vi.fn()
 Element.prototype.scrollTo = vi.fn(() => {})
+if (typeof window.URL.createObjectURL === 'undefined') {
+  Object.defineProperty(window.URL, 'createObjectURL', {
+    value: () => 'url',
+    writable: true,
+  })
+}
+if (typeof window.URL.revokeObjectURL === 'undefined') {
+  Object.defineProperty(window.URL, 'revokeObjectURL', {
+    value: () => {},
+    writable: true,
+  })
+}
 
 // Define geolocation and permissions query
 const geoLocationResult: GeolocationPosition = {
@@ -102,6 +115,9 @@ const omrrResponse: OmrrResponse = {
 const successHandlers = [
   http.get(`${baseUrl}/api/omrr`, () => {
     return HttpResponse.json(omrrResponse, { status: 200 })
+  }),
+  http.get(`${baseUrl}/api/omrr/application-status`, () => {
+    return HttpResponse.json(mockOmrrApplicationStatusResponse, { status: 200 })
   }),
   http.get(`${baseUrl}/places.json`, () => {
     return HttpResponse.json(mockPlaces, { status: 200 })

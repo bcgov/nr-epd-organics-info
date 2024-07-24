@@ -1,18 +1,35 @@
-import { Card, CardActions, Grid, Stack, Typography } from '@mui/material'
+import {
+  Card,
+  CardActions,
+  Grid,
+  Stack,
+  Theme,
+  Typography,
+} from '@mui/material'
+import { SxProps } from '@mui/system'
+import clsx from 'clsx'
 
 import OmrrData from '@/interfaces/omrr'
-import { AuthorizationStatusChip } from '@/components/AuthorizationStatusChip'
-import { ViewFacilityDetailsButton } from '@/components/ViewFacilityDetailsButton'
-import { formatLatOrLng, truncateDate } from '@/utils/utils'
+import { formatLatOrLng } from '@/utils/utils'
+import { AuthorizationStatusChip } from './AuthorizationStatusChip'
+import { ViewFacilityDetailsButton } from './ViewFacilityDetailsButton'
+
+import './AuthorizationListItem.css'
 
 interface Props {
   item: OmrrData
   fullDetails?: boolean
+  showAddress?: boolean
+  className?: string
+  sx?: SxProps<Theme>
 }
 
-export function SearchResultListItem({
+export function AuthorizationListItem({
   item,
   fullDetails = false,
+  showAddress = false,
+  className,
+  sx,
 }: Readonly<Props>) {
   const {
     'Authorization Number': number,
@@ -22,7 +39,12 @@ export function SearchResultListItem({
   } = item
 
   return (
-    <Card className="search-result-list-item" variant="outlined" component="li">
+    <Card
+      className={clsx('authorization-list-item', className)}
+      variant="outlined"
+      component="li"
+      sx={sx}
+    >
       <Typography component="div" fontSize={14} marginBottom="8px">
         Authorization #: <u>{number}</u>
       </Typography>
@@ -38,31 +60,43 @@ export function SearchResultListItem({
       <Grid container>
         {fullDetails && (
           <>
-            <SearchResultLabel
+            <LabelValue
               label="Effective/Issue Date"
-              value={truncateDate(item['Effective/Issue Date'])}
+              value={item['Effective/Issue Date']}
             />
-            <SearchResultLabel
+            <LabelValue
               label="Last Amendment Date"
-              value={truncateDate(item['Last Amendment Date'])}
+              value={item['Last Amendment Date']}
             />
           </>
         )}
 
-        <SearchResultLabel label="Authorization Type" value={type} fullWidth />
+        {showAddress ? (
+          <>
+            <LabelValue
+              label="Facility Location"
+              value={item['Facility Location']}
+            />
+            <LabelValue label="Authorization Type" value={type} />
+          </>
+        ) : (
+          <LabelValue label="Authorization Type" value={type} fullWidth />
+        )}
 
         {fullDetails && (
           <>
-            <SearchResultLabel
-              label="Facility Location"
-              value={item['Facility Location']}
-              fullWidth
-            />
-            <SearchResultLabel
+            {!showAddress && (
+              <LabelValue
+                label="Facility Location"
+                value={item['Facility Location']}
+                fullWidth
+              />
+            )}
+            <LabelValue
               label="Latitude"
               value={formatLatOrLng(item.Latitude)}
             />
-            <SearchResultLabel
+            <LabelValue
               label="Longitude"
               value={formatLatOrLng(item.Longitude)}
             />
@@ -73,8 +107,14 @@ export function SearchResultListItem({
       <Stack direction="row" gap="16px" alignItems="center">
         <Typography component="div">Status:</Typography>
         <AuthorizationStatusChip status={status} />
-        <div className="spacer" />
-        <CardActions sx={{ padding: 0 }}>
+        <CardActions
+          sx={{
+            padding: 0,
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
           <ViewFacilityDetailsButton item={item} />
         </CardActions>
       </Stack>
@@ -82,17 +122,17 @@ export function SearchResultListItem({
   )
 }
 
-interface SearchResultLabelProps {
+interface LabelValueProps {
   label: string
-  value: string | number
+  value: string | number | undefined
   fullWidth?: boolean
 }
 
-function SearchResultLabel({
+function LabelValue({
   label,
   value,
   fullWidth = false,
-}: Readonly<SearchResultLabelProps>) {
+}: Readonly<LabelValueProps>) {
   // Don't display if the value isn't valid
   if (
     value === undefined ||

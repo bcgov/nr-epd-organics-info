@@ -1,3 +1,6 @@
+import OmrrData from '@/interfaces/omrr'
+import { MyLocationData, MyLocationSuccess } from '@/interfaces/location'
+
 /**
  * Checks if the entire string is made up of digits
  */
@@ -18,7 +21,7 @@ export function isValidDate(date?: Date) {
  * @param {string} dateString the ISO date string
  */
 export const truncateDate = (dateString: string): string =>
-  dateString ? dateString.substring(0, 10) : ''
+  typeof dateString === 'string' ? dateString.substring(0, 10) : ''
 
 /**
  * Formats the date in MMM D, YYYY format
@@ -77,4 +80,94 @@ export function formatLatOrLng(input: number | undefined, digits = 4): string {
   }
   // Limit the number of digits, and remove trailing zeroes
   return String(Number(num.toFixed(digits)))
+}
+
+const CSV_KEYS: (keyof OmrrData)[] = [
+  'Authorization Number',
+  'Authorization Type',
+  'Regulated Party',
+  'Authorization Status',
+  'Effective/Issue Date',
+  'Last Amendment Date',
+  'Facility Location',
+  'Latitude',
+  'Longitude',
+  'Waste Discharge Regulation',
+  'Operation Type',
+  'Material Land Applied',
+  'Intended Dates of Land Application',
+  'Facility Design Capacity (t/y)',
+  'Type of Compost Produced',
+  'Yard Waste',
+  'Biosolids',
+  'Whey',
+  'Untreated and Unprocessed Wood Residuals',
+  'Poultry Carcasses',
+  'Fish Wastes',
+  'Food Waste',
+  'Brewery Waste/Wine Waste',
+  'Animal Bedding',
+  'Domestic Septic Tank Sludge',
+  'Hatchery Waste',
+  'Manure',
+  'Milk Processing Waste',
+]
+const DELIMETER_REGEX = /,/
+const CSV_DELIMETER = ','
+
+export function omrrDataToCsv(data: OmrrData[]): string {
+  const rows: string[] = data.map((item: OmrrData) => {
+    const cols: string[] = CSV_KEYS.map((key) => {
+      const value: string | number | boolean | null | undefined = item[key]
+      let stringValue: string = ''
+      if (value !== undefined && value !== null) {
+        if (typeof value === 'boolean') {
+          stringValue = value ? 'Yes' : 'No'
+        } else if (typeof value === 'number') {
+          if (!isNaN(value)) {
+            stringValue = String(value)
+          }
+        } else {
+          // Remove quotes if necessary, and add quotes if a comma is present
+          stringValue = value.replace(/"/g, '')
+          if (DELIMETER_REGEX.test(stringValue)) {
+            stringValue = `"${stringValue}"`
+          }
+        }
+      }
+      return stringValue
+    })
+    return cols.join(CSV_DELIMETER)
+  })
+  // Header line
+  rows.unshift(CSV_KEYS.join(CSV_DELIMETER))
+  return rows.join('\n')
+}
+
+const DEFAULT_POSITION_OPTIONS: PositionOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+}
+
+/**
+ * Uses geolocation to find the current users latitude and longitude.
+ */
+export function getMyLocation(
+  onSuccess: MyLocationSuccess,
+  onError: PositionErrorCallback | null | undefined = undefined,
+  options: PositionOptions | undefined = DEFAULT_POSITION_OPTIONS,
+) {
+  // Extract just the position and accuracy values
+  const successCb = (result: GeolocationPosition) => {
+    const { coords } = result
+    const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
+    const newData: MyLocationData = { accuracy }
+    if (!isNaN(lat) && !isNaN(lng)) {
+      newData.position = { lat, lng }
+    }
+    onSuccess(newData)
+  }
+  const { geolocation } = navigator
+  // prettier-ignore Ignore Sonar error about geolocation - we need to allow this
+  geolocation.getCurrentPosition(successCb, onError, options) // NOSONAR
 }

@@ -23,6 +23,7 @@ describe('Test suite for MapView', () => {
         },
         map: {
           isMyLocationVisible: false,
+          isDrawerExpanded: false,
           sidebarWidth: 0,
         },
       },
@@ -53,6 +54,7 @@ describe('Test suite for MapView', () => {
         },
         map: {
           isMyLocationVisible: true,
+          isDrawerExpanded: false,
           sidebarWidth: 0,
         },
       },

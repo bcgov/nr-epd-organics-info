@@ -19,7 +19,7 @@ import {
 } from '@/features/map/map-slice'
 import OmrrData from '@/interfaces/omrr'
 import { facilityTypeFilters, OmrrFilter } from '@/interfaces/omrr-filter'
-import { formatLatOrLng, truncateDate } from '@/utils/utils'
+import { formatLatOrLng } from '@/utils/utils'
 import { SEARCH_BY_ALL } from '@/interfaces/types'
 
 interface State {
@@ -138,7 +138,7 @@ describe('Test suite for SearchResultsList', () => {
 
     expect(state.selectedItem).toBe(selectedItem)
 
-    // There should be one listitem
+    // There should be one list item
     screen.getByRole('listitem')
 
     const {
@@ -149,8 +149,6 @@ describe('Test suite for SearchResultsList', () => {
       Latitude: lat,
       Longitude: lng,
       'Facility Location': address,
-      'Effective/Issue Date': issueDate,
-      'Last Amendment Date': lastDate,
     } = selectedItem
 
     screen.getByText('Authorization #:')
@@ -164,10 +162,14 @@ describe('Test suite for SearchResultsList', () => {
     const btn = screen.getByRole('button', { name: 'View Facility Details' })
 
     // Details
+    const issueDate = selectedItem['Effective/Issue Date']
+    const lastDate = selectedItem['Last Amendment Date']
     screen.getByText('Effective/Issue Date')
-    screen.getByText(truncateDate(issueDate))
+    screen.getByText(issueDate)
     screen.getByText('Last Amendment Date')
-    screen.getByText(truncateDate(lastDate))
+    if (lastDate) {
+      screen.getByText(lastDate)
+    }
     screen.getByText('Facility Location')
     screen.getByText(address)
     screen.getByText('Latitude')
@@ -179,18 +181,16 @@ describe('Test suite for SearchResultsList', () => {
     expect(location.href).toContain(`/authorization/${number}`)
   })
 
-  it('should render SearchResultsList with 3 items', async () => {
-    const { state } = renderComponent({
-      filteredResults: [...allResults],
-    })
+  it('should render SearchResultsList with multiple items', async () => {
+    const filteredResults = [...allResults]
+    const { state } = renderComponent({ filteredResults })
 
     expect(state.selectedItem).toBeUndefined()
-    expect(state.filteredResults).toHaveLength(3)
 
     // The first 2 items should be shown (paginated with 2 items per page)
     const [item1, item2, item3] = allResults
 
-    screen.getByText('3 matching results')
+    screen.getByText(`${filteredResults.length} matching results`)
     screen.getByText(item1['Regulated Party'])
     screen.getByText(item1['Authorization Number'])
     screen.getByText(item2['Regulated Party'])

@@ -49,7 +49,7 @@ describe('Test suite for SearchDialog', () => {
     const onClose = vi.fn()
     const { user, state } = renderComponent(onClose)
 
-    const closeBtn = screen.getByTitle('Back to the map')
+    screen.getByTitle('Back to the map')
     const input = screen.getByPlaceholderText('Search')
     expect(screen.queryAllByRole('option')).toHaveLength(0)
 
@@ -74,5 +74,14 @@ describe('Test suite for SearchDialog', () => {
     await user.click(farmington)
     // The search text gets set to the city name
     await waitFor(() => expect(state.searchTextFilter).toBe('Farmington'))
+  })
+
+  it('should render SearchDialog and click close', async () => {
+    const onClose = vi.fn()
+    const { user } = renderComponent(onClose)
+
+    const closeBtn = screen.getByTitle('Back to the map')
+    await user.click(closeBtn)
+    expect(onClose).toHaveBeenCalledOnce()
   })
 })

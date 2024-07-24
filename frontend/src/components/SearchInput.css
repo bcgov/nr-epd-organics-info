@@ -1,8 +1,5 @@
 .search-input {
   display: flex;
-  min-width: 350px;
-  max-width: 632px;
-  transition: width ease-in-out 0.3s;
 }
 
 div.search-input > div.MuiInputBase-root {

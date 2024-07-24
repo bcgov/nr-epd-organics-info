@@ -2,9 +2,9 @@ import { ChangeEvent } from 'react'
 import { Button, Dialog, Stack } from '@mui/material'
 
 import { AutocompleteOption } from '@/interfaces/autocomplete-option'
+import { SearchInput } from '@/components/SearchInput'
 import { useAutocompleteSearch } from '../hooks/useAutocompleteSearch'
 import { AutocompleteItem } from './AutocompleteItem'
-import { SearchInput } from './SearchInput'
 
 import ChevronLeft from '@/assets/svgs/fa-chevron-left.svg?react'
 
@@ -45,8 +45,8 @@ export function SearchDialog({ onClose }: Readonly<Props>) {
         <SearchInput
           value={value}
           onChange={onTextChange}
+          showSearchIcon={!value}
           onClear={onClear}
-          showStartAdornment={!value}
           size="small"
           className="search-dialog-input"
         />

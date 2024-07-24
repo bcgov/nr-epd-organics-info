@@ -1,29 +1,68 @@
 import { screen } from '@testing-library/react'
 
 import App from '@/App'
-import { errorHandlers, mswServer } from '@/test-setup'
 import { render } from '@/test-utils'
+import { initialState } from '@/features/omrr/omrr-slice'
 
 describe('App suite', () => {
-  test('renders the App with successful data load', async () => {
-    render(<App />, { withStateProvider: true })
+  test('renders the App with idle state', () => {
+    render(<App />, {
+      withStateProvider: true,
+    })
 
     screen.getByAltText('Logo')
     screen.getByText('Organics Info')
-    // Wait for dashboard to load
-    await screen.findByText(
+    screen.getByTitle('Loading...')
+  })
+
+  test('renders the App with loading state', () => {
+    render(<App />, {
+      withStateProvider: true,
+      initialState: {
+        omrr: {
+          ...initialState,
+          status: 'loading',
+        },
+      },
+    })
+
+    screen.getByAltText('Logo')
+    screen.getByText('Organics Info')
+    screen.getByTitle('Loading...')
+  })
+
+  test('renders the App with successful data load', () => {
+    render(<App />, {
+      withStateProvider: true,
+      initialState: {
+        omrr: {
+          ...initialState,
+          status: 'succeeded',
+        },
+      },
+    })
+
+    screen.getByAltText('Logo')
+    screen.getByText('Organics Info')
+    screen.getByText(
       'Find an authorized compost and biosolid facility in British Columbia',
     )
   })
 
-  test('renders the App with error loading data', async () => {
-    mswServer.use(...errorHandlers)
-
-    render(<App />, { withStateProvider: true })
+  test('renders the App with error loading data', () => {
+    render(<App />, {
+      withStateProvider: true,
+      initialState: {
+        omrr: {
+          ...initialState,
+          status: 'failed',
+          error: 'Error message',
+        },
+      },
+    })
 
     screen.getByAltText('Logo')
     screen.getByText('Organics Info')
-    // Wait for error message to display
-    await screen.findByText('Loading failed, please try again later')
+    screen.getByText('Loading failed, please try again later')
   })
 })

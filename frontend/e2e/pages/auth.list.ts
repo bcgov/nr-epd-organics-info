@@ -6,11 +6,14 @@ export const authorization_list_page = async (page: Page) => {
   await page.goto(baseURL)
   await page.getByRole('button', { name: 'List all authorizations' }).click()
   await expect(
-    page.getByRole('heading', { name: 'Authorizations' }),
+    page.getByRole('heading', { name: 'Search Authorizations' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'Authorized compost and' }),
+    page.getByRole('heading', {
+      name: 'Authorized compost and biosolid facilities in B.C.',
+    }),
   ).toBeVisible()
+
   await page.getByRole('button', { name: 'Filter by Facility Type' }).click()
   await expect(page.getByLabel('Notification')).toBeVisible()
   await expect(page.getByLabel('Permit')).toBeVisible()
@@ -23,9 +26,18 @@ export const authorization_list_page = async (page: Page) => {
   await expect(
     page.getByRole('button', { name: 'Reset Filters' }),
   ).toBeVisible()
-  await page.getByLabel('Search Authorizations').click()
-  await page.getByLabel('Search Authorizations').fill('victoria')
-  await expect(page.getByText('Authorization #:17268')).toBeVisible()
-  await expect(page.getByText('CITY OF VICTORIA')).toBeVisible()
-  await expect(page.locator('#root')).toContainText('Notification')
+
+  await expect(page.getByPlaceholder('Type keyword to search')).toBeVisible()
+  const searchInput = page.getByLabel('Search Authorizations')
+  await searchInput.click()
+  await searchInput.fill('victoria')
+
+  // There are 3 search results - find the City of Victoria one
+  const listItem = page
+    .getByRole('listitem')
+    .filter({ hasText: 'CITY OF VICTORIA' })
+  await expect(listItem.getByText('Authorization #:')).toBeVisible()
+  await expect(listItem.getByText('17268')).toBeVisible()
+  await expect(listItem.getByText('Active')).toBeVisible()
+  await expect(listItem.getByText('Notification')).toBeVisible()
 }

@@ -12,6 +12,7 @@
     "dev": "vite --host",
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
+    "tsc": "npx tsc --noEmit",
     "preview": "vite preview",
     "test:unit": "vitest --mode test",
     "test:cov": "vitest run --mode test --coverage",

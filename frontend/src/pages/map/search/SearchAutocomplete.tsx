@@ -1,11 +1,19 @@
 import { Autocomplete } from '@mui/material'
 
 import { AutocompleteOption } from '@/interfaces/autocomplete-option'
+import { SearchInput } from '@/components/SearchInput'
 import { AutocompleteItem } from './AutocompleteItem'
 import { useAutocompleteSearch } from '../hooks/useAutocompleteSearch'
-import { SearchInput } from './SearchInput'
 
 import './SearchAutocomplete.css'
+
+const searchInputStyles = {
+  width: {
+    xxl: '632px',
+    xl: '542px',
+    lg: '452px',
+  },
+}
 
 const componentProps = {
   popper: {
@@ -54,7 +62,14 @@ export function SearchAutocomplete() {
       }
       freeSolo
       renderInput={(params) => {
-        return <SearchInput {...params} value={value} onClear={onClear} />
+        return (
+          <SearchInput
+            {...params}
+            value={value}
+            onClear={onClear}
+            sx={searchInputStyles}
+          />
+        )
       }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props
