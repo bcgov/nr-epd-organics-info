@@ -38,8 +38,8 @@
 .list-last-updated {
   border-top: 1px solid var(--surface-color-border-light);
   padding: 40px 0 16px;
-  display: flex;
-  flex-direction: column;
+  font-style: italic;
+  color: #000;
 }
 
 .list-search-results {

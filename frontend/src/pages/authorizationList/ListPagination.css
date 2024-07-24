@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 16px;
+  gap: 9px 16px;
 }
 
 .list-pagination-control .MuiPagination-ul {
@@ -37,12 +37,8 @@
   cursor: default;
 }
 
-.list-pagination-last-updated-text {
-  color: #000;
-  font-style: italic;
-}
-
 .list-pagination-results-text {
   color: #000;
   white-space: nowrap;
+  line-height: 40px;
 }

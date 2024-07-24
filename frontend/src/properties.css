@@ -1,259 +1,62 @@
-/* Layout Sizes */
-@property --layout-margin-xsmall {
-  syntax: '<length>';
-  initial-value: 4px;
-  inherits: true;
-}
-
-@property --layout-margin-small {
-  syntax: '<length>';
-  initial-value: 8px;
-  inherits: true;
-}
-
-@property --layout-margin-medium {
-  syntax: '<length>';
-  initial-value: 16px;
-  inherits: true;
-}
-
-@property --layout-margin-large {
-  syntax: '<length>';
-  initial-value: 24px;
-  inherits: true;
-}
-
-@property --layout-padding-xsmall {
-  syntax: '<length>';
-  initial-value: 4px;
-  inherits: true;
-}
-
-@property --layout-padding-small {
-  syntax: '<length>';
-  initial-value: 8px;
-  inherits: true;
-}
-
-@property --layout-padding-medium {
-  syntax: '<length>';
-  initial-value: 16px;
-  inherits: true;
-}
-
-@property --layout-padding-large {
-  syntax: '<length>';
-  initial-value: 24px;
-  inherits: true;
-}
-
-@property --layout-border-radius-medium {
-  syntax: '<length>';
-  initial-value: 4px;
-  inherits: true;
-}
-
-@property --header-height {
-  syntax: '<length>';
-  initial-value: 64px;
-  inherits: true;
-}
-
-@property --footer-height {
-  syntax: '<length>';
-  initial-value: 64px;
-  inherits: true;
-}
-
-/* Colors */
-@property --surface-color-primary-active-border {
-  syntax: '<color>';
-  initial-value: #2e5dd7;
-  inherits: true;
-}
-
-@property --surface-color-primary-default {
-  syntax: '<color>';
-  initial-value: #053662;
-  inherits: true;
-}
-
-@property --surface-color-secondary-hover {
-  syntax: '<color>';
-  initial-value: #edebe9;
-  inherits: true;
-}
-
-@property --surface-color-background-white {
-  syntax: '<color>';
-  initial-value: #ffffff;
-  inherits: true;
-}
-
-@property --surface-color-background-light {
-  syntax: '<color>';
-  initial-value: #faf9f8;
-  inherits: true;
-}
-
-@property --surface-color-background-light {
-  syntax: '<color>';
-  initial-value: #faf9f8;
-  inherits: true;
-}
-
-@property --surface-color-brand-gray-10 {
-  syntax: '<color>';
-  initial-value: #faf9f8;
-  inherits: true;
-}
-
-@property --surface-color-brand-gray-20 {
-  syntax: '<color>';
-  initial-value: #f3f2f1;
-  inherits: true;
-}
-
-@property --surface-color-brand-gray-30 {
-  syntax: '<color>';
-  initial-value: #eceae8;
-  inherits: true;
-}
-
-@property --surface-color-brand-gray-60 {
-  syntax: '<color>';
-  initial-value: #c6c5c3;
-  inherits: true;
-}
-
-@property --surface-color-brand-gold-50 {
-  syntax: '<color>';
-  initial-value: #fcc85d;
-  inherits: true;
-}
-
-@property --surface-color-border-light {
-  syntax: '<color>';
-  initial-value: #d8d8d8;
-  inherits: true;
-}
-
-@property --surface-color-border-hover {
-  syntax: '<color>';
-  initial-value: #b8b8b8;
-  inherits: true;
-}
-
-@property --surface-color-border-dark {
-  syntax: '<color>';
-  initial-value: #353433;
-  inherits: true;
-}
-
-@property --surface-color-border-medium {
-  syntax: '<color>';
-  initial-value: #898785;
-  inherits: true;
-}
-
-@property --icons-color-info {
-  syntax: '<color>';
-  initial-value: #053662;
-  inherits: true;
-}
-
-@property --icons-color-disabled {
-  syntax: '<color>';
-  initial-value: #9f9d9c;
-  inherits: true;
-}
-
-@property --icons-color-secondary {
-  syntax: '<color>';
-  initial-value: #474543;
-  inherits: true;
-}
-
-@property --typography-color-primary {
-  syntax: '<color>';
-  initial-value: #2d2d2d;
-  inherits: true;
-}
-
-@property --typography-color-primary {
-  syntax: '<color>';
-  initial-value: #474543;
-  inherits: true;
-}
-
-@property --typography-color-secondary {
-  syntax: '<color>';
-  initial-value: #474543;
-  inherits: true;
-}
-
-@property --typography-color-link {
-  syntax: '<color>';
-  initial-value: #255A90;
-  inherits: true;
-}
-
-@property --support-border-color-success {
-  syntax: '<color>';
-  initial-value: #42814a;
-  inherits: true;
-}
-
-@property --support-border-color-info {
-  syntax: '<color>';
-  initial-value: #053662;
-  inherits: true;
-}
-
-@property --support-surface-color-info {
-  syntax: '<color>';
-  initial-value: #f7f9fc;
-  inherits: true;
-}
-
-/* Map button sizing */
-@property --map-button-height-medium {
-  syntax: '<length>';
-  initial-value: 40px;
-  inherits: true;
-}
-
-@property --map-button-height-large {
-  syntax: '<length>';
-  initial-value: 64px;
-  inherits: true;
-}
-
-@property --map-button-padding-medium {
-  syntax: '<length>+';
-  initial-value: 8px 16px;
-  inherits: true;
-}
-
-@property --map-button-padding-large {
-  syntax: '<length>+';
-  initial-value: 16px 24px;
-  inherits: true;
-}
-
-@property --map-button-font-size-medium {
-  syntax: '<length>';
-  initial-value: 16px;
-  inherits: true;
-}
-
-@property --map-button-font-size-large {
-  syntax: '<length>';
-  initial-value: 18px;
-  inherits: true;
-}
-
 :root {
+  --layout-margin-xsmall: 4px;
+  --layout-margin-small: 8px;
+  --layout-margin-medium: 16px;
+  --layout-margin-large: 24px;
+  --layout-padding-xsmall: 4px;
+  --layout-padding-small: 8px;
+  --layout-padding-medium: 16px;
+  --layout-padding-large: 24px;
+  --layout-border-radius-medium: 4px;
+
+  --header-height: 64px;
+  --footer-height: 64px;
+
+  --surface-color-primary-active-border: #2e5dd7;
+  --surface-color-primary-default: #053662;
+  --surface-color-primary-hover: #1e5189;
+  --surface-color-secondary-hover: #edebe9;
+  --surface-color-background-white: #ffffff;
+  --surface-color-background-light: #faf9f8;
+  --surface-color-border-light: #d8d8d8;
+  --surface-color-border-hover: #b8b8b8;
+  --surface-color-border-medium: #898785;
+  --surface-color-border-dark: #353433;
+  --surface-color-brand-gray-10: #faf9f8;
+  --surface-color-brand-gray-20: #f3f2f1;
+  --surface-color-brand-gray-30: #eceae8;
+  --surface-color-brand-gray-60: #c6c5c3;
+  --surface-color-brand-gray-80: #605e5c;
+  --surface-color-brand-gray-white: #fff;
+  --surface-color-brand-gold-50: #fcc85d;
+  --surface-color-brand-gold-60: #f8ba47;
+  --surface-color-brand-blue-20: #d8eafd;
+  --surface-color-brand-blue-70: #5595d9;
+  --surface-color-brand-blue-100: #053662;
+
+  --support-border-color-success: #42814a;
+  --support-surface-color-info: #f7f9fc;
+  --support-border-color-info: #053662;
+
+  --icons-color-primary: #2d2d2d;
+  --icons-color-secondary: #474543;
+  --icons-color-info: #053662;
+  --icons-color-success: #42814A;
+  --icons-color-disabled: #9f9d9c;
+
+  --typography-color-primary: #2d2d2d;
+  --typography-color-primary-invert: #fff;
+  --typography-color-secondary: #474543;
+  --typography-color-link: #255a90;
+  --typography-color-disabled: #9f9d9c;
+
   --box-shadow-small: 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1), 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
+
+  --map-button-height-large: 64px;
+  --map-button-height-medium: 40px;
+  --map-button-padding-large: 16px 24px;
+  --map-button-padding-medium: 8px 16px;
+  --map-button-font-size-large: 18px;
+  --map-button-font-size-medium: 16px;
 }
 

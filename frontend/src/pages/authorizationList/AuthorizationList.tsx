@@ -7,7 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { selectPage, useFilteredResults } from '@/features/omrr/omrr-slice'
 import { ListTopSection } from './ListTopSection'
 import { ListSearchSection } from './ListSearchSection'
-import ListLastUpdated from './ListLastUpdated'
+import { ListLastUpdated } from './ListLastUpdated'
 import { ListPagination } from './ListPagination'
 import { ListSearchResults } from './ListSearchResults'
 

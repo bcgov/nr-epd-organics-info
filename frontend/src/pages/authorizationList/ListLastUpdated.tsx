@@ -9,11 +9,7 @@ export function ListLastUpdated() {
 
   return (
     <div className="list-last-updated">
-      <Typography className="list-last-updated-text">
-        Data last updated : {lastModified}
-      </Typography>
+      <Typography>Data last updated : {lastModified}</Typography>
     </div>
   )
 }
-
-export default ListLastUpdated
