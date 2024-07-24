@@ -61,10 +61,7 @@ export function ListSearchSection() {
             },
           }}
         >
-          <FilterByCheckboxGroup
-            row={true}
-            className="list-search-checkbox-group"
-          />
+          <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
       )}
     </>

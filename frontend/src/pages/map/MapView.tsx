@@ -9,6 +9,7 @@ import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
 import { MyLocationMarker } from './layers/MyLocationMarker'
 import { MapControls } from './layers/MapControls'
+import { MapDataLayers } from './layers/MapDataLayers'
 import { MapZoom } from './layers/MapZoom'
 
 import 'leaflet/dist/leaflet.css'
@@ -39,6 +40,7 @@ function MapView() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <MapDataLayers />
         <MapControls />
         <AuthorizationMarkers />
         <MyLocationMarker />

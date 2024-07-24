@@ -22,3 +22,18 @@ export const DEFAULT_AUTHORIZATION_ZOOM = 13
  * in its initial state. It can be expanded to full height.
  */
 export const MAP_BOTTOM_DRAWER_HEIGHT = 320
+export const MAP_BOTTOM_DRAWER_HEIGHT_SEARCH_BY = 160
+
+export const MAP_CONTROLS_RIGHT_XL = 64
+export const MAP_CONTROLS_RIGHT_LG = 48
+export const MAP_CONTROLS_RIGHT_SM = 24
+export const MAP_CONTROLS_BOTTOM_LG = 40
+export const MAP_CONTROLS_BOTTOM_SM = 24
+
+export enum BottomDrawerContentEnum {
+  dataLayers = 'dataLayers',
+  pointSearch = 'pointSearch',
+  polygonSearch = 'polygonSearch',
+  searchBy = 'searchBy',
+  filterBy = 'filterBy',
+}

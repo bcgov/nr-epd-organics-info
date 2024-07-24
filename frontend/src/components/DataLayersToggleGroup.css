@@ -1,0 +1,86 @@
+.data-layers-toggle-group {
+
+}
+
+button.data-layers-toggle-button {
+  justify-content: space-between;
+  color: var(--typography-color-primary);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 8px;
+}
+
+button.data-layers-toggle-button .MuiButton-endIcon {
+  margin: 0 4px
+}
+
+.data-layers-toggle-group--small button.data-layers-toggle-button {
+  font-weight: 400;
+  padding: 0;
+}
+
+button.data-layers-reset-button {
+  align-self: flex-start;
+  color: var(--typography-color-primary);
+  border-color: var(--surface-color-border-dark);
+}
+
+button.data-layers-reset-link {
+  color: var(--typography-color-link);
+  font-size: 18px;
+  line-height: 28px;
+  padding: 4px;
+}
+
+.data-layers-expand-arrow {
+  transform: rotate(0deg);
+  transition: transform 0.2s linear;
+}
+
+.data-layers-expand-arrow--invert {
+  transform: rotate(180deg);
+}
+
+.data-layers-checkbox-list {
+  gap: 2px;
+  padding-left: 4px;
+}
+
+.data-layers-toggle-group--small .data-layers-checkbox-list {
+  gap: 8px;
+  padding-left: 0;
+}
+
+label.data-layers-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  min-height: 40px;
+  color: var(--typography-color-secondary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+label.data-layers-checkbox-item:hover {
+  color: var(--typography-color-primary);
+}
+
+label.data-layers-checkbox-item .MuiCheckbox-root {
+  padding: 8px;
+}
+
+.data-layers-toggle-group--small label.data-layers-checkbox-item {
+  flex-direction: row-reverse;
+  padding: 0 16px;
+  color: var(--typography-color-primary);
+  background-color: var(--surface-color-brand-gray-20);
+  border: 1px solid var(--surface-color-border-medium);
+  border-radius: 4px;
+}
+
+label.data-layers-checkbox-item .MuiFormControlLabel-label {
+  flex: 1;
+  text-align: left;
+}

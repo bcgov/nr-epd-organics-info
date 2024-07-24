@@ -4,6 +4,21 @@
   border: 1px solid var(--surface-color-border-light);
   background: var(--surface-color-background-white);
   box-shadow: var(--box-shadow-small);
+  scrollbar-width: thin;
+  scrollbar-color: #4e4e4e transparent;
+}
+
+.dropdown-button-menu .MuiPaper-root::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdown-button-menu .MuiPaper-root::-webkit-scrollbar-thumb {
+  background: #4e4e4e;
+  border-radius: 8px;
+}
+
+.dropdown-button-menu .MuiPaper-root::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .dropdown-button-menu .MuiList-root {

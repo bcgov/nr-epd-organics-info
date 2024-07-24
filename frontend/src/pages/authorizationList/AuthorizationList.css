@@ -23,6 +23,11 @@
 }
 
 .list-search-checkbox-group {
+  margin-bottom: 16px;
+}
+
+.list-search-checkbox-group .filter-by-checkbox-form-group {
+  flex-direction: row;
   gap: 12px 0;
 }
 

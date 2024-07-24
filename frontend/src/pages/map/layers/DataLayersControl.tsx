@@ -1,24 +1,35 @@
+import { useDispatch } from 'react-redux'
 import { IconButton } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import clsx from 'clsx'
+
+import {
+  setBottomDrawerContent,
+  useBottomDrawerContentType,
+} from '@/features/map/map-slice'
+import { BottomDrawerContentEnum } from '@/constants/constants'
 
 import LayersIcon from '@/assets/svgs/fa-layers.svg?react'
 
 export function DataLayersControl() {
-  const theme = useTheme()
-  const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
+  const dispatch = useDispatch()
+  const isActive =
+    useBottomDrawerContentType() === BottomDrawerContentEnum.dataLayers
 
-  if (isLarge) {
-    return null
+  const onClick = () => {
+    dispatch(
+      setBottomDrawerContent(
+        isActive ? undefined : BottomDrawerContentEnum.dataLayers,
+      ),
+    )
   }
-
-  const onClick = () => {}
 
   return (
     <IconButton
-      className="map-control-button"
+      className={clsx(
+        'map-control-button',
+        isActive && 'map-control-button--active',
+      )}
       onClick={onClick}
-      disabled
       title="Show the data layers"
     >
       <LayersIcon />

@@ -4,6 +4,9 @@ import { LatLngBoundsLiteral, LatLngTuple } from 'leaflet'
 
 import { RootState } from '@/app/store'
 import OmrrData from '@/interfaces/omrr'
+import { DataLayer } from '@/interfaces/data-layers'
+import { useCallback } from 'react'
+import { BottomDrawerContentEnum } from '@/constants/constants'
 
 export interface ZoomPosition {
   position: LatLngTuple
@@ -20,6 +23,10 @@ export interface MapSliceState {
   sidebarWidth: number
   // Keep track of if a single item has been selected
   selectedItem?: OmrrData
+  // Selected data layers
+  dataLayers: DataLayer[]
+  // On small screens - defines which type of content is shown in the bottom drawer
+  bottomDrawerContentType?: BottomDrawerContentEnum
 }
 
 export const initialState: MapSliceState = {
@@ -29,6 +36,8 @@ export const initialState: MapSliceState = {
   isDrawerExpanded: false,
   sidebarWidth: 0,
   selectedItem: undefined,
+  dataLayers: [],
+  bottomDrawerContentType: undefined,
 }
 
 export const mapSlice = createSlice({
@@ -60,6 +69,30 @@ export const mapSlice = createSlice({
     clearSelectedItem: (state) => {
       state.selectedItem = undefined
     },
+    toggleDataLayer: (state, action: PayloadAction<DataLayer>) => {
+      const layer = action.payload
+      const newLayers = [...state.dataLayers]
+      // Layers are cloned - need to compare names
+      const index = newLayers.findIndex(
+        (dl) => dl === layer || dl.name === layer.name,
+      )
+      if (index === -1) {
+        newLayers.push(layer)
+      } else {
+        newLayers.splice(index, 1)
+      }
+      state.dataLayers = newLayers
+    },
+    resetDataLayers: (state) => {
+      state.dataLayers = []
+    },
+    setBottomDrawerContent: (
+      state,
+      action: PayloadAction<BottomDrawerContentEnum | undefined>,
+    ) => {
+      state.bottomDrawerContentType = action.payload
+      state.isDrawerExpanded = Boolean(action.payload)
+    },
   },
 })
 
@@ -71,6 +104,9 @@ export const {
   setSidebarWidth,
   setSelectedItem,
   clearSelectedItem,
+  toggleDataLayer,
+  resetDataLayers,
+  setBottomDrawerContent,
 } = mapSlice.actions
 
 // Selectors
@@ -89,3 +125,23 @@ export const useSidebarWidth = () => useSelector(selectSidebarWidth)
 
 const selectSelectedItem = (state: RootState) => state.map.selectedItem
 export const useSelectedItem = () => useSelector(selectSelectedItem)
+
+const selectDataLayers = (state: RootState) => state.map.dataLayers
+export const useDataLayers = () => useSelector(selectDataLayers)
+export const useIsDataLayerOn = () => {
+  const dataLayers = useSelector(selectDataLayers)
+  return useCallback(
+    (layer: DataLayer) => {
+      return Boolean(
+        dataLayers.find((dl) => dl === layer || dl.name === layer.name),
+      )
+    },
+    [dataLayers],
+  )
+}
+export const useHasDataLayersOn = () => useSelector(selectDataLayers).length > 0
+
+const selectBottomDrawerContentType = (state: RootState) =>
+  state.map.bottomDrawerContentType
+export const useBottomDrawerContentType = () =>
+  useSelector(selectBottomDrawerContentType)

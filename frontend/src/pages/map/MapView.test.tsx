@@ -2,7 +2,8 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
-import { initialState } from '@/features/omrr/omrr-slice'
+import { initialState as initialOmrrState } from '@/features/omrr/omrr-slice'
+import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
 import MapView from './MapView'
@@ -15,16 +16,14 @@ describe('Test suite for MapView', () => {
       withRouter: true,
       initialState: {
         omrr: {
-          ...initialState,
+          ...initialOmrrState,
           allResults: mockOmrrData,
           searchByFilteredResults: mockOmrrData,
           filteredResults: mockOmrrData,
           status: 'succeeded',
         },
         map: {
-          isMyLocationVisible: false,
-          isDrawerExpanded: false,
-          sidebarWidth: 0,
+          ...initialMapState,
         },
       },
     })
@@ -49,13 +48,12 @@ describe('Test suite for MapView', () => {
       withStateProvider: true,
       initialState: {
         omrr: {
-          ...initialState,
+          ...initialOmrrState,
           status: 'succeeded',
         },
         map: {
+          ...initialMapState,
           isMyLocationVisible: true,
-          isDrawerExpanded: false,
-          sidebarWidth: 0,
         },
       },
     })

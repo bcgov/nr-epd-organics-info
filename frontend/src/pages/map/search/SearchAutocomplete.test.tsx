@@ -2,7 +2,8 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
-import { initialState } from '@/features/omrr/omrr-slice'
+import { initialState as initialOmrrState } from '@/features/omrr/omrr-slice'
+import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { SEARCH_BY_ALL } from '@/interfaces/types'
 import { SearchAutocomplete } from './SearchAutocomplete'
@@ -13,7 +14,7 @@ describe('Test suite for SearchAutocomplete', () => {
       withStateProvider: true,
       initialState: {
         omrr: {
-          ...initialState,
+          ...initialOmrrState,
           // Use all results
           searchBy: SEARCH_BY_ALL,
           allResults: mockOmrrData,
@@ -22,9 +23,7 @@ describe('Test suite for SearchAutocomplete', () => {
           status: 'succeeded',
         },
         map: {
-          isDrawerExpanded: false,
-          isMyLocationVisible: false,
-          sidebarWidth: 0,
+          ...initialMapState,
         },
       },
     })

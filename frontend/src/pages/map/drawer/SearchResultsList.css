@@ -5,24 +5,9 @@
   justify-content: flex-start;
   align-items: stretch;
   gap: 24px;
-  padding: 0;
+  padding: 0 0 24px 0;
   margin: 0;
   overflow: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #4e4e4e transparent;
-}
-
-.search-results-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.search-results-list::-webkit-scrollbar-thumb {
-  background: #4e4e4e;
-  border-radius: 8px;
-}
-
-.search-results-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
 
 .search-results-list--no-scrollbars {
