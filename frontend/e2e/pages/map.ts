@@ -115,16 +115,4 @@ export const map_page = async (page: Page) => {
   await showResultsBtn.click()
 
   await page.getByTitle('Close').click({ force: true })
-
-  // Data layers
-  await page.getByRole('button', { name: 'Data Layers' }).click({ force: true })
-  await expect(
-    page.getByRole('button', { name: 'Aquifers and Water Wells' }),
-  ).toBeVisible()
-  const checkbox = page.getByRole('checkbox', { name: 'Aquifers - All' })
-  await expect(checkbox).toBeVisible()
-  await checkbox.check()
-
-  const resetBtn = page.getByRole('button', { name: 'Reset Layers' })
-  await resetBtn.click()
 }

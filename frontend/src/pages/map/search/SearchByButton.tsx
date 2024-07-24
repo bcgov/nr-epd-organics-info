@@ -50,7 +50,7 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
         variant="contained"
         color="secondary"
         size="medium"
-        className={clsx('map-button', 'map-button--medium')}
+        className="map-button map-button--medium"
         openClassName="map-button--active"
         dropdownContent={content}
       >
@@ -69,6 +69,7 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
         isActive && 'map-button--active',
       )}
       onClick={onClick}
+      aria-label="Search By"
     >
       {label}
     </Button>

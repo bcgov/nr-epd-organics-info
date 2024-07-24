@@ -64,7 +64,7 @@ export function FilterByCheckboxGroup({
               className="filter-by-reset-link"
               onClick={onReset}
             >
-              Reset Filters
+              Reset
             </Button>
           )}
         </div>

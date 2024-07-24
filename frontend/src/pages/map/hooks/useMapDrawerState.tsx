@@ -8,6 +8,7 @@ import {
 import {
   clearSelectedItem,
   setDrawerExpanded,
+  useBottomDrawerContentType,
   useDrawerExpanded,
   useSelectedItem,
 } from '@/features/map/map-slice'
@@ -27,19 +28,18 @@ export function useMapDrawerState(isSmallScreen: boolean) {
   const isDrawerExpanded = useDrawerExpanded()
   const selectedItem = useSelectedItem()
   const lastSearchTime = useLastSearchTime()
+  const contentType = useBottomDrawerContentType()
   const [visible, setVisible] = useState<boolean>(false)
   // Keep track of whether the drawer has been expanded for the first time
   const initialExpansionRef = useRef<boolean>(false)
 
+  const hasSelectedItem = Boolean(selectedItem)
+  const hasContentType = Boolean(contentType) && isSmallScreen
   useEffect(() => {
-    // Show the drawer whenever there are filtered results
-    // or a single item is selected
-    setVisible(!allResultsShowing || Boolean(selectedItem))
-    // For small screens also show the drawer when other displays like
-    // point/polygon tool, search by, or filter by is active
-    // if (isSmallScreen) {
-    // }
-  }, [allResultsShowing, selectedItem])
+    // Show the drawer whenever there are filtered results, a single item is selected
+    // or on small screens when the point/polygon tools or search by/filter by are active
+    setVisible(!allResultsShowing || hasSelectedItem || hasContentType)
+  }, [allResultsShowing, hasSelectedItem, hasContentType])
 
   // When the drawer is made visible, expand it
   // On small screens always expand when the search results change
