@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 
-import SearchIcon from '@/assets/svgs/fa-search.svg?react'
-import { SearchDialog } from '@/pages/map/search/SearchDialog'
+import { SearchDialog } from './SearchDialog'
 
-export function SearchButton() {
+import SearchIcon from '@/assets/svgs/fa-search.svg?react'
+
+export function TextSearchButton() {
   const [open, setOpen] = useState<boolean>(false)
 
   return (
@@ -21,7 +22,7 @@ export function SearchButton() {
         )}
         startIcon={<SearchIcon title="Search icon" />}
         onClick={() => setOpen(true)}
-        aria-label="Search"
+        aria-label="Text Search"
       >
         Text Search
       </Button>

@@ -7,6 +7,7 @@ import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
 import MapView from './MapView'
+import { ActiveToolEnum } from '@/constants/constants'
 
 describe('Test suite for MapView', () => {
   it('should render the MapView with markers', async () => {
@@ -42,7 +43,7 @@ describe('Test suite for MapView', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('should render the MapView with no markers on a small screen', async () => {
+  it.only('should render the MapView with no markers on a small screen', async () => {
     const { user } = render(<MapView />, {
       screenWidth: themeBreakpointValues.sm - 10,
       withStateProvider: true,
@@ -107,5 +108,16 @@ describe('Test suite for MapView', () => {
     const resetLink = screen.getByRole('button', { name: 'Reset' })
     await user.click(resetLink)
     expect(screen.queryByText('Reset')).not.toBeInTheDocument()
+
+    const searchBtn = screen.getByRole('button', { name: 'Text Search' })
+    expect(searchBtn).not.toHaveClass('map-button--active')
+    await user.click(searchBtn)
+
+    expect(searchBtn).toHaveClass('map-button--active')
+    screen.getByPlaceholderText('Search')
+    const backBtn = screen.getByTitle('Back to the map')
+
+    await user.click(backBtn)
+    expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
   })
 })

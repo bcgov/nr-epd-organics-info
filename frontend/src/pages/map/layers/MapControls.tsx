@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import {
-  BottomDrawerContentEnum,
+  ActiveToolEnum,
   MAP_BOTTOM_DRAWER_HEIGHT,
-  MAP_BOTTOM_DRAWER_HEIGHT_SEARCH_BY,
+  MAP_BOTTOM_DRAWER_HEIGHT_SMALL,
   MAP_CONTROLS_BOTTOM_LG,
   MAP_CONTROLS_BOTTOM_SM,
   MAP_CONTROLS_RIGHT_LG,
@@ -13,7 +13,7 @@ import {
   MAP_CONTROLS_RIGHT_XL,
 } from '@/constants/constants'
 import {
-  useBottomDrawerContentType,
+  useActiveTool,
   useDrawerExpanded,
   useSidebarWidth,
 } from '@/features/map/map-slice'
@@ -31,8 +31,11 @@ export function MapControls() {
   const isLarge = useMediaQuery(theme.breakpoints.down('xl'))
   const sidebarWidth = useSidebarWidth()
   const isExpanded = useDrawerExpanded()
-  const contentType = useBottomDrawerContentType()
-  const isSearchBy = contentType === BottomDrawerContentEnum.searchBy
+  const activeTool = useActiveTool()
+  const isSearchBy = activeTool === ActiveToolEnum.searchBy
+  const isPointPolygon =
+    activeTool === ActiveToolEnum.pointSearch ||
+    activeTool === ActiveToolEnum.polygonSearch
 
   // Shift the controls based on screen size and whether the sidebar or bottom drawer is expanded
   let right = MAP_CONTROLS_RIGHT_XL
@@ -52,10 +55,10 @@ export function MapControls() {
   } else if (isMedium && !isSmall && isExpanded) {
     // medium devices only - shift the controls up bottom drawer height
     let height = MAP_BOTTOM_DRAWER_HEIGHT
-    if (isSearchBy) {
-      height = MAP_BOTTOM_DRAWER_HEIGHT_SEARCH_BY
-      bottom = height + bottom
+    if (isSearchBy || isPointPolygon) {
+      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
     }
+    bottom = height + bottom
   }
 
   const style = useMemo(

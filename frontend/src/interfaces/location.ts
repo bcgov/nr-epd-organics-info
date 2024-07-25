@@ -1,4 +1,4 @@
-import { LatLngLiteral } from 'leaflet'
+import { LatLngTuple } from 'leaflet'
 
 export interface Location {
   latitude: number
@@ -6,7 +6,7 @@ export interface Location {
 }
 
 export interface MyLocationData {
-  position?: LatLngLiteral
+  position?: LatLngTuple
   accuracy?: number
 }
 

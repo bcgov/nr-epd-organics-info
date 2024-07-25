@@ -5,11 +5,19 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
+import { LatLngTuple } from 'leaflet'
+import { useLocation } from 'react-router-dom'
 import rfdc from 'rfdc'
 
 import { RootState } from '@/app/store'
+import { LoadingStatusType } from '@/interfaces/loading-status'
 import OmrrData from '@/interfaces/omrr'
-import { facilityTypeFilters, OmrrFilter } from '@/interfaces/omrr-filter'
+import {
+  facilityTypeFilters,
+  OmrrFilter,
+  CircleFilter,
+  PolygonFilter,
+} from '@/interfaces/omrr-filter'
 import { SEARCH_BY_ACTIVE } from '@/interfaces/types'
 import OmrrResponse from '@/interfaces/omrr-response'
 import apiService from '@/service/api-service'
@@ -22,11 +30,16 @@ import {
   sortDataByPosition,
 } from './omrr-utils'
 import { MIN_SEARCH_LENGTH } from '@/constants/constants'
-import { LatLngLiteral } from 'leaflet'
-import { useLocation } from 'react-router-dom'
-import { LoadingStatusType } from '@/interfaces/loading-status'
 
 const deepClone = rfdc({ circles: true })
+
+export const fetchOMRRData = createAsyncThunk(
+  'data/fetchOMRRRecords',
+  async () => {
+    const result = await apiService.getAxiosInstance().get('/omrr')
+    return result?.data
+  },
+)
 
 export interface OmrrSliceState {
   lastModified: string
@@ -41,15 +54,9 @@ export interface OmrrSliceState {
   searchTextFilter: string
   // The timestamp when the user last performed a search or filter
   lastSearchTime?: number
+  polygonFilter?: PolygonFilter
+  circleFilter?: CircleFilter
 }
-
-export const fetchOMRRData = createAsyncThunk(
-  'data/fetchOMRRRecords',
-  async () => {
-    const result = await apiService.getAxiosInstance().get('/omrr')
-    return result?.data
-  },
-)
 
 export const initialState: OmrrSliceState = {
   lastModified: '',
@@ -125,7 +132,7 @@ export const omrrSlice = createSlice({
     },
     sortFilteredResultsByPosition: (
       state,
-      action: PayloadAction<LatLngLiteral>,
+      action: PayloadAction<LatLngTuple>,
     ) => {
       state.filteredResults = sortDataByPosition(
         state.filteredResults,
@@ -139,6 +146,20 @@ export const omrrSlice = createSlice({
     },
     setSearchTextFilter: (state, action: PayloadAction<string>) => {
       state.searchTextFilter = action.payload
+      performSearch(state)
+    },
+    setPolygonFilter: (
+      state,
+      action: PayloadAction<PolygonFilter | undefined>,
+    ) => {
+      state.polygonFilter = action.payload
+      performSearch(state)
+    },
+    setCircleFilter: (
+      state,
+      action: PayloadAction<CircleFilter | undefined>,
+    ) => {
+      state.circleFilter = action.payload
       performSearch(state)
     },
   },
@@ -185,6 +206,8 @@ export const {
   sortFilteredResultsByPosition,
   setPage,
   setSearchTextFilter,
+  setPolygonFilter,
+  setCircleFilter,
 } = omrrSlice.actions
 
 export default omrrSlice.reducer
@@ -245,3 +268,8 @@ export const useAllResultsShowing = () => {
 
 const selectLastSearchTime = (state: RootState) => state.omrr.lastSearchTime
 export const useLastSearchTime = () => useSelector(selectLastSearchTime)
+
+const selectPolygonFilter = (state: RootState) => state.omrr.polygonFilter
+export const usePolygonFilter = () => useSelector(selectPolygonFilter)
+const selectCircleFilter = (state: RootState) => state.omrr.circleFilter
+export const useCircleFilter = () => useSelector(selectCircleFilter)

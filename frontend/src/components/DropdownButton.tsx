@@ -3,7 +3,7 @@ import { Button, ButtonProps, MenuProps } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import clsx from 'clsx'
 
-import downArrow from '@/assets/svgs/fa-caret-down.svg'
+import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 import './DropdownButton.css'
 
@@ -68,7 +68,7 @@ export function DropdownButton({
         aria-label={typeof children === 'string' ? children : undefined}
         endIcon={
           showArrow ? (
-            <img src={downArrow} alt="Down arrow" {...arrowProps} />
+            <DownArrow title="Down arrow" {...arrowProps} />
           ) : undefined
         }
         {...buttonProps}

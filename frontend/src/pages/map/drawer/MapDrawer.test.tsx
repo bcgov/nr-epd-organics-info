@@ -52,7 +52,6 @@ describe('Test suite for MapDrawer', () => {
       const isExpanded = useDrawerExpanded()
       const zoomPosition = useSelector(selectZoomPosition)
       const zoomBounds = useSelector(selectZoomBounds)
-
       Object.assign(state, { isExpanded, zoomBounds, zoomPosition })
 
       return <MapDrawer />

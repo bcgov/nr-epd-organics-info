@@ -6,7 +6,7 @@ import { RootState } from '@/app/store'
 import OmrrData from '@/interfaces/omrr'
 import { DataLayer } from '@/interfaces/data-layers'
 import { useCallback } from 'react'
-import { BottomDrawerContentEnum } from '@/constants/constants'
+import { ActiveToolEnum } from '@/constants/constants'
 
 export interface ZoomPosition {
   position: LatLngTuple
@@ -25,8 +25,9 @@ export interface MapSliceState {
   selectedItem?: OmrrData
   // Selected data layers
   dataLayers: DataLayer[]
-  // On small screens - defines which type of content is shown in the bottom drawer
-  bottomDrawerContentType?: BottomDrawerContentEnum
+  // Keeps track of the active tool - point/polygon search (all screen sizes), and
+  // data layers, search by and filter by (small screens only - shown in bottom drawer)
+  activeTool?: ActiveToolEnum
 }
 
 export const initialState: MapSliceState = {
@@ -37,7 +38,7 @@ export const initialState: MapSliceState = {
   sidebarWidth: 0,
   selectedItem: undefined,
   dataLayers: [],
-  bottomDrawerContentType: undefined,
+  activeTool: undefined,
 }
 
 export const mapSlice = createSlice({
@@ -86,12 +87,13 @@ export const mapSlice = createSlice({
     resetDataLayers: (state) => {
       state.dataLayers = []
     },
-    setBottomDrawerContent: (
+    setActiveTool: (
       state,
-      action: PayloadAction<BottomDrawerContentEnum | undefined>,
+      action: PayloadAction<ActiveToolEnum | undefined>,
     ) => {
-      state.bottomDrawerContentType = action.payload
-      state.isDrawerExpanded = Boolean(action.payload)
+      // Toggle the tool
+      const tool = action.payload
+      state.activeTool = state.activeTool === tool ? undefined : tool
     },
   },
 })
@@ -106,7 +108,7 @@ export const {
   clearSelectedItem,
   toggleDataLayer,
   resetDataLayers,
-  setBottomDrawerContent,
+  setActiveTool,
 } = mapSlice.actions
 
 // Selectors
@@ -141,7 +143,5 @@ export const useIsDataLayerOn = () => {
 }
 export const useHasDataLayersOn = () => useSelector(selectDataLayers).length > 0
 
-const selectBottomDrawerContentType = (state: RootState) =>
-  state.map.bottomDrawerContentType
-export const useBottomDrawerContentType = () =>
-  useSelector(selectBottomDrawerContentType)
+const selectActiveTool = (state: RootState) => state.map.activeTool
+export const useActiveTool = () => useSelector(selectActiveTool)

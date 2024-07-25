@@ -18,7 +18,9 @@
   height: 320px;
 }
 
-.map-bottom-drawer--expanded.map-bottom-drawer--searchBy {
+.map-bottom-drawer--expanded.map-bottom-drawer--searchBy,
+.map-bottom-drawer--expanded.map-bottom-drawer--pointSearch,
+.map-bottom-drawer--expanded.map-bottom-drawer--polygonSearch {
   height: 160px;
 }
 
