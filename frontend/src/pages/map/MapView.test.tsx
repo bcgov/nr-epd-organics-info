@@ -43,7 +43,7 @@ describe('Test suite for MapView', () => {
     ).not.toBeInTheDocument()
   })
 
-  it.only('should render the MapView with no markers on a small screen', async () => {
+  it('should render the MapView with no markers on a small screen', async () => {
     const { user } = render(<MapView />, {
       screenWidth: themeBreakpointValues.sm - 10,
       withStateProvider: true,
