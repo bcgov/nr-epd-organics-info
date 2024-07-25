@@ -113,4 +113,6 @@ export const map_page = async (page: Page) => {
   const showResultsBtn = page.getByRole('button', { name: 'Show Results' })
   await expect(showResultsBtn).toBeVisible()
   await showResultsBtn.click()
+
+  await page.getByTitle('Close').click({ force: true })
 }

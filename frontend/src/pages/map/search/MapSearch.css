@@ -74,11 +74,16 @@ button.map-button--active:hover {
   border-color: var(--surface-color-primary-active-border);
 }
 
-
 .data-layers-icon, .find-me-icon {
   color: var(--typography-color-secondary);
 }
 
 .polygon-search-icon, .point-search-icon {
   color: var(--typography-color-primary);
+}
+
+.dropdown-button-menu.data-layers-button-menu .MuiPaper-root {
+  /* Fit remaining vertical space */
+  max-height: calc(100vh - 265px);
+  max-width: 413px;
 }

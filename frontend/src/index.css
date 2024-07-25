@@ -42,6 +42,24 @@ html, body {
   flex: 1 1 100%;
 }
 
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4e4e4e transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #4e4e4e;
+  border-radius: 8px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 button.MuiButton-sizeMedium {
   display: flex;
   align-items: center;

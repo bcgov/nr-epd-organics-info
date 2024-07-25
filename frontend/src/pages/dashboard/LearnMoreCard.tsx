@@ -70,7 +70,7 @@ export function LearnMoreCard({
   icon,
   actions,
   divider = true,
-}: Props) {
+}: Readonly<Props>) {
   const titleElement = (
     <Link sx={styles.title} target="_blank" href={link}>
       {title}

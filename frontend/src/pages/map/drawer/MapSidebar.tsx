@@ -1,9 +1,9 @@
-import { MouseEvent, ReactNode } from 'react'
+import { MouseEvent } from 'react'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
 
-import { useSelectedItem } from '@/features/map/map-slice'
-import { useCalculateSidebarWidth } from '../hooks/useCalculateSidebarWidth'
+import { useSelectedItem, useSidebarWidth } from '@/features/map/map-slice'
+import { SearchResultsList } from './SearchResultsList'
 import { SidebarToggleButton } from './SidebarToggleButton'
 import { ZoomToButton } from './ZoomToButton'
 
@@ -12,20 +12,13 @@ import CloseIcon from '@/assets/svgs/close.svg?react'
 import './MapSidebar.css'
 
 interface Props {
-  children?: ReactNode
   isExpanded: boolean
   setExpanded: (expanded: boolean, ev: MouseEvent) => void
 }
 
-export function MapSidebar({
-  children,
-  isExpanded,
-  setExpanded,
-}: Readonly<Props>) {
+export function MapSidebar({ isExpanded, setExpanded }: Readonly<Props>) {
   const selectedItem = useSelectedItem()
-  // This hook calculates the sidebar width based on screen size
-  // It also updates the sidebarWidth state which other components use
-  const expandedWidth = useCalculateSidebarWidth()
+  const expandedWidth = useSidebarWidth()
 
   const onClose = (ev: MouseEvent) => {
     setExpanded(false, ev)
@@ -59,7 +52,7 @@ export function MapSidebar({
             <CloseIcon className="map-sidebar-close-icon" />
           </IconButton>
         </div>
-        {children}
+        <SearchResultsList />
         <SidebarToggleButton isExpanded={isExpanded} setExpanded={setExpanded}>
           {isExpanded ? 'Hide Results' : 'Show Results'}
         </SidebarToggleButton>

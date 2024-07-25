@@ -9,6 +9,7 @@ import {
   SEARCH_BY_INACTIVE,
 } from '@/interfaces/types'
 import { setSearchBy, useSearchBy } from '@/features/omrr/omrr-slice'
+import clsx from 'clsx'
 
 interface Props extends Omit<RadioGroupProps, 'value'> {
   defaultValue?: string
@@ -18,6 +19,7 @@ export function SearchByRadioGroup({
   defaultValue = SEARCH_BY_ALL,
   onChange,
   row = true,
+  className,
   sx,
   ...rest
 }: Readonly<Props>) {
@@ -37,6 +39,7 @@ export function SearchByRadioGroup({
   return (
     <RadioGroup
       {...rest}
+      className={clsx('search-by-radio-group', className)}
       defaultValue={defaultValue}
       name="search-by-group"
       value={searchBy}

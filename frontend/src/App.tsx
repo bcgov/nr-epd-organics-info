@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Box, CircularProgress, Stack } from '@mui/material'
 
 import Header from '@/components/Header'

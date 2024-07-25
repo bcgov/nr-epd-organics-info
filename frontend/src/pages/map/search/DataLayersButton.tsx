@@ -1,5 +1,6 @@
 import DropdownButton from '@/components/DropdownButton'
 import { useDrawerExpanded } from '@/features/map/map-slice'
+import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
 
 import layersIcon from '@/assets/svgs/fa-layers.svg'
 
@@ -13,9 +14,11 @@ export function DataLayersButton() {
       variant="contained"
       size="large"
       color="secondary"
-      className="map-button map-button--large data-layers-button"
+      className="map-button map-button--large"
+      menuClassName="data-layers-button-menu"
       startIcon={<img src={layersIcon} alt="Data layers icon" />}
-      disabled
+      dropdownContent={<DataLayersCheckboxGroup />}
+      horizontalAlign="right"
     >
       Data Layers
     </DropdownButton>

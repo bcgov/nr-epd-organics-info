@@ -34,7 +34,10 @@ export function SearchResultsList({
   const itemRenderer = (item: OmrrData) => (
     <AuthorizationListItem
       key={`SearchResultListItem-${item['Authorization Number']}`}
-      className="search-results-list-item"
+      className={clsx(
+        'search-results-list-item',
+        scrollBars && 'thin-scrollbar',
+      )}
       item={item}
       fullDetails={Boolean(selectedItem)}
     />

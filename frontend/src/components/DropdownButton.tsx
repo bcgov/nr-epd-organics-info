@@ -22,6 +22,7 @@ interface ButtonDropdownProps extends ButtonProps {
   openClassName?: string
   menuClassName?: string
   menuProps?: Partial<MenuProps>
+  horizontalAlign?: 'left' | 'right'
   [key: string]: any
 }
 
@@ -35,6 +36,7 @@ export function DropdownButton({
   openClassName,
   menuClassName,
   menuProps,
+  horizontalAlign = 'left',
   ...rest
 }: Readonly<ButtonDropdownProps>) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -77,11 +79,11 @@ export function DropdownButton({
       <Menu
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: horizontalAlign,
         }}
         transformOrigin={{
           vertical: -6,
-          horizontal: 'left',
+          horizontal: horizontalAlign,
         }}
         elevation={0}
         {...menuProps}
