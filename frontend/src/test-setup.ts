@@ -45,6 +45,25 @@ if (typeof window.URL.revokeObjectURL === 'undefined') {
   })
 }
 
+// Support SVG in leaflet, so that Polylines work
+// https://stackoverflow.com/questions/54382414/fixing-react-leaflet-testing-error-cannot-read-property-layeradd-of-null/54384719#54384719
+const createElementNSOrig = document.createElementNS
+// @ts-ignore
+document.createElementNS = function (namespaceURI, qualifiedName) {
+  if (
+    namespaceURI === 'http://www.w3.org/2000/svg' &&
+    qualifiedName === 'svg'
+  ) {
+    const element = createElementNSOrig.apply(this, [
+      namespaceURI,
+      qualifiedName,
+    ])
+    ;(element as any).createSVGRect = () => {}
+    return element
+  }
+  return createElementNSOrig.apply(this, [namespaceURI, qualifiedName])
+}
+
 // Define geolocation and permissions query
 const geoLocationResult: GeolocationPosition = {
   coords: {

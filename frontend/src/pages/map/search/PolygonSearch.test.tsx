@@ -1,15 +1,11 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { PolygonSearch } from './PolygonSearch'
 import { render } from '@/test-utils'
-import {
-  initialState,
-  useCircleFilter,
-  usePolygonFilter,
-} from '@/features/omrr/omrr-slice'
+import { initialState, usePolygonFilter } from '@/features/omrr/omrr-slice'
 import { useActiveTool } from '@/features/map/map-slice'
-import { CircleFilter, PolygonFilter } from '@/interfaces/omrr-filter'
-import { ActiveToolEnum, MIN_CIRCLE_RADIUS } from '@/constants/constants'
+import { PolygonFilter } from '@/interfaces/omrr-filter'
+import { ActiveToolEnum } from '@/constants/constants'
 import { LatLngTuple } from 'leaflet'
 
 interface State {

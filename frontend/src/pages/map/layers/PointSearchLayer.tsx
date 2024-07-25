@@ -5,8 +5,8 @@ import { Circle, useMap, useMapEvents } from 'react-leaflet'
 import { ActiveToolEnum, MIN_CIRCLE_RADIUS } from '@/constants/constants'
 import { useActiveTool } from '@/features/map/map-slice'
 import { setCircleFilter, useCircleFilter } from '@/features/omrr/omrr-slice'
-import { useMapCrosshairsCursor } from '@/pages/map/hooks/useMapCrosshairsCursor'
-import { CrosshairsTooltipMarker } from '@/pages/map/layers/CrosshairsTooltipMarker'
+import { useMapCrosshairsCursor } from '../hooks/useMapCrosshairsCursor'
+import { CrosshairsTooltipMarker } from './CrosshairsTooltipMarker'
 
 export function PointSearchLayer() {
   const activeTool = useActiveTool()
@@ -42,7 +42,6 @@ function CircleLayer() {
           stroke
           fill
           className="point-search-circle"
-          data-testid="point-search-circle"
         />
       )}
     </>

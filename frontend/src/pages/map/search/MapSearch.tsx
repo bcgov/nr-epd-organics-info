@@ -71,13 +71,11 @@ export function MapSearch() {
         <FilterByButton isLarge={isLarge} />
       </HorizontalScroller>
       {isLarge && (isPolygonTool || isPointTool) && (
-        <>
-          <div className="map-search-tool-row">
-            <div className="map-search-tool-box">
-              {isPolygonTool ? <PolygonSearch /> : <PointSearch />}
-            </div>
+        <div className="map-search-tool-row">
+          <div className="map-search-tool-box">
+            {isPolygonTool ? <PolygonSearch /> : <PointSearch />}
           </div>
-        </>
+        </div>
       )}
     </Box>
   )

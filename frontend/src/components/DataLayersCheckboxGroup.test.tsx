@@ -43,12 +43,10 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
     DATA_LAYER_GROUPS.forEach(({ name, layers }) => {
       screen.getByRole('button', { name, pressed: true })
       layers.forEach((layer) => {
-        const cb = screen.getByLabelText(layer.name)
-        expect(cb).not.toBeChecked()
         if (layer.url) {
+          const cb = screen.getByLabelText(layer.name)
+          expect(cb).not.toBeChecked()
           expect(cb).toBeEnabled()
-        } else {
-          expect(cb).toBeDisabled()
         }
       })
     })

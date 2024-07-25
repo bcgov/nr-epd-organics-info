@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
@@ -7,11 +7,7 @@ import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 import { ActiveToolEnum } from '@/constants/constants'
-import {
-  setActiveTool,
-  setDrawerExpanded,
-  useActiveTool,
-} from '@/features/map/map-slice'
+import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
 import { setCircleFilter, setPolygonFilter } from '@/features/omrr/omrr-slice'
 import { SearchResultsList } from './SearchResultsList'
 import { PolygonSearch } from '../search/PolygonSearch'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { initialState as initialOmrrState } from '@/features/omrr/omrr-slice'
@@ -7,12 +7,16 @@ import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
 import MapView from './MapView'
-import { ActiveToolEnum } from '@/constants/constants'
+import OmrrData from '@/interfaces/omrr'
 
 describe('Test suite for MapView', () => {
-  it('should render the MapView with markers', async () => {
-    render(<MapView />, {
-      screenWidth: themeBreakpointValues.xxl,
+  function renderComponent(
+    screenWidth: number,
+    filteredResults: OmrrData[] = mockOmrrData,
+    isMyLocationVisible = false,
+  ) {
+    return render(<MapView />, {
+      screenWidth,
       withStateProvider: true,
       withRouter: true,
       initialState: {
@@ -20,14 +24,18 @@ describe('Test suite for MapView', () => {
           ...initialOmrrState,
           allResults: mockOmrrData,
           searchByFilteredResults: mockOmrrData,
-          filteredResults: mockOmrrData,
+          filteredResults,
           status: 'succeeded',
         },
         map: {
           ...initialMapState,
+          isMyLocationVisible,
         },
       },
     })
+  }
+  it('should render the MapView with markers', async () => {
+    renderComponent(themeBreakpointValues.xxl)
 
     const mapView = screen.getByTestId('map-view')
     expect(mapView).not.toHaveClass('map-view--small')
@@ -44,20 +52,7 @@ describe('Test suite for MapView', () => {
   })
 
   it('should render the MapView with no markers on a small screen', async () => {
-    const { user } = render(<MapView />, {
-      screenWidth: themeBreakpointValues.sm - 10,
-      withStateProvider: true,
-      initialState: {
-        omrr: {
-          ...initialOmrrState,
-          status: 'succeeded',
-        },
-        map: {
-          ...initialMapState,
-          isMyLocationVisible: true,
-        },
-      },
-    })
+    const { user } = renderComponent(themeBreakpointValues.sm - 10, [], true)
 
     const mapView = screen.getByTestId('map-view')
     expect(mapView).toHaveClass('map-view--small')
@@ -119,5 +114,96 @@ describe('Test suite for MapView', () => {
 
     await user.click(backBtn)
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
+  })
+
+  it('should render the MapView and test point search', async () => {
+    const { user } = renderComponent(themeBreakpointValues.xxl, mockOmrrData)
+
+    const pointSearchBtn = screen.getByRole('button', { name: 'Point Search' })
+    await user.click(pointSearchBtn)
+
+    const cancelBtn = screen.getByRole('button', { name: 'Cancel' })
+    screen.getByRole('button', { name: 'Set Radius' })
+    screen.getByText('Click to place center point')
+
+    const map = document.querySelector('.leaflet-container') as HTMLElement
+    await user.click(map)
+
+    expect(document.querySelector('.point-search-circle')).toBeInTheDocument()
+
+    await user.click(cancelBtn)
+
+    expect(
+      screen.queryByText('Click to place center point'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('should render the MapView and test polygon search', async () => {
+    const { user } = renderComponent(themeBreakpointValues.xxl, mockOmrrData)
+
+    const pointSearchBtn = screen.getByRole('button', {
+      name: 'Polygon Search',
+    })
+    await user.click(pointSearchBtn)
+
+    const cancelBtn = screen.getByRole('button', { name: 'Cancel' })
+    const deleteBtn = screen.getByRole('button', { name: 'Delete Last Point' })
+    expect(deleteBtn).toBeDisabled()
+    const finishBtn = screen.getByRole('button', { name: 'Finish Shape' })
+    expect(finishBtn).toBeDisabled()
+    screen.getByText('Click to start drawing shape')
+
+    expect(
+      document.querySelector('.polygon-search-line--dotted'),
+    ).not.toBeInTheDocument()
+    expect(
+      document.querySelector('.polygon-search-line'),
+    ).not.toBeInTheDocument()
+    expect(
+      document.querySelector('.polygon-search-polygon'),
+    ).not.toBeInTheDocument()
+
+    const map = document.querySelector('.leaflet-container') as HTMLElement
+    fireEvent.mouseOver(map)
+    fireEvent.mouseMove(map, { clientX: 50, clientY: 50 })
+    await user.click(map)
+    fireEvent.mouseMove(map, { clientX: 60, clientY: 60 })
+    await user.click(map)
+    fireEvent.mouseMove(map, { clientX: 60, clientY: 70 })
+    await user.click(map)
+    fireEvent.mouseOut(map)
+
+    const lines = document.querySelectorAll('.polygon-search-line')
+    expect(lines).toHaveLength(2)
+    expect(deleteBtn).toBeEnabled()
+    expect(finishBtn).toBeEnabled()
+
+    await user.click(cancelBtn)
+
+    expect(
+      screen.queryByText('Click to start drawing shape'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('should render the MapView and test data layers', async () => {
+    const { user } = renderComponent(themeBreakpointValues.xxl, [])
+
+    const dataLayersBtn = screen.getByRole('button', {
+      name: 'Data Layers',
+    })
+    await user.click(dataLayersBtn)
+
+    screen.getByText(/^All data layers sourced/)
+    expect(
+      screen.queryByRole('button', { name: 'Reset Layers' }),
+    ).not.toBeInTheDocument()
+    const layerCb = screen.getByRole('checkbox', { name: 'Aquifers - All' })
+    expect(layerCb).not.toBeChecked()
+    await user.click(layerCb)
+    expect(layerCb).toBeChecked()
+
+    const resetBtn = screen.getByRole('button', { name: 'Reset Layers' })
+    await user.click(resetBtn)
+    expect(layerCb).not.toBeChecked()
   })
 })
