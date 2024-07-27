@@ -1,8 +1,11 @@
-import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link, Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
-import { useFindApplicationStatus } from '@/features/omrr/application-status-slice'
+import {
+  selectStatus,
+  useFindApplicationStatus,
+} from '@/features/omrr/applications-slice'
 import { OmrrApplicationStatus } from '@/interfaces/omrr-application-status'
 
 import './ApplicationStatusSection.css'
@@ -13,14 +16,15 @@ interface Props {
 
 /**
  * Displays the details about an application status.
- * If there is no application status then null is returned and nothing is shown.
+ * If there are no application status items then null is returned and nothing is shown.
  */
 export function ApplicationStatusSection({ item }: Readonly<Props>) {
   const number = item['Authorization Number']
+  const status = useSelector(selectStatus)
   const allApplications: OmrrApplicationStatus[] =
     useFindApplicationStatus(number)
 
-  if (allApplications.length === 0) {
+  if (status !== 'succeeded' || allApplications.length === 0) {
     return null
   }
 

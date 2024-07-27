@@ -2,13 +2,18 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { fetchOMRRData, omrrSlice } from '@/features/omrr/omrr-slice'
 import { mapSlice } from '@/features/map/map-slice'
 import {
-  applicationStatusSlice,
+  applicationsSlice,
   fetchOmrrApplicationStatus,
-} from '@/features/omrr/application-status-slice'
+} from '@/features/omrr/applications-slice'
+import {
+  documentsSlice,
+  fetchOmrrDocuments,
+} from '@/features/omrr/documents-slice'
 
 const rootReducer = combineReducers({
   omrr: omrrSlice.reducer,
-  applicationStatus: applicationStatusSlice.reducer,
+  applications: applicationsSlice.reducer,
+  documents: documentsSlice.reducer,
   map: mapSlice.reducer,
 })
 
@@ -25,6 +30,7 @@ export const store = setupStore()
 export function loadApiData() {
   store.dispatch(fetchOMRRData())
   store.dispatch(fetchOmrrApplicationStatus())
+  store.dispatch(fetchOmrrDocuments())
 }
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

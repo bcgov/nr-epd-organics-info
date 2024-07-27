@@ -23,6 +23,8 @@
 }
 
 .document-table-link {
-  color: var(--typography-color-link, #255A90);
-  text-decoration-line: underline;
+  /* The links are not viewable yet so don't make them look like a link */
+  color: var(--typography-color-primary);
+  /* color: var(--typography-color-link); */
+  /* text-decoration-line: underline; */
 }

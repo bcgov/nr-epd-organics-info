@@ -12,12 +12,6 @@ import { OmrrApplicationStatus } from '@/interfaces/omrr-application-status'
 import apiService from '@/service/api-service'
 import { truncateDate } from '@/utils/utils'
 
-export interface ApplicationStatusSliceState {
-  status: LoadingStatusType
-  error?: string
-  allApplications: OmrrApplicationStatus[]
-}
-
 export const fetchOmrrApplicationStatus = createAsyncThunk(
   'data/fetchOmrrApplicationStatus',
   async () => {
@@ -28,19 +22,23 @@ export const fetchOmrrApplicationStatus = createAsyncThunk(
   },
 )
 
-export const initialState: ApplicationStatusSliceState = {
+export interface ApplicationsSliceState {
+  status: LoadingStatusType
+  error?: string
+  allApplications: OmrrApplicationStatus[]
+}
+
+export const initialState: ApplicationsSliceState = {
   status: 'idle',
   error: undefined,
   allApplications: [],
 }
 
-export const applicationStatusSlice = createSlice({
-  name: 'applicationStatus',
+export const applicationsSlice = createSlice({
+  name: 'applications',
   initialState,
   reducers: {},
-  extraReducers: (
-    builder: ActionReducerMapBuilder<ApplicationStatusSliceState>,
-  ) => {
+  extraReducers: (builder: ActionReducerMapBuilder<ApplicationsSliceState>) => {
     builder.addCase(fetchOmrrApplicationStatus.pending, (state) => {
       state.status = 'loading'
     })
@@ -71,15 +69,11 @@ export const applicationStatusSlice = createSlice({
   },
 })
 
-// export const {} = applicationStatusSlice.actions
-
-// export default applicationStatusSlice.reducer
-
 // Selectors
-//export const selectStatus = (state: RootState) => state.applicationStatus.status
+export const selectStatus = (state: RootState) => state.applications.status
 //export const selectError = (state: RootState) => state.applicationStatus.error
 export const selectAllApplications = (state: RootState) =>
-  state.applicationStatus.allApplications
+  state.applications.allApplications
 
 export const useFindApplicationStatus = (
   authorizationNumber: number,

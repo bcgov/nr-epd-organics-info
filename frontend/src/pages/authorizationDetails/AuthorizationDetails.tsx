@@ -76,7 +76,7 @@ export default function AuthorizationDetails() {
       <ApplicationStatusSection item={item} />
       <LocationSection item={item} />
       <DetailsSection item={item} />
-      <DocumentsSection />
+      <DocumentsSection item={item} />
     </Stack>
   )
 }

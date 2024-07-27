@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Stack, Typography } from '@mui/material'
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { LatLngTuple } from 'leaflet'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 
