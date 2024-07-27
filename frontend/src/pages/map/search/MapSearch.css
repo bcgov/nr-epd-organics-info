@@ -11,7 +11,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
-  gap: 1em 0.5rem;
+  gap: 16px 8px;
 }
 
 .map-search .MuiButton-root,
@@ -24,13 +24,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: 8px;
   flex: 1;
 }
 
 .map-search-row {
   flex: 1 1 100%;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 button.map-button {
@@ -86,4 +86,89 @@ button.map-button--active:hover {
   /* Fit remaining vertical space */
   max-height: calc(100vh - 265px);
   max-width: 413px;
+}
+
+.map-search-tool-row {
+  flex: 1 1 100%;
+  display: flex;
+}
+
+.map-search-tool-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--surface-color-background-white);
+  border: 1px solid var(--surface-color-border-light);
+  border-radius: 4px;
+  box-shadow: var(--box-shadow-small)
+}
+
+.polygon-search, .point-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.polygon-cancel-icon {
+  width: 14px;
+}
+
+.polygon-delete-icon {
+  width: 12px;
+}
+
+.polygon-finish-icon {
+  width: 16px;
+}
+
+.point-search-arrow {
+  color: white;
+}
+
+.point-search-slider-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.point-search-slider {
+  flex: 0 0 290px;
+  min-width: 290px;
+  max-width: min(290px, 80vw);
+  margin-left: 8px;
+}
+
+.point-search-slider--shrink {
+  min-width: 120px;
+  flex-shrink: 1;
+}
+
+.point-search-slider .MuiSlider-rail {
+  height: 8px;
+  border-radius: 16px;
+  background-color: #a8a8a8;
+}
+
+.point-search-slider .MuiSlider-thumb {
+  width: 23px;
+  height: 23px;
+  background-color: var(--surface-color-primary-default);
+  border: 1px solid var(--surface-color-primary-active-border);
+}
+
+.point-search-slider .MuiSlider-valueLabel {
+  background-color: #8c8c8c;
+  color: var(--typography-color-primary-invert);
+  border-radius: 4px;
+}
+
+p.point-search-slider-text {
+  white-space: nowrap;
+  color: black;
+  font-size: 14px;
+}
+
+.point-search-menu .MuiPaper-root {
+  overflow: visible;
 }

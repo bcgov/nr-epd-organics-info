@@ -4,12 +4,9 @@ import { Button } from '@mui/material'
 
 import DropdownButton from '@/components/DropdownButton'
 import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
-import { BottomDrawerContentEnum } from '@/constants/constants'
+import { ActiveToolEnum } from '@/constants/constants'
 import { useSearchBy } from '@/features/omrr/omrr-slice'
-import {
-  setBottomDrawerContent,
-  useBottomDrawerContentType,
-} from '@/features/map/map-slice'
+import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
 
 interface Props {
   isLarge: boolean
@@ -19,15 +16,10 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
   const dispatch = useDispatch()
   const searchBy = useSearchBy()
   // Bottom drawer only
-  const isActive =
-    useBottomDrawerContentType() === BottomDrawerContentEnum.searchBy
+  const isActive = useActiveTool() === ActiveToolEnum.searchBy
 
   const onClick = () => {
-    dispatch(
-      setBottomDrawerContent(
-        isActive ? undefined : BottomDrawerContentEnum.searchBy,
-      ),
-    )
+    dispatch(setActiveTool(ActiveToolEnum.searchBy))
   }
 
   const label = (

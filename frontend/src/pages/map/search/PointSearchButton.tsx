@@ -1,18 +1,23 @@
-import { MouseEventHandler } from 'react'
+import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
+
+import { setActiveTool } from '@/features/map/map-slice'
+import { ActiveToolEnum } from '@/constants/constants'
 
 import PointIcon from '@/assets/svgs/fa-point.svg?react'
 
 interface Props {
-  isActive?: boolean
-  onClick?: MouseEventHandler
+  isActive: boolean
 }
 
-export function PointSearchButton({
-  isActive = false,
-  onClick,
-}: Readonly<Props>) {
+export function PointSearchButton({ isActive }: Readonly<Props>) {
+  const dispatch = useDispatch()
+
+  const onClick = () => {
+    dispatch(setActiveTool(ActiveToolEnum.pointSearch))
+  }
+
   return (
     <Button
       variant="contained"
@@ -24,11 +29,10 @@ export function PointSearchButton({
         'point-search-button',
         isActive && 'map-button--active',
       )}
+      onClick={onClick}
       startIcon={
         <PointIcon title="Point search icon" className="point-search-icon" />
       }
-      disabled
-      onClick={onClick}
     >
       Point Search
     </Button>

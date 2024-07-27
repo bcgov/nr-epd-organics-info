@@ -3,21 +3,25 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { HorizontalScroller } from '@/components/HorizontalScroller'
-import { DataLayersButton } from './DataLayersButton'
-import { FilterByButton } from './FilterByButton'
-import { FindMeButton } from './FindMeButton'
-import { PolygonSearchButton } from './PolygonSearchButton'
-import { PointSearchButton } from './PointSearchButton'
-import { SearchByButton } from './SearchByButton'
-import { SearchAutocomplete } from './SearchAutocomplete'
-import { SearchButton } from './SearchButton'
-
-import './MapSearch.css'
 import {
+  ActiveToolEnum,
   MAP_CONTROLS_RIGHT_LG,
   MAP_CONTROLS_RIGHT_SM,
   MAP_CONTROLS_RIGHT_XL,
 } from '@/constants/constants'
+import { useActiveTool } from '@/features/map/map-slice'
+import { DataLayersButton } from './DataLayersButton'
+import { FilterByButton } from './FilterByButton'
+import { FindMeButton } from './FindMeButton'
+import { PointSearch } from './PointSearch'
+import { PointSearchButton } from './PointSearchButton'
+import { PolygonSearchButton } from './PolygonSearchButton'
+import { PolygonSearch } from './PolygonSearch'
+import { SearchByButton } from './SearchByButton'
+import { SearchAutocomplete } from './SearchAutocomplete'
+import { TextSearchButton } from './TextSearchButton'
+
+import './MapSearch.css'
 
 const styles = {
   marginTop: {
@@ -43,6 +47,9 @@ export function MapSearch() {
   const theme = useTheme()
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
   const isSmall = useMediaQuery(theme.breakpoints.down('md'))
+  const activeTool = useActiveTool()
+  const isPolygonTool = activeTool === ActiveToolEnum.polygonSearch
+  const isPointTool = activeTool === ActiveToolEnum.pointSearch
 
   return (
     <Box component="div" sx={styles} className="map-search">
@@ -55,14 +62,21 @@ export function MapSearch() {
             <DataLayersButton />
           </Stack>
         ) : (
-          <SearchButton />
+          <TextSearchButton />
         )}
-        <PolygonSearchButton />
-        <PointSearchButton />
+        <PolygonSearchButton isActive={isPolygonTool} />
+        <PointSearchButton isActive={isPointTool} />
         {isLarge || isSmall ? null : <div className="spacer--fill" />}
         <SearchByButton isLarge={isLarge} />
         <FilterByButton isLarge={isLarge} />
       </HorizontalScroller>
+      {isLarge && (isPolygonTool || isPointTool) && (
+        <div className="map-search-tool-row">
+          <div className="map-search-tool-box">
+            {isPolygonTool ? <PolygonSearch /> : <PointSearch />}
+          </div>
+        </div>
+      )}
     </Box>
   )
 }

@@ -19,7 +19,7 @@ describe('Test suite for MapSearch', () => {
     screen.getByText('Search By:')
     screen.getByRole('button', { name: 'Filter by Facility Type' })
 
-    const dropdownArrows = screen.getAllByAltText('Down arrow')
+    const dropdownArrows = screen.getAllByTitle('Down arrow')
     expect(dropdownArrows).toHaveLength(3)
   })
 
@@ -30,7 +30,7 @@ describe('Test suite for MapSearch', () => {
     })
 
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
-    screen.getByRole('button', { name: 'Search' })
+    screen.getByRole('button', { name: 'Text Search' })
     expect(
       screen.queryByRole('button', { name: 'Find Me' }),
     ).not.toBeInTheDocument()
@@ -41,8 +41,5 @@ describe('Test suite for MapSearch', () => {
     screen.getByRole('button', { name: 'Point Search' })
     screen.getByText('Search By:')
     screen.getByRole('button', { name: 'Filter by Facility Type' })
-
-    const dropdownArrows = screen.queryAllByAltText('Down arrow')
-    expect(dropdownArrows).toHaveLength(0)
   })
 })

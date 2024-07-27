@@ -62,17 +62,18 @@ export function DataLayersToggleGroup({
       </Button>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <FormGroup className="data-layers-checkbox-list">
-          {group.layers.map((layer: DataLayer) => (
-            <FormControlLabel
-              key={`dataLayerCheckBox-${layer.name}`}
-              control={<Checkbox />}
-              checked={isDataLayerChecked(layer)}
-              label={layer.name}
-              disabled={!layer.url}
-              className="data-layers-checkbox-item"
-              onChange={() => onLayerToggle(layer)}
-            />
-          ))}
+          {group.layers.map((layer: DataLayer) =>
+            layer.url ? (
+              <FormControlLabel
+                key={`dataLayerCheckBox-${layer.name}`}
+                control={<Checkbox />}
+                checked={isDataLayerChecked(layer)}
+                label={layer.name}
+                className="data-layers-checkbox-item"
+                onChange={() => onLayerToggle(layer)}
+              />
+            ) : null,
+          )}
         </FormGroup>
       </Collapse>
     </Stack>

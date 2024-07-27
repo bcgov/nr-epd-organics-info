@@ -11,6 +11,8 @@ import { MyLocationMarker } from './layers/MyLocationMarker'
 import { MapControls } from './layers/MapControls'
 import { MapDataLayers } from './layers/MapDataLayers'
 import { MapZoom } from './layers/MapZoom'
+import { PointSearchLayer } from './layers/PointSearchLayer'
+import { PolygonSearchLayer } from './layers/PolygonSearchLayer'
 
 import 'leaflet/dist/leaflet.css'
 import './MapView.css'
@@ -44,6 +46,8 @@ function MapView() {
         <MapControls />
         <AuthorizationMarkers />
         <MyLocationMarker />
+        <PointSearchLayer />
+        <PolygonSearchLayer />
         <MapZoom />
       </MapContainer>
       <MapSearch />

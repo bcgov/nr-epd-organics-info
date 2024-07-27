@@ -4,6 +4,7 @@ import markerIcon1x from '@/assets/marker-icon-1x-blue.png'
 import shadowIcon1x from '@/assets/marker-shadow-1x.png'
 import markerIcon2x from '@/assets/marker-icon-2x-blue.png'
 import shadowIcon2x from '@/assets/marker-shadow-2x.png'
+import crosshairsSvg from '@/assets/svgs/crosshairs.svg'
 
 export const blueIcon2x = new L.Icon({
   iconUrl: markerIcon2x,
@@ -27,4 +28,26 @@ export const blueIcon1x = new L.Icon({
   shadowUrl: shadowIcon1x,
   shadowSize: [16, 8],
   shadowAnchor: [8, 4],
+})
+
+export const crosshairsIcon = new L.Icon({
+  iconUrl: crosshairsSvg,
+  iconSize: [32, 32],
+  iconAnchor: [16, 16],
+  // relative to iconAnchor
+  popupAnchor: [32, 0],
+  tooltipAnchor: [32, 0],
+  className: 'crosshairs-icon',
+})
+
+export const emptyIcon = new L.DivIcon({
+  html: '<span/>',
+  className: 'empty-icon',
+  iconSize: [0, 0],
+})
+
+export const blackSquareIcon = new L.DivIcon({
+  html: '<div />',
+  className: 'black-square-icon',
+  iconSize: [18, 18],
 })

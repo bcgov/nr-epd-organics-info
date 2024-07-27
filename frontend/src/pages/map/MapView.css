@@ -25,3 +25,59 @@
   height: 100%;
   z-index: 1;
 }
+
+.leaflet-container.crosshairs-cursor {
+  cursor: crosshair;
+}
+
+.crosshairs-icon,
+.empty-icon {
+  pointer-events: none;
+}
+
+.black-square-icon {
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  background-color: var(--surface-color-brand-blue-100);
+  border: 1px solid var(--surface-color-border-light);
+  box-shadow: var(--box-shadow-small)
+}
+
+.point-search-circle,
+.polygon-search-polygon {
+  stroke: var(--surface-color-brand-blue-100);
+  stroke-width: 8;
+  fill: #3470b1;
+  fill-opacity: 0.5;
+}
+
+.polygon-search-line {
+  stroke: var(--surface-color-brand-blue-70);
+  stroke-width: 8;
+}
+
+.polygon-search-line--dotted {
+  stroke-dasharray: 8 24;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.leaflet-tooltip.search-layer-tooltip {
+  background-color: rgba(0, 0, 0, 0.45);
+  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
+  border: 0 none;
+  box-shadow: none;
+}
+
+.leaflet-tooltip-right.search-layer-tooltip:before {
+  border-right-color: rgba(0, 0, 0, 0.45);
+  margin-left: -11px;
+}
+
+.leaflet-tooltip-left.search-layer-tooltip:before {
+  border-left-color: rgba(0, 0, 0, 0.45);
+  margin-right: -11px;
+}

@@ -1,18 +1,23 @@
-import { MouseEventHandler } from 'react'
+import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
+
+import { setActiveTool } from '@/features/map/map-slice'
+import { ActiveToolEnum } from '@/constants/constants'
 
 import PolygonIcon from '@/assets/svgs/fa-polygon.svg?react'
 
 interface Props {
-  isActive?: boolean
-  onClick?: MouseEventHandler
+  isActive: boolean
 }
 
-export function PolygonSearchButton({
-  isActive = false,
-  onClick,
-}: Readonly<Props>) {
+export function PolygonSearchButton({ isActive }: Readonly<Props>) {
+  const dispatch = useDispatch()
+
+  const onClick = () => {
+    dispatch(setActiveTool(ActiveToolEnum.polygonSearch))
+  }
+
   return (
     <Button
       color="secondary"
@@ -28,7 +33,6 @@ export function PolygonSearchButton({
           className="polygon-search-icon"
         />
       }
-      disabled
       onClick={onClick}
     >
       Polygon Search

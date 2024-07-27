@@ -1,31 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
 
 import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
-import { BottomDrawerContentEnum } from '@/constants/constants'
-import { useLastSearchTime } from '@/features/omrr/omrr-slice'
-import { useBottomDrawerContentType } from '@/features/map/map-slice'
+import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
+import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
+import { ActiveToolEnum } from '@/constants/constants'
+import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
+import { setCircleFilter, setPolygonFilter } from '@/features/omrr/omrr-slice'
 import { SearchResultsList } from './SearchResultsList'
+import { PolygonSearch } from '../search/PolygonSearch'
+import { PointSearch } from '../search/PointSearch'
 
-import ChevonUpIcon from '@/assets/svgs/fa-chevron-up.svg?react'
+import ChevronUpIcon from '@/assets/svgs/fa-chevron-up.svg?react'
 import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapBottomDrawer.css'
-import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
-import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 
-function getTitle(contentType: BottomDrawerContentEnum | undefined): string {
-  switch (contentType) {
-    case BottomDrawerContentEnum.dataLayers:
+function getTitle(tool: ActiveToolEnum | undefined): string {
+  switch (tool) {
+    case ActiveToolEnum.dataLayers:
       return 'Data Layers'
-    case BottomDrawerContentEnum.polygonSearch:
+    case ActiveToolEnum.polygonSearch:
       return 'Polygon Search'
-    case BottomDrawerContentEnum.pointSearch:
+    case ActiveToolEnum.pointSearch:
       return 'Point Search'
-    case BottomDrawerContentEnum.searchBy:
+    case ActiveToolEnum.searchBy:
       return 'Search By'
-    case BottomDrawerContentEnum.filterBy:
+    case ActiveToolEnum.filterBy:
       return 'Filter by Facility Type'
     default:
       return 'Search Results'
@@ -44,24 +47,25 @@ interface Props {
  * It can be toggled to be full height.
  */
 export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
+  const dispatch = useDispatch()
   const [fullHeight, setFullHeight] = useState<boolean>(false)
-  const lastSearchTime = useLastSearchTime()
-  const contentType = useBottomDrawerContentType()
-  const isSearchResultsVisible = !contentType
-  const isDataLayersVisible = contentType === BottomDrawerContentEnum.dataLayers
-  // const isPointSearchVisible =
-  //   contentType === BottomDrawerContentEnum.pointSearch
-  // const isPolygonSearchVisible =
-  //   contentType === BottomDrawerContentEnum.polygonSearch
-  const isSearchByVisible = contentType === BottomDrawerContentEnum.searchBy
-  const isFilterByVisible = contentType === BottomDrawerContentEnum.filterBy
-
-  // Expand when the search changes ???
-  useEffect(() => {}, [lastSearchTime])
+  const activeTool = useActiveTool()
+  const isSearchResultsVisible = !activeTool
+  const isDataLayersVisible = activeTool === ActiveToolEnum.dataLayers
+  const isPointSearchVisible = activeTool === ActiveToolEnum.pointSearch
+  const isPolygonSearchVisible = activeTool === ActiveToolEnum.polygonSearch
+  const isSearchByVisible = activeTool === ActiveToolEnum.searchBy
+  const isFilterByVisible = activeTool === ActiveToolEnum.filterBy
 
   const onClose = () => {
     setExpanded(false)
     setFullHeight(false)
+    dispatch(setActiveTool(undefined))
+    if (isPolygonSearchVisible) {
+      dispatch(setPolygonFilter(undefined))
+    } else if (isPointSearchVisible) {
+      dispatch(setCircleFilter(undefined))
+    }
   }
 
   return (
@@ -70,7 +74,7 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
         'map-bottom-drawer',
         isExpanded && 'map-bottom-drawer--expanded',
         fullHeight && 'map-bottom-drawer--full-height',
-        Boolean(contentType) && `map-bottom-drawer--${contentType}`,
+        Boolean(activeTool) && `map-bottom-drawer--${activeTool}`,
       )}
       data-testid="map-bottom-drawer"
     >
@@ -80,7 +84,7 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
           className="map-bottom-drawer-button"
           title={fullHeight ? 'Collapse' : 'Expand'}
         >
-          <ChevonUpIcon
+          <ChevronUpIcon
             className={clsx(
               'map-bottom-drawer-icon',
               fullHeight && 'map-bottom-drawer-icon--invert',
@@ -88,7 +92,7 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
           />
         </IconButton>
 
-        <div className="map-bottom-drawer-title">{getTitle(contentType)}</div>
+        <div className="map-bottom-drawer-title">{getTitle(activeTool)}</div>
 
         <IconButton
           onClick={onClose}
@@ -106,7 +110,8 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
             {isDataLayersVisible && <DataLayersCheckboxGroup isSmall />}
             {isSearchByVisible && <SearchByRadioGroup />}
             {isFilterByVisible && <FilterByCheckboxGroup isSmall />}
-            {/* Add more contents like point/polygon search */}
+            {isPolygonSearchVisible && <PolygonSearch isSmall />}
+            {isPointSearchVisible && <PointSearch isSmall />}
             {isSearchResultsVisible && (
               <SearchResultsList pageSize={5} scrollBars={false} />
             )}

@@ -37,6 +37,17 @@ export function shortDateFormat(date: Date): string {
   return `${month} ${day}, ${year}`
 }
 
+export function formatDistance(meters: number, kmDigits = 2): string {
+  if (isNaN(meters)) {
+    return ''
+  }
+  if (meters <= 1000) {
+    return `${Math.round(meters)} m`
+  }
+  const kms = Number((meters / 1000).toFixed(kmDigits))
+  return `${kms} km`
+}
+
 // These postal codes are all for BC only!
 const POSTAL_CODE_REGEX = /(V\d[ABCEGHJ-NPRSTV-Z] ?\d[ABCEGHJ-NPRSTV-Z]\d)/i
 const POSTAL_CODE_PREFIX = /^(V\d[ABCEGHJ-NPRSTV-Z])/i
@@ -163,7 +174,7 @@ export function getMyLocation(
     const { latitude: lat, longitude: lng, accuracy = 0 } = coords || {}
     const newData: MyLocationData = { accuracy }
     if (!isNaN(lat) && !isNaN(lng)) {
-      newData.position = { lat, lng }
+      newData.position = [lat, lng]
     }
     onSuccess(newData)
   }

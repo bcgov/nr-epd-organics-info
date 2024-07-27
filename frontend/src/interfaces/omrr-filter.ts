@@ -1,4 +1,5 @@
 import OmrrData from './omrr'
+import { LatLngTuple } from 'leaflet'
 
 export interface OmrrFilter {
   value: string
@@ -64,3 +65,13 @@ export const facilityTypeFilters: OmrrFilter[] = [
     on: false,
   },
 ]
+
+export interface CircleFilter {
+  center?: LatLngTuple
+  radius: number
+}
+
+export interface PolygonFilter {
+  positions: LatLngTuple[]
+  finished?: boolean
+}

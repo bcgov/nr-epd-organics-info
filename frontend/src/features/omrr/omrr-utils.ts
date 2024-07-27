@@ -1,3 +1,4 @@
+import L, { LatLngTuple } from 'leaflet'
 import { matchSorter, MatchSorterOptions } from 'match-sorter'
 
 import { MIN_SEARCH_LENGTH } from '@/constants/constants'
@@ -10,7 +11,7 @@ import {
   isPostalCodeStart,
   truncateDate,
 } from '@/utils/utils'
-import { LatLng, LatLngLiteral } from 'leaflet'
+import { distanceTo, isPointInsidePolygon } from '@/utils/map-utils'
 
 /**
  * Filters items by authorization status (all, active, inactive)
@@ -125,6 +126,14 @@ export function filterData(state: OmrrSliceState): OmrrData[] {
   )
   // Now apply global text search
   filteredData = filterByTextSearch(filteredData, searchTextFilter)
+  // Apply polygon or point filters
+  if (state.polygonFilter?.finished) {
+    const { positions } = state.polygonFilter
+    filteredData = filterDataInsidePolygon(filteredData, positions)
+  } else if (state.circleFilter?.center) {
+    const { center, radius } = state.circleFilter
+    filteredData = filterDataInsideCircle(filteredData, center, radius)
+  }
   return filteredData
 }
 
@@ -162,33 +171,74 @@ function filterByAuthorizationNumberStart(
 }
 
 /**
- * Creates a new array and sorts it by the distance away from the given position,
- * the closest items are first in the array.
+ * Filters the data points that are within the given radius, and sorts by closest to the position.
  */
-export function sortDataByPosition(
+function filterAndSortByDistance(
   data: OmrrData[],
-  position: LatLngLiteral,
+  position: LatLngTuple,
+  radius: number | undefined = undefined,
 ): OmrrData[] {
-  const latlng = new LatLng(position.lat, position.lng)
-  const newData: OmrrData[] = [...data]
-
+  const latlng = L.latLng(position)
   // Cache the distance calculations
   const map = new Map<OmrrData, number>()
+  // Calculate the distance (in meters) between the position and the given item
   const getDistance = (item: OmrrData) => {
     let distance = map.get(item)
     if (distance === undefined) {
-      distance = Math.round(latlng.distanceTo([item.Latitude, item.Longitude]))
+      distance = distanceTo(latlng, [item.Latitude, item.Longitude])
       map.set(item, distance)
     }
     return distance
   }
 
+  let newData: OmrrData[] = [...data]
+
+  // Filter data that is within the given radius
+  if (radius !== undefined && radius > 0) {
+    newData = newData.filter((item: OmrrData) => {
+      const distance = getDistance(item)
+      return distance <= radius
+    })
+  }
+
+  // Sort by closest to position
   newData.sort((item1, item2) => {
     const dist1 = getDistance(item1)
     const dist2 = getDistance(item2)
     return dist1 - dist2
   })
   return newData
+}
+
+/**
+ * Creates a new array and sorts it by the distance away from the given position,
+ * the closest items are first in the array.
+ */
+export function sortDataByPosition(
+  data: OmrrData[],
+  position: LatLngTuple,
+): OmrrData[] {
+  return filterAndSortByDistance(data, position)
+}
+
+/**
+ * Filters the data points that are within the given radius from the center point.
+ */
+export function filterDataInsideCircle(
+  data: OmrrData[],
+  center: LatLngTuple,
+  radius: number,
+): OmrrData[] {
+  return filterAndSortByDistance(data, center, radius)
+}
+
+export function filterDataInsidePolygon(
+  data: OmrrData[],
+  positions: LatLngTuple[],
+): OmrrData[] {
+  return data.filter((item: OmrrData) =>
+    isPointInsidePolygon([item.Latitude, item.Longitude], positions),
+  )
 }
 
 /**
