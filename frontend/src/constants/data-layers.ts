@@ -186,7 +186,7 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
         name: 'PMBC Parcel Cadastre',
         url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
         layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
-        styles: '5898',
+        styles: '5899', // Provincial Crown Lands
       },
     ],
   },
