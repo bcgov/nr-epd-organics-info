@@ -25,9 +25,10 @@ export function setupStore(preloadedState?: Partial<RootState>) {
 }
 
 export const store = setupStore()
+type StoreType = typeof store
 
 // Load initial data from the API
-export function loadApiData() {
+export function loadApiData(store: StoreType) {
   store.dispatch(fetchOMRRData())
   store.dispatch(fetchOmrrApplicationStatus())
   store.dispatch(fetchOmrrDocuments())

@@ -11,7 +11,7 @@ import { loadApiData, store } from './app/store'
 import './index.css'
 
 // Load initial API data
-loadApiData()
+loadApiData(store)
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

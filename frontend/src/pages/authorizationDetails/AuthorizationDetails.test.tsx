@@ -7,6 +7,7 @@ import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { initialState } from '@/features/omrr/omrr-slice'
 import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
 import AuthorizationDetails from './AuthorizationDetails'
+import { mockOmrrDocuments } from '@/mocks/mock-omrr-documents'
 
 describe('Test suite for AuthorizationDetails', () => {
   function renderComponent(
@@ -126,15 +127,9 @@ describe('Test suite for AuthorizationDetails', () => {
   })
 
   it('should render AuthorizationDetails with no documents', async () => {
+    // this one has no documents
     const number = 11123
-    const documents: OmrrAuthzDocsResponse[] = [
-      {
-        'Authorization Number': number,
-        doc_links: [],
-      },
-    ]
-
-    renderComponent(number, documents)
+    renderComponent(number, mockOmrrDocuments)
 
     screen.getByText('Documents')
     screen.getByText('File Description')
@@ -142,32 +137,13 @@ describe('Test suite for AuthorizationDetails', () => {
   })
 
   it('should render AuthorizationDetails with documents', async () => {
+    // This one has 2 documents
     const number = 108485
-    const description1 = 'test-file.pdf'
-    const description2 = 'test-report.pdf'
-    const documents: OmrrAuthzDocsResponse[] = [
-      {
-        'Authorization Number': number,
-        doc_links: [
-          {
-            DocumentObjectID: 1,
-            Description: description1,
-            Publiclyviewable: '',
-          },
-          {
-            DocumentObjectID: 2,
-            Description: description2,
-            Publiclyviewable: '',
-          },
-        ],
-      },
-    ]
-
-    renderComponent(number, documents)
+    renderComponent(number, mockOmrrDocuments)
 
     screen.getByText('Documents')
     screen.getByText('File Description')
-    screen.getByText(description1)
-    screen.getByText(description2)
+    screen.getByText('test-file.pdf')
+    screen.getByText('sample-file.pdf')
   })
 })

@@ -48,29 +48,6 @@ export const documentsSlice = createSlice({
       fetchOmrrDocuments.fulfilled,
       (state, action: PayloadAction<OmrrAuthzDocsResponse[]>) => {
         const data: OmrrAuthzDocsResponse[] = action.payload
-        if (Array.isArray(data) && data.length === 0) {
-          // TESTING
-          data.push({
-            'Authorization Number': 12398,
-            doc_links: [
-              {
-                DocumentObjectID: 1,
-                Description: 'document.pdf',
-                Publiclyviewable: '',
-              },
-              {
-                DocumentObjectID: 2,
-                Description: 'sample.pdf',
-                Publiclyviewable: '',
-              },
-              {
-                DocumentObjectID: 3,
-                Description: 'trouble.pdf',
-                Publiclyviewable: '',
-              },
-            ],
-          })
-        }
         if (Array.isArray(data) && data.length > 0) {
           state.status = 'succeeded'
           state.allDocuments = data
