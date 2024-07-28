@@ -1,4 +1,7 @@
 import { Chip } from '@mui/material'
+import clsx from 'clsx'
+
+import './AuthorizationStatusChip.css'
 
 interface Props {
   status: string
@@ -12,18 +15,13 @@ export function AuthorizationStatusChip({
   const isActive = status === 'Active'
   return (
     <Chip
-      sx={{
-        color: '#ffffff',
-        backgroundColor: isActive ? '#42814a' : '#9f9d9c',
-        display: 'inline-flex',
-        height: size === 'small' ? '24px' : '40px',
-        fontSize: size === 'small' ? '14px' : '16px',
-        padding: '0 12px',
-        borderRadius: '24px',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      className={clsx(
+        'authorization-status-chip',
+        `authorization-status-chip--${size}`,
+        isActive && 'authorization-status-chip--active',
+      )}
       label={status}
+      size={size}
     />
   )
 }
