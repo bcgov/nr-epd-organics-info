@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
-import {env} from '@/env'
 import { isTest } from '@/constants/env'
 
 class APIService {
@@ -26,7 +25,7 @@ class APIService {
         }
       },
     )
-    console.info(env.VITE_AMS_URL)
+    // console.info(env.VITE_AMS_URL)
   }
 
   public getAxiosInstance(): AxiosInstance {

@@ -1,4 +1,5 @@
 import { Stack, Typography } from '@mui/material'
+import clsx from 'clsx'
 
 import {
   useDocumentsStatus,
@@ -21,6 +22,8 @@ export function DocumentsSection({ item }: Readonly<Props>) {
   }
 
   const count = documents.length
+  // When the documents can be downloaded - change to a link
+  const canDownload = false
   return (
     <Stack
       direction="column"
@@ -40,14 +43,17 @@ export function DocumentsSection({ item }: Readonly<Props>) {
           File Description
         </div>
         {count === 0 && (
-          <div className="documents-table-cell">
+          <div className="documents-table-cell documents-table-cell--no-data">
             There are no documents to display.
           </div>
         )}
         {documents.map((doc: OmrrAuthzDocs) => (
           <div
             key={`DocumentRow-${doc.DocumentObjectID}`}
-            className="documents-table-cell document-table-link"
+            className={clsx(
+              'documents-table-cell',
+              canDownload && 'documents-table-cell--link',
+            )}
           >
             {doc.Description}
           </div>

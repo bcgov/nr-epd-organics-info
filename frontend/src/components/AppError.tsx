@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { Snackbar } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
+import { isTest } from '@/constants/env'
 import { selectError } from '@/features/omrr/omrr-slice'
 
 export default function AppError() {
@@ -11,7 +12,9 @@ export default function AppError() {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.secondary.main,
   }
-  console.info('App error:', error)
+  if (!isTest) {
+    console.info('App error:', error)
+  }
 
   return (
     <Snackbar
