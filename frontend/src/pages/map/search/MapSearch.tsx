@@ -53,7 +53,11 @@ export function MapSearch() {
 
   return (
     <Box component="div" sx={styles} className="map-search">
-      <HorizontalScroller isEnabled={isSmall} className="map-search-scroller">
+      <HorizontalScroller
+        isEnabled={isSmall}
+        className="map-search-scroller"
+        scrollOffset={150}
+      >
         {isLarge ? (
           <Stack direction="row" className="map-search-row">
             <SearchAutocomplete />

@@ -83,7 +83,7 @@ button.MuiButton-containedPrimary {
   color: white;
 }
 
-button.MuiButton-containedPrimary:hover {
+button.MuiButton-containedPrimary:not(.Mui-disabled):hover {
   background-color: #385a8a;
   color: white;
 }
