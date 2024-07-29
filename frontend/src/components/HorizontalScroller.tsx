@@ -65,6 +65,7 @@ function HorizontalScrollerComponent({
       doScroll(-scrollOffset)
     }
   }
+
   const onScrollRight = () => {
     if (ref.current) {
       doScroll(scrollOffset)

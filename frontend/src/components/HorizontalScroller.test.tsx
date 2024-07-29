@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { HorizontalScroller } from './HorizontalScroller'
@@ -40,24 +40,38 @@ describe('Test suite for HorizontalScroller', () => {
       .mockImplementation(() => 300)
 
     const { user } = render(
-      <div style={{ width: '100px', height: '20px' }} title="scroller">
-        <HorizontalScroller>
+      <div style={{ width: '100px', height: '20px' }}>
+        <HorizontalScroller title="scroller">
           <div style={{ width: '300px', height: '20px' }}>Content</div>
         </HorizontalScroller>
       </div>,
     )
 
-    screen.getByTitle('scroller')
+    const scroller = screen.getByTitle('scroller')
     screen.getByText('Content')
 
     const scrollRight = await screen.findByTitle('Scroll right')
     expect(screen.queryByTitle('Scroll left')).not.toBeInTheDocument()
-
     await user.click(scrollRight)
 
     const scrollLeft = await screen.findByTitle('Scroll left')
-
     await user.click(scrollLeft)
+
+    // Swipe left - scroll right
+    fireEvent.touchStart(scroller, {
+      changedTouches: [{ clientX: 50, clientY: 0 }],
+    })
+    fireEvent.touchEnd(scroller, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    })
+
+    // Swipe right - scroll left
+    fireEvent.touchStart(scroller, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    })
+    fireEvent.touchEnd(scroller, {
+      changedTouches: [{ clientX: 50, clientY: 0 }],
+    })
 
     clientWidthMock.mockRestore()
     scrollWidthMock.mockRestore()

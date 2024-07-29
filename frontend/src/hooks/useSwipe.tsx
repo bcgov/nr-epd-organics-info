@@ -1,8 +1,7 @@
 import { RefObject, useEffect, useRef } from 'react'
 
-const isTouch = 'ontouchstart' in window
 export type SwipeDirection = 'left' | 'right' | 'up' | 'down'
-type SwipeCallback = (swipeDirection: SwipeDirection) => void
+export type SwipeCallback = (swipeDirection: SwipeDirection) => void
 
 export function useSwipe(
   ref: RefObject<HTMLElement | null | undefined>,
@@ -54,13 +53,14 @@ export function useSwipe(
 
   useEffect(() => {
     const el = ref.current
+    const isTouch = 'ontouchstart' in window
     if (el) {
       if (isTouch) {
-        el.addEventListener('touchstart', onTouchStart, false)
-        el.addEventListener('touchend', onTouchEnd, false)
+        el.addEventListener('touchstart', onTouchStart)
+        el.addEventListener('touchend', onTouchEnd)
       } else {
-        el.addEventListener('mousedown', onMouseDown, false)
-        el.addEventListener('mouseup', onMouseUp, false)
+        el.addEventListener('mousedown', onMouseDown)
+        el.addEventListener('mouseup', onMouseUp)
       }
     }
     return () => {
