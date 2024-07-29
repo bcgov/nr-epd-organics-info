@@ -3,6 +3,8 @@ import { Button } from '@mui/material'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import clsx from 'clsx'
 
+import { SwipeDirection, useSwipe } from '@/hooks/useSwipe'
+
 import './HorizontalScroller.css'
 
 const DEFAULT_SCROLL_OFFSET = 100
@@ -18,29 +20,31 @@ interface Props {
 /**
  * When enabled, this component will horizontally scroll its children,
  * showing a left and right scroll button when appropriate.
+ * It also supports swipe left/right gestures.
  */
 export function HorizontalScroller({
   children,
   isEnabled = true,
+  ...rest
+}: Readonly<Props>) {
+  return isEnabled ? (
+    <HorizontalScrollerComponent {...rest}>
+      {children}
+    </HorizontalScrollerComponent>
+  ) : (
+    children
+  )
+}
+
+function HorizontalScrollerComponent({
+  children,
   className,
   scrollOffset = DEFAULT_SCROLL_OFFSET,
   ...rest
-}: Readonly<Props>) {
+}: Readonly<Omit<Props, 'isEnabled'>>) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [scrollLeftVisible, setScrollLeftVisible] = useState<boolean>(false)
   const [scrollRightVisible, setScrollRightVisible] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (isEnabled && ref.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = ref.current
-      setScrollLeftVisible(scrollLeft > 0)
-      setScrollRightVisible(scrollWidth > clientWidth)
-    }
-  }, [isEnabled])
-
-  if (!isEnabled) {
-    return children
-  }
 
   const doScroll = (offset: number) => {
     if (ref.current) {
@@ -61,18 +65,37 @@ export function HorizontalScroller({
       doScroll(-scrollOffset)
     }
   }
+
   const onScrollRight = () => {
     if (ref.current) {
       doScroll(scrollOffset)
     }
   }
 
+  const swipeCallback = (direction: SwipeDirection) => {
+    if (direction === 'left') {
+      onScrollRight()
+    } else if (direction === 'right') {
+      onScrollLeft()
+    }
+  }
+
+  useSwipe(ref, swipeCallback)
+
+  useEffect(() => {
+    if (ref.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = ref.current
+      setScrollLeftVisible(scrollLeft > 0)
+      setScrollRightVisible(scrollWidth > clientWidth)
+    }
+  }, [])
+
   return (
     <div className="horizontal-scroller-container">
       <div
         {...rest}
-        className={clsx('horizontal-scroller', className)}
         ref={ref}
+        className={clsx('horizontal-scroller', className)}
       >
         {children}
       </div>

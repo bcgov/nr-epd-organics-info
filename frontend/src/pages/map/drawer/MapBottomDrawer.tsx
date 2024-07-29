@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { IconButton } from '@mui/material'
@@ -9,6 +9,7 @@ import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 import { ActiveToolEnum } from '@/constants/constants'
 import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
 import { setCircleFilter, setPolygonFilter } from '@/features/omrr/omrr-slice'
+import { SwipeDirection, useSwipe } from '@/hooks/useSwipe'
 import { SearchResultsList } from './SearchResultsList'
 import { PolygonSearch } from '../search/PolygonSearch'
 import { PointSearch } from '../search/PointSearch'
@@ -48,6 +49,7 @@ interface Props {
  */
 export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
   const dispatch = useDispatch()
+  const ref = useRef<HTMLDivElement>(null)
   const [fullHeight, setFullHeight] = useState<boolean>(false)
   const activeTool = useActiveTool()
   const isSearchResultsVisible = !activeTool
@@ -56,6 +58,24 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
   const isPolygonSearchVisible = activeTool === ActiveToolEnum.polygonSearch
   const isSearchByVisible = activeTool === ActiveToolEnum.searchBy
   const isFilterByVisible = activeTool === ActiveToolEnum.filterBy
+
+  const swipeCallback = (direction: SwipeDirection) => {
+    if (direction === 'up') {
+      if (isExpanded) {
+        setFullHeight(true)
+      } else {
+        setExpanded(true)
+      }
+    } else if (direction === 'down') {
+      if (fullHeight) {
+        setFullHeight(false)
+      } else if (isExpanded) {
+        onClose()
+      }
+    }
+  }
+
+  useSwipe(ref, swipeCallback)
 
   const onClose = () => {
     setExpanded(false)
@@ -70,6 +90,7 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
 
   return (
     <div
+      ref={ref}
       className={clsx(
         'map-bottom-drawer',
         isExpanded && 'map-bottom-drawer--expanded',

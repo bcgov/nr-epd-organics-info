@@ -3,8 +3,8 @@ import L from 'leaflet'
 import { Circle, Tooltip, useMap } from 'react-leaflet'
 
 import { useMyLocationVisible } from '@/features/map/map-slice'
+import { useMyLocation } from '@/hooks/useMyLocation'
 import { IconMarker } from './IconMarker'
-import { useMyLocation } from '../hooks/useMyLocation'
 
 import './MyLocationMarker.css'
 
