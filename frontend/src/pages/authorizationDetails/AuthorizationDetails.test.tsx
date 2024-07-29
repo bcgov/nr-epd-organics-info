@@ -2,13 +2,18 @@ import { getByText, screen, waitFor } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import OmrrData from '@/interfaces/omrr'
+import { OmrrAuthzDocsResponse } from '@/interfaces/omrr-documents'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { initialState } from '@/features/omrr/omrr-slice'
 import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
 import AuthorizationDetails from './AuthorizationDetails'
+import { mockOmrrDocuments } from '@/mocks/mock-omrr-documents'
 
 describe('Test suite for AuthorizationDetails', () => {
-  function renderComponent(authorizationNumber: number) {
+  function renderComponent(
+    authorizationNumber: number,
+    allDocuments: OmrrAuthzDocsResponse[] | undefined = [],
+  ) {
     const { user } = render(<AuthorizationDetails />, {
       withRouter: true,
       route: `/authorization/${authorizationNumber}`,
@@ -20,9 +25,13 @@ describe('Test suite for AuthorizationDetails', () => {
           allResults: mockOmrrData,
           searchByFilteredResults: mockOmrrData,
         },
-        applicationStatus: {
+        applications: {
           status: 'succeeded',
           allApplications: mockOmrrApplicationStatusResponse,
+        },
+        documents: {
+          status: allDocuments.length > 0 ? 'succeeded' : 'failed',
+          allDocuments,
         },
       },
     })
@@ -92,9 +101,7 @@ describe('Test suite for AuthorizationDetails', () => {
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText(/^Please note that authorizations issued/)
 
-    screen.getByText('Documents')
-    screen.getByText('File Description')
-    screen.getByText('There are no documents to display.')
+    expect(screen.queryByText('Documents')).not.toBeInTheDocument()
   })
 
   it('should render AuthorizationDetails with application status', async () => {
@@ -117,5 +124,26 @@ describe('Test suite for AuthorizationDetails', () => {
 
     screen.getByText(/^Applies to amendment and new notifications only/)
     // screen.getByRole('link', { name: 'please see our guidance on data we show' })
+  })
+
+  it('should render AuthorizationDetails with no documents', async () => {
+    // this one has no documents
+    const number = 11123
+    renderComponent(number, mockOmrrDocuments)
+
+    screen.getByText('Documents')
+    screen.getByText('File Description')
+    screen.getByText('There are no documents to display.')
+  })
+
+  it('should render AuthorizationDetails with documents', async () => {
+    // This one has 2 documents
+    const number = 108485
+    renderComponent(number, mockOmrrDocuments)
+
+    screen.getByText('Documents')
+    screen.getByText('File Description')
+    screen.getByText('test-file.pdf')
+    screen.getByText('sample-file.pdf')
   })
 })

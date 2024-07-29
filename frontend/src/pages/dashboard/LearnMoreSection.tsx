@@ -56,7 +56,7 @@ export function LearnMoreSection() {
         />
         <LearnMoreCard
           title="Compliance and enforcement"
-          link="https://www2.gov.bc.ca/gov/content/environment/natural-resource-stewardship/natural-resource-law-enforcement/environmental-compliance"
+          link="https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/reporting/environmental-enforcement-reporting"
           icon={identity}
           actions="Search the compliance and enforcement database and learn
                     about how we coordinate oversight."

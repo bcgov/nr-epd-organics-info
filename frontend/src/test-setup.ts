@@ -11,6 +11,7 @@ import { cleanup } from '@testing-library/react'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { mockPlaces } from '@/mocks/mock-places'
 import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
+import { mockOmrrDocuments } from '@/mocks/mock-omrr-documents'
 
 expect.extend(matchers)
 
@@ -138,6 +139,9 @@ const successHandlers = [
   http.get(`${baseUrl}/api/omrr/application-status`, () => {
     return HttpResponse.json(mockOmrrApplicationStatusResponse, { status: 200 })
   }),
+  http.get(`${baseUrl}/api/omrr/authorization-docs`, () => {
+    return HttpResponse.json(mockOmrrDocuments, { status: 200 })
+  }),
   http.get(`${baseUrl}/places.json`, () => {
     return HttpResponse.json(mockPlaces, { status: 200 })
   }),
@@ -160,7 +164,7 @@ beforeAll(() => {
 //  Close server after all tests
 afterAll(() => mswServer.close())
 
-// Reset handlers after each test `important for test isolation`
+// Reset handlers after each test (important for test isolation)
 afterEach(() => {
   cleanup()
   mswServer.resetHandlers()

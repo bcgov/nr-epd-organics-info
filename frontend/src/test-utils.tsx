@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { render, RenderOptions } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { Provider } from 'react-redux'
-import { RootState, setupStore } from '@/app/store'
+import { loadApiData, RootState, setupStore } from '@/app/store'
 
 interface TestRouterProps {
   children: ReactNode
@@ -42,15 +42,20 @@ interface TestStateProviderProps {
   children: ReactNode
   withStateProvider?: boolean
   initialState?: Partial<RootState>
+  withApiData?: boolean
 }
 
 function TestStateProvider({
   children,
   withStateProvider = false,
   initialState,
+  withApiData = false,
 }: Readonly<TestStateProviderProps>) {
   if (withStateProvider) {
     const store = setupStore(initialState)
+    if (withApiData) {
+      loadApiData(store)
+    }
     return <Provider store={store}>{children}</Provider>
   }
   return children
@@ -63,6 +68,7 @@ type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
   path?: string
   withStateProvider?: boolean
   initialState?: Partial<RootState>
+  withApiData?: boolean
 }
 
 function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
@@ -74,6 +80,7 @@ function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
     path,
     withStateProvider,
     initialState,
+    withApiData,
     ...restOptions
   } = options
   if (screenWidth !== undefined) {
@@ -86,6 +93,7 @@ function customRender(ui: ReactElement, options: CustomRenderOptions = {}) {
         <TestStateProvider
           withStateProvider={withStateProvider}
           initialState={initialState}
+          withApiData={withApiData}
         >
           {children}
         </TestStateProvider>

@@ -1,4 +1,6 @@
-export const mockOmrrApplicationStatusResponse = [
+import { OmrrApplicationStatus } from '@/interfaces/omrr-application-status'
+
+export const mockOmrrApplicationStatusResponse: OmrrApplicationStatus[] = [
   {
     Status: 'In Review',
     'Authorization Number': 108485,

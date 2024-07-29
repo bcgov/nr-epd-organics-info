@@ -1,9 +1,8 @@
-import React from 'react'
+import { Box } from '@mui/material'
 
 import { NoResults } from '@/components/NoResults'
 import { AuthorizationListItem } from '@/components/AuthorizationListItem'
 import OmrrData from '@/interfaces/omrr'
-import { Box } from '@mui/material'
 
 interface Props {
   results: OmrrData[]

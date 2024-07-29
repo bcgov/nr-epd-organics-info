@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Slider, Typography } from '@mui/material'
 import clsx from 'clsx'

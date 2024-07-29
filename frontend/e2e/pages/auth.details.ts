@@ -33,8 +33,6 @@ export const authorization_details_page = async (page: Page) => {
     page.getByText('Schedule 2 - Composting Operations'),
   ).toBeVisible()
 
-  await expect(page.getByText('Documents', { exact: true })).toBeVisible()
-
   const backBtn = page.getByRole('button', { name: 'Back to Text Search' })
   await expect(backBtn).toBeVisible()
   await backBtn.click()

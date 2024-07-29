@@ -231,7 +231,7 @@ export const useSearchTextFilter = () => useSelector(selectSearchTextFilter)
 export const useHasSearchTextFilter = () =>
   useSearchTextFilter().length >= MIN_SEARCH_LENGTH
 
-const selectAllResults = (state: RootState) => state.omrr.allResults
+export const selectAllResults = (state: RootState) => state.omrr.allResults
 const selectAllResultsCount = (state: RootState) => state.omrr.allResults.length
 
 export const selectFilteredResults = (state: RootState) =>

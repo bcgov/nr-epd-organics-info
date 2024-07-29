@@ -1,0 +1,25 @@
+div.authorization-status-chip {
+  color: #ffffff;
+  background-color: var(--icons-color-disabled);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 0 var(--layout-padding-large);
+  font-size: 16px;
+  border-radius: 24px;
+}
+
+.authorization-status-chip .MuiChip-label {
+  padding: 0;
+}
+
+div.authorization-status-chip--small {
+  height: 24px;
+  font-size: 14px;
+  padding: 0 var(--layout-padding-medium);
+}
+
+div.authorization-status-chip--active {
+  background-color: var(--support-border-color-success);
+}
