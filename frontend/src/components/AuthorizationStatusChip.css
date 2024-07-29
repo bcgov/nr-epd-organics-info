@@ -1,4 +1,4 @@
-.authorization-status-chip {
+div.authorization-status-chip {
   color: #ffffff;
   background-color: var(--icons-color-disabled);
   display: inline-flex;
@@ -14,12 +14,12 @@
   padding: 0;
 }
 
-.authorization-status-chip--small {
+div.authorization-status-chip--small {
   height: 24px;
   font-size: 14px;
   padding: 0 var(--layout-padding-medium);
 }
 
-.authorization-status-chip--active {
+div.authorization-status-chip--active {
   background-color: var(--support-border-color-success);
 }
