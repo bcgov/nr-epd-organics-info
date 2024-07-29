@@ -50,6 +50,8 @@ spec:
                     key: apiKey
             - name: OMRR_AUTHZ_DOCS_FLAG
               value: {{ .Values.backend.env.omrrAuthzDocsFlag | quote }}
+            - name: OMRR_APP_STATUS_FLAG
+              value: {{ .Values.backend.env.omrrAppStatusFlag | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.backend.service.targetPort }}

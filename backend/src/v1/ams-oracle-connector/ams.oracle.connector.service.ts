@@ -88,7 +88,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         process.exit(128)
       }
     }
-    if (!omrrApplicationStatusResponse) {
+    if (!omrrApplicationStatusResponse && process.env.OMRR_APP_STATUS_FLAG === 'true') {
       try {
         await this.getOMRRApplicationStatusFromAMS()
       } catch (error) {

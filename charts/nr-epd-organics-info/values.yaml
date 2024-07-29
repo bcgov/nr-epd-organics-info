@@ -69,6 +69,7 @@ backend:
     minAvailable: 1 # the minimum number of pods that must be available during the disruption budget.
   env:
     omrrAuthzDocsFlag: "false"
+    omrrAppStatusFlag: "false"
 
 frontend:
   # -- enable or disable a component deployment.
