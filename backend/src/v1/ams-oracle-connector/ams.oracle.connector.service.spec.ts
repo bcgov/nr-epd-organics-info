@@ -43,6 +43,7 @@ describe('AmsOracleConnectorService', () => {
   describe('onModuleInit', () => {
     it('should initialize AmsOracleConnectorService and call getOMRRDataFromAMS and getOMRRApplicationStatusFromAMS', async () => {
       process.env.OMRR_AUTHZ_DOCS_FLAG = 'true';
+      process.env.OMRR_APP_STATUS_FLAG = 'true';
       const getOMRRDataFromAMS = jest
         .spyOn(service, 'getOMRRDataFromAMS')
         .mockResolvedValue(undefined);

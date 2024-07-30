@@ -14,7 +14,9 @@ export class TasksService {
   async refreshCache() {
     this.logger.log('refresh cache every hour');
     await this.amsOracleConnectorService.getOMRRDataFromAMS();
-    await this.amsOracleConnectorService.getOMRRApplicationStatusFromAMS();
+    if(process.env.OMRR_APP_STATUS_FLAG === 'true'){
+      await this.amsOracleConnectorService.getOMRRApplicationStatusFromAMS();
+    }
     if(OMRR_AUTHZ_DOCS_FLAG === 'true') {
       await this.amsOracleConnectorService.getOMRRAuthorizationDocumentsFromAMS();
     }

@@ -10,7 +10,7 @@ import { OMRR_AUTHZ_DOCS_QUERY } from './omrr-authz-docs-query'
 import { OmrrAuthzDocsQueryResponse, OmrrAuthzDocsResponse } from '../types/omrr-authz-docs-response'
 
 let omrrResponse: OmrrResponse | null = null
-let omrrApplicationStatusResponse: OmrrApplicationStatusResponse[] | null = null
+let omrrApplicationStatusResponse: OmrrApplicationStatusResponse[] | null = []
 let omrrAuthzDocsResponse: OmrrAuthzDocsResponse[] | null = [] // initialize to empty array
 const NR_ORACLE_SERVICE_URL = process.env.NR_ORACLE_SERVICE_URL
 const NR_ORACLE_SERVICE_KEY = process.env.NR_ORACLE_SERVICE_KEY
@@ -88,7 +88,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         process.exit(128)
       }
     }
-    if (!omrrApplicationStatusResponse) {
+    if (omrrApplicationStatusResponse.length === 0 && process.env.OMRR_APP_STATUS_FLAG === 'true') {
       try {
         await this.getOMRRApplicationStatusFromAMS()
       } catch (error) {

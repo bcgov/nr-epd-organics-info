@@ -42,6 +42,7 @@ jobs:
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
         --set global.amsURL=https://test.j200.gov.bc.ca/pub/ams/ \
+        --set-string backend.env.omrrAuthzDocsFlag=true \
   tests:
     name: Tests
     if: needs.deploys.outputs.triggered == 'true'
