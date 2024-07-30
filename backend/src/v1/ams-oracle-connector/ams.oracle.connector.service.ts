@@ -166,7 +166,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         for (const row of result) {
           const authNum: number = Number(row['Authorization Number'])
           const doc = {
-            DocumentObjectID: row['DocumentObjectID'] as number,
+            DocumentObjectID: Number(row['DocumentObjectID']),
             Description: row['Description'],
             Publiclyviewable: row['Publiclyviewable'],
           }
