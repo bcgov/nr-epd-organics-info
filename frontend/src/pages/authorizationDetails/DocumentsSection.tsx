@@ -1,4 +1,5 @@
-import { Stack, Typography } from '@mui/material'
+import { Link, Stack, Typography } from '@mui/material'
+import {env} from '@/env'
 import clsx from 'clsx'
 
 import {
@@ -23,7 +24,7 @@ export function DocumentsSection({ item }: Readonly<Props>) {
 
   const count = documents.length
   // When the documents can be downloaded - change to a link
-  const canDownload = false
+  const canDownload = env.VITE_AMS_DOCS_FLAG === 'true'
   return (
     <Stack
       direction="column"
@@ -48,15 +49,18 @@ export function DocumentsSection({ item }: Readonly<Props>) {
           </div>
         )}
         {documents.map((doc: OmrrAuthzDocs) => (
-          <div
+          <Link
             key={`DocumentRow-${doc.DocumentObjectID}`}
             className={clsx(
               'documents-table-cell',
               canDownload && 'documents-table-cell--link',
             )}
+            href={env.VITE_AMS_URL +'download.aspx?PosseObjectId='+ doc.DocumentObjectID}
+            target="_blank"
+            rel={canDownload ? 'noopener noreferrer' : ''}
           >
             {doc.Description}
-          </div>
+          </Link>
         ))}
       </Stack>
     </Stack>
