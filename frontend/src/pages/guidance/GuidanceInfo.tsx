@@ -99,7 +99,7 @@ export function GuidanceInfo() {
             >
               B.C. Data Catalogue
             </a>
-            .
+            {/* fix sonar warning */}.
           </Typography>
           <Typography className="guidance-info-text">
             The{' '}
@@ -121,7 +121,7 @@ export function GuidanceInfo() {
             >
               B.C. Data Catalogue
             </a>
-            .
+            {/* fix sonar warning */}.
           </Typography>
         </div>
       </Stack>
