@@ -164,19 +164,20 @@ export class AmsOracleConnectorService implements OnModuleInit {
         // else create a new document array and add it to the authorization number
         const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = []
         for (const row of result) {
-          const authNum = row['Authorization Number']
+          const authNum: number = row['Authorization Number']
           const doc = {
-            DocumentObjectID: row['DocumentObjectID'],
+            DocumentObjectID: row['DocumentObjectID'] as number,
             Description: row['Description'],
             Publiclyviewable: row['Publiclyviewable'],
           }
           if(omrrAuthzDocsResponseScoped?.length > 0) {
             const authNumIndex = omrrAuthzDocsResponseScoped.findIndex((auth) => auth['Authorization Number'] === authNum)
             if (authNumIndex === -1) {
-              omrrAuthzDocsResponseScoped.push({
+              const omrrAuthzDoc: OmrrAuthzDocsResponse = {
                 'Authorization Number': authNum,
                 doc_links: [doc],
-              })
+              }
+              omrrAuthzDocsResponseScoped.push(omrrAuthzDoc)
             } else {
               omrrAuthzDocsResponseScoped[authNumIndex].doc_links.push(doc)
             }
