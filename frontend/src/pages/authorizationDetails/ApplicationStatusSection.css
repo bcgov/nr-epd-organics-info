@@ -27,3 +27,12 @@
   font-style: italic;
   color: var(--typography-color-secondary);
 }
+
+.application-status-guidance-link {
+  color: var(--typography-color-link);
+  text-decoration: none;
+}
+
+.application-status-guidance-link:hover {
+  text-decoration: underline;
+}

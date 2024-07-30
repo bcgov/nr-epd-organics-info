@@ -1,0 +1,5 @@
+.header-menu-link {
+  text-transform: none;
+  text-decoration: none;
+  color: var(--typography-color-primary);
+}

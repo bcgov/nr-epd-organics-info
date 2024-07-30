@@ -6,27 +6,32 @@ import homePageBanner from '@/assets/homepage-banner-unsplash.jpg'
 
 const styles = {
   section: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    backgroundImage: `url(${homePageBanner})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    padding: '5rem',
+    // backgroundImage: `url(${homePageBanner})`,
+    background: `linear-gradient(0deg, rgba(5, 54, 98, 0.80) 0%, rgba(5, 54, 98, 0.80) 100%), url(${homePageBanner}) lightgray -34.093px -78.971px / 111.389% 194.45% no-repeat`,
+    backgroundBlendMode: 'multiply, normal',
+    padding: {
+      xs: '40px 24px',
+      md: '80px 76px',
+    },
     height: {
       xs: 'auto',
       md: '377px',
     },
-    gap: '2rem',
+    gap: '32px',
   },
-  stack: {},
-  heading: {},
+  heading: {
+    fontSize: {
+      xs: '28px',
+      md: '32px',
+    },
+  },
   buttonBar: {
-    gap: '1rem',
+    gap: '16px',
   },
   button: {
     color: '#255a90',
     fontWeight: 'bold',
-    fontSize: '1.125rem',
+    fontSize: '18px',
   },
 }
 

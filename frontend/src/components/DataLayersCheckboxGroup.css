@@ -16,21 +16,11 @@
   padding: 0;
 }
 
-.data-layers-top-text,
+p.data-layers-top-text,
 .data-layers-top-link {
   color: var(--typography-color-disabled);
   font-size: 14px;
   font-style: italic;
-}
-
-.data-layers-top-link,
-.data-layers-top-link:hover {
-  text-decoration: underline;
-}
-
-.data-layers-type-text {
-  color: var(--typography-color-primary);
-  font-weight: 700;
 }
 
 .available-layers-row {
@@ -41,6 +31,8 @@
   flex: 0 0 28px;
 }
 
-.available-layers-text {
+p.available-layers-text {
   color: var(--typography-color-primary);
+  font-size: 18px;
+  font-weight: 700;
 }

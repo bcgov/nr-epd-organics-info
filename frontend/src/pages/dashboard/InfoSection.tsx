@@ -1,6 +1,6 @@
 import { Typography, Button, Box, Stack } from '@mui/material'
 
-import infoImage from '@/assets/homepage-info.png'
+import infoImage from '@/assets/homepage-info.jpg'
 
 const styles = {
   section: {
@@ -39,9 +39,9 @@ const styles = {
       md: '2em',
     },
     gap: {
-      xs: '1rem',
-      md: '2rem',
-      lg: '5rem',
+      xs: '16px',
+      md: '32px',
+      lg: '80px',
     },
   },
   stackList: {
@@ -49,13 +49,13 @@ const styles = {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     gap: {
-      xs: '0.5rem',
-      md: '1.25rem',
+      xs: '8px',
+      md: '20px',
     },
   },
   list: {
-    margin: '0 0 0.5rem',
-    padding: '0 0 0 2rem',
+    margin: '0 0 8px',
+    padding: '0 0 0 32px',
   },
   imageContainer: {
     flex: 1,
@@ -65,11 +65,15 @@ const styles = {
   },
   image: {
     borderRadius: '8px',
-    maxWidth: 'calc(100vw - 3em)',
+    maxWidth: 'calc(100vw - 64px)',
   },
   button: {
-    fontWeight: 'bold',
-    padding: '0.5rem 2rem',
+    fontWeight: 700,
+    padding: '8px 32px',
+    margin: {
+      xs: '0',
+      md: '10px 0 0 0',
+    },
   },
 }
 

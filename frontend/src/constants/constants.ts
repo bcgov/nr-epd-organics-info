@@ -17,6 +17,9 @@ export const DEFAULT_PLACE_ZOOM = 13
  */
 export const DEFAULT_AUTHORIZATION_ZOOM = 13
 
+export const HEADER_HEIGHT = 64
+export const FOOTER_HEIGHT = 64
+
 /**
  * The map bottom drawer component is 320px in height
  * in its initial state. It can be expanded to full height.

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Stack, Typography } from '@mui/material'
 import clsx from 'clsx'
@@ -34,8 +35,6 @@ export function DataLayersCheckboxGroup({
     dispatch(resetDataLayers())
   }
 
-  const isGuidanceReady = false
-
   return (
     <Stack
       direction="column"
@@ -51,19 +50,13 @@ export function DataLayersCheckboxGroup({
         <Typography className="data-layers-top-text">
           All data layers sourced from GeoBC.
         </Typography>
-        {isGuidanceReady && (
-          <Typography className="data-layers-top-link">
-            Click here to read our guidance page about map layers.
-          </Typography>
-        )}
+        <NavLink to="/guidance" className="data-layers-top-link">
+          Click here to read our guidance page about map layers.
+        </NavLink>
       </Stack>
       {isSmall && (
         <div className="available-layers-row">
-          <Typography
-            className="available-layers-text"
-            fontSize="18px"
-            fontWeight={700}
-          >
+          <Typography className="available-layers-text">
             Available Layers
           </Typography>
           {hasDataLayers && (
