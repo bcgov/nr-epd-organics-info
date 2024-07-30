@@ -24,7 +24,7 @@ export function DetailsGridLabel({
       >
         {label}
       </Typography>
-      {children}
+      <span>{children}</span>
     </Grid>
   )
 }
