@@ -6,9 +6,10 @@ export const dashboard_page = async (page: Page) => {
   await page.goto(baseURL)
   await expect(page.getByText('Organics Info')).toBeVisible()
   await expect(page.getByAltText('Logo')).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Map Search' })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Text Search' })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Contact Us' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Map Search' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Text Search' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Guidance' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Contact Us' })).toBeVisible()
   await expect(
     page.getByRole('heading', {
       name: 'Find an authorized compost and biosolid facility in British Columbia',

@@ -12,7 +12,7 @@ export const authorization_details_page = async (page: Page) => {
   await expect(page.getByText('Authorization Status')).toBeVisible()
   await expect(page.getByText('Active')).toBeVisible()
   await expect(page.getByText('Authorization Number')).toBeVisible()
-  await expect(page.getByText('12398')).toBeVisible()
+  await expect(page.getByText('12398', { exact: true })).toBeVisible()
   await expect(page.getByText('Effective/Issue Date')).toBeVisible()
   await expect(page.getByText('1994-08-02')).toBeVisible()
   await expect(page.getByText('Last Amendment Date')).toBeVisible()

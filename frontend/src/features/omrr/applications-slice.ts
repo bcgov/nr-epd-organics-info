@@ -75,7 +75,8 @@ export const selectStatus = (state: RootState) => state.applications.status
 export const selectAllApplications = (state: RootState) =>
   state.applications.allApplications
 
-export const useFindApplicationStatus = (
+// Find all applications by authorization number
+export const useFindApplications = (
   authorizationNumber: number,
 ): OmrrApplicationStatus[] => {
   const allApplications = useSelector(selectAllApplications)

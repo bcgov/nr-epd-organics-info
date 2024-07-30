@@ -26,6 +26,7 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
     }
     const { user } = render(<TestComponent />, {
       withStateProvider: true,
+      withRouter: true,
     })
     return { user, state }
   }
@@ -33,6 +34,7 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
   it('should render large DataLayersCheckboxGroup', async () => {
     const { user, state } = renderComponent(false, 'test-class')
     screen.getByText(/^All data layers sourced from GeoBC/)
+    screen.getByRole('link', { name: /^Click here to read our guidance/ })
     expect(state.dataLayers).toHaveLength(0)
     expect(state.hasDataLayersOn).toBe(false)
 

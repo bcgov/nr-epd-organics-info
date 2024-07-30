@@ -1,26 +1,28 @@
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import {
   AppBar,
   Box,
   IconButton,
   Link,
-  Menu as MenuComponent,
-  MenuItem,
+  Menu,
   Stack,
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Menu } from '@mui/icons-material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-import { HeaderIconButton } from '@/components/HeaderIconButton'
+import { HeaderLink } from './HeaderLink'
+import { HeaderMenuLink } from './HeaderMenuLink'
 
 import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
 import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
 import MapIcon from '@/assets/svgs/fa-map.svg?react'
 import TextIcon from '@/assets/svgs/fa-text.svg?react'
+import MenuIcon from '@/assets/svgs/fa-menu.svg?react'
+
+import './Header.css'
 
 const styles = {
   appBar: {
@@ -56,11 +58,6 @@ const styles = {
       sm: '.5em',
     },
   },
-  menuLink: {
-    textTransform: 'none',
-    textDecoration: 'none',
-    color: 'inherit',
-  },
 }
 
 export default function Header() {
@@ -68,6 +65,10 @@ export default function Header() {
   const navigate = useNavigate()
   const theme = useTheme()
   const mdMatches = useMediaQuery(theme.breakpoints.up('lg'))
+
+  useEffect(() => {
+    setAnchorEl(undefined)
+  }, [mdMatches])
 
   const handleMenuClick = (event: MouseEvent) => {
     setAnchorEl(event.currentTarget as HTMLElement)
@@ -106,31 +107,20 @@ export default function Header() {
         <Stack direction="row" id="nav">
           {mdMatches && (
             <>
-              <HeaderIconButton
-                onClick={() => buttonClicked('/map')}
+              <HeaderLink
+                to="/map"
                 icon={<MapIcon width="20px" height="24px" />}
               >
                 Map Search
-              </HeaderIconButton>
-              <HeaderIconButton
-                onClick={() => buttonClicked('/search')}
+              </HeaderLink>
+              <HeaderLink
+                to="/search"
                 icon={<TextIcon width="14px" height="24px" />}
               >
                 Text Search
-              </HeaderIconButton>
-              <a href="mailto:env.omrr.reg.reviews@gov.bc.ca">
-                <Link
-                  component="button"
-                  sx={{
-                    color: '#ffffff',
-                    textDecoration: 'none',
-                    textTransform: 'none',
-                    padding: '.5em 1em',
-                  }}
-                >
-                  Contact Us
-                </Link>
-              </a>
+              </HeaderLink>
+              <HeaderLink to="/guidance">Guidance</HeaderLink>
+              <HeaderLink to="/contact">Contact Us</HeaderLink>
             </>
           )}
           {!mdMatches && (
@@ -139,43 +129,38 @@ export default function Header() {
                 onClick={handleMenuClick}
                 aria-label="Menu"
                 title="Menu"
+                className="header-menu-button"
               >
-                <Menu color="secondary" />
+                <MenuIcon />
               </IconButton>
-              <MenuComponent
+              <Menu
                 id="headerMenu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: -6,
+                  horizontal: 24,
+                }}
               >
-                <MenuItem onClick={handleMenuClose}>
-                  <Link
-                    sx={styles.menuLink}
-                    onClick={() => buttonClicked('/map')}
-                    component="button"
-                  >
-                    Map Search
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <Link
-                    sx={styles.menuLink}
-                    onClick={() => buttonClicked('/search')}
-                    component="button"
-                  >
-                    Text Search
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <a
-                    href="mailto:env.omrr.reg.reviews@gov.bc.ca"
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                  >
-                    Contact Us
-                  </a>
-                </MenuItem>
-              </MenuComponent>
+                <HeaderMenuLink onClick={handleMenuClose} to="/map">
+                  Map Search
+                </HeaderMenuLink>
+                <HeaderMenuLink onClick={handleMenuClose} to="/search">
+                  Text Search
+                </HeaderMenuLink>
+                <HeaderMenuLink onClick={handleMenuClose} to="/guidance">
+                  Guidance
+                </HeaderMenuLink>
+                <HeaderMenuLink onClick={handleMenuClose} to="/contact">
+                  Contact Us
+                </HeaderMenuLink>
+              </Menu>
             </div>
           )}
         </Stack>

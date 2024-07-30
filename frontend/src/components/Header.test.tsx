@@ -12,9 +12,10 @@ describe('Header suite', () => {
 
     const logoLink = screen.getByAltText('Logo')
     screen.getByText('Organics Info')
-    const mapLink = screen.getByRole('button', { name: 'Map Search' })
-    const textLink = screen.getByRole('button', { name: 'Text Search' })
-    screen.getByText('Contact Us')
+    const mapLink = screen.getByRole('link', { name: 'Map Search' })
+    const textLink = screen.getByRole('link', { name: 'Text Search' })
+    const guidanceLink = screen.getByRole('link', { name: 'Guidance' })
+    const contactLink = screen.getByRole('link', { name: 'Contact Us' })
 
     await user.click(mapLink)
     expect(location.href).toContain('/map')
@@ -22,10 +23,16 @@ describe('Header suite', () => {
     await user.click(textLink)
     expect(location.href).toContain('/search')
 
+    await user.click(guidanceLink)
+    expect(location.href).toContain('/guidance')
+
+    await user.click(contactLink)
+    expect(location.href).toContain('/contact')
+
     // Clicking on the logo will redirect back to "/"
     // Find the base url without hard-coding the url
     const { href } = location
-    const baseUrl = href.substring(0, href.indexOf('/search') + 1)
+    const baseUrl = href.substring(0, href.indexOf('/contact') + 1)
 
     await user.click(logoLink)
     expect(location.href).toEqual(baseUrl)
@@ -43,14 +50,21 @@ describe('Header suite', () => {
     await user.click(menuButton)
 
     const menu = screen.getByRole('menu')
-    const mapMenuItem = getByText(menu, 'Map Search')
-    const textMenuItem = getByText(menu, 'Text Search')
-    getByText(menu, 'Contact Us')
+    const mapLink = getByText(menu, 'Map Search')
+    const textLink = getByText(menu, 'Text Search')
+    const guidanceLink = getByText(menu, 'Guidance')
+    const contactLink = getByText(menu, 'Contact Us')
 
-    await user.click(mapMenuItem)
+    await user.click(mapLink)
     expect(location.href).toContain('/map')
 
-    await user.click(textMenuItem)
+    await user.click(textLink)
     expect(location.href).toContain('/search')
+
+    await user.click(guidanceLink)
+    expect(location.href).toContain('/guidance')
+
+    await user.click(contactLink)
+    expect(location.href).toContain('/contact')
   })
 })

@@ -4,12 +4,11 @@ import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
   await page.goto(baseURL)
-
-  await page.getByRole('button', { name: 'Map Search' }).click()
+  await page.getByRole('link', { name: 'Map Search' }).click()
 
   await expect(page).toHaveTitle('Organics Info')
-  await expect(page.getByRole('button', { name: 'Map Search' })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Text Search' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Map Search' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Text Search' })).toBeVisible()
 
   await expect(page.getByTestId('map-view')).toBeVisible()
 

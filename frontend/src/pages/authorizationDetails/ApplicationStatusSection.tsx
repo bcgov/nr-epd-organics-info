@@ -1,10 +1,11 @@
+import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Link, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
 import {
   selectStatus,
-  useFindApplicationStatus,
+  useFindApplications,
 } from '@/features/omrr/applications-slice'
 import { OmrrApplicationStatus } from '@/interfaces/omrr-application-status'
 
@@ -21,15 +22,11 @@ interface Props {
 export function ApplicationStatusSection({ item }: Readonly<Props>) {
   const number = item['Authorization Number']
   const status = useSelector(selectStatus)
-  const allApplications: OmrrApplicationStatus[] =
-    useFindApplicationStatus(number)
+  const allApplications: OmrrApplicationStatus[] = useFindApplications(number)
 
   if (status !== 'succeeded' || allApplications.length === 0) {
     return null
   }
-
-  // Still need to make a new guidance page
-  const isGuidancePageReady = false
 
   return (
     <div className="application-status-section">
@@ -79,15 +76,10 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
       })}
 
       <div className="application-status-guidance">
-        Applies to amendment and new notifications only
-        {isGuidancePageReady && (
-          <>
-            {', '}
-            <Link href="/guidance">
-              please see our guidance on data we show
-            </Link>
-          </>
-        )}
+        Applies to amendment and new notifications only,{' '}
+        <NavLink to="/guidance" className="application-status-guidance-link">
+          please see our guidance on data we show
+        </NavLink>
         .
       </div>
     </div>
