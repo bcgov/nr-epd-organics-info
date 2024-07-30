@@ -164,7 +164,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
         // else create a new document array and add it to the authorization number
         const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = []
         for (const row of result) {
-          const authNum: number = row['Authorization Number'] as number
+          const authNum: number = Number(row['Authorization Number'])
           const doc = {
             DocumentObjectID: row['DocumentObjectID'] as number,
             Description: row['Description'],
