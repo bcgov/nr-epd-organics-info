@@ -56,6 +56,8 @@ export function DocumentsSection({ item }: Readonly<Props>) {
               canDownload && 'documents-table-cell--link',
             )}
             href={env.VITE_AMS_URL +'download.aspx?PosseObjectId='+ doc.DocumentObjectID}
+            target="_blank"
+            rel={canDownload ? 'noopener noreferrer' : ''}
           >
             {doc.Description}
           </Link>
