@@ -41,6 +41,8 @@ spec:
               value: "info"
             - name: VITE_AMS_URL
               value: {{ .Values.global.amsURL }}
+            - name: VITE_AMS_DOCS_FLAG
+              value: {{ .Values.backend.env.omrrAuthzDocsFlag }}
           ports:
             - name: http
               containerPort: 3000
