@@ -55,3 +55,8 @@ input:-webkit-autofill:active {
 .Mui-focused .search-input-icon {
   color: var(--icons-color-info);
 }
+
+.search-input-icon--active,
+.Mui-focused .search-input-icon--active {
+  color: var(--surface-color-primary-active-border);
+}

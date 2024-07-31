@@ -1,5 +1,5 @@
 import React from 'react'
-import { getByAltText, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { DATA_LAYER_GROUPS } from '@/constants/data-layers'
 import { render } from '@/test-utils'

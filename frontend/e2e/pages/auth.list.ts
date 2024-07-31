@@ -40,4 +40,11 @@ export const authorization_list_page = async (page: Page) => {
   await expect(listItem.getByText('17268')).toBeVisible()
   await expect(listItem.getByText('Active')).toBeVisible()
   await expect(listItem.getByText('Notification')).toBeVisible()
+
+  // Sort by location
+  await page.getByTitle('Sort results by my location').click()
+
+  await expect(
+    page.getByRole('button', { name: 'Export Results to CSV' }),
+  ).toBeVisible()
 }

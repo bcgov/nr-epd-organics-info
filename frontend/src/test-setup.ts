@@ -81,9 +81,9 @@ const geoLocationResult: GeolocationPosition = {
 
 Object.defineProperty(navigator, 'geolocation', {
   value: {
-    getCurrentPosition: (success: (pos: GeolocationPosition) => void) => {
+    getCurrentPosition: vi.fn((success: (pos: GeolocationPosition) => void) => {
       success(geoLocationResult)
-    },
+    }),
     watchPosition: (success: (pos: GeolocationPosition) => void) => {
       success(geoLocationResult)
       return 0
@@ -94,12 +94,12 @@ Object.defineProperty(navigator, 'geolocation', {
 
 Object.defineProperty(navigator, 'permissions', {
   value: {
-    query: ({ name }: PermissionDescriptor) => {
+    query: vi.fn(({ name }: PermissionDescriptor) => {
       return Promise.resolve({
         name,
         state: 'granted',
       } as PermissionStatus)
-    },
+    }),
   },
 })
 
