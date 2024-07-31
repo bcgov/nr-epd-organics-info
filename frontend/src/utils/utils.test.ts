@@ -1,9 +1,12 @@
 import {
   extractPostalCode,
+  filenameDateFormat,
+  formatDistance,
   formatLatOrLng,
   isDigits,
   isPostalCodeStart,
   isValidDate,
+  shortDateFormat,
   toNumber,
   truncateDate,
 } from '@/utils/utils'
@@ -29,6 +32,27 @@ describe('Test suite for utils', () => {
     expect(truncateDate(undefined as any)).toBe('')
     expect(truncateDate(null as any)).toBe('')
     expect(truncateDate(123 as any)).toBe('')
+  })
+
+  it('should test filenameDateFormat', () => {
+    const date = new Date('2024-07-31T13:57:34.553Z')
+    expect(filenameDateFormat(date)).toBe('20240731_135734553')
+    expect(filenameDateFormat()).toHaveLength(18)
+  })
+
+  it('should test shortDateFormat', () => {
+    const date = new Date('2024-07-25T13:57:34.553Z')
+    expect(shortDateFormat(date)).toBe('Jul 25, 2024')
+
+    const today = new Date()
+    const expected = shortDateFormat(today)
+    expect(shortDateFormat(undefined as any)).toBe(expected)
+  })
+  it('should test formatDistance', () => {
+    expect(formatDistance(NaN)).toBe('')
+    expect(formatDistance(12.3)).toBe('12 m')
+    expect(formatDistance(1234.123)).toBe('1.23 km')
+    expect(formatDistance(1234.123, 1)).toBe('1.2 km')
   })
 
   it('should test isPostalCodeStart()', () => {

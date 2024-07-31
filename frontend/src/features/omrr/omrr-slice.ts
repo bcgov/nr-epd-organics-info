@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom'
 import rfdc from 'rfdc'
 
 import { RootState } from '@/app/store'
+import { MIN_SEARCH_LENGTH } from '@/constants/constants'
 import { LoadingStatusType } from '@/interfaces/loading-status'
 import OmrrData from '@/interfaces/omrr'
 import {
@@ -27,9 +28,7 @@ import {
   filterByAuthorizationStatus,
   filterData,
   flattenFilters,
-  sortDataByPosition,
 } from './omrr-utils'
-import { MIN_SEARCH_LENGTH } from '@/constants/constants'
 
 const deepClone = rfdc({ circles: true })
 
@@ -48,6 +47,7 @@ export interface OmrrSliceState {
   page: number
   searchBy: string
   filters: OmrrFilter[]
+  userLocation?: LatLngTuple
   allResults: OmrrData[]
   searchByFilteredResults: OmrrData[]
   filteredResults: OmrrData[]
@@ -68,6 +68,8 @@ export const initialState: OmrrSliceState = {
   searchBy: SEARCH_BY_ACTIVE,
   // Array of filters to keep track of which are on and which are disabled
   filters: [...facilityTypeFilters],
+  // Set to the user's location when they want to sort results by closest facilities
+  userLocation: undefined,
   // The data array containing all results
   allResults: [],
   // results filtered by the search by value
@@ -130,16 +132,12 @@ export const omrrSlice = createSlice({
       state.filters = [...facilityTypeFilters]
       performSearch(state)
     },
-    sortFilteredResultsByPosition: (
+    setUserLocation: (
       state,
-      action: PayloadAction<LatLngTuple>,
+      action: PayloadAction<LatLngTuple | undefined>,
     ) => {
-      state.filteredResults = sortDataByPosition(
-        state.filteredResults,
-        action.payload,
-      )
-      state.page = 1
-      state.lastSearchTime = Date.now()
+      state.userLocation = action.payload
+      performSearch(state)
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload
@@ -203,7 +201,7 @@ export const {
   updateFilter,
   setSearchBy,
   resetFilters,
-  sortFilteredResultsByPosition,
+  setUserLocation,
   setPage,
   setSearchTextFilter,
   setPolygonFilter,
@@ -224,6 +222,9 @@ export const selectFilters = (state: RootState) => state.omrr.filters
 export const useFilters = () => useSelector(selectFilters)
 export const useHasFiltersOn = () =>
   flattenFilters(useFilters()).some(({ on, disabled }) => on && !disabled)
+
+export const selectUserLocation = (state: RootState) => state.omrr.userLocation
+export const useUserLocation = () => useSelector(selectUserLocation)
 
 export const selectSearchTextFilter = (state: RootState) =>
   state.omrr.searchTextFilter

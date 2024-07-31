@@ -134,6 +134,11 @@ export function filterData(state: OmrrSliceState): OmrrData[] {
     const { center, radius } = state.circleFilter
     filteredData = filterDataInsideCircle(filteredData, center, radius)
   }
+  // Sort data by closest to user's location
+  if (state.userLocation) {
+    filteredData = sortDataByPosition(filteredData, state.userLocation)
+  }
+
   return filteredData
 }
 
@@ -214,7 +219,7 @@ function filterAndSortByDistance(
  * Creates a new array and sorts it by the distance away from the given position,
  * the closest items are first in the array.
  */
-export function sortDataByPosition(
+function sortDataByPosition(
   data: OmrrData[],
   position: LatLngTuple,
 ): OmrrData[] {

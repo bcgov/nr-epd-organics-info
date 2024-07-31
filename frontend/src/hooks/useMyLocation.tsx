@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 
 import { MyLocationData } from '@/interfaces/location'
-import { getMyLocation } from '@/utils/utils'
+import { getGeolocationPermission, getMyLocation } from '@/utils/utils'
 
 /**
  * Uses the navigator geolocation to find the GPS location of the user.
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  * @returns { position, accuracy } object
  */
 export function useMyLocation(): MyLocationData {
@@ -17,4 +15,16 @@ export function useMyLocation(): MyLocationData {
   }, [])
 
   return data
+}
+
+export function useGeolocationPermission(): PermissionState | undefined {
+  const [state, setState] = useState<PermissionState | undefined>(undefined)
+
+  useEffect(() => {
+    // If there is an error - assume the permissions API is not supported
+    // And the geolocation is probably still available
+    getGeolocationPermission(setState, () => setState('prompt'))
+  }, [])
+
+  return state
 }
