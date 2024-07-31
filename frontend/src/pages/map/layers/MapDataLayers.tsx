@@ -18,6 +18,7 @@ export function MapDataLayers() {
       styles,
       format = 'image/png',
       transparent = true,
+      className,
     } = layer
     const key = `DataLayer-${name}`
     return (
@@ -28,6 +29,7 @@ export function MapDataLayers() {
         styles={styles}
         format={format}
         transparent={transparent}
+        className={className}
       />
     )
   })
