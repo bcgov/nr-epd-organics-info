@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 
 import { useFilteredResults } from '@/features/omrr/omrr-slice'
 import { downloadCsvFile } from '@/utils/file-utils'
-import { omrrDataToCsv } from '@/utils/utils'
+import { filenameDateFormat, omrrDataToCsv } from '@/utils/utils'
 
 import ExportIcon from '@/assets/svgs/fa-file-export.svg?react'
 
@@ -11,7 +11,8 @@ export function ExportResultsButton() {
 
   const onExport = () => {
     const csv = omrrDataToCsv(filteredResults)
-    downloadCsvFile(csv, `authorizations.csv`)
+    const date = filenameDateFormat(new Date())
+    downloadCsvFile(csv, `OMMR_Authorizations_${date}.csv`)
   }
 
   return (

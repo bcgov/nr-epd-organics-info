@@ -24,6 +24,17 @@ export const truncateDate = (dateString: string): string =>
   typeof dateString === 'string' ? dateString.substring(0, 10) : ''
 
 /**
+ * Returns a formatted date string that can go in filenames.
+ * It will be the UTC time in this format:
+ * `YYYYMMDD_HHMMSSmmm`, e.g. `20240731_025126298`
+ */
+export function filenameDateFormat(date: Date | undefined = undefined): string {
+  let s = (date ?? new Date()).toISOString()
+  s = s.replace('T', '_').replace(/[-:.Z]/gi, '')
+  return s
+}
+
+/**
  * Formats the date in MMM D, YYYY format
  * @param date
  */

@@ -3,9 +3,9 @@ import { screen } from '@testing-library/react'
 import { render } from '@/test-utils'
 import { initialState } from '@/features/omrr/omrr-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
-import { ExportResultsButton } from './ExportResultsButton'
 import { omrrDataToCsv } from '@/utils/utils'
 import { downloadCsvFile } from '@/utils/file-utils'
+import { ExportResultsButton } from './ExportResultsButton'
 
 vi.mock('@/utils/file-utils')
 
@@ -26,6 +26,10 @@ describe('Test suite for ExportResultsButton', () => {
 
     const csv = omrrDataToCsv(mockOmrrData)
     expect(downloadCsvFile).toHaveBeenCalledOnce()
-    expect(downloadCsvFile).toHaveBeenCalledWith(csv, 'authorizations.csv')
+
+    const expectedFilename = expect.stringMatching(
+      /OMMR_Authorizations_\d{8}_\d{9}\.csv/,
+    )
+    expect(downloadCsvFile).toHaveBeenCalledWith(csv, expectedFilename)
   })
 })
