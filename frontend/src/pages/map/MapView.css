@@ -81,3 +81,12 @@
   border-left-color: rgba(0, 0, 0, 0.45);
   margin-right: -11px;
 }
+
+/* Data Layers customizations - changes the colors of the tile images */
+.wl-pod-springs img {
+  filter: brightness(0.75) hue-rotate(135deg);
+}
+
+.wl-pod-sources img {
+  filter: brightness(0.5);
+}

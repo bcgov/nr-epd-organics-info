@@ -185,9 +185,20 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
       {
         name: 'ALR Notices of Intent (Spatial View)',
         // No public WMS URL for this layer
-        url: '',
+        url: `${BASE_URL}/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_NOI_SV/ows`,
+        layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_NOI_SV',
+        styles: '4764',
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/43e45e82-b5d8-46a3-bb28-f2b7223423fc',
+      },
+      {
+        name: 'ALR Applications (Spatial View)',
+        // No public WMS URL for this layer
+        url: `${BASE_URL}/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_APPLICATIONS_SVW/ows`,
+        layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_APPLICATIONS_SVW',
+        styles: '4758',
+        webUrl:
+          'https://catalogue.data.gov.bc.ca/dataset/48165eb9-cd44-4c3a-a178-ab5c0b9d9ebc',
       },
     ],
   },
@@ -195,18 +206,20 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     name: 'Water License Points of Diversion',
     layers: [
       {
-        name: 'Water points of diversion - Licensed Springs, joined with license information',
+        name: 'Water Licence Points of Diversion – Springs',
         url: `${BASE_URL}/WHSE_WATER_MANAGEMENT.WLS_POD_LICENCE_SOURCES_SP/ows`,
         layers: 'pub:WHSE_WATER_MANAGEMENT.WLS_POD_LICENCE_SOURCES_SP',
         styles: '1836',
+        className: 'wl-pod-springs',
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/4bc1cf40-3507-4591-bd89-82e8809440b5',
       },
       {
-        name: 'Water points of diversion - Drinking Water Sources, consumptive water license points',
+        name: 'Water Licence Points of Diversion – Drinking Water Sources',
         url: `${BASE_URL}/WHSE_WATER_MANAGEMENT.WLS_BC_POD_DRINKNG_SOURCES_SP/ows`,
         layers: 'pub:WHSE_WATER_MANAGEMENT.WLS_BC_POD_DRINKNG_SOURCES_SP',
         styles: '1835',
+        className: 'wl-pod-sources',
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/bd3566ed-1101-473b-a3ec-5daefa1fe2c1',
       },
@@ -219,7 +232,7 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
         name: 'Critical Habitat for federally-listed species at risk',
         url: `${BASE_URL}/WHSE_WILDLIFE_MANAGEMENT.WCP_CRITICAL_HABITAT_SP/ows`,
         layers: 'pub:WHSE_WILDLIFE_MANAGEMENT.WCP_CRITICAL_HABITAT_SP',
-        styles: '4883_4884',
+        styles: '4883',
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/076b8c98-a3f1-429b-9dae-03faed0c6aef',
       },
@@ -229,12 +242,25 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     name: 'Crown Lands',
     layers: [
       {
-        name: 'PMBC Parcel Cadastre',
+        name: 'PMBC Parcel Cadastre – Crown Provincial',
         url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
         layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
         styles: '5899', // Provincial Crown Lands
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/4cf233c2-f020-4f7a-9b87-1923252fbc24',
+      },
+    ],
+  },
+  {
+    name: 'Indian Reserves',
+    layers: [
+      {
+        name: 'Indian Reserves Including Band Names',
+        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/ows',
+        layers: 'pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP',
+        styles: '381_382',
+        webUrl:
+          'https://catalogue.data.gov.bc.ca/dataset/indian-reserves-and-band-names-administrative-boundaries',
       },
     ],
   },
