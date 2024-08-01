@@ -28,7 +28,7 @@ describe('Test suite for ExportResultsButton', () => {
     expect(downloadCsvFile).toHaveBeenCalledOnce()
 
     const expectedFilename = expect.stringMatching(
-      /OMMR_Authorizations_\d{8}_\d{9}\.csv/,
+      /OMRR_Authorizations_\d{8}_\d{9}\.csv/,
     )
     expect(downloadCsvFile).toHaveBeenCalledWith(csv, expectedFilename)
   })
