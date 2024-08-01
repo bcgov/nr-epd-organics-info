@@ -26,6 +26,11 @@
   z-index: 1;
 }
 
+/* Make open street map tiles grayscale */
+.osm--grayscale .leaflet-tile {
+  filter: grayscale(100%);
+}
+
 .leaflet-container.crosshairs-cursor {
   cursor: crosshair;
 }

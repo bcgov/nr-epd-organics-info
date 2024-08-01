@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import clsx from 'clsx'
 
+import { env } from '@/env'
 import { MapSearch } from './search/MapSearch'
 import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
@@ -19,6 +20,9 @@ import './MapView.css'
 
 // Set the position of the marker for center of BC
 const CENTER_OF_BC: LatLngTuple = [53.7267, -127.6476]
+
+// Feature flag for turning OpenStreetMap tiles gray
+const osmGrayscale = env.VITE_OSM_GRAYSCALE_FLAG === 'true'
 
 /**
  * Renders a map with a marker at the supplied location
@@ -41,6 +45,7 @@ function MapView() {
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          className={clsx(osmGrayscale && 'osm--grayscale')}
         />
         <MapDataLayers />
         <MapControls />
