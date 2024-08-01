@@ -1,5 +1,7 @@
 import { ChangeEvent } from 'react'
 import { Button, Dialog, Stack } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { AutocompleteOption } from '@/interfaces/autocomplete-option'
 import { SearchInput } from '@/components/SearchInput'
@@ -9,12 +11,15 @@ import { AutocompleteItem } from './AutocompleteItem'
 import ChevronLeft from '@/assets/svgs/fa-chevron-left.svg?react'
 
 import './SearchDialog.css'
+import clsx from 'clsx'
 
 interface Props {
   onClose: () => void
 }
 
 export function SearchDialog({ onClose }: Readonly<Props>) {
+  const theme = useTheme()
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
   const { value, options, performSearch, selectOption } =
     useAutocompleteSearch()
 
@@ -32,7 +37,15 @@ export function SearchDialog({ onClose }: Readonly<Props>) {
   }
 
   return (
-    <Dialog open={true} onClose={onClose} className="search-dialog">
+    <Dialog
+      open={true}
+      onClose={onClose}
+      className={clsx(
+        'search-dialog',
+        !isSmall && 'search-dialog--fixed-size',
+        isSmall && 'search-dialog--full-size',
+      )}
+    >
       <Stack direction="row" className="search-dialog-titlebar">
         <Button
           title="Back to the map"

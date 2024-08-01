@@ -12,14 +12,6 @@ export const map_page = async (page: Page) => {
 
   await expect(page.getByTestId('map-view')).toBeVisible()
 
-  // Find map markers - expect there to be some
-  const markers = await page.getByAltText('Authorization marker').all()
-  if (markers.length === 0) {
-    console.log('No markers')
-  }
-  // TODO not sure why this fails on CI (chromium/Chrome)
-  // expect(markers.length > 0).toBe(true)
-
   // Search components
   await expect(page.getByPlaceholder('Search')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()

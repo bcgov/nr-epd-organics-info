@@ -1,15 +1,16 @@
 import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import clsx from 'clsx'
 import { IconButton } from '@mui/material'
+import clsx from 'clsx'
 
 import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 import { ActiveToolEnum } from '@/constants/constants'
-import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
-import { setCircleFilter, setPolygonFilter } from '@/features/omrr/omrr-slice'
+import { clearActiveTool } from '@/features/map/map-slice'
+import { clearShapeFilters } from '@/features/omrr/omrr-slice'
 import { SwipeDirection, useSwipe } from '@/hooks/useSwipe'
+import { useBottomDrawerState } from '../hooks/useBottomDrawerState'
 import { SearchResultsList } from './SearchResultsList'
 import { PolygonSearch } from '../search/PolygonSearch'
 import { PointSearch } from '../search/PointSearch'
@@ -36,28 +37,38 @@ function getTitle(tool: ActiveToolEnum | undefined): string {
   }
 }
 
-interface Props {
-  isExpanded: boolean
-  setExpanded: (expanded: boolean) => void
-}
-
 /**
  * Renders the children at the bottom of the map view.
  * When isExpanded is true - it is displayed.
  * When isExpanded is false - it is hidden.
  * It can be toggled to be full height.
  */
-export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
+export function MapBottomDrawer() {
   const dispatch = useDispatch()
-  const ref = useRef<HTMLDivElement>(null)
+  const {
+    isExpanded,
+    setExpanded,
+    height,
+    activeTool,
+    isSearchResultsVisible,
+    isDataLayersVisible,
+    isSearchByVisible,
+    isFilterByVisible,
+    isPointSearchVisible,
+    isPolygonSearchVisible,
+  } = useBottomDrawerState()
   const [fullHeight, setFullHeight] = useState<boolean>(false)
-  const activeTool = useActiveTool()
-  const isSearchResultsVisible = !activeTool
-  const isDataLayersVisible = activeTool === ActiveToolEnum.dataLayers
-  const isPointSearchVisible = activeTool === ActiveToolEnum.pointSearch
-  const isPolygonSearchVisible = activeTool === ActiveToolEnum.polygonSearch
-  const isSearchByVisible = activeTool === ActiveToolEnum.searchBy
-  const isFilterByVisible = activeTool === ActiveToolEnum.filterBy
+  const ref = useRef<HTMLDivElement>(null)
+
+  const onClose = () => {
+    setExpanded(false)
+    setFullHeight(false)
+    // Clear active tool and filters too
+    if (activeTool) {
+      dispatch(clearActiveTool())
+    }
+    dispatch(clearShapeFilters())
+  }
 
   const swipeCallback = (direction: SwipeDirection) => {
     if (direction === 'up') {
@@ -77,25 +88,14 @@ export function MapBottomDrawer({ isExpanded, setExpanded }: Readonly<Props>) {
 
   useSwipe(ref, swipeCallback)
 
-  const onClose = () => {
-    setExpanded(false)
-    setFullHeight(false)
-    dispatch(setActiveTool(undefined))
-    if (isPolygonSearchVisible) {
-      dispatch(setPolygonFilter(undefined))
-    } else if (isPointSearchVisible) {
-      dispatch(setCircleFilter(undefined))
-    }
-  }
-
   return (
     <div
       ref={ref}
+      style={!isExpanded || fullHeight ? undefined : { height: `${height}px` }}
       className={clsx(
         'map-bottom-drawer',
         isExpanded && 'map-bottom-drawer--expanded',
         fullHeight && 'map-bottom-drawer--full-height',
-        Boolean(activeTool) && `map-bottom-drawer--${activeTool}`,
       )}
       data-testid="map-bottom-drawer"
     >

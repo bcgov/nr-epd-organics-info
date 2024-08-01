@@ -2,8 +2,9 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 
-import { setActiveTool } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
+import { toggleActiveTool } from '@/features/map/map-slice'
+import { clearShapeFilters } from '@/features/omrr/omrr-slice'
 
 import PolygonIcon from '@/assets/svgs/fa-polygon.svg?react'
 
@@ -15,7 +16,10 @@ export function PolygonSearchButton({ isActive }: Readonly<Props>) {
   const dispatch = useDispatch()
 
   const onClick = () => {
-    dispatch(setActiveTool(ActiveToolEnum.polygonSearch))
+    dispatch(toggleActiveTool(ActiveToolEnum.polygonSearch))
+    if (isActive) {
+      dispatch(clearShapeFilters())
+    }
   }
 
   return (

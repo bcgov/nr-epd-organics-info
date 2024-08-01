@@ -1,14 +1,14 @@
 import DropdownButton from '@/components/DropdownButton'
-import { useDrawerExpanded } from '@/features/map/map-slice'
+import { useSidebarWidth } from '@/features/map/map-slice'
 import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
 
 import layersIcon from '@/assets/svgs/fa-layers.svg'
 
 export function DataLayersButton() {
-  const isDrawerExpanded = useDrawerExpanded()
+  const sidebarWidth = useSidebarWidth()
 
-  // Hide the data layers button when the sidebar drawer is expanded
-  return isDrawerExpanded ? null : (
+  // Hide the data layers button when the sidebar is expanded
+  return sidebarWidth === 0 ? (
     <DropdownButton
       id="mapDataLayersButton"
       variant="contained"
@@ -22,5 +22,5 @@ export function DataLayersButton() {
     >
       Data Layers
     </DropdownButton>
-  )
+  ) : null
 }

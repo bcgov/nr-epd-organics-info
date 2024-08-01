@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react'
+import { MouseEventHandler, ReactNode } from 'react'
 import { Button } from '@mui/material'
 import { ChevronRight } from '@mui/icons-material'
 import clsx from 'clsx'
@@ -8,20 +8,20 @@ import './SidebarToggleButton.css'
 interface Props {
   children: ReactNode
   isExpanded: boolean
-  setExpanded: (expanded: boolean, ev: MouseEvent) => void
+  onClick: MouseEventHandler
 }
 
 export function SidebarToggleButton({
   children,
   isExpanded,
-  setExpanded,
+  onClick,
 }: Readonly<Props>) {
   return (
     <Button
       color="primary"
       variant="contained"
       size="medium"
-      onClick={(ev) => setExpanded(!isExpanded, ev)}
+      onClick={onClick}
       className={clsx(
         'sidebar-toggle-button',
         isExpanded && 'sidebar-toggle-button--expanded',

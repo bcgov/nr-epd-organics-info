@@ -6,7 +6,7 @@ import DropdownButton from '@/components/DropdownButton'
 import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 import { ActiveToolEnum } from '@/constants/constants'
 import { useSearchBy } from '@/features/omrr/omrr-slice'
-import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
+import { toggleActiveTool, useActiveTool } from '@/features/map/map-slice'
 
 interface Props {
   isLarge: boolean
@@ -15,11 +15,12 @@ interface Props {
 export function SearchByButton({ isLarge }: Readonly<Props>) {
   const dispatch = useDispatch()
   const searchBy = useSearchBy()
-  // Bottom drawer only
+  // Small screens/bottom drawer only
   const isActive = useActiveTool() === ActiveToolEnum.searchBy
 
+  // Small screens/bottom drawer only
   const onClick = () => {
-    dispatch(setActiveTool(ActiveToolEnum.searchBy))
+    dispatch(toggleActiveTool(ActiveToolEnum.searchBy))
   }
 
   const label = (

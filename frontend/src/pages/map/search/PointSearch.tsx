@@ -4,8 +4,12 @@ import clsx from 'clsx'
 
 import DropdownButton from '@/components/DropdownButton'
 import { MIN_CIRCLE_RADIUS } from '@/constants/constants'
-import { setActiveTool } from '@/features/map/map-slice'
-import { setCircleFilter, useCircleFilter } from '@/features/omrr/omrr-slice'
+import { clearActiveTool } from '@/features/map/map-slice'
+import {
+  clearShapeFilters,
+  setCircleFilter,
+  useCircleFilter,
+} from '@/features/omrr/omrr-slice'
 import { formatDistance } from '@/utils/utils'
 
 import CloseIcon from '@/assets/svgs/fa-close.svg?react'
@@ -20,8 +24,8 @@ export function PointSearch({ isSmall = false, className }: Readonly<Props>) {
   const { center, radius = MIN_CIRCLE_RADIUS } = useCircleFilter() ?? {}
 
   const onCancel = () => {
-    dispatch(setActiveTool(undefined))
-    dispatch(setCircleFilter(undefined))
+    dispatch(clearActiveTool())
+    dispatch(clearShapeFilters())
   }
 
   const onRadiusChange = (_ev: any, value: number | number[]) => {

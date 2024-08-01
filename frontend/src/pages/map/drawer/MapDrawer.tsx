@@ -1,56 +1,42 @@
+import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import {
-  setActiveTool,
-  setDrawerExpanded,
-  useActiveTool,
+  setBottomDrawerHeight,
+  setSelectedItem,
+  setSidebarWidth,
 } from '@/features/map/map-slice'
-import { useMapDrawerState } from '../hooks/useMapDrawerState'
+import { useLastSearchTime } from '@/features/omrr/omrr-slice'
 import { MapBottomDrawer } from './MapBottomDrawer'
 import { MapSidebar } from './MapSidebar'
-import { useCalculateSidebarWidth } from '../hooks/useCalculateSidebarWidth'
 
 import './MapDrawer.css'
-import { useEffect, useRef } from 'react'
-import { ActiveToolEnum } from '@/constants/constants'
 
 export function MapDrawer() {
   const dispatch = useDispatch()
   const theme = useTheme()
   // If the screen width is small or medium - shown drawer below
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('lg'))
-  const { isVisible, isDrawerExpanded } = useMapDrawerState(isSmallScreen)
-  // This hook calculates the sidebar width based on screen size
-  // and sets the sidebarWidth state which other components use
-  useCalculateSidebarWidth()
-  const activeTool = useActiveTool()
-  const activeToolRef = useRef<ActiveToolEnum | undefined>(activeTool)
+  const isSmallScreenRef = useRef<boolean>(isSmallScreen)
+  const lastSearchTime = useLastSearchTime()
 
-  // Expand the bottom drawer when the active tool changes (or collapse when no tool is active)
+  // When the screen size changes - collapse both sidebar and bottom drawer
   useEffect(() => {
-    const toolChanged = activeTool !== activeToolRef.current
-    activeToolRef.current = activeTool
-    if (isSmallScreen && toolChanged) {
-      dispatch(setDrawerExpanded(Boolean(activeTool)))
+    if (isSmallScreen !== isSmallScreenRef.current) {
+      isSmallScreenRef.current = isSmallScreen
+      dispatch(setSidebarWidth(0))
+      dispatch(setBottomDrawerHeight(0))
     }
-  }, [activeTool, isSmallScreen])
+  }, [isSmallScreen])
 
-  if (!isVisible) {
-    return null
-  }
-
-  const setExpanded = (expanded: boolean) => {
-    dispatch(setDrawerExpanded(expanded))
-    if (isSmallScreen && !expanded) {
-      dispatch(setActiveTool(undefined))
+  // When the search changes - clear the selected item
+  useEffect(() => {
+    if (lastSearchTime) {
+      dispatch(setSelectedItem(undefined))
     }
-  }
+  }, [lastSearchTime])
 
-  return isSmallScreen ? (
-    <MapBottomDrawer isExpanded={isDrawerExpanded} setExpanded={setExpanded} />
-  ) : (
-    <MapSidebar isExpanded={isDrawerExpanded} setExpanded={setExpanded} />
-  )
+  return isSmallScreen ? <MapBottomDrawer /> : <MapSidebar />
 }

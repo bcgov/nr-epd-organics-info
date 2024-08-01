@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { IconButton } from '@mui/material'
 import clsx from 'clsx'
 
-import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
+import { toggleActiveTool, useActiveTool } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
 
 import LayersIcon from '@/assets/svgs/fa-layers.svg?react'
@@ -12,7 +12,7 @@ export function DataLayersControl() {
   const isActive = useActiveTool() === ActiveToolEnum.dataLayers
 
   const onClick = () => {
-    dispatch(setActiveTool(ActiveToolEnum.dataLayers))
+    dispatch(toggleActiveTool(ActiveToolEnum.dataLayers))
   }
 
   return (

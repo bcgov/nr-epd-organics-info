@@ -1,0 +1,111 @@
+import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import {
+  useCircleFilter,
+  useLastSearchTime,
+  usePolygonFilter,
+} from '@/features/omrr/omrr-slice'
+import {
+  setBottomDrawerHeight,
+  useActiveTool,
+  useSelectedItem,
+  useSelectedItemTime,
+} from '@/features/map/map-slice'
+import {
+  ActiveToolEnum,
+  MAP_BOTTOM_DRAWER_HEIGHT,
+  MAP_BOTTOM_DRAWER_HEIGHT_SMALL,
+} from '@/constants/constants'
+
+/**
+ * Determines the state of the map bottom drawer.
+ * The bottom drawer is automatically expanded when:
+ * - the search results change (could be from search text,
+ *   search by, filter by, or a point or polygon search)
+ * - there is a selected item
+ * - if polygon or point search is active
+ * - if search by or filter by is active
+ */
+export function useBottomDrawerState() {
+  const dispatch = useDispatch()
+  const [isExpanded, setExpanded] = useState<boolean>(false)
+  const selectedItem = useSelectedItem()
+  const selectedItemTime = useSelectedItemTime()
+  const lastSearchTime = useLastSearchTime()
+  const lastSearchTimeRef = useRef<number | undefined>(lastSearchTime)
+  const activeTool = useActiveTool()
+  const activeToolRef = useRef<ActiveToolEnum | undefined>(undefined)
+  const heightRef = useRef<number>(0)
+  const polygonFilter = usePolygonFilter()
+  const circleFilter = useCircleFilter()
+
+  const isDataLayersVisible = activeTool === ActiveToolEnum.dataLayers
+  const isSearchByVisible = activeTool === ActiveToolEnum.searchBy
+  const isFilterByVisible = activeTool === ActiveToolEnum.filterBy
+  const isPointSearchVisible = activeTool === ActiveToolEnum.pointSearch
+  const isPolygonSearchVisible = activeTool === ActiveToolEnum.polygonSearch
+
+  // Show search results whenever there isn't an active tool
+  // or when polygon/point search are finished/ready
+  const isSearchResultsVisible =
+    !activeTool || polygonFilter?.finished || Boolean(circleFilter?.center)
+
+  // Expand bottom drawer when the active tool changes
+  useEffect(() => {
+    if (activeTool && activeTool !== activeToolRef.current) {
+      setExpanded(Boolean(activeTool))
+    }
+    activeToolRef.current = activeTool
+  }, [activeTool])
+
+  // Always expand when there is a selected item
+  useEffect(() => {
+    if (selectedItem) {
+      setExpanded(true)
+    }
+  }, [selectedItem, selectedItemTime])
+
+  // Expand when the search time changes (but not when there is an active tool)
+  useEffect(() => {
+    if (!activeTool && lastSearchTime !== lastSearchTimeRef.current) {
+      lastSearchTimeRef.current = lastSearchTime
+      setExpanded(true)
+    }
+  }, [lastSearchTime, activeTool])
+
+  // Determine the height of the bottom drawer
+  let height = 0
+  if (isExpanded) {
+    height = MAP_BOTTOM_DRAWER_HEIGHT
+    // When polygon/point filters are not finished use small height
+    if (isPolygonSearchVisible && !polygonFilter?.finished) {
+      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
+    } else if (isPointSearchVisible && !circleFilter?.center) {
+      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
+    } else if (isSearchByVisible) {
+      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
+    }
+  }
+
+  // Set the bottom drawer height so other components can use it
+  useEffect(() => {
+    if (height !== heightRef.current) {
+      heightRef.current = height
+      dispatch(setBottomDrawerHeight(height))
+    }
+  }, [height])
+
+  return {
+    isExpanded,
+    setExpanded,
+    height,
+    activeTool,
+    isSearchResultsVisible,
+    isDataLayersVisible,
+    isSearchByVisible,
+    isFilterByVisible,
+    isPointSearchVisible,
+    isPolygonSearchVisible,
+  }
+}
