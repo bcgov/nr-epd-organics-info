@@ -4,7 +4,7 @@ import DropdownButton from '@/components/DropdownButton'
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { Button } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { setActiveTool, useActiveTool } from '@/features/map/map-slice'
+import { toggleActiveTool, useActiveTool } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
 
 interface Props {
@@ -13,11 +13,12 @@ interface Props {
 
 export function FilterByButton({ isLarge }: Readonly<Props>) {
   const dispatch = useDispatch()
-  // Bottom drawer only
+  // Small screens/bottom drawer only
   const isActive = useActiveTool() === ActiveToolEnum.filterBy
 
+  // Small screens/bottom drawer only
   const onClick = () => {
-    dispatch(setActiveTool(ActiveToolEnum.filterBy))
+    dispatch(toggleActiveTool(ActiveToolEnum.filterBy))
   }
 
   if (isLarge) {

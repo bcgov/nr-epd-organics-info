@@ -3,9 +3,6 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import {
-  ActiveToolEnum,
-  MAP_BOTTOM_DRAWER_HEIGHT,
-  MAP_BOTTOM_DRAWER_HEIGHT_SMALL,
   MAP_CONTROLS_BOTTOM_LG,
   MAP_CONTROLS_BOTTOM_SM,
   MAP_CONTROLS_RIGHT_LG,
@@ -13,8 +10,7 @@ import {
   MAP_CONTROLS_RIGHT_XL,
 } from '@/constants/constants'
 import {
-  useActiveTool,
-  useDrawerExpanded,
+  useBottomDrawerHeight,
   useSidebarWidth,
 } from '@/features/map/map-slice'
 import { DataLayersControl } from './DataLayersControl'
@@ -30,12 +26,7 @@ export function MapControls() {
   const isMedium = useMediaQuery(theme.breakpoints.down('lg'))
   const isLarge = useMediaQuery(theme.breakpoints.down('xl'))
   const sidebarWidth = useSidebarWidth()
-  const isExpanded = useDrawerExpanded()
-  const activeTool = useActiveTool()
-  const isSearchBy = activeTool === ActiveToolEnum.searchBy
-  const isPointPolygon =
-    activeTool === ActiveToolEnum.pointSearch ||
-    activeTool === ActiveToolEnum.polygonSearch
+  const bottomDrawerHeight = useBottomDrawerHeight()
 
   // Shift the controls based on screen size and whether the sidebar or bottom drawer is expanded
   let right = MAP_CONTROLS_RIGHT_XL
@@ -49,16 +40,12 @@ export function MapControls() {
     bottom = MAP_CONTROLS_BOTTOM_SM
   }
 
-  if (sidebarWidth > 0 && isExpanded) {
+  if (sidebarWidth > 0) {
     // Sidebar is expanded - shift controls left
     right = sidebarWidth + right
-  } else if (isMedium && !isSmall && isExpanded) {
+  } else if (isMedium && !isSmall && bottomDrawerHeight > 0) {
     // medium devices only - shift the controls up bottom drawer height
-    let height = MAP_BOTTOM_DRAWER_HEIGHT
-    if (isSearchBy || isPointPolygon) {
-      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
-    }
-    bottom = height + bottom
+    bottom = bottomDrawerHeight + bottom
   }
 
   const style = useMemo(

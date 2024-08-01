@@ -143,22 +143,27 @@ export const omrrSlice = createSlice({
       state.page = action.payload
     },
     setSearchTextFilter: (state, action: PayloadAction<string>) => {
-      state.searchTextFilter = action.payload
-      performSearch(state)
+      if (state.searchTextFilter !== action.payload) {
+        state.searchTextFilter = action.payload
+        performSearch(state)
+      }
     },
-    setPolygonFilter: (
-      state,
-      action: PayloadAction<PolygonFilter | undefined>,
-    ) => {
+    setPolygonFilter: (state, action: PayloadAction<PolygonFilter>) => {
       state.polygonFilter = action.payload
+      state.circleFilter = undefined
       performSearch(state)
     },
-    setCircleFilter: (
-      state,
-      action: PayloadAction<CircleFilter | undefined>,
-    ) => {
+    setCircleFilter: (state, action: PayloadAction<CircleFilter>) => {
       state.circleFilter = action.payload
+      state.polygonFilter = undefined
       performSearch(state)
+    },
+    clearShapeFilters: (state) => {
+      if (state.polygonFilter || state.circleFilter) {
+        state.polygonFilter = undefined
+        state.circleFilter = undefined
+        performSearch(state)
+      }
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
@@ -206,6 +211,7 @@ export const {
   setSearchTextFilter,
   setPolygonFilter,
   setCircleFilter,
+  clearShapeFilters,
 } = omrrSlice.actions
 
 export default omrrSlice.reducer

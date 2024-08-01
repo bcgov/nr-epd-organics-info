@@ -2,8 +2,12 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 
-import { setActiveTool } from '@/features/map/map-slice'
-import { setPolygonFilter, usePolygonFilter } from '@/features/omrr/omrr-slice'
+import { clearActiveTool } from '@/features/map/map-slice'
+import {
+  clearShapeFilters,
+  setPolygonFilter,
+  usePolygonFilter,
+} from '@/features/omrr/omrr-slice'
 
 import CloseIcon from '@/assets/svgs/fa-close.svg?react'
 import DeleteIcon from '@/assets/svgs/fa-trash.svg?react'
@@ -19,8 +23,8 @@ export function PolygonSearch({ isSmall = false, className }: Readonly<Props>) {
   const { finished = false, positions = [] } = usePolygonFilter() ?? {}
 
   const onCancel = () => {
-    dispatch(setActiveTool(undefined))
-    dispatch(setPolygonFilter(undefined))
+    dispatch(clearActiveTool())
+    dispatch(clearShapeFilters())
   }
 
   const onDelete = () => {

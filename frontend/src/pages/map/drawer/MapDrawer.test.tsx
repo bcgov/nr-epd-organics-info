@@ -1,29 +1,34 @@
 import { useSelector } from 'react-redux'
 import { LatLngBoundsLiteral } from 'leaflet'
-import { screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 
 import { render } from '@/test-utils'
 import { mockActiveOmrrData, mockOmrrData } from '@/mocks/mock-omrr-data'
 import OmrrData from '@/interfaces/omrr'
-import {
-  SEARCH_BY_ACTIVE,
-  SEARCH_BY_ALL,
-  SearchByType,
-} from '@/interfaces/types'
+import { SEARCH_BY_ACTIVE, SearchByType } from '@/interfaces/types'
 import { initialState as omrrState } from '@/features/omrr/omrr-slice'
 import {
   initialState as mapState,
   selectZoomBounds,
   selectZoomPosition,
-  useDrawerExpanded,
+  useActiveTool,
+  useBottomDrawerHeight,
+  useSidebarWidth,
   ZoomPosition,
 } from '@/features/map/map-slice'
-import { MapDrawer } from './MapDrawer'
-import { DEFAULT_AUTHORIZATION_ZOOM } from '@/constants/constants'
+import {
+  ActiveToolEnum,
+  DEFAULT_AUTHORIZATION_ZOOM,
+  MAP_BOTTOM_DRAWER_HEIGHT,
+  MAP_BOTTOM_DRAWER_HEIGHT_SMALL,
+} from '@/constants/constants'
 import { themeBreakpointValues } from '@/theme'
+import { MapDrawer } from './MapDrawer'
 
 interface State {
-  isExpanded: boolean
+  sidebarWidth: number
+  bottomDrawerHeight: number
+  activeTool?: ActiveToolEnum
   zoomPosition?: ZoomPosition
   zoomBounds?: LatLngBoundsLiteral
 }
@@ -33,7 +38,8 @@ interface Props {
   filteredResults?: OmrrData[]
   searchBy?: SearchByType
   selectedItem?: OmrrData
-  isDrawerExpanded?: boolean
+  bottomDrawerHeight?: number
+  activeTool?: ActiveToolEnum
 }
 
 describe('Test suite for MapDrawer', () => {
@@ -42,17 +48,22 @@ describe('Test suite for MapDrawer', () => {
     filteredResults = [],
     searchBy = SEARCH_BY_ACTIVE,
     selectedItem = undefined,
-    isDrawerExpanded = false,
+    bottomDrawerHeight = 0,
+    activeTool = undefined,
   }: Readonly<Props> = {}) {
     const state: State = {
-      isExpanded: false,
+      sidebarWidth: 0,
+      bottomDrawerHeight,
     }
 
     const TestComponent = () => {
-      const isExpanded = useDrawerExpanded()
-      const zoomPosition = useSelector(selectZoomPosition)
-      const zoomBounds = useSelector(selectZoomBounds)
-      Object.assign(state, { isExpanded, zoomBounds, zoomPosition })
+      Object.assign(state, {
+        sidebarWidth: useSidebarWidth(),
+        bottomDrawerHeight: useBottomDrawerHeight(),
+        activeTool: useActiveTool(),
+        zoomPosition: useSelector(selectZoomPosition),
+        zoomBounds: useSelector(selectZoomBounds),
+      })
 
       return <MapDrawer />
     }
@@ -73,8 +84,9 @@ describe('Test suite for MapDrawer', () => {
         },
         map: {
           ...mapState,
-          isDrawerExpanded,
           selectedItem,
+          bottomDrawerHeight,
+          activeTool,
         },
       },
     })
@@ -86,12 +98,12 @@ describe('Test suite for MapDrawer', () => {
     const filteredResults = mockActiveOmrrData
     const { user, state } = renderComponent({ filteredResults })
 
-    expect(state.isExpanded).toBe(false)
+    expect(state.sidebarWidth).toBe(0)
     screen.getByTestId('map-sidebar')
     expect(screen.queryByTestId('map-bottom-drawer')).not.toBeInTheDocument()
     const showResults = screen.getByText('Show Results')
     await user.click(showResults)
-    expect(state.isExpanded).toBe(true)
+    expect(state.sidebarWidth > 0).toBe(true)
 
     screen.getByText('Hide Results')
 
@@ -107,7 +119,7 @@ describe('Test suite for MapDrawer', () => {
     expect(state.zoomBounds).toBeDefined()
 
     await user.click(closeBtn)
-    expect(state.isExpanded).toBe(false)
+    expect(state.sidebarWidth).toBe(0)
     screen.getByText('Show Results')
   })
 
@@ -116,41 +128,37 @@ describe('Test suite for MapDrawer', () => {
     const [selectedItem] = filteredResults
     const { user, state } = renderComponent({ filteredResults, selectedItem })
 
-    const showResults = screen.getByText('Show Results')
-    await user.click(showResults)
+    // Should already be expanded since there is a selected item
+    await screen.findByText('Hide Results')
 
     expect(screen.queryByText('Search Results')).not.toBeInTheDocument()
 
     const zoomToBtn = screen.getByRole('button', { name: 'Zoom To' })
     expect(state.zoomPosition).toBeUndefined()
     await user.click(zoomToBtn)
+
     expect(state.zoomPosition).toEqual({
       position: [selectedItem.Latitude, selectedItem.Longitude],
       zoom: DEFAULT_AUTHORIZATION_ZOOM,
     })
   })
 
-  it('should not render MapDrawer in right sidebar if all results are showing', async () => {
-    const filteredResults = mockOmrrData
-    renderComponent({ filteredResults, searchBy: SEARCH_BY_ALL })
-
-    expect(screen.queryByText('Show Results')).not.toBeInTheDocument()
-  })
-
-  it('should render MapDrawer with search results showing in bottom sidebar', async () => {
+  it('should render MapDrawer with selected item showing in bottom drawer', async () => {
     const filteredResults = mockActiveOmrrData
+    const [selectedItem] = filteredResults
     const { user, state } = renderComponent({
       filteredResults,
+      selectedItem,
       screenWidth: themeBreakpointValues.sm - 10,
-      isDrawerExpanded: true,
     })
 
-    expect(state.isExpanded).toBe(true)
-    screen.getByTestId('map-bottom-drawer')
+    const div = screen.getByTestId('map-bottom-drawer')
+    // It will get expanded since selected item is set
+    await waitFor(() => expect(div).toHaveClass('map-bottom-drawer--expanded'))
+    expect(state.bottomDrawerHeight).toBe(MAP_BOTTOM_DRAWER_HEIGHT)
     expect(screen.queryByTestId('map-sidebar')).not.toBeInTheDocument()
     expect(screen.queryByText('Show Results')).not.toBeInTheDocument()
     screen.getByText('Search Results')
-    screen.getByText(`${filteredResults.length} matching results`)
 
     let fullHeightToggle = screen.getByTitle('Expand')
     await user.click(fullHeightToggle)
@@ -160,7 +168,76 @@ describe('Test suite for MapDrawer', () => {
 
     const closeBtn = screen.getByTitle('Close')
     await user.click(closeBtn)
-    expect(state.isExpanded).toBe(false)
+    expect(state.bottomDrawerHeight).toBe(0)
     expect(screen.queryByText('Zoom To Results')).not.toBeInTheDocument()
+  })
+
+  it('should render MapDrawer with polygon tool showing in bottom drawer', async () => {
+    const filteredResults = mockActiveOmrrData
+    const { user, state } = renderComponent({
+      filteredResults,
+      screenWidth: themeBreakpointValues.sm - 10,
+      activeTool: ActiveToolEnum.polygonSearch,
+    })
+
+    const div = screen.getByTestId('map-bottom-drawer')
+    // It will get expanded since there is an active tool
+    await waitFor(() => expect(div).toHaveClass('map-bottom-drawer--expanded'))
+    expect(state.bottomDrawerHeight).toBe(MAP_BOTTOM_DRAWER_HEIGHT_SMALL)
+    expect(state.activeTool).toBe(ActiveToolEnum.polygonSearch)
+    screen.getByText('Polygon Search')
+    const deleteBtn = screen.getByRole('button', { name: 'Delete Last Point' })
+    expect(deleteBtn).toBeDisabled()
+    const finishBtn = screen.getByRole('button', { name: 'Finish Shape' })
+    expect(finishBtn).toBeDisabled()
+
+    const closeBtn = screen.getByTitle('Close')
+    await user.click(closeBtn)
+    expect(state.bottomDrawerHeight).toBe(0)
+    expect(state.activeTool).toBeUndefined()
+  })
+
+  it('should render MapDrawer with point tool showing in bottom drawer', async () => {
+    const filteredResults = mockActiveOmrrData
+    const { state } = renderComponent({
+      filteredResults,
+      screenWidth: themeBreakpointValues.sm - 1,
+      activeTool: ActiveToolEnum.pointSearch,
+    })
+
+    const div = screen.getByTestId('map-bottom-drawer')
+    await waitFor(() => expect(div).toHaveClass('map-bottom-drawer--expanded'))
+    expect(state.bottomDrawerHeight).toBe(MAP_BOTTOM_DRAWER_HEIGHT_SMALL)
+    expect(state.activeTool).toBe(ActiveToolEnum.pointSearch)
+    screen.getByText('Point Search')
+    screen.getByRole('slider', { name: 'Search radius' })
+
+    // Swipe up to make full height
+    fireEvent.touchStart(div, {
+      changedTouches: [{ clientX: 0, clientY: 50 }],
+    })
+    fireEvent.touchEnd(div, {
+      changedTouches: [{ clientX: 0, clientY: 10 }],
+    })
+    await screen.findByTitle('Collapse')
+
+    // Swipe down - collapse to normal height
+    fireEvent.touchStart(div, {
+      changedTouches: [{ clientX: 0, clientY: 10 }],
+    })
+    fireEvent.touchEnd(div, {
+      changedTouches: [{ clientX: 0, clientY: 100 }],
+    })
+    await screen.findByTitle('Expand')
+
+    // Swipe down again - close
+    fireEvent.touchStart(div, {
+      changedTouches: [{ clientX: 0, clientY: 10 }],
+    })
+    fireEvent.touchEnd(div, {
+      changedTouches: [{ clientX: 0, clientY: 100 }],
+    })
+    expect(state.bottomDrawerHeight).toBe(0)
+    expect(state.activeTool).toBeUndefined()
   })
 })

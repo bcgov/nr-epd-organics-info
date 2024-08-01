@@ -2,8 +2,9 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@mui/material'
 import clsx from 'clsx'
 
-import { setActiveTool } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
+import { clearShapeFilters } from '@/features/omrr/omrr-slice'
+import { toggleActiveTool } from '@/features/map/map-slice'
 
 import PointIcon from '@/assets/svgs/fa-point.svg?react'
 
@@ -15,7 +16,10 @@ export function PointSearchButton({ isActive }: Readonly<Props>) {
   const dispatch = useDispatch()
 
   const onClick = () => {
-    dispatch(setActiveTool(ActiveToolEnum.pointSearch))
+    dispatch(toggleActiveTool(ActiveToolEnum.pointSearch))
+    if (isActive) {
+      dispatch(clearShapeFilters())
+    }
   }
 
   return (

@@ -1,8 +1,7 @@
-import { MouseEvent } from 'react'
-import clsx from 'clsx'
 import { IconButton } from '@mui/material'
+import clsx from 'clsx'
 
-import { useSelectedItem, useSidebarWidth } from '@/features/map/map-slice'
+import { useSidebarState } from '../hooks/useSidebarState'
 import { SearchResultsList } from './SearchResultsList'
 import { SidebarToggleButton } from './SidebarToggleButton'
 import { ZoomToButton } from './ZoomToButton'
@@ -11,20 +10,16 @@ import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapSidebar.css'
 
-interface Props {
-  isExpanded: boolean
-  setExpanded: (expanded: boolean, ev: MouseEvent) => void
-}
+export function MapSidebar() {
+  // This hook keeps track of the expanded state and  calculates the sidebar width
+  const { isExpanded, setExpanded, selectedItem, width, expandedWidth } =
+    useSidebarState()
 
-export function MapSidebar({ isExpanded, setExpanded }: Readonly<Props>) {
-  const selectedItem = useSelectedItem()
-  const expandedWidth = useSidebarWidth()
-
-  const onClose = (ev: MouseEvent) => {
-    setExpanded(false, ev)
+  const onClose = () => {
+    setExpanded(false)
   }
 
-  const style = { width: `${isExpanded ? expandedWidth : 0}px` }
+  const style = { width: `${width}px` }
   return (
     <div
       className={clsx('map-sidebar', isExpanded && 'map-sidebar--expanded')}
@@ -52,8 +47,11 @@ export function MapSidebar({ isExpanded, setExpanded }: Readonly<Props>) {
             <CloseIcon className="map-sidebar-close-icon" />
           </IconButton>
         </div>
-        <SearchResultsList />
-        <SidebarToggleButton isExpanded={isExpanded} setExpanded={setExpanded}>
+        {isExpanded && <SearchResultsList />}
+        <SidebarToggleButton
+          isExpanded={isExpanded}
+          onClick={() => setExpanded(!isExpanded)}
+        >
           {isExpanded ? 'Hide Results' : 'Show Results'}
         </SidebarToggleButton>
       </div>

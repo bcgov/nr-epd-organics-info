@@ -1,6 +1,20 @@
-.search-dialog .MuiPaper-root {
-  width: 450px;
-  height: 640px;
+.search-dialog--fixed-size .MuiPaper-root {
+  width: 500px;
+  /* Since we display 6 results max - 500px fits them all nicely */
+  height: min(500px, calc(100vh - 128px));
+}
+
+.search-dialog--full-size .MuiPaper-root {
+  margin: var(--header-height) 0 0;
+  width: 100%;
+  max-width: 100%;
+  height: calc(100% - var(--header-height));
+  max-height: none;
+  border-radius: 0;
+}
+
+.search-dialog--full-size .MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.01);
 }
 
 .search-dialog-titlebar {

@@ -14,16 +14,6 @@
   transition: height 0.5s ease-in-out;
 }
 
-.map-bottom-drawer.map-bottom-drawer--expanded {
-  height: 320px;
-}
-
-.map-bottom-drawer--expanded.map-bottom-drawer--searchBy,
-.map-bottom-drawer--expanded.map-bottom-drawer--pointSearch,
-.map-bottom-drawer--expanded.map-bottom-drawer--polygonSearch {
-  height: 160px;
-}
-
 .map-bottom-drawer.map-bottom-drawer--full-height {
   height: calc(100% - var(--header-height));
 }

@@ -17,12 +17,14 @@ export interface MapSliceState {
   isMyLocationVisible: boolean
   zoomPosition?: ZoomPosition
   zoomBounds?: LatLngBoundsLiteral
-  // Whether the search results sidebar OR bottom drawer is expanded
-  isDrawerExpanded: boolean
-  // The right sidebar width
+  // The width of the right sidebar (will be 0 when collapsed)
   sidebarWidth: number
+  // The bottom drawer height (will be 0 when collapsed, does change when full height)
+  bottomDrawerHeight: number
   // Keep track of if a single item has been selected
   selectedItem?: OmrrData
+  // The time when it was selected
+  selectedItemTime?: number
   // Selected data layers
   dataLayers: DataLayer[]
   // Keeps track of the active tool - point/polygon search (all screen sizes), and
@@ -34,8 +36,8 @@ export const initialState: MapSliceState = {
   isMyLocationVisible: false,
   zoomPosition: undefined,
   zoomBounds: undefined,
-  isDrawerExpanded: false,
   sidebarWidth: 0,
+  bottomDrawerHeight: 0,
   selectedItem: undefined,
   dataLayers: [],
   activeTool: undefined,
@@ -56,19 +58,15 @@ export const mapSlice = createSlice({
       state.zoomPosition = undefined
       state.zoomBounds = action.payload
     },
-    setDrawerExpanded: (state, action: PayloadAction<boolean>) => {
-      state.isDrawerExpanded = action.payload
-    },
     setSidebarWidth: (state, action: PayloadAction<number>) => {
       state.sidebarWidth = action.payload
     },
-    setSelectedItem: (state, action: PayloadAction<OmrrData>) => {
-      state.selectedItem = action.payload
-      // Also expand drawer
-      state.isDrawerExpanded = true
+    setBottomDrawerHeight: (state, action: PayloadAction<number>) => {
+      state.bottomDrawerHeight = action.payload
     },
-    clearSelectedItem: (state) => {
-      state.selectedItem = undefined
+    setSelectedItem: (state, action: PayloadAction<OmrrData | undefined>) => {
+      state.selectedItem = action.payload
+      state.selectedItemTime = action.payload ? Date.now() : undefined
     },
     toggleDataLayer: (state, action: PayloadAction<DataLayer>) => {
       const layer = action.payload
@@ -87,13 +85,13 @@ export const mapSlice = createSlice({
     resetDataLayers: (state) => {
       state.dataLayers = []
     },
-    setActiveTool: (
-      state,
-      action: PayloadAction<ActiveToolEnum | undefined>,
-    ) => {
+    toggleActiveTool: (state, action: PayloadAction<ActiveToolEnum>) => {
       // Toggle the tool
       const tool = action.payload
       state.activeTool = state.activeTool === tool ? undefined : tool
+    },
+    clearActiveTool: (state) => {
+      state.activeTool = undefined
     },
   },
 })
@@ -102,13 +100,13 @@ export const {
   setMyLocationVisible,
   setZoomPosition,
   setZoomBounds,
-  setDrawerExpanded,
   setSidebarWidth,
+  setBottomDrawerHeight,
   setSelectedItem,
-  clearSelectedItem,
   toggleDataLayer,
   resetDataLayers,
-  setActiveTool,
+  toggleActiveTool,
+  clearActiveTool,
 } = mapSlice.actions
 
 // Selectors
@@ -119,14 +117,17 @@ export const useMyLocationVisible = () => useSelector(selectMyLocationVisible)
 export const selectZoomPosition = (state: RootState) => state.map.zoomPosition
 export const selectZoomBounds = (state: RootState) => state.map.zoomBounds
 
-const selectDrawerExpanded = (state: RootState) => state.map.isDrawerExpanded
-export const useDrawerExpanded = () => useSelector(selectDrawerExpanded)
-
 const selectSidebarWidth = (state: RootState) => state.map.sidebarWidth
 export const useSidebarWidth = () => useSelector(selectSidebarWidth)
 
+const selectBottomDrawerHeight = (state: RootState) =>
+  state.map.bottomDrawerHeight
+export const useBottomDrawerHeight = () => useSelector(selectBottomDrawerHeight)
+
 const selectSelectedItem = (state: RootState) => state.map.selectedItem
 export const useSelectedItem = () => useSelector(selectSelectedItem)
+const selectSelectedItemTime = (state: RootState) => state.map.selectedItemTime
+export const useSelectedItemTime = () => useSelector(selectSelectedItemTime)
 
 const selectDataLayers = (state: RootState) => state.map.dataLayers
 export const useDataLayers = () => useSelector(selectDataLayers)
