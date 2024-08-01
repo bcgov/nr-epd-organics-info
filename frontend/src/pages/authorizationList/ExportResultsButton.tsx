@@ -12,7 +12,7 @@ export function ExportResultsButton() {
   const onExport = () => {
     const csv = omrrDataToCsv(filteredResults)
     const date = filenameDateFormat(new Date())
-    downloadCsvFile(csv, `OMMR_Authorizations_${date}.csv`)
+    downloadCsvFile(csv, `OMRR_Authorizations_${date}.csv`)
   }
 
   return (
