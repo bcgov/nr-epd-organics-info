@@ -1,22 +1,20 @@
 import { Tooltip } from 'react-leaflet'
 
 import OmrrData from '@/interfaces/omrr'
-import { useSetSelectedItem } from '../hooks/useSetSelectedItem'
-import { IconMarker } from './IconMarker'
 import { blueIcon1x, blueIcon2x } from '@/constants/marker-icons'
+import { IconMarker } from './IconMarker'
 
 interface Props {
   item: OmrrData
   isSmall: boolean
+  onClick: () => void
 }
 
-export function AuthorizationMarker({ item, isSmall }: Readonly<Props>) {
-  const selectItem = useSetSelectedItem()
-
-  const onClick = () => {
-    selectItem(item)
-  }
-
+export function AuthorizationMarker({
+  item,
+  isSmall,
+  onClick,
+}: Readonly<Props>) {
   const title = item['Regulated Party']
   return (
     <IconMarker
