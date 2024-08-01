@@ -6,12 +6,18 @@ import {
   setMyLocationVisible,
   useMyLocationVisible,
 } from '@/features/map/map-slice'
+import { useGeolocationPermission } from '@/hooks/useMyLocation'
 
 import FindMeIcon from '@/assets/svgs/fa-gps.svg?react'
 
 export function FindMeButton() {
   const dispatch = useDispatch()
   const isMarkerVisible = useMyLocationVisible()
+  const state = useGeolocationPermission()
+  // No point in showing the button if the permission has been denied
+  if (state === 'denied') {
+    return null
+  }
 
   const onClick = () => {
     dispatch(setMyLocationVisible(!isMarkerVisible))

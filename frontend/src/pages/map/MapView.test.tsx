@@ -34,7 +34,7 @@ describe('Test suite for MapView', () => {
     })
   }
   it('should render the MapView with markers', async () => {
-    renderComponent(themeBreakpointValues.xxl)
+    const { user } = renderComponent(themeBreakpointValues.xxl)
 
     const mapView = screen.getByTestId('map-view')
     expect(mapView).not.toHaveClass('map-view--small')
@@ -43,11 +43,20 @@ describe('Test suite for MapView', () => {
     expect(markers.length > 0).toBe(true)
 
     screen.getByPlaceholderText('Search')
-    screen.getByRole('button', { name: 'Find Me' })
+    await screen.findByRole('button', { name: 'Find Me' })
     expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
     expect(
       screen.queryByTitle('Show my location on the map'),
     ).not.toBeInTheDocument()
+
+    const showResults = screen.getByRole('button', { name: 'Show Results' })
+    await user.click(showResults)
+
+    const zoomToBtn = screen.getByRole('button', { name: 'Zoom To Results' })
+    await user.click(zoomToBtn)
+
+    const hideResults = screen.getByRole('button', { name: 'Hide Results' })
+    await user.click(hideResults)
   })
 
   it('should render the MapView with no markers on a small screen', async () => {
@@ -140,10 +149,10 @@ describe('Test suite for MapView', () => {
   it('should render the MapView and test polygon search', async () => {
     const { user } = renderComponent(themeBreakpointValues.xxl, mockOmrrData)
 
-    const pointSearchBtn = screen.getByRole('button', {
+    const polygonSearchBtn = screen.getByRole('button', {
       name: 'Polygon Search',
     })
-    await user.click(pointSearchBtn)
+    await user.click(polygonSearchBtn)
 
     const cancelBtn = screen.getByRole('button', { name: 'Cancel' })
     const deleteBtn = screen.getByRole('button', { name: 'Delete Last Point' })

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import OmrrData from '@/interfaces/omrr'
 import { setSelectedItem } from '@/features/map/map-slice'
 import { useZoomToAuthorization } from './useZoomTo'
+import { isTest } from '@/constants/env'
 
 /**
  * Selects a single OmrrData item.
@@ -20,7 +21,7 @@ export function useSetSelectedItem() {
       dispatch(setSelectedItem(item))
       // Make sure this item is visible on the map
       // Delay the map zoom until the sidebar/bottom drawer finish expanding
-      zoomTo(item, 300)
+      zoomTo(item, isTest ? 0 : 300)
     },
     [dispatch],
   )

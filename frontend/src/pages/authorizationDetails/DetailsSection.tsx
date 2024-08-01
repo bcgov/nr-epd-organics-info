@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Grid, Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
