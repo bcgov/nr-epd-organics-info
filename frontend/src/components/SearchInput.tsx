@@ -1,13 +1,14 @@
-import React, { MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { TextFieldProps } from '@mui/material/TextField/TextField'
 import clsx from 'clsx'
+
+import { LocationIconButton } from './LocationIconButton'
 
 import SearchIcon from '@/assets/svgs/fa-search.svg?react'
 import CloseIcon from '@/assets/svgs/fa-close.svg?react'
 
 import './SearchInput.css'
-import { LocationIconButton } from '@/components/LocationIconButton'
 
 interface Props extends Omit<TextFieldProps, 'variant'> {
   showSearchIcon?: boolean

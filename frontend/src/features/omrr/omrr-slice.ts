@@ -239,7 +239,6 @@ export const useHasSearchTextFilter = () =>
   useSearchTextFilter().length >= MIN_SEARCH_LENGTH
 
 export const selectAllResults = (state: RootState) => state.omrr.allResults
-const selectAllResultsCount = (state: RootState) => state.omrr.allResults.length
 
 export const selectFilteredResults = (state: RootState) =>
   state.omrr.filteredResults
@@ -265,12 +264,6 @@ export const useFindByAuthorizationNumber = (
     )
   }
   return undefined
-}
-
-export const useAllResultsShowing = () => {
-  const allResultsCount = useSelector(selectAllResultsCount)
-  const filteredResultsCount = useSelector(selectFilteredResultsCount)
-  return filteredResultsCount === allResultsCount
 }
 
 const selectLastSearchTime = (state: RootState) => state.omrr.lastSearchTime

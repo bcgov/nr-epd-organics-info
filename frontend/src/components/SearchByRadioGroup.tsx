@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { RadioGroupProps } from '@mui/material/RadioGroup/RadioGroup'

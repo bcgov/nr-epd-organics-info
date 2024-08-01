@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Box, Button } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
+import clsx from 'clsx'
 
+import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { ListSearchInput } from './ListSearchInput'
 import { ListSearchByGroup } from './ListSearchByGroup'
-import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
-import clsx from 'clsx'
 
 const styles = {
   searchByRow: {

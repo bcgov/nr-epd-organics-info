@@ -1,4 +1,3 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
 
 import { DATA_LAYER_GROUPS } from '@/constants/data-layers'
