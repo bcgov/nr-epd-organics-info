@@ -29,7 +29,7 @@ import {
  */
 export function useBottomDrawerState() {
   const dispatch = useDispatch()
-  const [isExpanded, setExpanded] = useState<boolean>(false)
+  const [expanded, setExpanded] = useState<boolean>(false)
   const selectedItem = useSelectedItem()
   const selectedItemTime = useSelectedItemTime()
   const lastSearchTime = useLastSearchTime()
@@ -76,14 +76,14 @@ export function useBottomDrawerState() {
 
   // Determine the height of the bottom drawer
   let height = 0
-  if (isExpanded) {
+  if (expanded) {
     height = MAP_BOTTOM_DRAWER_HEIGHT
-    // When polygon/point filters are not finished use small height
-    if (isPolygonSearchVisible && !polygonFilter?.finished) {
-      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
-    } else if (isPointSearchVisible && !circleFilter?.center) {
-      height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
-    } else if (isSearchByVisible) {
+    // Use small height when polygon/point filters are not finished or search by is active
+    if (
+      (isPolygonSearchVisible && !polygonFilter?.finished) ||
+      (isPointSearchVisible && !circleFilter?.center) ||
+      isSearchByVisible
+    ) {
       height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL
     }
   }
@@ -97,7 +97,7 @@ export function useBottomDrawerState() {
   }, [height])
 
   return {
-    isExpanded,
+    isExpanded: expanded,
     setExpanded,
     height,
     activeTool,

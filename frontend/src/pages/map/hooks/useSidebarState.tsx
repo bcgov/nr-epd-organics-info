@@ -25,7 +25,7 @@ const sidebarWidths = {
  */
 export function useSidebarState() {
   const dispatch = useDispatch()
-  const [isExpanded, setExpanded] = useState<boolean>(false)
+  const [expanded, setExpanded] = useState<boolean>(false)
   const theme = useTheme()
   // Sidebar is only shown in L/XL/XXL
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'))
@@ -65,7 +65,7 @@ export function useSidebarState() {
     expandedWidth = sidebarWidths.lg
   }
 
-  if (isExpanded) {
+  if (expanded) {
     width = expandedWidth
   }
 
@@ -77,5 +77,11 @@ export function useSidebarState() {
     }
   }, [width])
 
-  return { isExpanded, setExpanded, width, expandedWidth, selectedItem }
+  return {
+    isExpanded: expanded,
+    setExpanded,
+    width,
+    expandedWidth,
+    selectedItem,
+  }
 }

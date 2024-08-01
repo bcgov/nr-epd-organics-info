@@ -22,10 +22,6 @@ export function MapZoom() {
   const zoomBounds: LatLngBoundsLiteral | undefined =
     useSelector(selectZoomBounds)
 
-  if (Math.random() <= 1) {
-    ;(window as any)._map = map
-  }
-
   useEffect(() => {
     if (zoomPosition) {
       const { zoom = map.getZoom(), position } = zoomPosition
