@@ -1,15 +1,19 @@
 import { screen } from '@testing-library/react'
-
-import { PolygonSearch } from './PolygonSearch'
-import { render } from '@/test-utils'
-import { initialState, usePolygonFilter } from '@/features/omrr/omrr-slice'
-import { useActiveTool } from '@/features/map/map-slice'
-import { PolygonFilter } from '@/interfaces/omrr-filter'
-import { ActiveToolEnum } from '@/constants/constants'
 import { LatLngTuple } from 'leaflet'
 
+import { render } from '@/test-utils'
+import {
+  initialState,
+  usePolygonFilterFinished,
+  usePolygonFilterPositions,
+} from '@/features/omrr/omrr-slice'
+import { useActiveTool } from '@/features/map/map-slice'
+import { ActiveToolEnum } from '@/constants/constants'
+import { PolygonSearch } from './PolygonSearch'
+
 interface State {
-  polygonFilter?: PolygonFilter
+  polygonFilterFinished: boolean
+  polygonFilterPositions: LatLngTuple[]
   activeTool?: ActiveToolEnum
 }
 
@@ -17,18 +21,17 @@ describe('Test suite for PolygonSearch', () => {
   function renderComponent(
     isSmall = false,
     className: string | undefined = undefined,
-    positions: LatLngTuple[] | undefined = undefined,
-    finished = false,
+    polygonFilterPositions: LatLngTuple[] = [],
+    polygonFilterFinished = false,
   ) {
-    let polygonFilter: PolygonFilter | undefined
-    if (positions) {
-      polygonFilter = { positions, finished }
+    const state: State = {
+      polygonFilterFinished,
+      polygonFilterPositions,
     }
-
-    const state: State = {}
     const TestComponent = () => {
       Object.assign(state, {
-        polygonFilter: usePolygonFilter(),
+        polygonFilterFinished: usePolygonFilterFinished(),
+        polygonFilterPositions: usePolygonFilterPositions(),
         activeTool: useActiveTool(),
       })
       return <PolygonSearch isSmall={isSmall} className={className} />
@@ -38,7 +41,8 @@ describe('Test suite for PolygonSearch', () => {
       initialState: {
         omrr: {
           ...initialState,
-          polygonFilter,
+          polygonFilterFinished,
+          polygonFilterPositions,
         },
       },
     })
@@ -56,7 +60,8 @@ describe('Test suite for PolygonSearch', () => {
     expect(finishBtn).toBeDisabled()
 
     await user.click(cancelBtn)
-    expect(state.polygonFilter).toBeUndefined()
+    expect(state.polygonFilterFinished).toBe(false)
+    expect(state.polygonFilterPositions).toHaveLength(0)
     expect(state.activeTool).toBeUndefined()
   })
 
@@ -64,7 +69,8 @@ describe('Test suite for PolygonSearch', () => {
     const positions: LatLngTuple[] = [[48, -123]]
     const { user, state } = renderComponent(false, undefined, positions)
 
-    expect(state.polygonFilter).toEqual({ positions, finished: false })
+    expect(state.polygonFilterFinished).toBe(false)
+    expect(state.polygonFilterPositions).toEqual(positions)
 
     const deleteBtn = screen.getByRole('button', { name: 'Delete Last Point' })
     expect(deleteBtn).toBeEnabled()
@@ -74,7 +80,8 @@ describe('Test suite for PolygonSearch', () => {
 
     await user.click(deleteBtn)
 
-    expect(state.polygonFilter).toEqual({ positions: [], finished: false })
+    expect(state.polygonFilterFinished).toBe(false)
+    expect(state.polygonFilterPositions).toHaveLength(0)
     expect(deleteBtn).toBeDisabled()
     expect(finishBtn).toBeDisabled()
   })
@@ -94,12 +101,14 @@ describe('Test suite for PolygonSearch', () => {
     expect(finishBtn).toBeEnabled()
 
     await user.click(finishBtn)
-    expect(state.polygonFilter).toEqual({ positions, finished: true })
+    expect(state.polygonFilterFinished).toBe(true)
+    expect(state.polygonFilterPositions).toEqual(positions)
     expect(finishBtn).toBeDisabled()
 
     const deleteShapeBtn = screen.getByRole('button', { name: 'Delete Shape' })
     await user.click(deleteShapeBtn)
 
-    expect(state.polygonFilter).toEqual({ positions: [], finished: false })
+    expect(state.polygonFilterFinished).toBe(false)
+    expect(state.polygonFilterPositions).toHaveLength(0)
   })
 })

@@ -4,7 +4,10 @@ import clsx from 'clsx'
 
 import { ActiveToolEnum } from '@/constants/constants'
 import { toggleActiveTool } from '@/features/map/map-slice'
-import { clearShapeFilters } from '@/features/omrr/omrr-slice'
+import {
+  resetPointFilter,
+  resetPolygonFilter,
+} from '@/features/omrr/omrr-slice'
 
 import PolygonIcon from '@/assets/svgs/fa-polygon.svg?react'
 
@@ -16,10 +19,14 @@ export function PolygonSearchButton({ isActive }: Readonly<Props>) {
   const dispatch = useDispatch()
 
   const onClick = () => {
-    dispatch(toggleActiveTool(ActiveToolEnum.polygonSearch))
     if (isActive) {
-      dispatch(clearShapeFilters())
+      // Turn off polygon filter
+      dispatch(resetPolygonFilter())
+    } else {
+      // starting point search - make sure point filter is turned off
+      dispatch(resetPointFilter())
     }
+    dispatch(toggleActiveTool(ActiveToolEnum.polygonSearch))
   }
 
   return (

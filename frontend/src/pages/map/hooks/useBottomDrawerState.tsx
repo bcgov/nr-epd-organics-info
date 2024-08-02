@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import {
-  useCircleFilter,
   useLastSearchTime,
-  usePolygonFilter,
+  usePointFilterCenter,
+  usePolygonFilterFinished,
 } from '@/features/omrr/omrr-slice'
 import {
   setBottomDrawerHeight,
@@ -37,8 +37,8 @@ export function useBottomDrawerState() {
   const activeTool = useActiveTool()
   const activeToolRef = useRef<ActiveToolEnum | undefined>(undefined)
   const heightRef = useRef<number>(0)
-  const polygonFilter = usePolygonFilter()
-  const circleFilter = useCircleFilter()
+  const polygonFilterFinished = usePolygonFilterFinished()
+  const pointFilterReady = Boolean(usePointFilterCenter())
 
   const isDataLayersVisible = activeTool === ActiveToolEnum.dataLayers
   const isSearchByVisible = activeTool === ActiveToolEnum.searchBy
@@ -49,7 +49,7 @@ export function useBottomDrawerState() {
   // Show search results whenever there isn't an active tool
   // or when polygon/point search are finished/ready
   const isSearchResultsVisible =
-    !activeTool || polygonFilter?.finished || Boolean(circleFilter?.center)
+    !activeTool || polygonFilterFinished || pointFilterReady
 
   // Expand bottom drawer when the active tool changes
   useEffect(() => {
@@ -80,8 +80,8 @@ export function useBottomDrawerState() {
     height = MAP_BOTTOM_DRAWER_HEIGHT
     // Use small height when polygon/point filters are not finished or search by is active
     if (
-      (isPolygonSearchVisible && !polygonFilter?.finished) ||
-      (isPointSearchVisible && !circleFilter?.center) ||
+      (isPolygonSearchVisible && !polygonFilterFinished) ||
+      (isPointSearchVisible && !pointFilterReady) ||
       isSearchByVisible
     ) {
       height = MAP_BOTTOM_DRAWER_HEIGHT_SMALL

@@ -70,9 +70,9 @@ export function MapBottomDrawer() {
     setFullHeight(false)
     // Clear active tool and filters too
     if (activeTool) {
+      dispatch(clearShapeFilters())
       dispatch(clearActiveTool())
     }
-    dispatch(clearShapeFilters())
   }
 
   const swipeCallback = (direction: SwipeDirection) => {

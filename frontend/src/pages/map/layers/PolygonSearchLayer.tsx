@@ -12,7 +12,11 @@ import { Polygon, Polyline, useMap, useMapEvents } from 'react-leaflet'
 import { ActiveToolEnum } from '@/constants/constants'
 import { blackSquareIcon } from '@/constants/marker-icons'
 import { useActiveTool } from '@/features/map/map-slice'
-import { setPolygonFilter, usePolygonFilter } from '@/features/omrr/omrr-slice'
+import {
+  addPolygonFilterPosition,
+  usePolygonFilterFinished,
+  usePolygonFilterPositions,
+} from '@/features/omrr/omrr-slice'
 import { useMapCrosshairsCursor } from '../hooks/useMapCrosshairsCursor'
 import { CrosshairsTooltipMarker } from './CrosshairsTooltipMarker'
 import { IconMarker } from './IconMarker'
@@ -27,9 +31,10 @@ export function PolygonSearchLayer() {
 
 function PolygonLayer() {
   const dispatch = useDispatch()
-  const { positions = [], finished = false } = usePolygonFilter() ?? {}
+  const positions = usePolygonFilterPositions()
+  const finished = usePolygonFilterFinished()
   const map = useMap()
-  useMapCrosshairsCursor(map)
+  useMapCrosshairsCursor(map, !finished)
   const dottedLineRef = useRef<LeafletPolyline>(null)
   const mousePositionRef = useRef<LatLng>(map.getCenter())
 
@@ -46,11 +51,7 @@ function PolygonLayer() {
     },
     click: (ev: LeafletMouseEvent) => {
       if (!finished) {
-        const newPositions: LatLngTuple[] = [
-          ...positions,
-          [ev.latlng.lat, ev.latlng.lng],
-        ]
-        dispatch(setPolygonFilter({ positions: newPositions, finished }))
+        dispatch(addPolygonFilterPosition([ev.latlng.lat, ev.latlng.lng]))
       }
     },
   })
