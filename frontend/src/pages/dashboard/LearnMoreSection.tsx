@@ -9,22 +9,22 @@ import identity from '@/assets/svgs/fa-identity.svg'
 const styles = {
   section: {
     margin: {
-      xs: '1.5em',
-      md: '5em',
+      xs: '24px',
+      md: '80px',
     },
-    gap: '0.25em',
+    gap: '4px',
   },
   yellowDivider: {
-    width: '2em',
+    width: '32px',
     height: '4px',
     backgroundColor: '#fcba19',
   },
   heading: {
     color: 'black',
-    fontSize: '1.5rem',
+    fontSize: '24px',
     fontWeight: 'bold',
-    lineHeight: '2.25em',
-    marginBottom: '1rem',
+    lineHeight: '56px',
+    marginBottom: '16px',
   },
 }
 

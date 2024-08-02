@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Box, Button } from '@mui/material'
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
+import { Box, Button, Collapse } from '@mui/material'
 import clsx from 'clsx'
 
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { ListSearchInput } from './ListSearchInput'
 import { ListSearchByGroup } from './ListSearchByGroup'
+
+import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 const styles = {
   searchByRow: {
@@ -42,12 +43,20 @@ export function ListSearchSection() {
           color="primary"
           variant="contained"
           onClick={() => setFiltersExpanded(!filtersExpanded)}
-          endIcon={filtersExpanded ? <ArrowDropUp /> : <ArrowDropDown />}
+          endIcon={
+            <DownArrow
+              width={10}
+              style={{
+                transform: `rotate(${filtersExpanded ? 180 : 0}deg)`,
+                transition: 'transform 0.2s linear',
+              }}
+            />
+          }
         >
           Filter by Facility Type
         </Button>
       </Box>
-      {filtersExpanded && (
+      <Collapse in={filtersExpanded} timeout="auto" unmountOnExit>
         <Box
           component="div"
           className={clsx(
@@ -63,7 +72,7 @@ export function ListSearchSection() {
         >
           <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
-      )}
+      </Collapse>
     </>
   )
 }

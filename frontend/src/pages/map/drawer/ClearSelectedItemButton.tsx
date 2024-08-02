@@ -24,8 +24,7 @@ export function ClearSelectedItemButton() {
       variant="contained"
       size="medium"
       onClick={onClick}
-      startIcon={<ChevronLeft />}
-      sx={{ color: '#2d2d2d' }}
+      startIcon={<ChevronLeft width={8} />}
     >
       Back to Search Results
     </Button>

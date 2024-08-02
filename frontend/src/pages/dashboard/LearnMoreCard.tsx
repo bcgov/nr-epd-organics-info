@@ -7,8 +7,9 @@ import {
   CardMedia,
   Link,
 } from '@mui/material'
-import { ChevronRight } from '@mui/icons-material'
 import Grid from '@mui/material/Grid'
+
+import ChevronRight from '@/assets/svgs/fa-chevron-right.svg?react'
 
 const styles = {
   card: {
@@ -18,17 +19,17 @@ const styles = {
   header: {
     padding: 0,
     marginBottom: {
-      xs: '0.75rem',
-      md: '1rem',
+      xs: '12px',
+      md: '16px',
     },
   },
   title: {
     fontWeight: 700,
-    fontSize: '1.125rem',
+    fontSize: '18px',
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem',
+    gap: '16px',
     color: '#255a90',
   },
   content: {
@@ -37,21 +38,21 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '0 0 1.25em',
+    margin: '0 0 20px',
   },
   icon: {
     width: 'auto',
-    height: '3rem',
+    height: '48px',
   },
   actions: {
-    padding: '0 0 1em',
+    padding: '0 0 16px',
   },
   divider: {
     display: {
       xs: 'block',
       md: 'none',
     },
-    margin: '0.75em 0 0.25em',
+    margin: '12px 0 4px',
     borderColor: '#d8d8d8',
   },
 }
@@ -74,7 +75,7 @@ export function LearnMoreCard({
   const titleElement = (
     <Link sx={styles.title} target="_blank" href={link}>
       {title}
-      <ChevronRight color="primary" />
+      <ChevronRight width={9} />
     </Link>
   )
 

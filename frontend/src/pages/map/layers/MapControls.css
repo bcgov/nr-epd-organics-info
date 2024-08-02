@@ -2,10 +2,10 @@
 .map-controls {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
   border: 0 !important;
   border-radius: 0;
-  max-height: calc(100vh - 5em);
+  max-height: calc(100vh - 80px);
   transition: margin ease-in-out 0.5s;
   position: relative;
 }
