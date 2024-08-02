@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { Grid, Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
-import { DetailsGridLabel } from './DetailsGridLabel'
 import {
   AUTHORIZATION_TYPE_APPROVAL,
   AUTHORIZATION_TYPE_NOTIFICATION,
@@ -17,6 +16,7 @@ import {
   NotificationLandApplicationGridItems,
   PermitApprovalOperationalCertificateGridItems,
 } from './DetailsGridItems'
+import { DetailsGridLabel } from './DetailsGridLabel'
 
 interface Props {
   item: OmrrData

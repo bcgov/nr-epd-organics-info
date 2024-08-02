@@ -1,9 +1,9 @@
+import { useDispatch } from 'react-redux'
+import { Button } from '@mui/material'
 import clsx from 'clsx'
 
 import DropdownButton from '@/components/DropdownButton'
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
-import { Button } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { toggleActiveTool, useActiveTool } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
 

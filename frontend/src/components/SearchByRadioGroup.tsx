@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { RadioGroupProps } from '@mui/material/RadioGroup/RadioGroup'
+import clsx from 'clsx'
 
 import {
   SEARCH_BY_ACTIVE,
@@ -9,7 +10,6 @@ import {
   SEARCH_BY_INACTIVE,
 } from '@/interfaces/types'
 import { setSearchBy, useSearchBy } from '@/features/omrr/omrr-slice'
-import clsx from 'clsx'
 
 interface Props extends Omit<RadioGroupProps, 'value'> {
   defaultValue?: string

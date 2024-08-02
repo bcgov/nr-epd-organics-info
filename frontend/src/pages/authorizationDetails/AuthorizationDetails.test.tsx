@@ -3,11 +3,11 @@ import { getByText, screen, waitFor } from '@testing-library/react'
 import { render } from '@/test-utils'
 import OmrrData from '@/interfaces/omrr'
 import { OmrrAuthzDocsResponse } from '@/interfaces/omrr-documents'
-import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { initialState } from '@/features/omrr/omrr-slice'
+import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
-import AuthorizationDetails from './AuthorizationDetails'
 import { mockOmrrDocuments } from '@/mocks/mock-omrr-documents'
+import AuthorizationDetails from './AuthorizationDetails'
 
 describe('Test suite for AuthorizationDetails', () => {
   function renderComponent(

@@ -16,6 +16,7 @@ export function DataLayersButton() {
       color="secondary"
       className="map-button map-button--large"
       menuClassName="data-layers-button-menu"
+      openClassName="map-button--active"
       startIcon={<img src={layersIcon} alt="Data layers icon" />}
       dropdownContent={<DataLayersCheckboxGroup />}
       horizontalAlign="right"

@@ -5,7 +5,7 @@
 
 Organics Info (ORI) shares information on authorized biosolids land application and compost facilities regulated under the Organic Matter Recycling Regulation (OMRR) in BC. 
 
-This project is part of a the OMRR Transparency Enhancement Initiative led by the Environmental Policy and Initiatives Branch (EPIB) in the Ministry of Environment and Climate Change Strategy.
+This project is part of the OMRR Transparency Enhancement Initiative led by the Environmental Policy and Initiatives Branch (EPIB) in the Ministry of Environment and Climate Change Strategy.
 
 # Technologies used
 
@@ -51,24 +51,6 @@ Steps:
    application on port 3000.
 4. Run the following command in terminal `cd frontend && npm install && npm run dev`, this will start the frontend
    application on port 3001.
-
-## Running Frontend Tests
-
-**End to end** tests are run using [Playwright](https://playwright.dev/).
-Here are the steps to follow to run the end to end tests:
-1. First install Playwright: `npx playwright install`
-2. Then run start the server and frontend as shown above in steps 1-4.
-3. Run Playwright with this command: `npx playwright test` or `npm run test:e2e`
-
-To configure playwright edit the `playwright.config.ts` file.
-End to end tests are located in the `/e2e` folder.
-
-**Unit tests** do not require the server or frontend to be running.
-You can run the unit tests with this command: `npm run test:unit`
-To generate a coverage report, use this command: `npm run test:cov`
-The coverage report can be viewed in the `coverage` folder.
-Unit tests use [MSW](https://mswjs.io/) to mock API responses, see the
-`src/test-setup.ts` file where it is set up.
 
 # Contribution Guidelines
 

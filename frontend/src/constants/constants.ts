@@ -7,6 +7,7 @@ export const MIN_SEARCH_LENGTH = 3
  * How long to wait before performing a search.
  */
 export const SEARCH_DELAY = 300
+
 /**
  * The zoom level when zooming to a place.
  */
@@ -25,8 +26,12 @@ export const FOOTER_HEIGHT = 64
  * in its initial state. It can be expanded to full height.
  */
 export const MAP_BOTTOM_DRAWER_HEIGHT = 320
+/**
+ * The search by, polygon and point search will have a smaller height.
+ */
 export const MAP_BOTTOM_DRAWER_HEIGHT_SMALL = 160
 
+// The positions of the map controls (zoom in/out etc)
 export const MAP_CONTROLS_RIGHT_XL = 64
 export const MAP_CONTROLS_RIGHT_LG = 48
 export const MAP_CONTROLS_RIGHT_SM = 24
@@ -41,4 +46,7 @@ export enum ActiveToolEnum {
   filterBy = 'filterBy',
 }
 
+/**
+ * The smallest allowed radius in meters for the Point Search feature.
+ */
 export const MIN_CIRCLE_RADIUS = 500

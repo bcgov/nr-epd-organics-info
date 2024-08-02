@@ -1,6 +1,6 @@
+import { useNavigate } from 'react-router'
 import { Box, Button, Container, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import { useNavigate } from 'react-router'
 
 export default function NotFound() {
   const navigate = useNavigate()
