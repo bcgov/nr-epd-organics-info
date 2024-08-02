@@ -167,7 +167,7 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     name: 'Agricultural Land Reserve',
     layers: [
       {
-        name: 'ALC ALR Polygons',
+        name: 'ALC Agricultural Land Reserve Polygons',
         url: `${BASE_URL}/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/ows`,
         layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS',
         styles: '2',
@@ -229,7 +229,7 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     name: 'Wildlife Species at Risk',
     layers: [
       {
-        name: 'Critical Habitat for federally-listed species at risk',
+        name: 'Critical Habitat for Federally-Listed Species at Risk',
         url: `${BASE_URL}/WHSE_WILDLIFE_MANAGEMENT.WCP_CRITICAL_HABITAT_SP/ows`,
         layers: 'pub:WHSE_WILDLIFE_MANAGEMENT.WCP_CRITICAL_HABITAT_SP',
         styles: '4883',
