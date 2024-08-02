@@ -35,15 +35,21 @@ export function useSidebarState() {
   const selectedItem = useSelectedItem()
   const selectedItemTime = useSelectedItemTime()
   const lastSearchTime = useLastSearchTime()
+  const lastSearchTimeRef = useRef<number | undefined>(lastSearchTime)
   const initialExpandRef = useRef<boolean>(false)
   const widthRef = useRef<number>(0)
 
   // Only expand the sidebar once after the first search is performed
   useEffect(() => {
-    if (lastSearchTime && !initialExpandRef.current) {
+    if (
+      lastSearchTime &&
+      lastSearchTime !== lastSearchTimeRef.current &&
+      !initialExpandRef.current
+    ) {
       initialExpandRef.current = true
       setExpanded(true)
     }
+    lastSearchTimeRef.current = lastSearchTime
   }, [lastSearchTime])
 
   // Always expand when there is a selected item

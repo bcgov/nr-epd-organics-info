@@ -6,9 +6,9 @@ import DropdownButton from '@/components/DropdownButton'
 import { MIN_CIRCLE_RADIUS } from '@/constants/constants'
 import { clearActiveTool } from '@/features/map/map-slice'
 import {
-  clearShapeFilters,
-  setCircleFilter,
-  useCircleFilter,
+  resetPointFilter,
+  setPointFilterRadius,
+  usePointFilterRadius,
 } from '@/features/omrr/omrr-slice'
 import { formatDistance } from '@/utils/utils'
 
@@ -21,11 +21,11 @@ interface Props {
 
 export function PointSearch({ isSmall = false, className }: Readonly<Props>) {
   const dispatch = useDispatch()
-  const { center, radius = MIN_CIRCLE_RADIUS } = useCircleFilter() ?? {}
+  const radius = usePointFilterRadius()
 
   const onCancel = () => {
+    dispatch(resetPointFilter())
     dispatch(clearActiveTool())
-    dispatch(clearShapeFilters())
   }
 
   const onRadiusChange = (_ev: any, value: number | number[]) => {
@@ -33,7 +33,7 @@ export function PointSearch({ isSmall = false, className }: Readonly<Props>) {
       Array.isArray(value) ? value[0] : value,
       MIN_CIRCLE_RADIUS,
     )
-    dispatch(setCircleFilter({ center, radius: newRadius }))
+    dispatch(setPointFilterRadius(newRadius))
   }
 
   const sliderBox = (

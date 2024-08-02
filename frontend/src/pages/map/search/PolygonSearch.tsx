@@ -4,9 +4,11 @@ import clsx from 'clsx'
 
 import { clearActiveTool } from '@/features/map/map-slice'
 import {
-  clearShapeFilters,
-  setPolygonFilter,
-  usePolygonFilter,
+  usePolygonFilterPositions,
+  usePolygonFilterFinished,
+  deleteLastPolygonFilterPosition,
+  resetPolygonFilter,
+  setPolygonFilterFinished,
 } from '@/features/omrr/omrr-slice'
 
 import CloseIcon from '@/assets/svgs/fa-close.svg?react'
@@ -20,25 +22,24 @@ interface Props {
 
 export function PolygonSearch({ isSmall = false, className }: Readonly<Props>) {
   const dispatch = useDispatch()
-  const { finished = false, positions = [] } = usePolygonFilter() ?? {}
+  const positions = usePolygonFilterPositions()
+  const finished = usePolygonFilterFinished()
 
   const onCancel = () => {
+    dispatch(resetPolygonFilter())
     dispatch(clearActiveTool())
-    dispatch(clearShapeFilters())
   }
 
   const onDelete = () => {
     if (finished) {
-      dispatch(setPolygonFilter({ positions: [], finished: false }))
+      dispatch(resetPolygonFilter())
     } else {
-      const newPositions = [...positions]
-      newPositions.pop()
-      dispatch(setPolygonFilter({ positions: newPositions, finished }))
+      dispatch(deleteLastPolygonFilterPosition())
     }
   }
 
   const onFinish = () => {
-    dispatch(setPolygonFilter({ positions, finished: true }))
+    dispatch(setPolygonFilterFinished())
   }
 
   return (

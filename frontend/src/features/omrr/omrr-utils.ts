@@ -127,11 +127,12 @@ export function filterData(state: OmrrSliceState): OmrrData[] {
   // Now apply global text search
   filteredData = filterByTextSearch(filteredData, searchTextFilter)
   // Apply polygon or point filters
-  if (state.polygonFilter?.finished) {
-    const { positions } = state.polygonFilter
+  if (state.polygonFilterFinished) {
+    const positions = state.polygonFilterPositions
     filteredData = filterDataInsidePolygon(filteredData, positions)
-  } else if (state.circleFilter?.center) {
-    const { center, radius } = state.circleFilter
+  } else if (state.pointFilterCenter) {
+    const center = state.pointFilterCenter
+    const radius = state.pointFilterRadius
     filteredData = filterDataInsideCircle(filteredData, center, radius)
   }
   // Sort data by closest to user's location

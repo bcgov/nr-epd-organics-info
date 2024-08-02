@@ -13,6 +13,7 @@ import {
   selectZoomPosition,
   useActiveTool,
   useBottomDrawerHeight,
+  useSelectedItem,
   useSidebarWidth,
   ZoomPosition,
 } from '@/features/map/map-slice'
@@ -29,6 +30,7 @@ interface State {
   sidebarWidth: number
   bottomDrawerHeight: number
   activeTool?: ActiveToolEnum
+  selectedItem?: OmrrData
   zoomPosition?: ZoomPosition
   zoomBounds?: LatLngBoundsLiteral
 }
@@ -61,6 +63,7 @@ describe('Test suite for MapDrawer', () => {
         sidebarWidth: useSidebarWidth(),
         bottomDrawerHeight: useBottomDrawerHeight(),
         activeTool: useActiveTool(),
+        selectedItem: useSelectedItem(),
         zoomPosition: useSelector(selectZoomPosition),
         zoomBounds: useSelector(selectZoomBounds),
       })
@@ -130,6 +133,7 @@ describe('Test suite for MapDrawer', () => {
 
     // Should already be expanded since there is a selected item
     await screen.findByText('Hide Results')
+    expect(state.selectedItem).toBe(selectedItem)
 
     expect(screen.queryByText('Search Results')).not.toBeInTheDocument()
 
@@ -141,6 +145,13 @@ describe('Test suite for MapDrawer', () => {
       position: [selectedItem.Latitude, selectedItem.Longitude],
       zoom: DEFAULT_AUTHORIZATION_ZOOM,
     })
+
+    const backToResultsBtn = screen.getByRole('button', {
+      name: 'Back to Search Results',
+    })
+    await user.click(backToResultsBtn)
+    expect(state.selectedItem).toBeUndefined()
+    screen.getByText('Search Results')
   })
 
   it('should render MapDrawer with selected item showing in bottom drawer', async () => {
@@ -158,13 +169,21 @@ describe('Test suite for MapDrawer', () => {
     expect(state.bottomDrawerHeight).toBe(MAP_BOTTOM_DRAWER_HEIGHT)
     expect(screen.queryByTestId('map-sidebar')).not.toBeInTheDocument()
     expect(screen.queryByText('Show Results')).not.toBeInTheDocument()
-    screen.getByText('Search Results')
+    expect(screen.queryByText('Search Results')).not.toBeInTheDocument()
 
     let fullHeightToggle = screen.getByTitle('Expand')
     await user.click(fullHeightToggle)
 
     fullHeightToggle = screen.getByTitle('Collapse')
     await user.click(fullHeightToggle)
+
+    const backToResultsBtn = screen.getByRole('button', {
+      name: 'Back to Search Results',
+    })
+    await user.click(backToResultsBtn)
+
+    screen.getByText('Search Results')
+    screen.getByText(`${filteredResults.length} matching results`)
 
     const closeBtn = screen.getByTitle('Close')
     await user.click(closeBtn)
