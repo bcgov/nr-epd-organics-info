@@ -14,13 +14,17 @@ import { useBottomDrawerState } from '../hooks/useBottomDrawerState'
 import { SearchResultsList } from './SearchResultsList'
 import { PolygonSearch } from '../search/PolygonSearch'
 import { PointSearch } from '../search/PointSearch'
+import { ClearSelectedItemButton } from './ClearSelectedItemButton'
 
 import ChevronUpIcon from '@/assets/svgs/fa-chevron-up.svg?react'
 import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapBottomDrawer.css'
 
-function getTitle(tool: ActiveToolEnum | undefined): string {
+function getTitle(
+  tool: ActiveToolEnum | undefined,
+  hasSelectedItem: boolean,
+): string {
   switch (tool) {
     case ActiveToolEnum.dataLayers:
       return 'Data Layers'
@@ -33,7 +37,7 @@ function getTitle(tool: ActiveToolEnum | undefined): string {
     case ActiveToolEnum.filterBy:
       return 'Filter by Facility Type'
     default:
-      return 'Search Results'
+      return hasSelectedItem ? '' : 'Search Results'
   }
 }
 
@@ -50,6 +54,7 @@ export function MapBottomDrawer() {
     setExpanded,
     height,
     activeTool,
+    hasSelectedItem,
     isSearchResultsVisible,
     isDataLayersVisible,
     isSearchByVisible,
@@ -113,7 +118,9 @@ export function MapBottomDrawer() {
           />
         </IconButton>
 
-        <div className="map-bottom-drawer-title">{getTitle(activeTool)}</div>
+        <div className="map-bottom-drawer-title">
+          {getTitle(activeTool, hasSelectedItem)}
+        </div>
 
         <IconButton
           onClick={onClose}
@@ -128,6 +135,11 @@ export function MapBottomDrawer() {
       <div className="map-bottom-drawer-container">
         {isExpanded && (
           <>
+            {hasSelectedItem && (
+              <div>
+                <ClearSelectedItemButton />
+              </div>
+            )}
             {isDataLayersVisible && <DataLayersCheckboxGroup isSmall />}
             {isSearchByVisible && <SearchByRadioGroup />}
             {isFilterByVisible && <FilterByCheckboxGroup isSmall />}

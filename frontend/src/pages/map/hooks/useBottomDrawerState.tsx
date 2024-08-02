@@ -101,6 +101,7 @@ export function useBottomDrawerState() {
     setExpanded,
     height,
     activeTool,
+    hasSelectedItem: Boolean(selectedItem),
     isSearchResultsVisible,
     isDataLayersVisible,
     isSearchByVisible,
