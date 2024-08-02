@@ -9,6 +9,7 @@ import { ZoomToButton } from './ZoomToButton'
 import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapSidebar.css'
+import { ClearSelectedItemButton } from '@/pages/map/drawer/ClearSelectedItemButton'
 
 export function MapSidebar() {
   // This hook keeps track of the expanded state and  calculates the sidebar width
@@ -33,7 +34,10 @@ export function MapSidebar() {
         <div className="map-sidebar-titlebar">
           <div className="map-sidebar-title">
             {selectedItem ? (
-              <ZoomToButton items={[selectedItem]} />
+              <>
+                <ClearSelectedItemButton />
+                <ZoomToButton items={[selectedItem]} />
+              </>
             ) : (
               'Search Results'
             )}

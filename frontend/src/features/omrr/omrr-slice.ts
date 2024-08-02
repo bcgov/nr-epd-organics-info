@@ -10,15 +10,10 @@ import { useLocation } from 'react-router-dom'
 import rfdc from 'rfdc'
 
 import { RootState } from '@/app/store'
-import { MIN_SEARCH_LENGTH } from '@/constants/constants'
+import { MIN_CIRCLE_RADIUS, MIN_SEARCH_LENGTH } from '@/constants/constants'
 import { LoadingStatusType } from '@/interfaces/loading-status'
 import OmrrData from '@/interfaces/omrr'
-import {
-  facilityTypeFilters,
-  OmrrFilter,
-  CircleFilter,
-  PolygonFilter,
-} from '@/interfaces/omrr-filter'
+import { facilityTypeFilters, OmrrFilter } from '@/interfaces/omrr-filter'
 import { SEARCH_BY_ACTIVE } from '@/interfaces/types'
 import OmrrResponse from '@/interfaces/omrr-response'
 import apiService from '@/service/api-service'
@@ -52,10 +47,13 @@ export interface OmrrSliceState {
   searchByFilteredResults: OmrrData[]
   filteredResults: OmrrData[]
   searchTextFilter: string
-  // The timestamp when the user last performed a search or filter
+  // The timestamp when the user last performed a search or filter, this is
+  // used to expand the search results & clear selected item when it changes
   lastSearchTime?: number
-  polygonFilter?: PolygonFilter
-  circleFilter?: CircleFilter
+  pointFilterCenter?: LatLngTuple
+  pointFilterRadius: number
+  polygonFilterPositions: LatLngTuple[]
+  polygonFilterFinished: boolean
 }
 
 export const initialState: OmrrSliceState = {
@@ -78,6 +76,12 @@ export const initialState: OmrrSliceState = {
   filteredResults: [],
   // global search text value
   searchTextFilter: '',
+  // The point filter is active when the center point is defined
+  pointFilterCenter: undefined,
+  pointFilterRadius: MIN_CIRCLE_RADIUS,
+  // The polygon filter is active when finished is true
+  polygonFilterPositions: [],
+  polygonFilterFinished: false,
 }
 
 function performSearch(state: OmrrSliceState, setSearchTime = true) {
@@ -143,26 +147,89 @@ export const omrrSlice = createSlice({
       state.page = action.payload
     },
     setSearchTextFilter: (state, action: PayloadAction<string>) => {
-      if (state.searchTextFilter !== action.payload) {
-        state.searchTextFilter = action.payload
+      const oldText = state.searchTextFilter
+      const newText = action.payload
+      state.searchTextFilter = newText
+      // Only perform the search when the search text changes AND
+      // when there are now 3+ characters or when there was 3+ characters
+      // This prevents doing the search extra times when only 0-2 characters
+      const hasSearchChanged =
+        oldText !== newText &&
+        (newText.length >= MIN_SEARCH_LENGTH ||
+          oldText.length >= MIN_SEARCH_LENGTH)
+      if (hasSearchChanged) {
         performSearch(state)
       }
     },
-    setPolygonFilter: (state, action: PayloadAction<PolygonFilter>) => {
-      state.polygonFilter = action.payload
-      state.circleFilter = undefined
+    addPolygonFilterPosition: (state, action: PayloadAction<LatLngTuple>) => {
+      // Adds a new polygon position, but don't perform search
+      state.polygonFilterPositions = [
+        ...state.polygonFilterPositions,
+        action.payload,
+      ]
+    },
+    deleteLastPolygonFilterPosition: (state) => {
+      // Removes the last polygon position
+      if (state.polygonFilterPositions.length > 0) {
+        const newPositions = [...state.polygonFilterPositions]
+        newPositions.pop()
+        state.polygonFilterPositions = newPositions
+      }
+    },
+    resetPolygonFilter: (state) => {
+      // Resets the polygon filter, also performs the search again
+      state.polygonFilterPositions = []
+      if (state.polygonFilterFinished) {
+        state.polygonFilterFinished = false
+        performSearch(state, false)
+      }
+    },
+    setPolygonFilterFinished: (state) => {
+      // Marks the polygon filter as finished, and performs the search
+      if (!state.polygonFilterFinished) {
+        state.polygonFilterFinished = true
+        // Reset point filter
+        state.pointFilterCenter = undefined
+        state.pointFilterRadius = MIN_CIRCLE_RADIUS
+        performSearch(state)
+      }
+    },
+    setPointFilterCenter: (state, action: PayloadAction<LatLngTuple>) => {
+      state.pointFilterCenter = action.payload
+      // Reset polygon filter
+      state.polygonFilterPositions = []
+      state.polygonFilterFinished = false
       performSearch(state)
     },
-    setCircleFilter: (state, action: PayloadAction<CircleFilter>) => {
-      state.circleFilter = action.payload
-      state.polygonFilter = undefined
-      performSearch(state)
+    setPointFilterRadius: (state, action: PayloadAction<number>) => {
+      const newRadius = action.payload
+      if (newRadius !== state.pointFilterRadius) {
+        state.pointFilterRadius = newRadius
+        // Only perform the search when there is a center point
+        if (state.pointFilterCenter) {
+          // Reset polygon filter
+          state.polygonFilterPositions = []
+          state.polygonFilterFinished = false
+          performSearch(state)
+        }
+      }
+    },
+    resetPointFilter: (state) => {
+      // Reset point filter and search if necessary
+      state.pointFilterRadius = MIN_CIRCLE_RADIUS
+      if (state.pointFilterCenter) {
+        state.pointFilterCenter = undefined
+        performSearch(state, false)
+      }
     },
     clearShapeFilters: (state) => {
-      if (state.polygonFilter || state.circleFilter) {
-        state.polygonFilter = undefined
-        state.circleFilter = undefined
-        performSearch(state)
+      state.polygonFilterPositions = []
+      state.pointFilterRadius = MIN_CIRCLE_RADIUS
+      // Only perform search if either of these were set
+      if (state.polygonFilterFinished || state.pointFilterCenter) {
+        state.polygonFilterFinished = false
+        state.pointFilterCenter = undefined
+        performSearch(state, false)
       }
     },
   },
@@ -209,8 +276,13 @@ export const {
   setUserLocation,
   setPage,
   setSearchTextFilter,
-  setPolygonFilter,
-  setCircleFilter,
+  addPolygonFilterPosition,
+  deleteLastPolygonFilterPosition,
+  resetPolygonFilter,
+  setPolygonFilterFinished,
+  setPointFilterCenter,
+  setPointFilterRadius,
+  resetPointFilter,
   clearShapeFilters,
 } = omrrSlice.actions
 
@@ -269,7 +341,18 @@ export const useFindByAuthorizationNumber = (
 const selectLastSearchTime = (state: RootState) => state.omrr.lastSearchTime
 export const useLastSearchTime = () => useSelector(selectLastSearchTime)
 
-const selectPolygonFilter = (state: RootState) => state.omrr.polygonFilter
-export const usePolygonFilter = () => useSelector(selectPolygonFilter)
-const selectCircleFilter = (state: RootState) => state.omrr.circleFilter
-export const useCircleFilter = () => useSelector(selectCircleFilter)
+const selectPolygonFilterPositions = (state: RootState) =>
+  state.omrr.polygonFilterPositions
+const selectPolygonFilterFinished = (state: RootState) =>
+  state.omrr.polygonFilterFinished
+export const usePolygonFilterPositions = () =>
+  useSelector(selectPolygonFilterPositions)
+export const usePolygonFilterFinished = () =>
+  useSelector(selectPolygonFilterFinished)
+
+const selectPointFilterCenter = (state: RootState) =>
+  state.omrr.pointFilterCenter
+const selectPointFilterRadius = (state: RootState) =>
+  state.omrr.pointFilterRadius
+export const usePointFilterCenter = () => useSelector(selectPointFilterCenter)
+export const usePointFilterRadius = () => useSelector(selectPointFilterRadius)

@@ -23,8 +23,9 @@ export function ZoomToButton({ items, children = 'Zoom To' }: Readonly<Props>) {
       variant="outlined"
       onClick={onZoomIn}
       size="medium"
-      startIcon={<ZoomInIcon className="zoom-to-icon" />}
+      startIcon={<ZoomInIcon />}
       sx={{ color: '#2d2d2d' }}
+      className="zoom-to-button"
     >
       {children}
     </Button>

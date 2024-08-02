@@ -17,7 +17,7 @@ import {
 import OmrrData from '@/interfaces/omrr'
 import { TestMapContainer } from './TestMapContainer'
 import { AuthorizationMarkers } from './AuthorizationMarkers'
-import { ActiveToolEnum, MIN_CIRCLE_RADIUS } from '@/constants/constants'
+import { ActiveToolEnum } from '@/constants/constants'
 
 interface State {
   selectedItem?: OmrrData
@@ -107,10 +107,8 @@ describe('Test suite for AuthorizationMarkers', () => {
   it('should render AuthorizationMarkers in polygon search mode with positions', async () => {
     const { user, state } = renderComponent(
       {
-        polygonFilter: {
-          positions: [[48.123, -123.123]],
-          finished: false,
-        },
+        polygonFilterPositions: [[48.123, -123.123]],
+        polygonFilterFinished: false,
       },
       { activeTool: ActiveToolEnum.polygonSearch },
     )
@@ -130,22 +128,6 @@ describe('Test suite for AuthorizationMarkers', () => {
 
     const markers = screen.getAllByAltText('Authorization marker')
     const [marker] = markers
-    await user.click(marker)
-
-    expect(state.selectedItem).toBeUndefined()
-  })
-
-  it('should render AuthorizationMarkers in point search mode with radius', async () => {
-    const { user, state } = renderComponent(
-      {
-        circleFilter: { radius: MIN_CIRCLE_RADIUS },
-      },
-      { activeTool: ActiveToolEnum.pointSearch },
-      500,
-    )
-
-    const marker = screen.getAllByAltText('Authorization marker')[0]
-    expect(marker).toBeDefined()
     await user.click(marker)
 
     expect(state.selectedItem).toBeUndefined()

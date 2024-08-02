@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 24px;
+  gap: 4px;
 }
 
 .map-sidebar-title {
@@ -43,6 +43,10 @@
   color: var(--typography-color-primary);
   font-size: 36px;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
 
 button.map-sidebar-close-button {
@@ -54,4 +58,8 @@ button.map-sidebar-close-button {
 .map-sidebar-close-icon {
   width: 48px;
   height: 48px;
+}
+
+.zoom-to-button .MuiButton-startIcon {
+  margin: 0 6px 0 -8px;
 }

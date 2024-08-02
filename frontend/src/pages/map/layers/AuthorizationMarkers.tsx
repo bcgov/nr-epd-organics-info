@@ -6,14 +6,14 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { selectStatus, useFilteredResults } from '@/features/omrr/omrr-slice'
 import OmrrData from '@/interfaces/omrr'
 import { AuthorizationMarker } from './AuthorizationMarker'
-import { useSetSelectedItem } from '@/pages/map/hooks/useSetSelectedItem'
+import { useSetSelectedItem } from '../hooks/useSetSelectedItem'
 import { useCallback } from 'react'
 import { RootState } from '@/app/store'
 import { ActiveToolEnum } from '@/constants/constants'
 
 /**
  * Looks at the activeTool value (map slice) and
- * polygonFilter and circleFilter values (omrr slice) to
+ * polygon filter and point filter values (omrr slice) to
  * determine if a polygon or point search is in progress.
  * This is not reactive, and is intended for use inside an event handler.
  * This is safe according to the Redux docs:
@@ -25,14 +25,14 @@ function useShapeFilterInProgress() {
   return useCallback((): boolean => {
     const { omrr, map } = store.getState()
     const { activeTool } = map
-    const { polygonFilter, circleFilter } = omrr
+    const { polygonFilterFinished, pointFilterCenter } = omrr
     if (activeTool === ActiveToolEnum.polygonSearch) {
       // When the polygon search tool is active but not finished
-      return polygonFilter ? !polygonFilter.finished : true
+      return !polygonFilterFinished
     }
     // When the point search tool is active, but the center point isn't defined
     if (activeTool === ActiveToolEnum.pointSearch) {
-      return circleFilter ? !circleFilter.center : true
+      return !pointFilterCenter
     }
     return false
   }, [store])

@@ -1,14 +1,18 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { LatLngTuple } from 'leaflet'
 
-import { PointSearch } from './PointSearch'
 import { render } from '@/test-utils'
-import { useCircleFilter } from '@/features/omrr/omrr-slice'
+import {
+  usePointFilterCenter,
+  usePointFilterRadius,
+} from '@/features/omrr/omrr-slice'
 import { useActiveTool } from '@/features/map/map-slice'
-import { CircleFilter } from '@/interfaces/omrr-filter'
 import { ActiveToolEnum, MIN_CIRCLE_RADIUS } from '@/constants/constants'
+import { PointSearch } from './PointSearch'
 
 interface State {
-  circleFilter?: CircleFilter
+  pointFilterCenter?: LatLngTuple
+  pointFilterRadius: number
   activeTool?: ActiveToolEnum
 }
 
@@ -17,10 +21,13 @@ describe('Test suite for PointSearch', () => {
     isSmall = false,
     className: string | undefined = undefined,
   ) {
-    const state: State = {}
+    const state: State = {
+      pointFilterRadius: MIN_CIRCLE_RADIUS,
+    }
     const TestComponent = () => {
       Object.assign(state, {
-        circleFilter: useCircleFilter(),
+        pointFilterCenter: usePointFilterCenter(),
+        pointFilterRadius: usePointFilterRadius(),
         activeTool: useActiveTool(),
       })
       return <PointSearch isSmall={isSmall} className={className} />
@@ -38,7 +45,8 @@ describe('Test suite for PointSearch', () => {
     const cancelBtn = screen.getByRole('button', { name: 'Cancel' })
 
     await user.click(cancelBtn)
-    expect(state.circleFilter).toBeUndefined()
+    expect(state.pointFilterCenter).toBeUndefined()
+    expect(state.pointFilterRadius).toBe(MIN_CIRCLE_RADIUS)
     expect(state.activeTool).toBeUndefined()
   })
 
@@ -50,7 +58,8 @@ describe('Test suite for PointSearch', () => {
     screen.getByText(`${MIN_CIRCLE_RADIUS} m`)
     const slider = screen.getByRole('slider', { name: 'Search radius' })
     fireEvent.change(slider, { target: { value: 1000 } })
-    expect(state.circleFilter).toEqual({ center: undefined, radius: 1000 })
+    expect(state.pointFilterCenter).toBeUndefined()
+    expect(state.pointFilterRadius).toBe(1000)
   })
 
   it('should render small PointSearch and set radius', async () => {
@@ -61,6 +70,7 @@ describe('Test suite for PointSearch', () => {
     const slider = screen.getByRole('slider', { name: 'Search radius' })
     screen.getByText(`${MIN_CIRCLE_RADIUS} m`)
     fireEvent.change(slider, { target: { value: 2000 } })
-    expect(state.circleFilter).toEqual({ center: undefined, radius: 2000 })
+    expect(state.pointFilterCenter).toBeUndefined()
+    expect(state.pointFilterRadius).toBe(2000)
   })
 })
