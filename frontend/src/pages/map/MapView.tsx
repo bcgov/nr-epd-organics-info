@@ -21,15 +21,14 @@ import './MapView.css'
 // Set the position of the marker for center of BC
 const CENTER_OF_BC: LatLngTuple = [53.7267, -127.6476]
 
-// Feature flag for turning OpenStreetMap tiles gray
-const osmGrayscale = env.VITE_OSM_GRAYSCALE_FLAG === 'true'
-
 /**
  * Renders a map with a marker at the supplied location
  */
 function MapView() {
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('md'))
+  // Feature flag for turning OpenStreetMap tiles gray
+  const osmGrayscale = env.VITE_OSM_GRAYSCALE_FLAG === 'true'
 
   return (
     <div
