@@ -24,7 +24,7 @@
   flex-direction: column;
   justify-content: stretch;
   align-items: flex-start;
-  gap: 0.25rem;
+  gap: 4px;
   overflow: hidden;
 }
 

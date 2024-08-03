@@ -5,28 +5,32 @@ import infoImage from '@/assets/homepage-info.jpg'
 const styles = {
   section: {
     padding: {
-      xs: '2.5rem 1.5rem',
-      md: '5rem',
+      xs: '40px 24px',
+      md: '80px',
     },
   },
   heading: {
-    fontSize: '1.5rem',
+    fontSize: '24px',
     fontWeight: 'bold',
-    color: 'black',
-    marginBottom: '1.5rem',
+    color: {
+      xs: 'black',
+      md: '#313131',
+    },
+    marginBottom: '24px',
   },
   heading2: {
     fontSize: {
-      xs: '1.25rem',
-      md: '1.5rem',
+      xs: '20px',
+      md: '24px',
     },
     fontWeight: 'bold',
+    color: '#313131',
   },
   link: {
     textDecoration: 'none',
   },
   content: {
-    paddingBottom: '1.25em',
+    paddingBottom: '20px',
   },
   stack: {
     justifyContent: {
@@ -36,7 +40,7 @@ const styles = {
     alignItems: 'flex-start',
     marginTop: {
       xs: 0,
-      md: '2em',
+      md: '32px',
     },
     gap: {
       xs: '16px',

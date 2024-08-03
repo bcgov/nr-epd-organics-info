@@ -36,10 +36,10 @@
 button.map-button {
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: 24px;
   display: flex;
   flex: 0 0 auto;
-  gap: 0.5rem;
+  gap: 8px;
   background-color: var(--surface-color-background-white);
   color: var(--typography-color-secondary);
   box-sizing: border-box;

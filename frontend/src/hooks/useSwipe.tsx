@@ -3,10 +3,18 @@ import { RefObject, useEffect, useRef } from 'react'
 export type SwipeDirection = 'left' | 'right' | 'up' | 'down'
 export type SwipeCallback = (swipeDirection: SwipeDirection) => void
 
+/**
+ * A simple hook that will call a callback function
+ * when a swipe gesture is detected on the reference element.
+ * @param ref a reference to the HTML element which will receive gestures
+ * @param callback the callback function for when gestures are detected
+ * @param {number} [minDistance=20] the minimum distance in pixels required
+ * for a swipe to be recognized.
+ */
 export function useSwipe(
   ref: RefObject<HTMLElement | null | undefined>,
   callback: SwipeCallback,
-  minDistance = 30,
+  minDistance = 20,
 ) {
   const callbackRef = useRef<SwipeCallback>(callback)
   callbackRef.current = callback
@@ -53,6 +61,7 @@ export function useSwipe(
 
   useEffect(() => {
     const el = ref.current
+    // Determine if touch screen enabled device
     const isTouch = 'ontouchstart' in window
     if (el) {
       if (isTouch) {

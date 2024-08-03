@@ -1,7 +1,8 @@
 import { MouseEventHandler, ReactNode } from 'react'
 import { Button } from '@mui/material'
-import { ChevronRight } from '@mui/icons-material'
 import clsx from 'clsx'
+
+import ChevronRight from '@/assets/svgs/fa-chevron-right.svg?react'
 
 import './SidebarToggleButton.css'
 
@@ -29,8 +30,8 @@ export function SidebarToggleButton({
     >
       <span className="sidebar-toggle-rotation">
         <ChevronRight
-          color="secondary"
           style={{ transform: `rotate(${isExpanded ? 90 : -90}deg)` }}
+          width={9}
         />
         {children}
       </span>

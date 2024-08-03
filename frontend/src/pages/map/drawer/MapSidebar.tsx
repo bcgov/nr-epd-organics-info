@@ -5,11 +5,11 @@ import { useSidebarState } from '../hooks/useSidebarState'
 import { SearchResultsList } from './SearchResultsList'
 import { SidebarToggleButton } from './SidebarToggleButton'
 import { ZoomToButton } from './ZoomToButton'
+import { ClearSelectedItemButton } from './ClearSelectedItemButton'
 
 import CloseIcon from '@/assets/svgs/close.svg?react'
 
 import './MapSidebar.css'
-import { ClearSelectedItemButton } from '@/pages/map/drawer/ClearSelectedItemButton'
 
 export function MapSidebar() {
   // This hook keeps track of the expanded state and  calculates the sidebar width

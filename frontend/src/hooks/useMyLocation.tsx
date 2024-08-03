@@ -17,6 +17,10 @@ export function useMyLocation(): MyLocationData {
   return data
 }
 
+/**
+ * Allows querying the browser permissions to see if the geolocation
+ * permission has been set (granted, prompt, denied).
+ */
 export function useGeolocationPermission(): PermissionState | undefined {
   const [state, setState] = useState<PermissionState | undefined>(undefined)
 

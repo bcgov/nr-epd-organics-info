@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react'
+import { Mock } from 'vitest'
 import { LatLngTuple } from 'leaflet'
 
 import { render } from '@/test-utils'
 import { useUserLocation } from '@/features/omrr/omrr-slice'
 import { LocationIconButton } from './LocationIconButton'
-import { Mock } from 'vitest'
 
 interface State {
   userLocation?: LatLngTuple

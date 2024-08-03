@@ -51,6 +51,7 @@ export function SearchDialog({ onClose }: Readonly<Props>) {
           title="Back to the map"
           onClick={onClose}
           variant="outlined"
+          size="small"
           className="search-dialog-back-button"
         >
           <ChevronLeft className="search-dialog-back-icon" />

@@ -1,7 +1,7 @@
 import { Link, Stack, Typography } from '@mui/material'
-import {env} from '@/env'
 import clsx from 'clsx'
 
+import { env } from '@/env'
 import {
   useDocumentsStatus,
   useFindAuthorizationDocuments,
@@ -55,7 +55,11 @@ export function DocumentsSection({ item }: Readonly<Props>) {
               'documents-table-cell',
               canDownload && 'documents-table-cell--link',
             )}
-            href={env.VITE_AMS_URL +'download.aspx?PosseObjectId='+ doc.DocumentObjectID}
+            href={
+              env.VITE_AMS_URL +
+              'download.aspx?PosseObjectId=' +
+              doc.DocumentObjectID
+            }
             target="_blank"
             rel={canDownload ? 'noopener noreferrer' : ''}
           >

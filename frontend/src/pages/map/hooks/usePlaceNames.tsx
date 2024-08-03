@@ -20,6 +20,7 @@ async function loadPlaces() {
 
 /**
  * Loads the place names from the public/places.json file.
+ * See the scripts folder for details on how that file is generated.
  */
 export function usePlaceNames(): PlaceNamesResult {
   const [loading, setLoading] = useState<boolean>(false)

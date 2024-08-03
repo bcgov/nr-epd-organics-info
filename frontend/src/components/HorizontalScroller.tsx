@@ -1,9 +1,11 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Button } from '@mui/material'
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import clsx from 'clsx'
 
 import { SwipeDirection, useSwipe } from '@/hooks/useSwipe'
+
+import ChevronLeft from '@/assets/svgs/fa-chevron-left.svg?react'
+import ChevronRight from '@/assets/svgs/fa-chevron-right.svg?react'
 
 import './HorizontalScroller.css'
 
@@ -107,7 +109,7 @@ function HorizontalScrollerComponent({
           className="horizontal-scroller-button horizontal-scroller-button--left"
           title="Scroll left"
         >
-          <ChevronLeft color="secondary" />
+          <ChevronLeft />
         </Button>
       )}
       {scrollRightVisible && (
@@ -118,7 +120,7 @@ function HorizontalScrollerComponent({
           className="horizontal-scroller-button horizontal-scroller-button--right"
           title="Scroll right"
         >
-          <ChevronRight color="secondary" />
+          <ChevronRight />
         </Button>
       )}
     </div>

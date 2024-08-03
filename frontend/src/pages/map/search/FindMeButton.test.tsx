@@ -1,8 +1,8 @@
 import { screen, waitForElementToBeRemoved } from '@testing-library/react'
+import { Mock } from 'vitest'
 
 import { FindMeButton } from './FindMeButton'
 import { render } from '@/test-utils'
-import { Mock } from '~/vitest'
 
 describe('Test suite for FindMeButton', () => {
   it('should render FindMeButton', async () => {
