@@ -25,8 +25,9 @@ that can be run. See the README file in that directory for more details.
 The [Playwright](https://playwright.dev/) library is used for End to End tests.
 It requires the backend server and front end client to be running.
 
-[React Testing Library](https://testing-library.com/) is used for unit tests, 
-combined with [MSW](https://mswjs.io/) for mocking the 3 API calls.
+[Vitest](https://vitest.dev/) is used for the unit tests, along with 
+[React Testing Library](https://testing-library.com/). 
+[MSW](https://mswjs.io/) is also used for mocking the 3 API calls.
 Unit tests run using jsdom, which is not the same as a full functioning browser,
 and as such some features don't work and need to be mocked.
 See the `src/test-setup.ts` file for more details.
