@@ -103,6 +103,6 @@ frontend:
     minAvailable: 1 # the minimum number of pods that must be available during the disruption budget.
 
   env:
-    osmGrayscaleFlag: "true"
+    osmGrayscaleFlag: "false"
     zoomToResultsControlFlag: "true"
 
