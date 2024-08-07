@@ -13,16 +13,17 @@ import {
   useBottomDrawerHeight,
   useSidebarWidth,
 } from '@/features/map/map-slice'
+import { Control } from './Control'
 import { DataLayersControl } from './DataLayersControl'
 import { FindMeControl } from './FindMeControl'
 import { ZoomInOutControl } from './ZoomInOutControl'
-import { Control } from './Control'
+import { ZoomToResultsControl } from './ZoomToResultsControl'
 
 import './MapControls.css'
 
 export function MapControls() {
   const theme = useTheme()
-  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'))
   const isMedium = useMediaQuery(theme.breakpoints.down('lg'))
   const isLarge = useMediaQuery(theme.breakpoints.down('xl'))
   const sidebarWidth = useSidebarWidth()
@@ -64,7 +65,8 @@ export function MapControls() {
           <FindMeControl />
         </>
       )}
-      <ZoomInOutControl />
+      <ZoomToResultsControl />
+      {isSmall ? null : <ZoomInOutControl />}
     </Control>
   )
 }

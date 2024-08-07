@@ -43,6 +43,10 @@ spec:
               value: {{ .Values.global.amsURL | quote }}
             - name: VITE_AMS_DOCS_FLAG
               value: {{ .Values.backend.env.omrrAuthzDocsFlag | quote }}
+            - name: VITE_OSM_GRAYSCALE_FLAG
+              value: {{ .Values.frontend.env.osmGrayscaleFlag | quote }}
+            - name: VITE_ZOOM_TO_RESULTS_CONTROL_FLAG
+              value: {{ .Values.frontend.env.zoomToResultsControlFlag | quote }}
           ports:
             - name: http
               containerPort: 3000

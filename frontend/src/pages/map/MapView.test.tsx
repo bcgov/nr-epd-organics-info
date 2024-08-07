@@ -7,6 +7,7 @@ import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { themeBreakpointValues } from '@/theme'
 import MapView from './MapView'
 import OmrrData from '@/interfaces/omrr'
+import { env } from '@/env'
 
 describe('Test suite for MapView', () => {
   function renderComponent(
@@ -213,5 +214,23 @@ describe('Test suite for MapView', () => {
     const resetBtn = screen.getByRole('button', { name: 'Reset Layers' })
     await user.click(resetBtn)
     expect(layerCb).not.toBeChecked()
+  })
+
+  it('should render the MapView with OSM and zoom feature flags turned on', async () => {
+    env.VITE_ZOOM_TO_RESULTS_CONTROL_FLAG = 'true'
+    env.VITE_OSM_GRAYSCALE_FLAG = 'true'
+
+    const { user } = renderComponent(themeBreakpointValues.xxl)
+
+    // When the VITE_ZOOM_TO_RESULTS_CONTROL_FLAG feature flag is on the control button shows up
+    const zoomToResultsBtn = screen.getByTitle(
+      'Zoom to show all search results',
+    )
+    await user.click(zoomToResultsBtn)
+
+    // When the VITE_OSM_GRAYSCALE_FLAG feature flag is on a special CSS class should be set
+    const map = screen.getByTestId('map-view')
+    const osmTileLayer = map.querySelector('.osm--grayscale')
+    expect(osmTileLayer).toBeDefined()
   })
 })

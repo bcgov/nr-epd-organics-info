@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import clsx from 'clsx'
 
+import { env } from '@/env'
 import { MapSearch } from './search/MapSearch'
 import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
@@ -26,6 +27,8 @@ const CENTER_OF_BC: LatLngTuple = [53.7267, -127.6476]
 function MapView() {
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('md'))
+  // Feature flag for turning OpenStreetMap tiles gray
+  const osmGrayscale = env.VITE_OSM_GRAYSCALE_FLAG === 'true'
 
   return (
     <div
@@ -41,6 +44,7 @@ function MapView() {
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          className={clsx(osmGrayscale && 'osm--grayscale')}
         />
         <MapDataLayers />
         <MapControls />
