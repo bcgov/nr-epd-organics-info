@@ -26,6 +26,7 @@
 
 button.search-dialog-back-button {
   min-width: 40px;
+  padding: 0;
   width: var(--map-button-height-medium);
   height: var(--map-button-height-medium);
   border-color: var(--surface-color-border-dark);
@@ -33,8 +34,7 @@ button.search-dialog-back-button {
 }
 
 .search-dialog-back-icon {
-  width: 10px;
-  height: 15px;
+  width: 9px;
 }
 
 .search-dialog-input {

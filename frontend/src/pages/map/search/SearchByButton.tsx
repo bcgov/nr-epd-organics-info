@@ -32,7 +32,7 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
     <SearchByRadioGroup
       name="map-search-by-group"
       row={false}
-      sx={{ gap: '0.25rem', paddingLeft: '0.5rem' }}
+      sx={{ gap: '4px', paddingLeft: '8px' }}
     />
   )
 

@@ -1,9 +1,9 @@
 
 .map-view {
   width: 100%;
-  height: calc(100vh - 4em);
+  height: calc(100vh - var(--header-height));
   /* Header is fixed */
-  padding-top: 4em;
+  padding-top: var(--header-height);
   position: relative;
   display: flex;
   flex-direction: column;

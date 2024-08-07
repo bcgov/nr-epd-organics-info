@@ -1,9 +1,10 @@
-import AuthorizationList from './AuthorizationList'
+import { screen } from '@testing-library/react'
+
 import { render } from '@/test-utils'
 import { initialState, OmrrSliceState } from '@/features/omrr/omrr-slice'
-import { screen } from '@testing-library/react'
 import { mockActiveOmrrData, mockOmrrData } from '@/mocks/mock-omrr-data'
 import { SEARCH_BY_ALL } from '@/interfaces/types'
+import AuthorizationList from './AuthorizationList'
 
 describe('Test suite for AuthorizationList', () => {
   function renderComponent(state: Partial<OmrrSliceState> = {}, pageSize = 2) {

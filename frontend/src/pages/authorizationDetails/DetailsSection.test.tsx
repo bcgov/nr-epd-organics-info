@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
 
 import OmrrData, { omrrDataBooleanFields } from '@/interfaces/omrr'
-import { DetailsSection } from './DetailsSection'
-import { createMockOmrrData } from '@/mocks/mock-omrr-data'
 import { OPERATION_TYPE_COMPOST_FACILITY } from '@/interfaces/omrr-filter'
+import { createMockOmrrData } from '@/mocks/mock-omrr-data'
+import { DetailsSection } from './DetailsSection'
 
 describe('Test suite for DetailsSection', () => {
   it('should render DetailsSection for old Notification', () => {

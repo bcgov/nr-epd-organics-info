@@ -10,8 +10,8 @@ import {
 import { AutocompleteOption } from '@/interfaces/autocomplete-option'
 import { getAutocompleteOptions } from '@/utils/autocomplete'
 import { usePlaceNames } from './usePlaceNames'
-import { useSetSelectedItem } from '@/pages/map/hooks/useSetSelectedItem'
-import { useSetSelectedPlace } from '@/pages/map/hooks/useSetSelectedPlace'
+import { useSetSelectedItem } from './useSetSelectedItem'
+import { useSetSelectedPlace } from './useSetSelectedPlace'
 
 export function useAutocompleteSearch() {
   const dispatch = useDispatch()

@@ -3,9 +3,12 @@ import { DataLayerGroup } from '@/interfaces/data-layers'
 const BASE_URL = 'https://openmaps.gov.bc.ca/geo/pub'
 
 /**
- * All layer urls and params extracted from the ticket.
+ * All layer urls and params are extracted from these tickets.
  * Many of them have multiple available styles that can be displayed.
+ * The `url` field is the WMS url. The `webUrl` is the data catalogue url.
+ * These values are displayed on the Map page and the Guidance page.
  * @see https://github.com/bcgov/nr-epd-organics-info/issues/109
+ * @see https://github.com/bcgov/nr-epd-organics-info/issues/204
  */
 export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
   {

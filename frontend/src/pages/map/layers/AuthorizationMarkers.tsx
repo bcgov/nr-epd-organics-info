@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useSelector, useStore } from 'react-redux'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { useTheme } from '@mui/material/styles'
@@ -7,7 +8,6 @@ import { selectStatus, useFilteredResults } from '@/features/omrr/omrr-slice'
 import OmrrData from '@/interfaces/omrr'
 import { AuthorizationMarker } from './AuthorizationMarker'
 import { useSetSelectedItem } from '../hooks/useSetSelectedItem'
-import { useCallback } from 'react'
 import { RootState } from '@/app/store'
 import { ActiveToolEnum } from '@/constants/constants'
 

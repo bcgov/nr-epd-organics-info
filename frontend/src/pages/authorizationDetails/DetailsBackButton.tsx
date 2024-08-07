@@ -19,7 +19,7 @@ export function DetailsBackButton() {
       color="primary"
       variant="contained"
       size="medium"
-      startIcon={<ChevronLeft />}
+      startIcon={<ChevronLeft width={8} />}
       onClick={onClick}
     >
       Back to {searchType}

@@ -30,6 +30,7 @@ export const blueIcon1x = new L.Icon({
   shadowAnchor: [8, 4],
 })
 
+// Used by Polygon and Point search tools
 export const crosshairsIcon = new L.Icon({
   iconUrl: crosshairsSvg,
   iconSize: [32, 32],
@@ -46,6 +47,7 @@ export const emptyIcon = new L.DivIcon({
   iconSize: [0, 0],
 })
 
+// Icon used by Polygon search at the vertices
 export const blackSquareIcon = new L.DivIcon({
   html: '<div />',
   className: 'black-square-icon',
