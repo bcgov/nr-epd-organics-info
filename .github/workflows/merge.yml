@@ -45,6 +45,7 @@ jobs:
         --set frontend.pdb.enabled=false \
         --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
         --set-string backend.env.omrrAppStatusFlag=true \
+        --set-string backend.env.omrrAuthzDocsFlag=true\
   tests:
     name: Tests
     needs: [ deploy-test ]
@@ -68,6 +69,7 @@ jobs:
         --set frontend.pdb.enabled=false \
         --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
         --set-string backend.env.omrrAppStatusFlag=true \
+        --set-string backend.env.omrrAuthzDocsFlag=true\
 
   promote:
     name: Promote Images
