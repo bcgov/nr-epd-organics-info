@@ -17,7 +17,7 @@ jobs:
   tests:
     name: Tests
     if: ${{ ! github.event.pull_request.draft }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     services:
       postgres:
@@ -61,7 +61,7 @@ jobs:
     name: CodeQL
     if: ${{ ! github.event.pull_request.draft }}
     needs: [tests]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
@@ -79,7 +79,7 @@ jobs:
     name: Trivy Security Scan
     if: ${{ ! github.event.pull_request.draft }}
     needs: [tests]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
