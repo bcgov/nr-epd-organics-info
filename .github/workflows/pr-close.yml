@@ -15,7 +15,7 @@ jobs:
     name: Cleanup OpenShift
     env:
       release: ${{ github.event.repository.name }}-${{ github.event.number }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: redhat-actions/openshift-tools-installer@v1
@@ -38,7 +38,7 @@ jobs:
   retags:
     name: Promote Images
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       packages: write
     strategy:
