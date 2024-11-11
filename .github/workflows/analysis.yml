@@ -98,3 +98,12 @@ jobs:
         with:
           sarif_file: "trivy-results.sarif"
 
+  results:
+    name: Analysis Results
+    if: always()
+    needs: [tests, codeql] # Restore trivy when/if fixed
+    runs-on: ubuntu-24.04
+    steps:
+      - if: contains(needs.*.result, 'failure')
+        run: echo "At least one job has failed." && exit 1
+      - run: echo "Success!"
