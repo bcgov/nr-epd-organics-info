@@ -27,7 +27,6 @@ export default interface OmrrData {
   'Hatchery Waste'?: boolean
   Manure?: boolean
   'Milk Processing Waste'?: boolean
-  'Plant Matter Derived From Processing Plants'?: boolean
 
   // Extracted from Facility Location - not all facilities will have this set
   'Postal Code'?: string
@@ -48,5 +47,4 @@ export const omrrDataBooleanFields: (keyof OmrrData)[] = [
   'Hatchery Waste',
   'Manure',
   'Milk Processing Waste',
-  'Plant Matter Derived From Processing Plants'
 ]

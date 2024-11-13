@@ -27,5 +27,4 @@ export interface OmrrData {
   'Hatchery Waste'?: boolean,
   'Manure'?: boolean,
   'Milk Processing Waste'?: boolean,
-  'Plant Matter Derived From Processing Plants'?: boolean,
 }
