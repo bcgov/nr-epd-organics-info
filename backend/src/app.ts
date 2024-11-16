@@ -23,10 +23,9 @@ export async function bootstrap() {
     prefix: 'v'
   });
   const config = new DocumentBuilder()
-    .setTitle('Users example')
-    .setDescription('The user API description')
+    .setTitle('Organics Info')
+    .setDescription('Organics Info API')
     .setVersion('1.0')
-    .addTag('users')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
