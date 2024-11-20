@@ -7,8 +7,8 @@ import { AmsOracleConnectorService } from './ams.oracle.connector.service';
 import { HttpService } from '@nestjs/axios';
 import { OmrrData } from '../types/omrr-data';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
-import { OmrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response'
-import * as process from 'node:process'
+import { OmrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response';
+import * as process from 'node:process';
 
 describe('AmsOracleConnectorService', () => {
   let service: AmsOracleConnectorService;
@@ -30,7 +30,6 @@ describe('AmsOracleConnectorService', () => {
 
     service = module.get<AmsOracleConnectorService>(AmsOracleConnectorService);
     httpService = module.get<HttpService>(HttpService);
-
   });
 
   afterEach(() => {
@@ -50,7 +49,9 @@ describe('AmsOracleConnectorService', () => {
       const getOMRRApplicationStatusFromAMS = jest
         .spyOn(service, 'getOMRRApplicationStatusFromAMS')
         .mockResolvedValue(undefined);
-      const getAuthzDocsFromAMS = jest.spyOn(service, 'getOMRRAuthorizationDocumentsFromAMS').mockResolvedValue(undefined);
+      const getAuthzDocsFromAMS = jest
+        .spyOn(service, 'getOMRRAuthorizationDocumentsFromAMS')
+        .mockResolvedValue(undefined);
       await service.onModuleInit();
 
       expect(getOMRRDataFromAMS).toHaveBeenCalled();
@@ -168,12 +169,14 @@ describe('AmsOracleConnectorService', () => {
           DocumentObjectID: 124,
           Description: 'desc',
           Publiclyviewable: 'Y',
+          Filename: 'file1.pdf',
         },
         {
           'Authorization Number': 123,
           DocumentObjectID: 125,
           Description: 'desc',
           Publiclyviewable: 'Y',
+          Filename: 'file2.pdf',
         },
       ]; // Mocked OMRR authorization documents
       const response = {
@@ -184,8 +187,8 @@ describe('AmsOracleConnectorService', () => {
 
       const result = await service.getOMRRAuthorizationDocumentsFromAMS();
 
-      expect(result).toHaveLength(1)
-      expect(result[0].doc_links).toHaveLength(2)
+      expect(result).toHaveLength(1);
+      expect(result[0].doc_links).toHaveLength(2);
     });
 
     it('should throw error if status is not 200', async () => {
@@ -194,14 +197,18 @@ describe('AmsOracleConnectorService', () => {
         data: undefined,
       };
       jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
-      const error = new Error('Error Getting OMRR Authorization Documents from AMS');
+      const error = new Error(
+        'Error Getting OMRR Authorization Documents from AMS',
+      );
       await expect(
         service.getOMRRAuthorizationDocumentsFromAMS(),
       ).rejects.toThrow(error);
     });
 
     it('should throw an error if there is an error getting OMRR authorization documents from AMS', async () => {
-      const error = new Error('Error Getting OMRR Authorization Documents from AMS');
+      const error = new Error(
+        'Error Getting OMRR Authorization Documents from AMS',
+      );
       jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
 
       await expect(
@@ -209,5 +216,4 @@ describe('AmsOracleConnectorService', () => {
       ).rejects.toThrow(error);
     });
   });
-
 });

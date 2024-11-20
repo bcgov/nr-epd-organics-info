@@ -118,3 +118,4 @@ test-report.xml
 **/out
 **/target
 
+*.key
