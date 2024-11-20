@@ -64,9 +64,9 @@ export class AmsOracleConnectorService implements OnModuleInit {
         if (response.data?.length > 0) {
           response.data.forEach((row: OmrrData) => {
             if (row['Authorization Number'] === 111479) {
-              row['Red Meat Waste'] = 'Yes';
+              row['Red Meat Waste'] = true;
             } else {
-              row['Red Meat Waste'] = 'No';
+              row['Red Meat Waste'] = false;
             }
           });
         }
