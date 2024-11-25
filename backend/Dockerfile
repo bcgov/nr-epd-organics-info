@@ -1,4 +1,4 @@
-FROM node:20.18.0-bullseye-slim AS build
+FROM node:20.18.1-bullseye-slim AS build
 
 # Install packages, build and keep only prod packages
 WORKDIR /app
