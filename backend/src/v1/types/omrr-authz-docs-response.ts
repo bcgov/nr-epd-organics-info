@@ -1,16 +1,18 @@
 export interface OmrrAuthzDocsResponse {
-  'Authorization Number': number,
-  'doc_links'?: OmrrAuthzDocs[]
+  'Authorization Number': number;
+  doc_links?: OmrrAuthzDocs[];
 }
-export interface OmrrAuthzDocs{
-  'DocumentObjectID': number,
-  'Description': string,
-  'Publiclyviewable': string
+export interface OmrrAuthzDocs {
+  DocumentObjectID: number;
+  Description: string;
+  Publiclyviewable: string;
+  Filename: string;
 }
 
 export interface OmrrAuthzDocsQueryResponse {
-  'Authorization Number': number,
-  'DocumentObjectID': number,
-  'Description': string,
-  'Publiclyviewable': string
+  'Authorization Number': number;
+  DocumentObjectID: number;
+  Description: string;
+  Publiclyviewable: string;
+  Filename: string;
 }

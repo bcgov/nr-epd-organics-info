@@ -1,7 +1,8 @@
 export interface OmrrAuthzDocs {
   DocumentObjectID: number
   Description: string
-  Publiclyviewable: string
+  Publiclyviewable: string,
+  Filename?: string
 }
 
 export interface OmrrAuthzDocsResponse {

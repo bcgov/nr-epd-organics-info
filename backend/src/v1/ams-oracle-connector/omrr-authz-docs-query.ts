@@ -5,6 +5,7 @@ export const OMRR_AUTHZ_DOCS_QUERY = `SELECT AUTHORIZATIONOBJECT.AuthorizationNu
                                           THEN EM_AuthorizationDocuments.Description
                                       ELSE EM_AuthorizationDocuments.Filename
                                       END                                 As "Description",
+                                      EM_AuthorizationDocuments.Filename AS "Filename",
                                   EM_AuthorizationDocuments.Publiclyviewable AS "Publiclyviewable"
                            FROM corral_generated_views.authorizationobject,
                                 corral_generated_views.Em_Authorizationdocuments
@@ -17,6 +18,7 @@ export const OMRR_AUTHZ_DOCS_QUERY = `SELECT AUTHORIZATIONOBJECT.AuthorizationNu
                                           THEN EM_AuthorizationDocuments.Description
                                       ELSE EM_AuthorizationDocuments.Filename
                                       END                             As "Description",
+                                    EM_AuthorizationDocuments.Filename AS "Filename",
                                   EM_AuthorizationDocuments.Publiclyviewable AS "Publiclyviewable"
                            FROM CORRAL_GENERATED_VIEWS.REGISTRATION,
                                 corral_generated_views.Em_Authorizationdocuments
