@@ -38,11 +38,13 @@ export const dashboard_page = async (page: Page) => {
   await expect(page.getByAltText('Information image')).toBeVisible()
 
   await expect(page.getByText('Learn more')).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Legislation' })).toBeVisible()
   await expect(
-    page.getByRole('link', { name: 'Process and procedures' }),
+    page.getByRole('link', { name: 'Legislation', exact: true }),
   ).toBeVisible()
   await expect(
-    page.getByRole('link', { name: 'Compliance and enforcement' }),
+    page.getByRole('link', { name: 'Process and procedures', exact: true }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: 'Compliance and enforcement', exact: true }),
   ).toBeVisible()
 }
