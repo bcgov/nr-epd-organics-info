@@ -1,7 +1,6 @@
 import { Typography, Button, Box, Stack } from '@mui/material'
 
 import infoImage from '@/assets/homepage-info.jpg'
-import { maxHeight } from '@mui/system'
 
 const styles = {
   section: {
