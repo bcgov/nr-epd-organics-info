@@ -1,6 +1,7 @@
 import { Typography, Button, Box, Stack } from '@mui/material'
 
 import infoImage from '@/assets/homepage-info.jpg'
+import { maxHeight } from '@mui/system'
 
 const styles = {
   section: {
@@ -69,7 +70,7 @@ const styles = {
   },
   image: {
     borderRadius: '8px',
-    maxWidth: 'calc(100vw - 64px)',
+    maxHeight: '40vh',
   },
   button: {
     fontWeight: 700,
@@ -89,7 +90,7 @@ export function InfoSection() {
       </Typography>
       <Typography component="p" sx={styles.content}>
         <a
-          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+          href="https://www2.gov.bc.ca/gov/content?id=2C130233751D44AEBC77A7ACE4A014A8"
           style={styles.link}
         >
           The Organic Matter Recycling Regulation of B.C.
@@ -120,7 +121,7 @@ export function InfoSection() {
           </Typography>
           <ul style={styles.list}>
             <Typography component="li">
-              Better protect of human and environment health
+              Better protection of human and environmental health
             </Typography>
             <Typography component="li">
               Increase engagement with Indigenous communities
