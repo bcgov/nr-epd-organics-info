@@ -43,20 +43,20 @@ export function LearnMoreSection() {
       <Grid container spacing={3}>
         <LearnMoreCard
           title="Legislation"
-          link="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+          link="https://www2.gov.bc.ca/gov/content?id=2C130233751D44AEBC77A7ACE4A014A8"
           icon={govSvg}
           actions="Learn about the laws that apply to recycling organic matter."
         />
         <LearnMoreCard
           title="Process and procedures"
-          link="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
+          link="https://www2.gov.bc.ca/gov/content?id=0876E90DA4744A449423D35EB4E09785"
           icon={verification}
           actions="Learn about how we administer the authorizations process for
                     compost and biosolids facilities."
         />
         <LearnMoreCard
           title="Compliance and enforcement"
-          link="https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/reporting/environmental-enforcement-reporting"
+          link="https://www2.gov.bc.ca/gov/content?id=41FDB87D3806443399047028740AC274"
           icon={identity}
           actions="Search the compliance and enforcement database and learn
                     about how we coordinate oversight."

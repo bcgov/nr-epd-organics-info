@@ -1,6 +1,7 @@
 import {
   Box,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
   CardHeader,
@@ -82,31 +83,38 @@ export function LearnMoreCard({
   return (
     <Grid item xs={12} md={4} component="section">
       <Card elevation={0} sx={styles.card}>
-        <CardHeader
-          sx={{
-            ...styles.header,
-            display: {
-              xs: 'none',
-              md: 'flex',
-            },
-          }}
-          title={titleElement}
-        />
-        <CardContent sx={styles.content}>
-          <CardMedia component="img" src={icon} sx={styles.icon} alt={title} />
-        </CardContent>
-        <CardHeader
-          sx={{
-            ...styles.header,
-            display: {
-              xs: 'flex',
-              md: 'none',
-            },
-          }}
-          title={titleElement}
-        />
-        <CardActions sx={styles.actions}>{actions}</CardActions>
-        {divider && <Box component="hr" sx={styles.divider} />}
+        <CardActionArea target="_blank" href={link}>
+          <CardHeader
+            sx={{
+              ...styles.header,
+              display: {
+                xs: 'none',
+                md: 'flex',
+              },
+            }}
+            title={titleElement}
+          />
+          <CardContent sx={styles.content}>
+            <CardMedia
+              component="img"
+              src={icon}
+              sx={styles.icon}
+              alt={title}
+            />
+          </CardContent>
+          <CardHeader
+            sx={{
+              ...styles.header,
+              display: {
+                xs: 'flex',
+                md: 'none',
+              },
+            }}
+            title={titleElement}
+          />
+          <CardActions sx={styles.actions}>{actions}</CardActions>
+          {divider && <Box component="hr" sx={styles.divider} />}
+        </CardActionArea>
       </Card>
     </Grid>
   )

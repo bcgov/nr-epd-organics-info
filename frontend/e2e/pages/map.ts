@@ -92,7 +92,7 @@ export const map_page = async (page: Page) => {
   await autocompleteOption.click()
 
   // Search input
-  await expect(searchInput).toHaveValue('CITY OF VICTORIA')
+  await expect(searchInput).toHaveValue('City Of Victoria')
 
   // Search results should be expanded
   await expect(page.getByText('Search Results')).toBeVisible()

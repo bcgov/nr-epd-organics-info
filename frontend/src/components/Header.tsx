@@ -100,9 +100,19 @@ export default function Header() {
               alt="Logo"
             />
           </Link>
-          <Typography data-testid="header-title" sx={styles.titleText}>
-            Organics Info
-          </Typography>
+          <Link
+            style={{
+              display: 'inline-flex',
+              textDecoration: 'none',
+              color: 'inherit',
+              cursor: 'pointer',
+            }}
+            onClick={() => buttonClicked('/')}
+          >
+            <Typography data-testid="header-title" sx={styles.titleText}>
+              Organics Info
+            </Typography>
+          </Link>
         </Stack>
         <Stack direction="row" id="nav">
           {mdMatches && (

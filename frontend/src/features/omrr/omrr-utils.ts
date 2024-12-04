@@ -25,7 +25,11 @@ const authorizationStatusFilter = (item: OmrrData, status: string): boolean => {
 
 export function filterByAuthorizationStatus(state: OmrrSliceState): OmrrData[] {
   const { allResults, searchBy } = state
-  return allResults.filter((item) => authorizationStatusFilter(item, searchBy))
+  return allResults
+    .filter((item) => authorizationStatusFilter(item, searchBy))
+    .sort((a, b) => {
+      return a['Regulated Party'].localeCompare(b['Regulated Party'])
+    })
 }
 
 type OmrrSortOptions = MatchSorterOptions<OmrrData> & {
@@ -265,6 +269,13 @@ export function convertData(data: OmrrData[]): OmrrData[] {
         : undefined,
       // Extract postal code from the address if possible
       'Postal Code': extractPostalCode(address),
+      // make it from all caps to title case
+      'Regulated Party': original['Regulated Party']
+        ?.trim()
+        .toLowerCase()
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' '),
     }
 
     // Remove null/undefined values, and convert booleans
