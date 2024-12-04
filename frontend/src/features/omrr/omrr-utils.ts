@@ -25,7 +25,11 @@ const authorizationStatusFilter = (item: OmrrData, status: string): boolean => {
 
 export function filterByAuthorizationStatus(state: OmrrSliceState): OmrrData[] {
   const { allResults, searchBy } = state
-  return allResults.filter((item) => authorizationStatusFilter(item, searchBy))
+  return allResults
+    .filter((item) => authorizationStatusFilter(item, searchBy))
+    .sort((a, b) => {
+      return a['Regulated Party'].localeCompare(b['Regulated Party'])
+    })
 }
 
 type OmrrSortOptions = MatchSorterOptions<OmrrData> & {
