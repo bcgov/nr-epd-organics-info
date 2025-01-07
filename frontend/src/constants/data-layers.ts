@@ -38,15 +38,6 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
         webUrl:
           'https://catalogue.data.gov.bc.ca/dataset/48165eb9-cd44-4c3a-a178-ab5c0b9d9ebc',
       },
-    /*** Github Issue #242 : Removed ALR notice of intent layer
-      {
-        name: 'ALR Notices of Intent (Spatial View)',
-        url: `${BASE_URL}/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_NOI_SV/ows`,
-        layers: 'pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_NOI_SV',
-        styles: '4764',
-        webUrl:
-          'https://catalogue.data.gov.bc.ca/dataset/43e45e82-b5d8-46a3-bb28-f2b7223423fc',
-      }, */
     ],
   },
   {
