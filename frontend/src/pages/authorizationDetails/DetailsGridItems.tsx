@@ -140,6 +140,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
         className="organic-matter-checkbox-grid"
       >
         {omrrDataBooleanFields
+          .slice()
           .sort((a, b) => (item[b] ? 1 : 0) - (item[a] ? 1 : 0))
           .map((key) => {
             const isChecked = Boolean(item[key])
