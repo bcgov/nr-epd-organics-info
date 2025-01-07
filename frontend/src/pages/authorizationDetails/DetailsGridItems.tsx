@@ -139,33 +139,35 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
         }}
         className="organic-matter-checkbox-grid"
       >
-        {omrrDataBooleanFields.map((key) => {
-          const isChecked = Boolean(item[key])
-          return (
-            <Grid
-              key={`CheckRow-${key}`}
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              xxl={3}
-              className="organic-matter-checkbox-item"
-            >
-              {isChecked ? (
-                <CheckIcon
-                  data-testid="organic-matter-checked-icon"
-                  className="organic-matter-checkbox-icon"
-                />
-              ) : (
-                <CloseIcon
-                  data-testid="organic-matter-unchecked-icon"
-                  className="organic-matter-checkbox-icon"
-                />
-              )}
-              <span className="organic-matter-checkbox-label">{key}</span>
-            </Grid>
-          )
-        })}
+        {omrrDataBooleanFields
+          .sort((a, b) => (item[b] ? 1 : 0) - (item[a] ? 1 : 0))
+          .map((key) => {
+            const isChecked = Boolean(item[key])
+            return (
+              <Grid
+                key={`CheckRow-${key}`}
+                item
+                xs={12}
+                md={6}
+                lg={4}
+                xxl={3}
+                className="organic-matter-checkbox-item"
+              >
+                {isChecked ? (
+                  <CheckIcon
+                    data-testid="organic-matter-checked-icon"
+                    className="organic-matter-checkbox-icon"
+                  />
+                ) : (
+                  <CloseIcon
+                    data-testid="organic-matter-unchecked-icon"
+                    className="organic-matter-checkbox-icon"
+                  />
+                )}
+                <span className="organic-matter-checkbox-label">{key}</span>
+              </Grid>
+            )
+          })}
       </Grid>
     </Grid>
   )
