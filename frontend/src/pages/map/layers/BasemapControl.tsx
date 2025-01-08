@@ -21,6 +21,17 @@ export function BasemapControl() {
     const basemaps = [
       {
         layer: L.tileLayer(
+          'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+          {
+            attribution:
+              '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
+          },
+        ),
+        icon: './assets/images/img2.PNG',
+        name: 'Pale OSM',
+      },
+      {
+        layer: L.tileLayer(
           'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           {
             attribution:
@@ -29,17 +40,6 @@ export function BasemapControl() {
         ),
         icon: './assets/images/img1.PNG',
         name: 'Map one',
-      },
-      {
-        layer: L.tileLayer(
-          'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
-          {
-            attribution:
-              '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
-          },
-        ),
-        icon: './assets/images/img2.PNG',
-        name: 'Map two',
       },
       {
         layer: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
