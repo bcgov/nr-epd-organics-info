@@ -11,6 +11,8 @@ declare module 'leaflet' {
   }
 }
 
+const key = 'gQbpOrAFVSVRriPYf9Zs'
+
 export function BasemapControl() {
   const map = useMap()
 
@@ -32,22 +34,53 @@ export function BasemapControl() {
       },
       {
         layer: L.tileLayer(
-          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           {
             attribution:
               '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           },
         ),
         icon: './assets/images/img1.PNG',
-        name: 'Map one',
+        name: 'Imagery',
       },
       {
-        layer: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-          attribution:
-            'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>...',
-        }),
-        icon: './assets/images/img3.PNG',
-        name: 'Map three',
+        layer: L.tileLayer(
+          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          },
+        ),
+        icon: './assets/images/img1.PNG',
+        name: 'Streets',
+      },
+      {
+        layer: L.tileLayer(
+          `https://api.maptiler.com/maps/backdrop/{z}/{x}/{y}.png?key=${key}`,
+        ),
+        name: 'Custom 1',
+        icon: './assets/images/img1.PNG',
+      },
+      {
+        layer: L.tileLayer(
+          `https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${key}`,
+        ),
+        name: 'Custom 2',
+        icon: './assets/images/img1.PNG',
+      },
+      {
+        layer: L.tileLayer(
+          `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${key}`,
+        ),
+        name: 'Custom 3',
+        icon: './assets/images/img1.PNG',
+      },
+      {
+        layer: L.tileLayer(
+          `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,
+        ),
+        name: 'Custom 4',
+        icon: './assets/images/img1.PNG',
       },
     ]
 
