@@ -64,7 +64,7 @@ export function BasemapControl() {
     })
 
     const switcher = new L.basemapsSwitcher(basemaps, {
-      position: 'bottomright',
+      position: 'bottomleft',
     }).addTo(map)
 
     // Cleanup
