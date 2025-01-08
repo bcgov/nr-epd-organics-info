@@ -14,7 +14,7 @@ import { MapDataLayers } from './layers/MapDataLayers'
 import { MapZoom } from './layers/MapZoom'
 import { PointSearchLayer } from './layers/PointSearchLayer'
 import { PolygonSearchLayer } from './layers/PolygonSearchLayer'
-
+import { BasemapControl } from './layers/BasemapControl'
 import 'leaflet/dist/leaflet.css'
 import './MapView.css'
 
@@ -48,6 +48,7 @@ function MapView() {
         />
         <MapDataLayers />
         <MapControls />
+        <BasemapControl />
         <AuthorizationMarkers />
         <MyLocationMarker />
         <PointSearchLayer />
