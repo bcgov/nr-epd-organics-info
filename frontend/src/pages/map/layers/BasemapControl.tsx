@@ -39,7 +39,7 @@ export function BasemapControl() {
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         icon: './imagery.png',
@@ -50,7 +50,7 @@ export function BasemapControl() {
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
-            crossOrigin: true,
+            crossOrigin: 'use-credentials',
           },
         ),
         icon: './streets.png',
