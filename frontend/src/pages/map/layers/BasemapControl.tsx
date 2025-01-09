@@ -28,7 +28,7 @@ export function BasemapControl() {
           {
             attribution:
               '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         icon: './pale-osm.png',
@@ -50,7 +50,7 @@ export function BasemapControl() {
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
-            crossOrigin: 'use-credentials',
+            crossOrigin: 'anonymous',
           },
         ),
         icon: './streets.png',
@@ -61,7 +61,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/backdrop/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         name: 'Custom 1',
@@ -72,7 +72,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         name: 'Custom 2',
@@ -83,7 +83,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         name: 'Custom 3',
@@ -94,7 +94,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: true,
+            crossOrigin: 'anonymous',
           },
         ),
         name: 'Custom 4',
