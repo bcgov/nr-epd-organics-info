@@ -24,11 +24,11 @@ export function BasemapControl() {
     const basemaps = [
       {
         layer: L.tileLayer(
-          'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           {
-            attribution:
-              '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
+            attribution: '&copy; OpenStreetMap contributors',
             crossOrigin: 'anonymous',
+            className: 'osm--grayscale',
           },
         ),
         icon: './pale-osm.png',
