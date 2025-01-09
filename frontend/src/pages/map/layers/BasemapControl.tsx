@@ -11,7 +11,8 @@ declare module 'leaflet' {
   }
 }
 
-const key = 'gQbpOrAFVSVRriPYf9Zs'
+// TODO: Replace with a more permanent key if we choose to use a MapTiler basemap.
+const key = import.meta.env.VITE_MAPTILER_KEY
 
 export function BasemapControl() {
   const map = useMap()
@@ -29,58 +30,65 @@ export function BasemapControl() {
               '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
           },
         ),
-        icon: './assets/images/img2.PNG',
+        icon: './pale-osm.png',
         name: 'Pale OSM',
       },
       {
         layer: L.tileLayer(
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            attribution: 'Tiles &copy; Esri',
           },
         ),
-        icon: './assets/images/img1.PNG',
+        icon: './imagery.png',
         name: 'Imagery',
       },
       {
         layer: L.tileLayer(
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            attribution: 'Tiles &copy; Esri',
           },
         ),
-        icon: './assets/images/img1.PNG',
+        icon: './streets.png',
         name: 'Streets',
       },
       {
         layer: L.tileLayer(
           `https://api.maptiler.com/maps/backdrop/{z}/{x}/{y}.png?key=${key}`,
+          {
+            attribution: 'Tiles &copy; MapTiler',
+          },
         ),
         name: 'Custom 1',
-        icon: './assets/images/img1.PNG',
+        icon: './custom-1.png',
       },
       {
         layer: L.tileLayer(
           `https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${key}`,
+          {
+            attribution: 'Tiles &copy; MapTiler',
+          },
         ),
         name: 'Custom 2',
-        icon: './assets/images/img1.PNG',
+        icon: './custom-2.png',
       },
       {
         layer: L.tileLayer(
           `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${key}`,
+          {
+            attribution: 'Tiles &copy; MapTiler',
+          },
         ),
         name: 'Custom 3',
-        icon: './assets/images/img1.PNG',
+        icon: './custom-3.png',
       },
       {
         layer: L.tileLayer(
           `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,
         ),
         name: 'Custom 4',
-        icon: './assets/images/img1.PNG',
+        icon: './custom-4.png',
       },
     ]
 
