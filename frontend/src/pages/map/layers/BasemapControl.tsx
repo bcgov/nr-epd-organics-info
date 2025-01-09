@@ -28,7 +28,7 @@ export function BasemapControl() {
           {
             attribution:
               '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>...',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         icon: './pale-osm.png',
@@ -39,7 +39,7 @@ export function BasemapControl() {
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         icon: './imagery.png',
@@ -50,7 +50,7 @@ export function BasemapControl() {
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         icon: './streets.png',
@@ -61,7 +61,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/backdrop/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         name: 'Custom 1',
@@ -72,7 +72,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         name: 'Custom 2',
@@ -83,7 +83,7 @@ export function BasemapControl() {
           `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${key}`,
           {
             attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
+            crossOrigin: true,
           },
         ),
         name: 'Custom 3',
@@ -93,7 +93,8 @@ export function BasemapControl() {
         layer: L.tileLayer(
           `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,
           {
-            crossOrigin: 'anonymous',
+            attribution: 'Tiles &copy; MapTiler',
+            crossOrigin: true,
           },
         ),
         name: 'Custom 4',
