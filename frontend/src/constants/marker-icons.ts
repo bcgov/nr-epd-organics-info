@@ -5,6 +5,9 @@ import shadowIcon1x from '@/assets/marker-shadow-1x.png'
 import markerIcon2x from '@/assets/marker-icon-2x-blue.png'
 import shadowIcon2x from '@/assets/marker-shadow-2x.png'
 import crosshairsSvg from '@/assets/svgs/crosshairs.svg'
+import pinDefault from '@/assets/svgs/pin-default-1.svg'
+import pinSelected from '@/assets/svgs/pin-selected-1.svg'
+import pinHover from '@/assets/svgs/pin-hover-1.svg'
 
 export const blueIcon2x = new L.Icon({
   iconUrl: markerIcon2x,
@@ -22,6 +25,45 @@ export const blueIcon1x = new L.Icon({
   iconUrl: markerIcon1x,
   iconSize: [23, 30],
   iconAnchor: [11.5, 30],
+  // both relative to iconAnchor
+  popupAnchor: [0, -28],
+  tooltipAnchor: [0, -28],
+  shadowUrl: shadowIcon1x,
+  shadowSize: [16, 8],
+  shadowAnchor: [8, 4],
+})
+
+export const pinDefaultIcon = new L.Icon({
+  iconUrl: pinDefault,
+  iconSize: [23, 30],
+  iconAnchor: [11.5, 30],
+  className: 'pin-default-icon',
+  // both relative to iconAnchor
+  popupAnchor: [0, -28],
+  tooltipAnchor: [0, -28],
+  shadowUrl: shadowIcon1x,
+  shadowSize: [16, 8],
+  shadowAnchor: [8, 4],
+})
+
+export const pinSelectedIcon = new L.Icon({
+  iconUrl: pinSelected,
+  iconSize: [23, 30],
+  iconAnchor: [11.5, 30],
+  className: 'pin-selected-icon',
+  // both relative to iconAnchor
+  popupAnchor: [0, -28],
+  tooltipAnchor: [0, -28],
+  shadowUrl: shadowIcon1x,
+  shadowSize: [16, 8],
+  shadowAnchor: [8, 4],
+})
+
+export const pinHoverIcon = new L.Icon({
+  iconUrl: pinHover,
+  iconSize: [23, 30],
+  iconAnchor: [11.5, 30],
+  className: 'pin-hover-icon',
   // both relative to iconAnchor
   popupAnchor: [0, -28],
   tooltipAnchor: [0, -28],

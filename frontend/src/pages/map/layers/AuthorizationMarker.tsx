@@ -1,7 +1,13 @@
 import { Tooltip } from 'react-leaflet'
 
 import OmrrData from '@/interfaces/omrr'
-import { blueIcon1x, blueIcon2x } from '@/constants/marker-icons'
+import {
+  blueIcon1x,
+  blueIcon2x,
+  pinDefaultIcon,
+  pinSelectedIcon,
+  pinHoverIcon,
+} from '@/constants/marker-icons'
 import { IconMarker } from './IconMarker'
 
 interface Props {
@@ -19,7 +25,7 @@ export function AuthorizationMarker({
   return (
     <IconMarker
       position={[item.Latitude, item.Longitude]}
-      icon={isSmall ? blueIcon1x : blueIcon2x}
+      icon={isSmall ? pinDefaultIcon : pinSelectedIcon}
       alt="Authorization marker"
       title={title}
       riseOnHover
