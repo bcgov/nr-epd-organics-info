@@ -60,7 +60,6 @@ services:
       NODE_ENV: development
       PORT: 3000
       BACKEND_URL: http://backend:3000
-      VITE_MAPTILER_KEY: gQbpOrAFVSVRriPYf9Zs # To be replaced with a more permanent key.
     image: node:20-bullseye
     ports: ["3000:3000"]
     volumes: ["./frontend:/app", "/app/node_modules"]
