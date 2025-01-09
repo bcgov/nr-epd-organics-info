@@ -12,7 +12,10 @@ declare module 'leaflet' {
 }
 
 // TODO: Replace with a more permanent key if we choose to use a MapTiler basemap.
-const key = import.meta.env.VITE_MAPTILER_KEY
+const params = new URLSearchParams(window.location.search)
+const urlKey = params.get('vite_maptiler_key')
+// If no key in the URL, use the one in the .env file.
+const key = urlKey || import.meta.env.VITE_MAPTILER_KEY
 
 export function BasemapControl() {
   const map = useMap()
