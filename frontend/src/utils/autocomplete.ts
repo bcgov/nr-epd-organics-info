@@ -120,9 +120,10 @@ export function getAutocompleteOptions(
       ...matchingFacilities,
     ].slice(0, maxOptions)
 
-    // Sort options - names first, then places, postal codes last
+    // Sort options - places first, then names, then postal codes last
     options.sort((o1, o2) => {
-      return o1.matchType.localeCompare(o2.matchType)
+      const order = { place: 1, name: 2, postalCode: 3 }
+      return (order[o1.matchType] || 0) - (order[o2.matchType] || 0)
     })
   }
   return options
