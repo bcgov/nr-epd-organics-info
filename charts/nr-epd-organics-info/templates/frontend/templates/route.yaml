@@ -6,6 +6,13 @@ metadata:
   labels:
     {{- include "frontend.labels" . | nindent 4 }}
   name: {{ include "frontend.fullname" . }}
+  annotations:
+    route.openshift.io/termination: "edge"
+    haproxy.router.openshift.io/disable_cookies: 'true'
+    haproxy.router.openshift.io/rate-limit-connections: 'true'
+    haproxy.router.openshift.io/rate-limit-connections.concurrent-tcp: '100'
+    haproxy.router.openshift.io/rate-limit-connections.rate-http: '200'
+    haproxy.router.openshift.io/rate-limit-connections.rate-tcp: '500'
 spec:
   host: {{ include "frontend.fullname" . }}.{{ .Values.global.domain }}
   port:
