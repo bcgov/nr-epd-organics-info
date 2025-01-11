@@ -1,12 +1,13 @@
 import { Tooltip } from 'react-leaflet'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/app/store'
 
 import OmrrData from '@/interfaces/omrr'
 import {
-  blueIcon1x,
-  blueIcon2x,
   pinDefaultIcon,
   pinSelectedIcon,
   pinHoverIcon,
+  pinSelectedHoverIcon,
 } from '@/constants/marker-icons'
 import { IconMarker } from './IconMarker'
 
@@ -21,11 +22,16 @@ export function AuthorizationMarker({
   isSmall,
   onClick,
 }: Readonly<Props>) {
+  const selectedItem = useSelector((state: RootState) => state.map.selectedItem)
+  const isSelected =
+    selectedItem?.['Authorization Number'] === item['Authorization Number']
+
   const title = item['Regulated Party']
   return (
     <IconMarker
       position={[item.Latitude, item.Longitude]}
-      icon={isSmall ? pinDefaultIcon : pinSelectedIcon}
+      icon={isSelected ? pinSelectedIcon : pinDefaultIcon}
+      hoverIcon={isSelected ? pinSelectedHoverIcon : pinHoverIcon}
       alt="Authorization marker"
       title={title}
       riseOnHover
