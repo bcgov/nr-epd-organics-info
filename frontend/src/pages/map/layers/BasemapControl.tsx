@@ -9,6 +9,9 @@ declare module 'leaflet' {
   class basemapsSwitcher {
     constructor(basemaps: any[], options?: any)
     addTo(map: any): this
+    _expand(): void
+    _collapse(): void
+    getContainer(): HTMLElement
   }
 }
 
@@ -66,17 +69,33 @@ export function BasemapControl() {
         map.removeLayer(activeLayer)
       }
       activeLayer = e.layer
+      switcher._collapse()
     })
 
     const switcher = new L.basemapsSwitcher(basemaps, {
       position: 'bottomright',
     }).addTo(map)
 
+    // Add touch event handlers
+    const switcherElement = switcher.getContainer()
+    switcherElement.addEventListener('touchstart', (e) => {
+      e.preventDefault()
+      const isExpanded = !switcherElement.querySelector('.hidden')
+      if (isExpanded) {
+        const target = e.target as HTMLElement
+        target.click()
+        switcher._collapse()
+      } else {
+        switcher._expand()
+      }
+    })
+
     // Cleanup
     return () => {
       if (activeLayer) {
         map.removeLayer(activeLayer)
       }
+      switcherElement.removeEventListener('touchstart', switcher._expand)
       map.removeControl(switcher as unknown as L.Control)
       map.off('baselayerchange')
     }
