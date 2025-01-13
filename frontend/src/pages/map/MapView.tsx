@@ -4,7 +4,6 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import clsx from 'clsx'
 
-import { env } from '@/env'
 import { MapSearch } from './search/MapSearch'
 import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'

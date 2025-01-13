@@ -3,6 +3,7 @@ import L from 'leaflet'
 import { useEffect } from 'react'
 import 'leaflet-switch-basemap'
 import 'leaflet-switch-basemap/src/L.switchBasemap.css'
+import './BasemapControl.css'
 
 declare module 'leaflet' {
   class basemapsSwitcher {
@@ -10,12 +11,6 @@ declare module 'leaflet' {
     addTo(map: any): this
   }
 }
-
-// TODO: Replace with a more permanent key if we choose to use a MapTiler basemap.
-const params = new URLSearchParams(window.location.search)
-const urlKey = params.get('vite_maptiler_key')
-// If no key in the URL, use the one in the .env file.
-const key = urlKey || import.meta.env.VITE_MAPTILER_KEY
 
 export function BasemapControl() {
   const map = useMap()
@@ -59,50 +54,6 @@ export function BasemapControl() {
         icon: './streets.png',
         name: 'Streets',
       },
-      {
-        layer: L.tileLayer(
-          `https://api.maptiler.com/maps/backdrop/{z}/{x}/{y}.png?key=${key}`,
-          {
-            attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
-          },
-        ),
-        name: 'Custom 1',
-        icon: './custom-1.png',
-      },
-      {
-        layer: L.tileLayer(
-          `https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${key}`,
-          {
-            attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
-          },
-        ),
-        name: 'Custom 2',
-        icon: './custom-2.png',
-      },
-      {
-        layer: L.tileLayer(
-          `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${key}`,
-          {
-            attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
-          },
-        ),
-        name: 'Custom 3',
-        icon: './custom-3.png',
-      },
-      {
-        layer: L.tileLayer(
-          `https://api.maptiler.com/maps/dataviz/{z}/{x}/{y}.png?key=${key}`,
-          {
-            attribution: 'Tiles &copy; MapTiler',
-            crossOrigin: 'anonymous',
-          },
-        ),
-        name: 'Custom 4',
-        icon: './custom-4.png',
-      },
     ]
 
     // Set initial active layer
@@ -118,7 +69,7 @@ export function BasemapControl() {
     })
 
     const switcher = new L.basemapsSwitcher(basemaps, {
-      position: 'bottomleft',
+      position: 'bottomright',
     }).addTo(map)
 
     // Cleanup
