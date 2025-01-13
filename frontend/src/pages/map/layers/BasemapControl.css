@@ -1,3 +1,15 @@
 .leaflet-control-basemapsSwitcher {
-  margin-right: 60px !important;
+  margin-right: 20px !important;
+}
+
+@media screen and (min-width: 768px) {
+  .leaflet-control-basemapsSwitcher {
+    margin-right: 40px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .leaflet-control-basemapsSwitcher {
+    margin-right: 60px !important;
+  }
 }
