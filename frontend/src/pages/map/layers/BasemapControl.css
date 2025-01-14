@@ -91,15 +91,20 @@
   border-color: #2196f3;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
 }
+@media screen and (max-width: 740px) {
+  .leaflet-control-basemaps {
+    margin-right: 23px !important;
+  }
+}
 
 @media screen and (min-width: 768px) {
   .leaflet-control-basemaps {
-    margin-right: 40px !important;
+    margin-right: 48px !important;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .leaflet-control-basemaps {
-    margin-right: 60px !important;
+    margin-right: 65px !important;
   }
 }
