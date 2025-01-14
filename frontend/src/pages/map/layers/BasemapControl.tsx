@@ -1,17 +1,112 @@
 import { useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { useEffect } from 'react'
-import 'leaflet-switch-basemap'
-import 'leaflet-switch-basemap/src/L.switchBasemap.css'
 import './BasemapControl.css'
 
-declare module 'leaflet' {
-  class basemapsSwitcher {
-    constructor(basemaps: any[], options?: any)
-    addTo(map: any): this
-    _expand(): void
-    _collapse(): void
-    getContainer(): HTMLElement
+// Custom control interface
+interface BasemapOption {
+  layer: L.TileLayer
+  icon: string
+  name: string
+}
+
+// Custom control class
+class BasemapSwitcher extends L.Control {
+  private container: HTMLElement
+  private expanded: boolean = false
+  private basemaps: BasemapOption[]
+  private onLayerChange: (layer: L.TileLayer) => void
+  private toggleButton: HTMLElement | null = null
+
+  constructor(
+    basemaps: BasemapOption[],
+    onLayerChange: (layer: L.TileLayer) => void,
+  ) {
+    super({ position: 'bottomright' })
+    this.basemaps = basemaps
+    this.onLayerChange = onLayerChange
+    this.container = L.DomUtil.create('div', 'leaflet-control-basemaps')
+  }
+
+  onAdd() {
+    this.toggleButton = L.DomUtil.create(
+      'div',
+      'basemap-toggle',
+      this.container,
+    )
+    this.toggleButton.style.background = `url(${this.basemaps[0].icon})`
+
+    const basemapsList = L.DomUtil.create(
+      'div',
+      'basemaps-list hidden',
+      this.container,
+    )
+
+    this.basemaps.forEach((basemap, index) => {
+      const item = L.DomUtil.create('div', 'basemap-option', basemapsList)
+      item.innerHTML = `
+        <img src="${basemap.icon}" alt="${basemap.name}" />
+        <span>${basemap.name}</span>
+      `
+      L.DomEvent.on(item, 'click', () => {
+        // Remove active class from all options
+        const options = this.container.getElementsByClassName('basemap-option')
+        Array.from(options).forEach((opt) => opt.classList.remove('active'))
+
+        // Add active class to clicked option
+        item.classList.add('active')
+
+        this.onLayerChange(basemap.layer)
+        if (this.toggleButton) {
+          this.toggleButton.style.background = `url(${basemap.icon})`
+        }
+        this._collapse()
+      })
+
+      // Set initial active state on first basemap
+      if (index === 0) {
+        item.classList.add('active')
+      }
+    })
+
+    L.DomEvent.on(this.toggleButton, 'click', (e) => {
+      L.DomEvent.stopPropagation(e)
+      this.expanded ? this._collapse() : this._expand()
+    })
+
+    // Add touch event handler
+    this.container.addEventListener('touchstart', (e) => {
+      e.preventDefault()
+      const isExpanded = !this.container.querySelector('.hidden')
+      if (isExpanded) {
+        const target = e.target as HTMLElement
+        target.click()
+        this._collapse()
+      } else {
+        this._expand()
+      }
+    })
+
+    // Prevent map click events when interacting with control
+    L.DomEvent.disableClickPropagation(this.container)
+    return this.container
+  }
+
+  _expand() {
+    const list = this.container.querySelector('.basemaps-list')
+    list?.classList.remove('hidden')
+    this.expanded = true
+  }
+
+  _collapse() {
+    const list = this.container.querySelector('.basemaps-list')
+    list?.classList.add('hidden')
+    this.expanded = false
+  }
+
+  // Add method to get container for cleanup
+  getContainer() {
+    return this.container
   }
 }
 
@@ -19,7 +114,6 @@ export function BasemapControl() {
   const map = useMap()
 
   useEffect(() => {
-    // Keep track of the current active layer
     let activeLayer: L.TileLayer | null = null
 
     const basemaps = [
@@ -63,41 +157,24 @@ export function BasemapControl() {
     activeLayer = basemaps[0].layer
     activeLayer.addTo(map)
 
-    // Add event listener to handle layer changes
-    map.on('baselayerchange', (e: any) => {
+    const handleLayerChange = (newLayer: L.TileLayer) => {
       if (activeLayer) {
         map.removeLayer(activeLayer)
       }
-      activeLayer = e.layer
-      switcher._collapse()
-    })
+      activeLayer = newLayer
+      newLayer.addTo(map)
+    }
 
-    const switcher = new L.basemapsSwitcher(basemaps, {
-      position: 'bottomright',
-    }).addTo(map)
-
-    // Add touch event handlers
-    const switcherElement = switcher.getContainer()
-    switcherElement.addEventListener('touchstart', (e) => {
-      e.preventDefault()
-      const isExpanded = !switcherElement.querySelector('.hidden')
-      if (isExpanded) {
-        const target = e.target as HTMLElement
-        target.click()
-        switcher._collapse()
-      } else {
-        switcher._expand()
-      }
-    })
+    const switcher = new BasemapSwitcher(basemaps, handleLayerChange).addTo(map)
 
     // Cleanup
     return () => {
       if (activeLayer) {
         map.removeLayer(activeLayer)
       }
-      switcherElement.removeEventListener('touchstart', switcher._expand)
-      map.removeControl(switcher as unknown as L.Control)
-      map.off('baselayerchange')
+      const switcherElement = switcher.getContainer()
+      switcherElement.removeEventListener('touchstart', () => {})
+      map.removeControl(switcher)
     }
   }, [map])
 

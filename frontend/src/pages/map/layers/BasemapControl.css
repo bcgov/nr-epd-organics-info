@@ -1,15 +1,105 @@
-.leaflet-control-basemapsSwitcher {
+.leaflet-control-basemaps {
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
   margin-right: 20px !important;
+  position: relative;
+  z-index: 399 !important;
+}
+
+.basemap-toggle {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover !important;
+  background-position: center;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.basemap-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.basemaps-list {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 0;
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.basemaps-list.hidden {
+  display: none;
+}
+
+.basemap-option {
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background: transparent;
+  box-shadow: none;
+}
+
+.basemap-option.active {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.basemap-option:hover {
+  background: #f4f4f4;
+  transform: translateY(-2px);
+}
+
+.basemap-option:hover img {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.basemap-option.active:hover {
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.basemap-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.basemap-option.active img {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
 }
 
 @media screen and (min-width: 768px) {
-  .leaflet-control-basemapsSwitcher {
+  .leaflet-control-basemaps {
     margin-right: 40px !important;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .leaflet-control-basemapsSwitcher {
+  .leaflet-control-basemaps {
     margin-right: 60px !important;
   }
 }

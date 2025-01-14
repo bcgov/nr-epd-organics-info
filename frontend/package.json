@@ -31,7 +31,6 @@
     "axios": "^1.4.0",
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",
-    "leaflet-switch-basemap": "^1.0.6",
     "leaflet.markercluster": "^1.5.3",
     "match-sorter": "^8.0.0",
     "react": "^18.3.1",
