@@ -43,10 +43,8 @@ export function AuthorizationMarkers() {
   const status = useSelector(selectStatus)
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-  const store = useStore<RootState>()
   const selectItem = useSetSelectedItem()
   const isShapeSearchInProgressFn = useShapeFilterInProgress()
-  const selectedItem = useSelector((state: RootState) => state.map.selectedItem)
 
   const hasMarkers =
     status === 'succeeded' && Array.isArray(values) && values.length > 0

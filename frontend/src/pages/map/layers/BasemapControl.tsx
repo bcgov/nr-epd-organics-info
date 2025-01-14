@@ -12,10 +12,10 @@ interface BasemapOption {
 
 // Custom control class
 class BasemapSwitcher extends L.Control {
-  private container: HTMLElement
+  private readonly container: HTMLElement
   private expanded: boolean = false
-  private basemaps: BasemapOption[]
-  private onLayerChange: (layer: L.TileLayer) => void
+  private readonly basemaps: BasemapOption[]
+  private readonly onLayerChange: (layer: L.TileLayer) => void
   private toggleButton: HTMLElement | null = null
 
   constructor(
