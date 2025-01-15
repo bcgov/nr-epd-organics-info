@@ -129,6 +129,12 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
       <Typography className="organic-matter-title">
         Organic Matter Used for Composting
       </Typography>
+      <Typography className="organic-matter-note">
+        <i style={{ color: '#666666' }}>
+          The information presented was provided by the proponent at the time of
+          submission
+        </i>
+      </Typography>
       <Grid
         container
         sx={{

@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react'
+import { forwardRef, ReactNode, useState } from 'react'
 import { Marker } from 'react-leaflet'
 import {
   DivIcon,
@@ -12,6 +12,7 @@ import {
 interface Props {
   position: LatLngExpression
   icon?: Icon | DivIcon
+  hoverIcon?: Icon | DivIcon
   onClick?: (e: LeafletMouseEvent) => void
   eventHandlers?: LeafletEventHandlerFnMap
   children?: ReactNode
@@ -24,6 +25,7 @@ export const IconMarker = forwardRef<LeafletMarker, Props>(
     {
       position,
       icon,
+      hoverIcon,
       onClick,
       eventHandlers,
       children = null,
@@ -32,22 +34,28 @@ export const IconMarker = forwardRef<LeafletMarker, Props>(
     }: Props,
     ref,
   ) => {
-    if (onClick) {
-      if (!eventHandlers) {
-        eventHandlers = {
-          click: onClick,
-        }
-      } else {
-        eventHandlers.click = onClick
-      }
+    const [isHovered, setIsHovered] = useState(false)
+    const currentIcon = isHovered ? hoverIcon : icon
+
+    const combinedEventHandlers = {
+      ...eventHandlers,
+      click: onClick,
+      mouseover: (e: LeafletMouseEvent) => {
+        setIsHovered(true)
+        eventHandlers?.mouseover?.(e)
+      },
+      mouseout: (e: LeafletMouseEvent) => {
+        setIsHovered(false)
+        eventHandlers?.mouseout?.(e)
+      },
     }
 
     return (
       <Marker
         ref={ref}
         position={position}
-        icon={icon}
-        eventHandlers={eventHandlers}
+        icon={currentIcon}
+        eventHandlers={combinedEventHandlers}
         riseOnHover={riseOnHover}
         {...rest}
       >

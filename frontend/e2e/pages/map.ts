@@ -106,4 +106,20 @@ export const map_page = async (page: Page) => {
   await showResultsBtn.click()
 
   await page.getByTitle('Close').click({ force: true })
+
+  // Test basemap switcher
+  const basemapButton = page.locator('.basemap-toggle')
+  await expect(basemapButton).toBeVisible()
+  await basemapButton.click()
+
+  // Check all basemap options are available
+  await expect(
+    page.locator('.basemap-option span').filter({ hasText: 'Streets' }),
+  ).toBeVisible()
+  await expect(
+    page.locator('.basemap-option span').filter({ hasText: 'Terrain' }),
+  ).toBeVisible()
+  await expect(
+    page.locator('.basemap-option span').filter({ hasText: 'Imagery' }),
+  ).toBeVisible()
 }

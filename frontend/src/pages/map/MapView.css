@@ -1,4 +1,3 @@
-
 .map-view {
   width: 100%;
   height: calc(100vh - var(--header-height));
@@ -46,7 +45,7 @@
   height: 18px;
   background-color: var(--surface-color-brand-blue-100);
   border: 1px solid var(--surface-color-border-light);
-  box-shadow: var(--box-shadow-small)
+  box-shadow: var(--box-shadow-small);
 }
 
 .point-search-circle,

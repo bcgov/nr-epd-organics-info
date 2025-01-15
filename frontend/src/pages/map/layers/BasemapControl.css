@@ -1,0 +1,131 @@
+.leaflet-control-basemaps {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 5px;
+}
+
+.basemap-toggle {
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.basemap-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: #666;
+}
+
+.basemap-toggle i {
+  color: #666;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.basemap-toggle.active i {
+  color: #0074d9;
+}
+
+.basemap-toggle:hover {
+  background: #f4f4f4;
+}
+
+.basemaps-list {
+  position: absolute;
+  right: 52px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 0;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.basemaps-list.hidden {
+  display: none;
+}
+
+.basemap-option {
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background: transparent;
+  box-shadow: none;
+}
+
+.basemap-option.active {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.basemap-option:hover {
+  background: #f4f4f4;
+  transform: translateY(-2px);
+}
+
+.basemap-option:hover img {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.basemap-option.active:hover {
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.basemap-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.basemap-option.active img {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+}
+
+.basemap-toggle.active {
+  background: #0074d9;
+}
+.basemap-toggle.active svg path {
+  fill: #fff;
+}
+.basemap-toggle svg path {
+  fill: #666;
+}
+
+@media screen and (max-width: 740px) {
+  .leaflet-control-basemaps {
+    margin-right: 23px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .leaflet-control-basemaps {
+    margin-right: 48px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .leaflet-control-basemaps {
+    margin-right: 65px !important;
+  }
+}
