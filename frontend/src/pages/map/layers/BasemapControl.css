@@ -1,43 +1,53 @@
 .leaflet-control-basemaps {
-  background: white;
-  padding: 5px;
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
-  margin-right: 20px !important;
-  position: relative;
-  z-index: 399 !important;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 5px;
 }
 
 .basemap-toggle {
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-size: cover !important;
-  background-position: center;
-  border-radius: 4px;
-  border: 2px solid #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.basemap-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: #666;
+}
+
+.basemap-toggle i {
+  color: #666;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.basemap-toggle.active i {
+  color: #0074d9;
 }
 
 .basemap-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  background: #f4f4f4;
 }
 
 .basemaps-list {
   position: absolute;
-  right: calc(100% + 10px);
-  top: 0;
+  right: 52px;
   display: flex;
-  gap: 10px;
-  padding: 8px;
+  flex-direction: row;
+  gap: 5px;
+  margin: 0;
   background: white;
   border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 }
 
 .basemaps-list.hidden {
@@ -91,6 +101,17 @@
   border-color: #2196f3;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
 }
+
+.basemap-toggle.active {
+  background: #0074d9;
+}
+.basemap-toggle.active svg path {
+  fill: #fff;
+}
+.basemap-toggle svg path {
+  fill: #666;
+}
+
 @media screen and (max-width: 740px) {
   .leaflet-control-basemaps {
     margin-right: 23px !important;

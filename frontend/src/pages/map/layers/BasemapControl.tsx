@@ -2,6 +2,8 @@ import { useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { useEffect } from 'react'
 import './BasemapControl.css'
+import MapIcon from '@/assets/svgs/fa-map.svg?react'
+import { renderToString } from 'react-dom/server'
 
 // Custom control interface
 interface BasemapOption {
@@ -30,11 +32,14 @@ class BasemapSwitcher extends L.Control {
 
   onAdd() {
     this.toggleButton = L.DomUtil.create(
-      'div',
-      'basemap-toggle',
+      'button',
+      'basemap-toggle leaflet-control-button',
       this.container,
     )
-    this.toggleButton.style.background = `url(${this.basemaps[0].icon})`
+
+    const icon = document.createElement('div')
+    icon.innerHTML = renderToString(MapIcon({ width: '20px', height: '24px' }))
+    this.toggleButton.appendChild(icon.firstChild as Node)
 
     const basemapsList = L.DomUtil.create(
       'div',
@@ -58,7 +63,7 @@ class BasemapSwitcher extends L.Control {
 
         this.onLayerChange(basemap.layer)
         if (this.toggleButton) {
-          this.toggleButton.style.background = `url(${basemap.icon})`
+          this.toggleButton.classList.remove('active')
         }
         this._collapse()
       })
@@ -72,6 +77,7 @@ class BasemapSwitcher extends L.Control {
     L.DomEvent.on(this.toggleButton, 'click', (e) => {
       L.DomEvent.stopPropagation(e)
       this.expanded ? this._collapse() : this._expand()
+      this.toggleButton?.classList.toggle('active')
     })
 
     // Add touch event handler
