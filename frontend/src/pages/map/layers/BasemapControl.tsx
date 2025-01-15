@@ -123,11 +123,10 @@ export function BasemapControl() {
           {
             attribution: '&copy; OpenStreetMap contributors',
             crossOrigin: 'anonymous',
-            className: 'osm--grayscale',
           },
         ),
-        icon: './pale-osm.png',
-        name: 'Pale OSM',
+        icon: './streets.png',
+        name: 'Streets',
       },
       {
         layer: L.tileLayer(
@@ -148,8 +147,8 @@ export function BasemapControl() {
             crossOrigin: 'anonymous',
           },
         ),
-        icon: './streets.png',
-        name: 'Streets',
+        icon: './terrain.png',
+        name: 'Terrain',
       },
     ]
 
