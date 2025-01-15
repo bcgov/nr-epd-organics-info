@@ -3,7 +3,7 @@
 
 # Organics Info (ORI) - OMRR Transparency Initiative
 
-Organics Info (ORI) shares information on authorized biosolids land application and compost facilities regulated under the Organic Matter Recycling Regulation (OMRR) in BC. 
+Organics Info (ORI) shares information on authorized biosolids land application and compost facilities regulated under the Organic Matter Recycling Regulation (OMRR) in BC.
 
 This project is part of the OMRR Transparency Enhancement Initiative led by the Environmental Policy and Initiatives Branch (EPIB) in the Ministry of Environment and Climate Change Strategy.
 
@@ -20,7 +20,8 @@ We have [architecture diagrams](.diagrams/architecture) the document the technol
 
 # Getting Started
 
-Here is high-level documentation on the development of applications, use of GitHub, and Openshift in the Government of BC: 
+Here is high-level documentation on the development of applications, use of GitHub, and Openshift in the Government of BC:
+
 - ["Working in github.com/bcgov" Cheatsheet](https://github.com/bcgov/BC-Policy-Framework-For-GitHub/blob/master/BC-Gov-Org-HowTo/Cheatsheet.md)
 - [DevHub DC Developer guide](https://developer.gov.bc.ca/docs/default/component/bc-developer-guide/)
 - [DevHub Openshift documentation](https://developer.gov.bc.ca/docs/default/component/platform-developer-docs)
@@ -31,20 +32,15 @@ Pre-requisites:
 
 - Node.js installed on the machine
 - Access to OpenShift namespace for Organics Info (ORI) project
-- OC CLI installed.(https://console.apps.silver.devops.gov.bc.ca/command-line-tools)
-- .env file is created in the backend folder based on the .env.sample file, the values can be retrieved from secrets in
-  OpenShift namespace: 
-  - `NR_ORACLE_SERVICE_URL=http://localhost:9080`
-  - `NR_ORACLE_SERVICE_KEY` value is the `apiKey` value in the [nr-oracle-service dev project](https://console.apps.silver.devops.gov.bc.ca/k8s/ns/d37bb7-dev/secrets/nr-oracle-service)
-  -  The `OS_` values can be found in the [nr-epd-organics-info-prod project](https://console.apps.silver.devops.gov.bc.ca/k8s/ns/d37bb7-prod/secrets/nr-epd-organics-info-prod)
+- OC CLI installed.(https://console.apps.silver.devops.gov.bc.ca/command-line-tools) and is on path.
+- Copy the .env.sample in frontend and paste it as .env and update the value of `VITE_API_URL=http://localhost:3000`
+- Run the [env generator for windows](./utils/env-gen.ps1) or [env generator for linux](./utils/env-gen.sh), it will generate the backend/.env file
 
 Steps:
 
-1. Open a terminal, run the oc login command and switch to the namespace where the application is deployed.
-   - The oc login command can be found by logging into [OpenShift](https://console.apps.silver.devops.gov.bc.ca/)
-   - Clicking on your name in the top right corner and choose `Copy login command` 
-   - Then choose `Developer Log In` and click `Display Token`
-   - Then copy the `oc login ...` command
+1. Open a terminal, run the following command
+   - `oc login --server=https://api.silver.devops.gov.bc.ca:6443 --web`
+   - switch to namespace `oc project d37bb7-dev`
 2. Run the following command in terminal `oc port-forward service/nr-oracle-service 9080:80`, this enables access to nr
    oracle service on port 9080 of local machine.
 3. Run the following command in terminal `cd backend && npm install && npm run start:debug`, this will start the backend

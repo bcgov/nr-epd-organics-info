@@ -6,24 +6,16 @@ This script is an environment generator for backend.
 This script sets up the necessary environment variables and configurations required for the backend system to function properly.
 .EXAMPLE
 # To run this script, use the following command:
-# .\env-gen.ps1 -OpenShiftToken "your-openshift-token"
+# .\env-gen.ps1 "
 
-# Replace "your-openshift-token" with your actual OpenShift token.
 
-.NOTES
-Author: [Your Name]
-Date: [Date]
+
 #>
-param (
-    [Parameter(Mandatory=$true)]
-    [string]$OpenShiftToken
-    
-
-)
 $file_path = "$PSScriptRoot/../backend/.env"
 
 # Log in to OpenShift
-oc login --token=$OpenShiftToken --server=https://api.silver.devops.gov.bc.ca:6443
+Start-Process "oc" -Wait -ArgumentList "login --server=https://api.silver.devops.gov.bc.ca:6443 --web"
+
 
 #switch to dev, 
 oc project d37bb7-dev
