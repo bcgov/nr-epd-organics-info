@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Button,
   Checkbox,
@@ -20,15 +20,25 @@ interface Props {
   group: DataLayerGroup
   onLayerToggle: (layer: DataLayer) => void
   isSmall: boolean
+  forceAction?: 'collapse' | 'expand' | null
 }
 
 export function DataLayersToggleGroup({
   group,
   onLayerToggle,
   isSmall,
+  forceAction,
 }: Readonly<Props>) {
   const [expanded, setExpanded] = useState<boolean>(true)
   const isDataLayerChecked = useIsDataLayerOn()
+
+  useEffect(() => {
+    if (forceAction === 'collapse') {
+      setExpanded(false)
+    } else if (forceAction === 'expand') {
+      setExpanded(true)
+    }
+  }, [forceAction])
 
   const onToggle = () => {
     setExpanded(!expanded)

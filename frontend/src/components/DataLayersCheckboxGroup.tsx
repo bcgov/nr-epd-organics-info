@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Stack, Typography } from '@mui/material'
 import clsx from 'clsx'
+import { useState } from 'react'
 
 import { DATA_LAYER_GROUPS } from '@/constants/data-layers'
 import {
@@ -26,6 +27,9 @@ export function DataLayersCheckboxGroup({
   const dispatch = useDispatch()
   const isLarge = !isSmall
   const hasDataLayers = useHasDataLayersOn()
+  const [forceAction, setForceAction] = useState<'collapse' | 'expand' | null>(
+    null,
+  )
 
   const onLayerToggle = (layer: DataLayer) => {
     dispatch(toggleDataLayer(layer))
@@ -33,6 +37,10 @@ export function DataLayersCheckboxGroup({
 
   const onReset = () => {
     dispatch(resetDataLayers())
+  }
+
+  const onCollapseAll = () => {
+    setForceAction((prev) => (prev === 'collapse' ? null : 'collapse'))
   }
 
   return (
@@ -50,9 +58,27 @@ export function DataLayersCheckboxGroup({
         <Typography className="data-layers-top-text">
           All data layers sourced from GeoBC.
         </Typography>
-        <NavLink to="/guidance" className="data-layers-top-link">
-          Click here to read our guidance page about map layers.
-        </NavLink>
+        <Stack direction="row" spacing={1}>
+          <NavLink to="/guidance" className="data-layers-top-link">
+            Click here to read our guidance page about map layers.
+          </NavLink>
+          <Button
+            variant="text"
+            size="small"
+            className="data-layers-top-link"
+            onClick={() => setForceAction('collapse')}
+          >
+            Collapse All
+          </Button>
+          <Button
+            variant="text"
+            size="small"
+            className="data-layers-top-link"
+            onClick={() => setForceAction('expand')}
+          >
+            Expand All
+          </Button>
+        </Stack>
       </Stack>
       {isSmall && (
         <div className="available-layers-row">
@@ -77,6 +103,7 @@ export function DataLayersCheckboxGroup({
           group={group}
           onLayerToggle={onLayerToggle}
           isSmall={isSmall}
+          forceAction={forceAction}
         />
       ))}
       {isLarge && hasDataLayers && (
