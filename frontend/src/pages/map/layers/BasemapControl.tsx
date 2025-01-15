@@ -147,6 +147,18 @@ export function BasemapControl() {
       },
       {
         layer: L.tileLayer(
+          'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+          {
+            attribution: 'Tiles &copy; Google',
+            crossOrigin: 'anonymous',
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+          },
+        ),
+        icon: './terrain2.png',
+        name: 'Terrain2',
+      },
+      {
+        layer: L.tileLayer(
           'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
           {
             attribution: 'Tiles &copy; Esri',
