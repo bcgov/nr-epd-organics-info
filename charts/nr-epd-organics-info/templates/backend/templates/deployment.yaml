@@ -35,9 +35,6 @@ spec:
           {{- end }}
           image: "{{.Values.global.registry}}/{{.Values.global.repository}}/backend:{{ .Values.global.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ default "IfNotPresent" .Values.backend.imagePullPolicy }}
-          envFrom:
-            - secretRef:
-                name: {{.Release.Name}}
           env:
             - name: LOG_LEVEL
               value: info
