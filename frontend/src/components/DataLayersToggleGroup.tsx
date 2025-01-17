@@ -16,12 +16,14 @@ import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 import './DataLayersToggleGroup.css'
 
+type ForceAction = 'collapse' | 'expand' | null
+
 interface Props {
   group: DataLayerGroup
   onLayerToggle: (layer: DataLayer) => void
   isSmall: boolean
-  forceAction?: 'collapse' | 'expand' | null
-  setForceAction: (action: 'collapse' | 'expand' | null) => void
+  forceAction?: ForceAction
+  setForceAction: (action: ForceAction) => void
 }
 
 export function DataLayersToggleGroup({
