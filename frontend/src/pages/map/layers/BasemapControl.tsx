@@ -147,7 +147,7 @@ export function BasemapControl() {
       },
       {
         layer: L.tileLayer(
-          'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+          'https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
           {
             attribution: 'Tiles &copy; Google',
             crossOrigin: 'anonymous',
