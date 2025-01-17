@@ -198,7 +198,7 @@ describe('Test suite for MapView', () => {
     const { user } = renderComponent(themeBreakpointValues.xxl, [])
 
     const dataLayersBtn = screen.getByRole('button', {
-      name: 'Data Layers',
+      name: 'Layers',
     })
     await user.click(dataLayersBtn)
 
