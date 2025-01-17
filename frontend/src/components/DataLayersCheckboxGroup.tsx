@@ -31,16 +31,20 @@ export function DataLayersCheckboxGroup({
     null,
   )
 
-  const onLayerToggle = (layer: DataLayer) => {
-    dispatch(toggleDataLayer(layer))
-  }
-
   const onReset = () => {
     dispatch(resetDataLayers())
   }
 
   const onCollapseAll = () => {
-    setForceAction((prev) => (prev === 'collapse' ? null : 'collapse'))
+    setForceAction('collapse')
+  }
+
+  const onExpandAll = () => {
+    setForceAction('expand')
+  }
+
+  const onLayerToggle = (layer: DataLayer) => {
+    dispatch(toggleDataLayer(layer))
   }
 
   return (
@@ -55,26 +59,28 @@ export function DataLayersCheckboxGroup({
       data-testid="data-layers-checkbox-group"
     >
       <Stack direction="column" className="data-layers-top-section">
-        <Typography className="data-layers-top-text">
-          All data layers sourced from GeoBC.
-        </Typography>
-        <Stack direction="row" spacing={1}>
-          <NavLink to="/guidance" className="data-layers-top-link">
-            Click here to read our guidance page about map layers.
-          </NavLink>
+        <Stack direction="row" justifyContent="space-between">
           <Button
             variant="text"
             size="small"
-            className="data-layers-top-link"
-            onClick={() => setForceAction('collapse')}
+            className="layer-button"
+            onClick={onReset}
+          >
+            Clear All
+          </Button>
+          <Button
+            variant="text"
+            size="small"
+            className="layer-button"
+            onClick={onCollapseAll}
           >
             Collapse All
           </Button>
           <Button
             variant="text"
             size="small"
-            className="data-layers-top-link"
-            onClick={() => setForceAction('expand')}
+            onClick={onExpandAll}
+            className="layer-button"
           >
             Expand All
           </Button>
@@ -85,16 +91,6 @@ export function DataLayersCheckboxGroup({
           <Typography className="available-layers-text">
             Available Layers
           </Typography>
-          {hasDataLayers && (
-            <Button
-              variant="text"
-              size="small"
-              className="data-layers-reset-link"
-              onClick={onReset}
-            >
-              Reset
-            </Button>
-          )}
         </div>
       )}
       {DATA_LAYER_GROUPS.map((group: DataLayerGroup) => (
@@ -104,17 +100,17 @@ export function DataLayersCheckboxGroup({
           onLayerToggle={onLayerToggle}
           isSmall={isSmall}
           forceAction={forceAction}
+          setForceAction={setForceAction}
         />
       ))}
-      {isLarge && hasDataLayers && (
-        <Button
-          variant="outlined"
-          onClick={onReset}
-          className="data-layers-reset-button"
-        >
-          Reset Layers
-        </Button>
-      )}
+      <Stack direction="column" spacing={1}>
+        <Typography className="data-layers-top-text">
+          All data layers sourced from GeoBC.
+        </Typography>
+        <NavLink to="/guidance" className="data-layers-top-link">
+          Click here to read our guidance page about map layers.
+        </NavLink>
+      </Stack>
     </Stack>
   )
 }

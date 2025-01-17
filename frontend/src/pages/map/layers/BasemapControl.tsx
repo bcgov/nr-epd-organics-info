@@ -155,17 +155,6 @@ export function BasemapControl() {
           },
         ),
         icon: './terrain2.png',
-        name: 'Terrain2',
-      },
-      {
-        layer: L.tileLayer(
-          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-          {
-            attribution: 'Tiles &copy; Esri',
-            crossOrigin: 'anonymous',
-          },
-        ),
-        icon: './terrain.png',
         name: 'Terrain',
       },
     ]

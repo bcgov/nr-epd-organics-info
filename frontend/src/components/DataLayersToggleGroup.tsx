@@ -21,6 +21,7 @@ interface Props {
   onLayerToggle: (layer: DataLayer) => void
   isSmall: boolean
   forceAction?: 'collapse' | 'expand' | null
+  setForceAction: (action: 'collapse' | 'expand' | null) => void
 }
 
 export function DataLayersToggleGroup({
@@ -28,20 +29,29 @@ export function DataLayersToggleGroup({
   onLayerToggle,
   isSmall,
   forceAction,
+  setForceAction,
 }: Readonly<Props>) {
   const [expanded, setExpanded] = useState<boolean>(true)
   const isDataLayerChecked = useIsDataLayerOn()
 
+  // Track when global expand/collapse was last triggered
+  const [lastGlobalAction, setLastGlobalAction] = useState<
+    'collapse' | 'expand' | null
+  >(null)
+
   useEffect(() => {
-    if (forceAction === 'collapse') {
-      setExpanded(false)
-    } else if (forceAction === 'expand') {
-      setExpanded(true)
+    if (forceAction && forceAction !== lastGlobalAction) {
+      setExpanded(forceAction === 'expand')
+      setLastGlobalAction(forceAction)
+      // Reset the force action after it's been applied
+      setTimeout(() => setForceAction(null), 0)
     }
-  }, [forceAction])
+  }, [forceAction, lastGlobalAction, setForceAction])
 
   const onToggle = () => {
     setExpanded(!expanded)
+    // Reset the global action tracking when user manually toggles
+    setLastGlobalAction(null)
   }
 
   return (
