@@ -54,8 +54,7 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
     })
 
     expect(screen.queryByText('Available Layers')).not.toBeInTheDocument()
-    expect(screen.queryByText('Reset')).not.toBeInTheDocument()
-    expect(screen.queryByText('Reset Layers')).not.toBeInTheDocument()
+    expect(screen.queryByText('Clear All')).not.toBeInTheDocument()
 
     const toggle = screen.getByRole('button', {
       name: 'Aquifers and Water Wells',
@@ -81,12 +80,12 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
     expect(state.dataLayers).toHaveLength(1)
     expect(state.hasDataLayersOn).toBe(true)
 
-    const resetBtn = screen.getByRole('button', { name: 'Reset Layers' })
+    const resetBtn = screen.getByRole('button', { name: 'Clear All' })
     await user.click(resetBtn)
 
     expect(state.dataLayers).toHaveLength(0)
     expect(state.hasDataLayersOn).toBe(false)
-    expect(screen.queryByText('Reset Layers')).not.toBeInTheDocument()
+    expect(screen.queryByText('Clear All')).not.toBeInTheDocument()
   })
 
   it('should render small DataLayersCheckboxGroup', async () => {
@@ -105,10 +104,10 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
     expect(state.dataLayers).toHaveLength(1)
     expect(state.hasDataLayersOn).toBe(true)
 
-    const resetLink = screen.getByRole('button', { name: 'Reset' })
+    const resetLink = screen.getByRole('button', { name: 'Clear All' })
     await user.click(resetLink)
 
     expect(state.dataLayers).toHaveLength(0)
-    expect(screen.queryByText('Reset Layers')).not.toBeInTheDocument()
+    expect(screen.queryByText('Clear All')).not.toBeInTheDocument()
   })
 })
