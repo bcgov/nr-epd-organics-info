@@ -12,7 +12,7 @@ describe('Test suite for MapSearch', () => {
 
     screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Find Me' })
-    screen.getByRole('button', { name: 'Data Layers' })
+    screen.getByRole('button', { name: 'Layers' })
     screen.getByRole('button', { name: 'Polygon Search' })
     screen.getByRole('button', { name: 'Point Search' })
     screen.getByText('Search By:')
