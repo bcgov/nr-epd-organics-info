@@ -22,10 +22,12 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  border-radius: 4px;
-  padding: 4px;
-  width: 80px;
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border-radius: 8px;
+  padding: 8px;
+  width: 90px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: 2px solid var(--surface-color-border);
+  background: var(--surface-color-background-white);
 }
 
 .basemap-option:hover {
@@ -35,20 +37,24 @@
 .basemap-option img {
   width: 70px;
   height: 70px;
-  border: 2px solid var(--surface-color-border);
   border-radius: 4px;
   margin-bottom: 4px;
-}
-
-.basemap-option.active img {
-  border-color: var(--surface-color-primary-active-border);
-  box-shadow:
-    0 0 0 3px var(--surface-color-primary-active-border),
-    0 0 8px 2px rgba(24, 144, 255, 0.35);
 }
 
 .basemap-option span {
   font-size: 12px;
   text-align: center;
   color: var(--surface-color-text);
+}
+
+.basemap-option.active {
+  border-color: var(--surface-color-primary-active-border);
+  box-shadow:
+    0 0 0 3px var(--surface-color-primary-active-border),
+    0 0 12px 4px rgba(24, 144, 255, 0.45);
+}
+
+.basemap-option.active img {
+  border-color: var(--surface-color-border);
+  box-shadow: none;
 }

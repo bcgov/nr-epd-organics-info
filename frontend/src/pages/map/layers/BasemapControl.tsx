@@ -69,8 +69,9 @@ export function BasemapControlButton() {
 
       <div className={clsx('basemaps-list', !isListVisible && 'hidden')}>
         {basemaps.map((basemap) => (
-          <div
+          <button
             key={basemap.name}
+            type="button"
             className={clsx(
               'basemap-option',
               activeLayer === basemap.layer && 'active',
@@ -79,7 +80,7 @@ export function BasemapControlButton() {
           >
             <img src={basemap.thumbnail} alt={basemap.name} />
             <span>{basemap.name}</span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
