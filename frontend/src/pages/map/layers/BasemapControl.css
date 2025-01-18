@@ -1,39 +1,19 @@
 .leaflet-control-basemaps {
-  margin-bottom: 8px;
-}
-
-.basemap-toggle {
-  background-color: var(--surface-color-background-white);
-  border: 2px solid var(--surface-color-border);
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 6px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.basemap-toggle:hover {
-  background-color: var(--surface-color-background-hover);
-}
-
-.basemap-toggle i {
-  font-size: 20px;
-  color: var(--surface-color-text);
+  margin-bottom: 2px;
 }
 
 .basemaps-list {
   position: absolute;
-  bottom: 100%;
-  right: 0;
+  bottom: 0;
+  right: 60px;
+  transform: translateY(-60%);
   background: white;
   border: 2px solid var(--surface-color-border);
   border-radius: 4px;
-  padding: 8px;
-  width: 200px;
+  padding: 12px;
   margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -43,11 +23,12 @@
 
 .basemap-option {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 8px;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  padding: 4px;
+  width: 80px;
 }
 
 .basemap-option:hover {
@@ -55,16 +36,22 @@
 }
 
 .basemap-option img {
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-  border: 1px solid var(--surface-color-border);
-  border-radius: 2px;
-  object-fit: cover;
+  width: 70px;
+  height: 70px;
+  border: 2px solid var(--surface-color-border);
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.basemap-option.active img {
+  border-color: var(--surface-color-primary-active-border);
+  box-shadow:
+    0 0 0 3px var(--surface-color-primary-active-border),
+    0 0 8px 2px rgba(24, 144, 255, 0.35);
 }
 
 .basemap-option span {
-  flex: 1;
+  font-size: 12px;
+  text-align: center;
   color: var(--surface-color-text);
-  font-size: 14px;
 }

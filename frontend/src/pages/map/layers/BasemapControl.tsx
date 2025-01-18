@@ -3,7 +3,7 @@ import { useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { IconButton } from '@mui/material'
 import clsx from 'clsx'
-import LayersIcon from '@/assets/svgs/fa-layers.svg?react'
+import LayersIcon from '@/assets/svgs/fa-map.svg?react'
 
 import './BasemapControl.css'
 
@@ -40,7 +40,6 @@ export function BasemapControlButton() {
   const [isListVisible, setIsListVisible] = useState(false)
   const [activeLayer, setActiveLayer] = useState(basemaps[0].layer)
 
-  // Initialize the first layer
   useEffect(() => {
     activeLayer.addTo(map)
     return () => {
@@ -69,7 +68,10 @@ export function BasemapControlButton() {
         {basemaps.map((basemap) => (
           <div
             key={basemap.name}
-            className="basemap-option"
+            className={clsx(
+              'basemap-option',
+              activeLayer === basemap.layer && 'active',
+            )}
             onClick={() => handleLayerChange(basemap.layer)}
           >
             <img src={basemap.thumbnail} alt={basemap.name} />
