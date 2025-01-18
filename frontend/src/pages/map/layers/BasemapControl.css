@@ -1,20 +1,16 @@
-.leaflet-control-basemaps {
-  margin-bottom: 2px;
-}
-
 .basemaps-list {
   position: absolute;
   bottom: 0;
   right: 60px;
-  transform: translateY(-60%);
-  background: white;
-  border: 2px solid var(--surface-color-border);
-  border-radius: 4px;
+  transform: translateY(-45%);
+  background: var(--surface-color-background-white);
+  border: 2px solid var(--surface-color-primary-active-border);
+  border-radius: 8px;
   padding: 12px;
   margin-bottom: 8px;
   display: flex;
   gap: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-small);
 }
 
 .basemaps-list.hidden {
@@ -29,10 +25,11 @@
   border-radius: 4px;
   padding: 4px;
   width: 80px;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .basemap-option:hover {
-  background-color: var(--surface-color-background-hover);
+  transform: scale(1.1);
 }
 
 .basemap-option img {

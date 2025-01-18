@@ -57,7 +57,10 @@ export function BasemapControlButton() {
   return (
     <div className="leaflet-control-basemaps">
       <IconButton
-        className="map-control-button"
+        className={clsx(
+          'map-control-button',
+          isListVisible && 'map-control-button--active',
+        )}
         onClick={() => setIsListVisible(!isListVisible)}
         title="Change basemap"
       >
