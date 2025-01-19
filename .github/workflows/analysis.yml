@@ -40,7 +40,7 @@ jobs:
           - dir: frontend
             token: SONAR_TOKEN_FRONTEND
     steps: # The project key is still pointing to the old name, changing it would break sonar analysis.
-      - uses: bcgov-nr/action-test-and-analyse@v1.2.1
+      - uses: bcgov/action-test-and-analyse@v1.2.1
         with:
           commands: |
             npm ci
