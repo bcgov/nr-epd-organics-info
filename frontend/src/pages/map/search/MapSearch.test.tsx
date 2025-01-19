@@ -12,7 +12,7 @@ describe('Test suite for MapSearch', () => {
 
     screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Find Me' })
-    screen.getByRole('button', { name: 'Data Layers' })
+    screen.getByRole('button', { name: 'Layers' })
     screen.getByRole('button', { name: 'Polygon Search' })
     screen.getByRole('button', { name: 'Point Search' })
     screen.getByText('Search By:')
@@ -34,7 +34,7 @@ describe('Test suite for MapSearch', () => {
       screen.queryByRole('button', { name: 'Find Me' }),
     ).not.toBeInTheDocument()
     expect(
-      screen.queryByRole('button', { name: 'Data Layers' }),
+      screen.queryByRole('button', { name: 'Layers' }),
     ).not.toBeInTheDocument()
     screen.getByRole('button', { name: 'Polygon Search' })
     screen.getByRole('button', { name: 'Point Search' })

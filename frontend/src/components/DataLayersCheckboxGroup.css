@@ -16,11 +16,20 @@
   padding: 0;
 }
 
+button.layer-button {
+  color: black;
+  text-transform: none;
+  text-decoration: none;
+}
+
+button.layer-button:hover {
+  text-decoration: underline;
+}
+
 p.data-layers-top-text,
 .data-layers-top-link {
   color: var(--typography-color-disabled);
   font-size: 14px;
-  font-style: italic;
 }
 
 .available-layers-row {

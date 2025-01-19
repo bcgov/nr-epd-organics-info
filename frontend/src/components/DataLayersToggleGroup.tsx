@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Button,
   Checkbox,
@@ -16,22 +16,44 @@ import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 import './DataLayersToggleGroup.css'
 
+type ForceAction = 'collapse' | 'expand' | null
+
 interface Props {
   group: DataLayerGroup
   onLayerToggle: (layer: DataLayer) => void
   isSmall: boolean
+  forceAction?: ForceAction
+  setForceAction: (action: ForceAction) => void
 }
 
 export function DataLayersToggleGroup({
   group,
   onLayerToggle,
   isSmall,
+  forceAction,
+  setForceAction,
 }: Readonly<Props>) {
   const [expanded, setExpanded] = useState<boolean>(true)
   const isDataLayerChecked = useIsDataLayerOn()
 
+  // Track when global expand/collapse was last triggered
+  const [lastGlobalAction, setLastGlobalAction] = useState<
+    'collapse' | 'expand' | null
+  >(null)
+
+  useEffect(() => {
+    if (forceAction && forceAction !== lastGlobalAction) {
+      setExpanded(forceAction === 'expand')
+      setLastGlobalAction(forceAction)
+      // Reset the force action after it's been applied
+      setTimeout(() => setForceAction(null), 0)
+    }
+  }, [forceAction, lastGlobalAction, setForceAction])
+
   const onToggle = () => {
     setExpanded(!expanded)
+    // Reset the global action tracking when user manually toggles
+    setLastGlobalAction(null)
   }
 
   return (

@@ -18,6 +18,7 @@ import { DataLayersControl } from './DataLayersControl'
 import { FindMeControl } from './FindMeControl'
 import { ZoomInOutControl } from './ZoomInOutControl'
 import { ZoomToResultsControl } from './ZoomToResultsControl'
+import { BasemapControlButton } from './BasemapControl'
 
 import './MapControls.css'
 
@@ -65,6 +66,7 @@ export function MapControls() {
           <FindMeControl />
         </>
       )}
+      <BasemapControlButton />
       <ZoomToResultsControl />
       {isSmall ? null : <ZoomInOutControl />}
     </Control>
