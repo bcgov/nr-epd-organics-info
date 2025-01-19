@@ -1,12 +1,13 @@
 import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
-import { Button } from '@mui/material'
+import { Button, Chip } from '@mui/material'
 
 import DropdownButton from '@/components/DropdownButton'
 import { SearchByRadioGroup } from '@/components/SearchByRadioGroup'
 import { ActiveToolEnum } from '@/constants/constants'
 import { useSearchBy } from '@/features/omrr/omrr-slice'
 import { toggleActiveTool, useActiveTool } from '@/features/map/map-slice'
+import { SEARCH_BY_ALL } from '@/interfaces/types'
 
 interface Props {
   isLarge: boolean
@@ -24,16 +25,28 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
   }
 
   const label = (
-    <span>
-      Search By: <b style={{ textTransform: 'capitalize' }}>{searchBy}</b>
-    </span>
-  )
-  const content = (
-    <SearchByRadioGroup
-      name="map-search-by-group"
-      row={false}
-      sx={{ gap: '4px', paddingLeft: '8px' }}
-    />
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      Status
+      {searchBy !== SEARCH_BY_ALL && (
+        <Chip
+          label={searchBy}
+          size="small"
+          sx={{
+            position: 'absolute',
+            top: '-14px',
+            right: '-35px',
+            height: '20px',
+            backgroundColor: 'primary.main',
+            color: 'white',
+            fontSize: '12px',
+            '& .MuiChip-label': {
+              px: 1,
+              textTransform: 'capitalize',
+            },
+          }}
+        />
+      )}
+    </div>
   )
 
   if (isLarge) {
@@ -42,10 +55,16 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
         id="mapSearchByButton"
         variant="contained"
         color="secondary"
-        size="medium"
-        className="map-button map-button--medium"
+        size="large"
+        className={clsx('map-button', 'map-button--large')}
         openClassName="map-button--active"
-        dropdownContent={content}
+        dropdownContent={
+          <SearchByRadioGroup
+            name="map-search-by-group"
+            row={false}
+            sx={{ gap: '4px', paddingLeft: '8px' }}
+          />
+        }
       >
         {label}
       </DropdownButton>
@@ -57,10 +76,7 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
       variant="contained"
       color="secondary"
       size="medium"
-      className={clsx(
-        'map-button map-button--medium',
-        isActive && 'map-button--active',
-      )}
+      className={clsx('map-button', isActive && 'map-button--active')}
       onClick={onClick}
       aria-label="Search By"
     >
