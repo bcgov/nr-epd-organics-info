@@ -71,7 +71,10 @@ button.map-sidebar-close-button {
   color: #666;
   padding: 0 0 0 8px;
   cursor: pointer;
-  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 2px;
+  margin-right: 28px;
 }
 
 .clear-results-button:hover {
