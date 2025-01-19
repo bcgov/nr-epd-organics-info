@@ -63,3 +63,17 @@ button.map-sidebar-close-button {
 .zoom-to-button .MuiButton-startIcon {
   margin: 0 6px 0 -8px;
 }
+
+.clear-results-button {
+  font-size: 0.75rem;
+  background: none;
+  border: none;
+  color: #666;
+  padding: 0 0 0 8px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clear-results-button:hover {
+  color: #333;
+}
