@@ -27,14 +27,14 @@ export function FilterByButton({ isLarge }: Readonly<Props>) {
         id="mapFilterByButton"
         variant="contained"
         color="secondary"
-        size="medium"
-        className="map-button map-button--medium"
+        size="large"
+        className={clsx('map-button', 'map-button--large')}
         openClassName="map-button--active"
         dropdownContent={
           <FilterByCheckboxGroup sx={{ gap: '8px', paddingLeft: '8px' }} />
         }
       >
-        Filter by Facility Type
+        Filter
       </DropdownButton>
     )
   }
@@ -44,13 +44,10 @@ export function FilterByButton({ isLarge }: Readonly<Props>) {
       variant="contained"
       color="secondary"
       size="medium"
-      className={clsx(
-        'map-button map-button--medium',
-        isActive && 'map-button--active',
-      )}
+      className={clsx('map-button', isActive && 'map-button--active')}
       onClick={onClick}
     >
-      Filter by Facility Type
+      Filter
     </Button>
   )
 }
