@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 import clsx from 'clsx'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useAppDispatch } from '@/app/hooks'
 
 import { useSidebarState } from '../hooks/useSidebarState'
 import { SearchResultsList } from './SearchResultsList'
@@ -23,7 +23,6 @@ export function MapSidebar() {
   const { isExpanded, setExpanded, selectedItem, width, expandedWidth } =
     useSidebarState()
 
-  const searchResults = useFilteredResults()
   const searchText = useSearchTextFilter()
   const hasResults = searchText.length > 0
 

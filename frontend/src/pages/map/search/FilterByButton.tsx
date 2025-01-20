@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
-import { Button } from '@mui/material'
+import { Button, Chip } from '@mui/material'
 import clsx from 'clsx'
-import { Chip } from '@mui/material'
 
 import DropdownButton from '@/components/DropdownButton'
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'

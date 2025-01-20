@@ -11,10 +11,9 @@ import { SEARCH_BY_ALL } from '@/interfaces/types'
 
 interface Props {
   isLarge: boolean
-  sx?: any // or use SxProps<Theme> from MUI for better typing
 }
 
-export function SearchByButton({ isLarge, sx }: Props) {
+export function SearchByButton({ isLarge }: Readonly<Props>) {
   const dispatch = useDispatch()
   const searchBy = useSearchBy()
   // Small screens/bottom drawer only
@@ -37,7 +36,7 @@ export function SearchByButton({ isLarge, sx }: Props) {
             top: '-16px',
             right: '-35px',
             height: '20px',
-            backgroundColor: 'primary.main',
+            backgroundColor: 'var(--surface-color-primary-default)',
             color: 'white',
             fontSize: '10px',
             '& .MuiChip-label': {

@@ -44,10 +44,9 @@ button.map-button {
   color: var(--typography-color-secondary);
   box-sizing: border-box;
   text-wrap: nowrap;
-  border-radius: var(--layout-border-radius-medium);
+  border-radius: var(--layout-border-radius-large);
   border: 2px solid #295286;
   box-shadow: var(--box-shadow-small);
-  color: #295286;
 }
 button.map-button svg path {
   fill: #295286;
@@ -129,7 +128,7 @@ button.map-button--active .MuiChip-root.Mui-active:hover {
   padding: 16px;
   background: var(--surface-color-background-white);
   border: 1px solid var(--surface-color-border-light);
-  border-radius: 4px;
+  border-radius: var(--layout-border-radius-large);
   box-shadow: var(--box-shadow-small);
 }
 
