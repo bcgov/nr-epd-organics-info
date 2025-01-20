@@ -41,9 +41,6 @@ const styles = {
   flexWrap: {
     md: 'wrap',
   },
-  searchByButton: {
-    display: 'none',
-  },
 }
 
 export function MapSearch() {
@@ -64,8 +61,6 @@ export function MapSearch() {
         {isLarge ? (
           <Stack direction="row" className="map-search-row">
             <SearchAutocomplete />
-            <SearchByButton isLarge={isLarge} sx={styles.searchByButton} />
-            <FilterByButton isLarge={isLarge} />
             <FindMeButton />
             <div className="spacer" />
             <DataLayersButton />
@@ -76,8 +71,8 @@ export function MapSearch() {
         <PolygonSearchButton isActive={isPolygonTool} />
         <PointSearchButton isActive={isPointTool} />
         {isLarge || isSmall ? null : <div className="spacer--fill" />}
-        {!isLarge && <SearchByButton isLarge={isLarge} />}
-        {!isLarge && <FilterByButton isLarge={isLarge} />}
+        <SearchByButton isLarge={isLarge} />
+        <FilterByButton isLarge={isLarge} />
       </HorizontalScroller>
       {isLarge && (isPolygonTool || isPointTool) && (
         <div className="map-search-tool-row">

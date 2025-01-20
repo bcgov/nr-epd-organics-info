@@ -95,7 +95,7 @@ describe('Test suite for MapView', () => {
     expect(inactiveCb).not.toBeChecked()
 
     const filterBy = screen.getByRole('button', {
-      name: 'Filter by Facility Type',
+      name: 'Filter',
     })
     expect(filterBy).not.toHaveClass('map-button--active')
     await user.click(filterBy)
