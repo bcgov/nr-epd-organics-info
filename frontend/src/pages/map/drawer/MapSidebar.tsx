@@ -10,10 +10,7 @@ import { ClearSelectedItemButton } from './ClearSelectedItemButton'
 
 import CloseIcon from '@/assets/svgs/close.svg?react'
 import { clearSearchAndResults } from '@/features/map/map-slice'
-import {
-  useFilteredResults,
-  useSearchTextFilter,
-} from '@/features/omrr/omrr-slice'
+import { useSearchTextFilter } from '@/features/omrr/omrr-slice'
 
 import './MapSidebar.css'
 
