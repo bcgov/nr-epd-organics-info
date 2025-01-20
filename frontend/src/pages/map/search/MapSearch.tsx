@@ -41,6 +41,9 @@ const styles = {
   flexWrap: {
     md: 'wrap',
   },
+  searchByButton: {
+    display: 'none',
+  },
 }
 
 export function MapSearch() {
@@ -61,7 +64,7 @@ export function MapSearch() {
         {isLarge ? (
           <Stack direction="row" className="map-search-row">
             <SearchAutocomplete />
-            <SearchByButton isLarge={isLarge} />
+            <SearchByButton isLarge={isLarge} sx={styles.searchByButton} />
             <FilterByButton isLarge={isLarge} />
             <FindMeButton />
             <div className="spacer" />

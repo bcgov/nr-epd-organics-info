@@ -49,6 +49,17 @@ export function SearchAutocomplete() {
   return (
     <Autocomplete
       value={value}
+      sx={{
+        border: '2px solid #295286',
+        borderRadius: '4px',
+        color: '#295286',
+        '& svg path': {
+          fill: '#295286',
+        },
+        input: {
+          color: '#295286',
+        },
+      }}
       options={options}
       loading={loading}
       onInputChange={onTextChange}

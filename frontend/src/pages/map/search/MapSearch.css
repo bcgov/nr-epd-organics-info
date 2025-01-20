@@ -45,12 +45,17 @@ button.map-button {
   box-sizing: border-box;
   text-wrap: nowrap;
   border-radius: var(--layout-border-radius-medium);
-  border: 1px solid var(--surface-color-border-light);
+  border: 2px solid #295286;
   box-shadow: var(--box-shadow-small);
+  color: #295286;
+}
+button.map-button svg path {
+  fill: #295286;
 }
 
 button.map-button:hover {
-  border-color: var(--surface-color-border-hover);
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
 }
 
 button.map-button.map-button--large {
@@ -66,19 +71,43 @@ button.map-button.map-button--medium {
 }
 
 button.map-button--active {
-  background-color: var(--surface-color-secondary-hover);
-  border: 3px solid var(--surface-color-primary-active-border);
+  background-color: #295286;
+  border-radius: 4px;
+  color: white;
+  border: 2px solid white;
+  transform: scale(1.05);
+}
+
+button.map-button--active svg path {
+  fill: white;
 }
 
 button.map-button--active:hover {
   border-color: var(--surface-color-primary-active-border);
 }
 
-.data-layers-icon, .find-me-icon {
+button.map-button--active .MuiChip-root {
+  border: 1px solid #1976d2 !important;
+  color: #1976d2 !important;
+  background-color: white !important;
+}
+
+button.map-button--active .MuiChip-root.Mui-active {
+  background-color: #1976d2 !important;
+  color: white !important;
+}
+
+button.map-button--active .MuiChip-root.Mui-active:hover {
+  background-color: #1565c0 !important;
+}
+
+.data-layers-icon,
+.find-me-icon {
   color: var(--typography-color-secondary);
 }
 
-.polygon-search-icon, .point-search-icon {
+.polygon-search-icon,
+.point-search-icon {
   color: var(--typography-color-primary);
 }
 
@@ -101,10 +130,11 @@ button.map-button--active:hover {
   background: var(--surface-color-background-white);
   border: 1px solid var(--surface-color-border-light);
   border-radius: 4px;
-  box-shadow: var(--box-shadow-small)
+  box-shadow: var(--box-shadow-small);
 }
 
-.polygon-search, .point-search {
+.polygon-search,
+.point-search {
   display: flex;
   align-items: center;
   gap: 8px;
