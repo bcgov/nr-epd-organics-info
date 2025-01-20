@@ -33,12 +33,12 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
           size="small"
           sx={{
             position: 'absolute',
-            top: '-14px',
+            top: '-16px',
             right: '-35px',
             height: '20px',
             backgroundColor: 'primary.main',
             color: 'white',
-            fontSize: '12px',
+            fontSize: '10px',
             '& .MuiChip-label': {
               px: 1,
               textTransform: 'capitalize',
