@@ -52,11 +52,6 @@ button.map-button svg path {
   fill: #295286;
 }
 
-button.map-button:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
-}
-
 button.map-button.map-button--large {
   height: var(--map-button-height-large);
   font-size: var(--map-button-font-size-large);
