@@ -29,21 +29,15 @@ export function FilterByButton({ isLarge }: Readonly<Props>) {
     <div style={{ position: 'relative', display: 'inline-block' }}>
       Filter
       {activeFilterCount > 0 && (
-        <Chip
-          label={activeFilterCount}
-          size="small"
-          sx={{
+        <div
+          style={{
             position: 'absolute',
-            top: '-16px',
-            right: '-35px',
-            height: '20px',
-            backgroundColor: 'primary.main',
-            color: 'white',
-            fontSize: '10px',
-            minWidth: '20px',
-            '& .MuiChip-label': {
-              px: 1,
-            },
+            top: isLarge ? '-10px' : '-2px',
+            right: isLarge ? '-30px' : '-12px',
+            width: isLarge ? '10px' : '6px',
+            height: isLarge ? '10px' : '6px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
           }}
         />
       )}

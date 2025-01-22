@@ -28,21 +28,15 @@ export function SearchByButton({ isLarge }: Readonly<Props>) {
     <div style={{ position: 'relative', display: 'inline-block' }}>
       Status
       {searchBy !== SEARCH_BY_ALL && (
-        <Chip
-          label={searchBy}
-          size="small"
-          sx={{
+        <div
+          style={{
             position: 'absolute',
-            top: '-16px',
-            right: '-35px',
-            height: '20px',
-            backgroundColor: 'var(--surface-color-primary-default)',
-            color: 'white',
-            fontSize: '10px',
-            '& .MuiChip-label': {
-              px: 1,
-              textTransform: 'capitalize',
-            },
+            top: isLarge ? '-10px' : '-2px',
+            right: isLarge ? '-30px' : '-12px',
+            width: isLarge ? '10px' : '6px',
+            height: isLarge ? '10px' : '6px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
           }}
         />
       )}
