@@ -8,7 +8,6 @@ import { MapSearch } from './search/MapSearch'
 import { MapDrawer } from './drawer/MapDrawer'
 import { AuthorizationMarkers } from './layers/AuthorizationMarkers'
 import { MyLocationMarker } from './layers/MyLocationMarker'
-import { BasemapControl } from './layers/BasemapControl'
 import { MapControls } from './layers/MapControls'
 import { MapDataLayers } from './layers/MapDataLayers'
 import { MapZoom } from './layers/MapZoom'
@@ -38,7 +37,6 @@ function MapView() {
         zoomControl={false}
         className="map-container"
       >
-        <BasemapControl />
         <MapDataLayers />
         <MapControls />
         <AuthorizationMarkers />

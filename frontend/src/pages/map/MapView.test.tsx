@@ -198,7 +198,7 @@ describe('Test suite for MapView', () => {
     const { user } = renderComponent(themeBreakpointValues.xxl, [])
 
     const dataLayersBtn = screen.getByRole('button', {
-      name: 'Data Layers',
+      name: 'Layers',
     })
     await user.click(dataLayersBtn)
 
@@ -211,7 +211,7 @@ describe('Test suite for MapView', () => {
     await user.click(layerCb)
     expect(layerCb).toBeChecked()
 
-    const resetBtn = screen.getByRole('button', { name: 'Reset Layers' })
+    const resetBtn = screen.getByRole('button', { name: 'Clear All' })
     await user.click(resetBtn)
     expect(layerCb).not.toBeChecked()
   })

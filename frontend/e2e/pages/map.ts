@@ -108,7 +108,7 @@ export const map_page = async (page: Page) => {
   await page.getByTitle('Close').click({ force: true })
 
   // Test basemap switcher
-  const basemapButton = page.locator('.basemap-toggle')
+  const basemapButton = page.locator('.leaflet-control-basemaps')
   await expect(basemapButton).toBeVisible()
   await basemapButton.click()
 
