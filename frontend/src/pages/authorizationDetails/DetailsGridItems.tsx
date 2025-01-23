@@ -184,7 +184,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
             Known matter <u>not</u> accepted
           </Typography>
           {omrrDataBooleanFields
-            .filter((key) => !Boolean(item[key]))
+            .filter((key) => !item[key])
             .map((key) => (
               <Grid
                 key={`CheckRow-${key}`}
