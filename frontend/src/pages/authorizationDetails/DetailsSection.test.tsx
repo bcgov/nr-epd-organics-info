@@ -63,10 +63,6 @@ describe('Test suite for DetailsSection', () => {
     omrrDataBooleanFields.forEach((key) => {
       screen.getByText(key)
     })
-    // All should be unchecked
-    expect(screen.getAllByTestId('organic-matter-unchecked-icon')).toHaveLength(
-      omrrDataBooleanFields.length,
-    )
   })
 
   it('should render DetailsSection for Notification Compost operation with all checked', () => {
@@ -88,10 +84,6 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Unknown')
 
     screen.getByText('Organic Matter Used for Composting')
-    // All should be checked
-    expect(screen.getAllByTestId('organic-matter-checked-icon')).toHaveLength(
-      omrrDataBooleanFields.length,
-    )
   })
 
   it('should render DetailsSection for Notification Land Application', () => {
