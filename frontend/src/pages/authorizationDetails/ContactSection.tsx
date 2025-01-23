@@ -31,8 +31,8 @@ export function ContactSection({ authNumber }: Readonly<Props>) {
         spacing={1}
         sx={{
           padding: {
-            xs: '8px 16px 24px',
-            md: '12px 24px 32px',
+            xs: '4px 24px 24px',
+            md: '8px 32px 32px',
           },
         }}
       >
