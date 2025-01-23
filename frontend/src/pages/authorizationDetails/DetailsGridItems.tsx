@@ -149,7 +149,13 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
   }
 
   return (
-    <Grid item xs={12} sx={style.container} className="organic-matter-grid">
+    <Grid
+      // @ts-ignore Grid is deprecated but still used in the codebase
+      item
+      xs={12}
+      sx={style.container}
+      className="organic-matter-grid"
+    >
       <Typography variant="h6" className="organic-matter-title">
         Organic Matter Used for Composting
       </Typography>
@@ -160,16 +166,22 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
         </i>
       </Typography>
       <Grid
+        // @ts-ignore Grid is deprecated but still used in the codebase
         container
         sx={style.gridContainer}
         className="organic-matter-checkbox-grid"
       >
-        <Grid item xs={6}>
+        <Grid
+          // @ts-ignore Grid is deprecated but still used in the codebase
+          item
+          xs={6}
+        >
           <Typography sx={style.columnHeader}>Known matter accepted</Typography>
           {omrrDataBooleanFields
             .filter((key) => Boolean(item[key]))
             .map((key) => (
               <Grid
+                // @ts-ignore Grid is deprecated but still used in the codebase
                 key={`CheckRow-${key}`}
                 item
                 className="organic-matter-checkbox-item"
@@ -179,7 +191,11 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
               </Grid>
             ))}
         </Grid>
-        <Grid item xs={6}>
+        <Grid
+          // @ts-ignore Grid is deprecated but still used in the codebase
+          item
+          xs={6}
+        >
           <Typography sx={style.columnHeader}>
             Known matter <u>not</u> accepted
           </Typography>
@@ -187,6 +203,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
             .filter((key) => !item[key])
             .map((key) => (
               <Grid
+                // @ts-ignore Grid is deprecated but still used in the codebase
                 key={`CheckRow-${key}`}
                 item
                 className="organic-matter-checkbox-item"
