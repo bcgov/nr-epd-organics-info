@@ -146,4 +146,26 @@ describe('Test suite for AuthorizationDetails', () => {
     screen.getByText('test-file.pdf')
     screen.getByText('sample-file.pdf')
   })
+
+  it('should render ContactSection with correct authorization number', async () => {
+    const item: OmrrData = mockOmrrData[0]
+    const number = item['Authorization Number']
+    renderComponent(number)
+
+    expect(screen.getByText('Contact')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        `If you have questions regarding authorization #${number}, contact the email below.`,
+      ),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Email')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', {
+        name: 'WasteDischargeApplicationInquiries@gov.bc.ca',
+      }),
+    ).toHaveAttribute(
+      'href',
+      'mailto:WasteDischargeApplicationInquiries@gov.bc.ca',
+    )
+  })
 })
