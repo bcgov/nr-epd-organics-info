@@ -39,10 +39,7 @@ describe('Test suite for ContactUs', () => {
       'href',
       'mailto:ENV.OMRR.Reg.Reviews@gov.bc.ca',
     )
-    expect(links[1]).toHaveAttribute(
-      'href',
-      'mailto:WasteDischargeApplicationInquiries@gov.bc.ca',
-    )
+    expect(links[1]).toHaveAttribute('href', 'mailto:ENVCIA@gov.bc.ca')
     expect(links[2]).toHaveAttribute(
       'href',
       'https://forms.gov.bc.ca/environment/wda-enquiry/',
