@@ -3,28 +3,28 @@ import { ReactNode } from 'react'
 
 import './LinkSection.css'
 
-interface Props {
+interface LinkSectionProps {
   title: string
   text: string
   children: ReactNode
-  sx?: SxProps<Theme>
-  headerSx?: SxProps<Theme>
-  contentSx?: SxProps<Theme>
+  className?: string
+  headerClassName?: string
+  contentClassName?: string
 }
 
 export function LinkSection({
   title,
   text,
   children,
-  sx,
-  headerSx,
-  contentSx,
-}: Props) {
+  className = '',
+  headerClassName = '',
+  contentClassName = '',
+}: LinkSectionProps) {
   return (
-    <Stack direction="column" sx={sx}>
-      <Typography sx={headerSx}>{title}</Typography>
-      <Stack direction="column" sx={contentSx}>
-        <Typography sx={{ mb: 2 }}>{text}</Typography>
+    <Stack className={className}>
+      <Stack className={headerClassName}>{title}</Stack>
+      <Stack className={contentClassName}>
+        <Typography sx={{ mb: 3 }}>{text}</Typography>
         <ul style={{ margin: 0, paddingLeft: '20px' }}>{children}</ul>
       </Stack>
     </Stack>

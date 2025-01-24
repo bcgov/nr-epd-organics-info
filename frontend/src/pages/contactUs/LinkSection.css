@@ -1,7 +1,31 @@
 .link-section {
-  padding-bottom: var(--layout-margin-huge);
-  border-bottom: 1px solid var(--surface-color-border-light);
-  margin-bottom: var(--layout-margin-huge);
+  overflow: hidden;
+  background-color: var(--surface-color-base);
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color-base);
+}
+
+.link-section-header {
+  background: var(--surface-color-primary-hover);
+  color: white;
+  padding: 17px 24px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.link-section-content {
+  padding: 8px 32px 32px;
+}
+
+@media (max-width: 900px) {
+  .link-section-header {
+    padding: 17px 16px;
+  }
+
+  .link-section-content {
+    padding: 4px 24px 24px;
+  }
 }
 
 .link-section:last-child {

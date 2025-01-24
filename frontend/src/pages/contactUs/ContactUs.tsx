@@ -72,29 +72,9 @@ export function ContactUs() {
           <LinkSection
             title="Organic matter"
             text="For questions about organic matter recycling regulation, biosolids, or compost."
-            sx={{
-              overflow: 'hidden',
-              backgroundColor: 'var(--surface-color-base)',
-              borderRadius: '6px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color-base)',
-            }}
-            headerSx={{
-              background: 'var(--surface-color-primary-hover)',
-              color: 'white',
-              padding: {
-                xs: '17px 16px',
-                md: '17px 24px',
-              },
-              fontWeight: 700,
-              fontSize: '18px',
-            }}
-            contentSx={{
-              padding: {
-                xs: '4px 24px 24px',
-                md: '8px 32px 32px',
-              },
-            }}
+            className="link-section"
+            headerClassName="link-section-header"
+            contentClassName="link-section-content"
           >
             <Stack direction="row" spacing={1}>
               <div
@@ -126,29 +106,9 @@ export function ContactUs() {
           <LinkSection
             title="Authorizations"
             text="For additional information on authorizations or for information not found on this site."
-            sx={{
-              overflow: 'hidden',
-              backgroundColor: 'var(--surface-color-base)',
-              borderRadius: '6px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color-base)',
-            }}
-            headerSx={{
-              background: 'var(--surface-color-primary-hover)',
-              color: 'white',
-              padding: {
-                xs: '17px 16px',
-                md: '17px 24px',
-              },
-              fontWeight: 700,
-              fontSize: '18px',
-            }}
-            contentSx={{
-              padding: {
-                xs: '4px 24px 24px',
-                md: '8px 32px 32px',
-              },
-            }}
+            className="link-section"
+            headerClassName="link-section-header"
+            contentClassName="link-section-content"
           >
             <Stack
               direction={{ xs: 'column', md: 'row' }}
@@ -215,29 +175,9 @@ export function ContactUs() {
           <LinkSection
             title="Report natural resource violations"
             text="If you see a violation, report it using the toll-free number or the online reporting service."
-            sx={{
-              overflow: 'hidden',
-              backgroundColor: 'var(--surface-color-base)',
-              borderRadius: '6px',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color-base)',
-            }}
-            headerSx={{
-              background: 'var(--surface-color-primary-hover)',
-              color: 'white',
-              padding: {
-                xs: '17px 16px',
-                md: '17px 24px',
-              },
-              fontWeight: 700,
-              fontSize: '18px',
-            }}
-            contentSx={{
-              padding: {
-                xs: '4px 24px 24px',
-                md: '8px 32px 32px',
-              },
-            }}
+            className="link-section"
+            headerClassName="link-section-header"
+            contentClassName="link-section-content"
           >
             <Stack
               direction={{ xs: 'column', md: 'row' }}
@@ -318,6 +258,7 @@ export function ContactUs() {
           display: 'flex',
           alignItems: 'center',
           '&::before': {
+            content: '""',
             position: 'absolute',
             top: 0,
             left: { xs: '40px', md: '126px' },
