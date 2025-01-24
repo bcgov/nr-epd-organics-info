@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import LinkIcon from '@mui/icons-material/Link'
+import PhoneIcon from '@mui/icons-material/Phone'
 
 import { TopSection } from './TopSection'
 import { LinkSection } from './LinkSection'
@@ -10,26 +11,73 @@ import './ContactUs.css'
 export function ContactUs() {
   return (
     <Stack direction="column" className="contact-us">
-      <TopSection />
+      <Stack
+        direction="column"
+        sx={{
+          padding: {
+            xs: '40px',
+            md: '76px 126px',
+          },
+          paddingBottom: { xs: '12px', md: '20px' },
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Stack sx={{ maxWidth: '1200px', width: '100%' }}>
+          <Typography
+            variant="h1"
+            sx={{
+              color: 'var(--typography-color-primary, #2D2D2D)',
+              fontSize: '32px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '54px',
+              mb: 1,
+            }}
+          >
+            Contact us
+          </Typography>
+          <Typography
+            sx={{
+              color: 'var(--typography-color-primary, #2D2D2D)',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '27.008px',
+            }}
+          >
+            If you have any questions or need assistance, see the contact
+            options below:
+          </Typography>
+        </Stack>
+      </Stack>
+
       <Stack
         direction="column"
         component="section"
         sx={{
           padding: {
-            xs: '40px 24px',
-            md: '80px 76px',
+            xs: '40px',
+            md: '76px 126px',
           },
+          paddingTop: { xs: '12px', md: '20px' },
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        <Stack spacing={3}>
+        <Stack
+          spacing="var(--layout-margin-large, 24px)"
+          sx={{ maxWidth: '1200px', width: '100%' }}
+        >
           <LinkSection
             title="Organic matter"
             text="For questions about organic matter recycling regulation, biosolids, or compost."
             sx={{
               overflow: 'hidden',
               backgroundColor: 'var(--surface-color-base)',
+              borderRadius: '6px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
               border: '1px solid var(--border-color-base)',
-              borderRadius: '4px',
             }}
             headerSx={{
               background: 'var(--surface-color-primary-hover)',
@@ -81,8 +129,9 @@ export function ContactUs() {
             sx={{
               overflow: 'hidden',
               backgroundColor: 'var(--surface-color-base)',
+              borderRadius: '6px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
               border: '1px solid var(--border-color-base)',
-              borderRadius: '4px',
             }}
             headerSx={{
               background: 'var(--surface-color-primary-hover)',
@@ -169,8 +218,9 @@ export function ContactUs() {
             sx={{
               overflow: 'hidden',
               backgroundColor: 'var(--surface-color-base)',
+              borderRadius: '6px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
               border: '1px solid var(--border-color-base)',
-              borderRadius: '4px',
             }}
             headerSx={{
               background: 'var(--surface-color-primary-hover)',
@@ -189,16 +239,111 @@ export function ContactUs() {
               },
             }}
           >
-            <li>
-              Toll-free: <a href="tel:18779527277">+1-877-952-7277</a>
-            </li>
-            <li>
-              Online reporting service:{' '}
-              <a href="https://forms.gov.bc.ca/environment/rapp/" target="rapp">
-                Report All Poachers and Polluters (RAPP)
-              </a>
-            </li>
+            <Stack
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
+              sx={{ width: '100%' }}
+            >
+              <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
+                <div
+                  style={{
+                    backgroundColor: 'var(--surface-color-primary-hover)',
+                    borderRadius: '50%',
+                    width: 40,
+                    height: 40,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <PhoneIcon sx={{ color: 'white' }} />
+                </div>
+                <Stack direction="column">
+                  <Typography fontWeight={700}>Toll-free</Typography>
+                  <a
+                    href="tel:18779527277"
+                    style={{
+                      color: 'var(--typography-color-link)',
+                    }}
+                  >
+                    +1-877-952-7277
+                  </a>
+                </Stack>
+              </Stack>
+              <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
+                <div
+                  style={{
+                    backgroundColor: 'var(--surface-color-primary-hover)',
+                    borderRadius: '50%',
+                    width: 40,
+                    height: 40,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <LinkIcon sx={{ color: 'white' }} />
+                </div>
+                <Stack direction="column">
+                  <Typography fontWeight={700}>
+                    Report All Poachers and Polluters
+                  </Typography>
+                  <a
+                    href="https://forms.gov.bc.ca/environment/rapp/"
+                    target="rapp"
+                    style={{
+                      color: 'var(--typography-color-link)',
+                    }}
+                  >
+                    https://forms.gov.bc.ca/environment/rapp/
+                  </a>
+                </Stack>
+              </Stack>
+            </Stack>
           </LinkSection>
+        </Stack>
+      </Stack>
+
+      <Stack
+        direction="column"
+        sx={{
+          padding: {
+            xs: '40px',
+            md: '76px 126px',
+          },
+          paddingTop: { xs: '12px', md: '20px' },
+          backgroundColor: 'var(--surface-color-base)',
+          mt: 2,
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          '&::before': {
+            position: 'absolute',
+            top: 0,
+            left: { xs: '40px', md: '126px' },
+            width: '40px',
+            height: '4px',
+            backgroundColor: '#FCBA19',
+          },
+        }}
+      >
+        <Stack sx={{ maxWidth: '1200px', width: '100%' }}>
+          <Typography
+            variant="h2"
+            sx={{ fontSize: '24px', fontWeight: 700, mb: 1 }}
+          >
+            Need general help?
+          </Typography>
+          <Typography>
+            Services are available in a variety of different languages and
+            channels through Service BC.{' '}
+            <a
+              href="https://www2.gov.bc.ca/gov/content/home/get-help-with-government-services"
+              style={{ color: 'var(--typography-color-link)' }}
+            >
+              Get help with government services
+            </a>
+          </Typography>
         </Stack>
       </Stack>
     </Stack>
