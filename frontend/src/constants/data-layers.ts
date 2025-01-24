@@ -101,10 +101,26 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     ],
   },
   {
-    name: 'Crown Lands',
+    name: 'ParcelMap BC',
     layers: [
       {
-        name: 'PMBC Parcel Cadastre – Crown Provincial',
+        name: 'Parcel Fabric - Outlined',
+        url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
+        layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+        styles: '5898',
+        webUrl:
+          'https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b',
+      },
+      {
+        name: 'Parcel Fabric - Labeled',
+        url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
+        layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+        styles: '7834',
+        webUrl:
+          'https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b',
+      },
+      {
+        name: 'Crown Provincial',
         url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
         layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
         styles: '5899', // Provincial Crown Lands
