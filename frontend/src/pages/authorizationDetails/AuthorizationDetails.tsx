@@ -20,6 +20,8 @@ export default function AuthorizationDetails() {
   const { id } = useParams()
   const item = useFindByAuthorizationNumber(parseInt(id ?? ''))
 
+  console.log('item from authorization details', item)
+
   useEffect(() => {
     if (item) {
       window.scrollTo(0, 0)

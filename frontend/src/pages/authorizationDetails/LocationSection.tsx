@@ -15,6 +15,7 @@ export function LocationSection({ item }: Readonly<Props>) {
   const isSmall = useMediaQuery(theme.breakpoints.down('md'))
 
   const { 'Facility Location': address, Latitude: lat, Longitude: lng } = item
+  console.log('item from location section', item)
 
   const title = (
     <Typography
