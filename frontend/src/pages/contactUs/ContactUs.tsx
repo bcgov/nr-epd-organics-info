@@ -257,18 +257,24 @@ export function ContactUs() {
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: { xs: '40px', md: '126px' },
-            width: '40px',
-            height: '4px',
-            backgroundColor: '#FCBA19',
-          },
         }}
       >
-        <Stack sx={{ maxWidth: '1200px', width: '100%' }}>
+        <Stack
+          sx={{
+            maxWidth: '1200px',
+            width: '100%',
+            position: 'relative',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: -20,
+              left: 0,
+              width: '40px',
+              height: '4px',
+              backgroundColor: '#FCBA19',
+            },
+          }}
+        >
           <Typography
             variant="h2"
             sx={{ fontSize: '24px', fontWeight: 700, mb: 1 }}
