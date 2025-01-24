@@ -71,7 +71,7 @@ export function ContactUs() {
         >
           <LinkSection
             title="Organic matter"
-            text="For questions about organic matter recycling regulation, biosolids, or compost."
+            text="For questions about Organic Matter Recycling Regulation, biosolids, or compost."
             className="link-section"
             headerClassName="link-section-header"
             contentClassName="link-section-content"
@@ -132,7 +132,7 @@ export function ContactUs() {
                 <Stack direction="column">
                   <Typography fontWeight={700}>Email</Typography>
                   <a
-                    href="mailto:WasteDischargeApplicationInquiries@gov.bc.ca"
+                    href="mailto:ENVCIA@gov.bc.ca"
                     style={{
                       color: 'var(--typography-color-link)',
                     }}
