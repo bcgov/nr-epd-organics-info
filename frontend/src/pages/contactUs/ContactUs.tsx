@@ -137,7 +137,7 @@ export function ContactUs() {
                       color: 'var(--typography-color-link)',
                     }}
                   >
-                    WasteDischargeApplicationInquiries@gov.bc.ca
+                    ENVCIA@gov.bc.ca
                   </a>
                 </Stack>
               </Stack>
