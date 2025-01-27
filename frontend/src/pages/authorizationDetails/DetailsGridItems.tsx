@@ -3,9 +3,6 @@ import { Grid, Typography } from '@mui/material'
 import OmrrData, { omrrDataBooleanFields } from '@/interfaces/omrr'
 import { DetailsGridLabel } from './DetailsGridLabel'
 
-import CheckIcon from '@/assets/svgs/fa-check.svg?react'
-import CloseIcon from '@/assets/svgs/fa-close.svg?react'
-
 interface Props {
   item: OmrrData
 }
@@ -67,6 +64,7 @@ export function NotificationGridItems() {
 }
 
 export function NotificationCompostGridItems({ item }: Readonly<Props>) {
+  console.log(item)
   return (
     <>
       <DetailsGridLabel label="Operation Type" md={6}>
@@ -114,64 +112,107 @@ export function NotificationLandApplicationGridItems({
  * Displays a list of checkboxes and "x" for all the organic matter booleans.
  */
 function OrganicMatterGridItem({ item }: Readonly<Props>) {
+  const style = {
+    subtitle: {
+      color: '#474543',
+      fontFamily: 'BC Sans',
+      fontSize: '16px',
+      fontStyle: 'italic',
+      fontWeight: '400',
+      lineHeight: '27px',
+      marginTop: '-18px',
+    },
+    container: {
+      padding: {
+        xs: '24px',
+        md: '24px 40px 32px',
+      },
+    },
+    gridContainer: {
+      gap: {
+        xs: '8px 0',
+        md: '12px 0',
+      },
+    },
+    columnHeader: {
+      mb: 2,
+      fontWeight: 700,
+      marginBottom: '8px',
+      fontSize: '12px',
+    },
+    checkboxItem: {
+      fontSize: '16px',
+      fontWeight: '400',
+      lineHeight: '32px',
+      marginBottom: '6px',
+    },
+  }
+
   return (
     <Grid
+      // @ts-ignore Grid is deprecated but still used in the codebase
       item
       xs={12}
-      sx={{
-        padding: {
-          xs: '24px',
-          md: '24px 40px 32px',
-        },
-      }}
+      sx={style.container}
       className="organic-matter-grid"
     >
-      <Typography className="organic-matter-title">
+      <Typography variant="h6" className="organic-matter-title">
         Organic Matter Used for Composting
       </Typography>
-      <Typography className="organic-matter-note">
-        <i style={{ color: '#666666' }}>
+      <Typography className="organic-matter-note" sx={style.subtitle}>
+        <i>
           The information presented was provided by the proponent at the time of
           submission
         </i>
       </Typography>
       <Grid
+        // @ts-ignore Grid is deprecated but still used in the codebase
         container
-        sx={{
-          gap: {
-            xs: '16px 0',
-            md: '24px 0',
-          },
-        }}
+        sx={style.gridContainer}
         className="organic-matter-checkbox-grid"
       >
-        {omrrDataBooleanFields.map((key) => {
-          const isChecked = Boolean(item[key])
-          return (
-            <Grid
-              key={`CheckRow-${key}`}
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              xxl={3}
-              className="organic-matter-checkbox-item"
-            >
-              {isChecked ? (
-                <CheckIcon
-                  data-testid="organic-matter-checked-icon"
-                  className="organic-matter-checkbox-icon"
-                />
-              ) : (
-                <CloseIcon
-                  data-testid="organic-matter-unchecked-icon"
-                  className="organic-matter-checkbox-icon"
-                />
-              )}
-              <span className="organic-matter-checkbox-label">{key}</span>
-            </Grid>
-          )
-        })}
+        <Grid
+          // @ts-ignore Grid is deprecated but still used in the codebase
+          item
+          xs={6}
+        >
+          <Typography sx={style.columnHeader}>Known matter accepted</Typography>
+          {omrrDataBooleanFields
+            .filter((key) => Boolean(item[key]))
+            .map((key) => (
+              <Grid
+                // @ts-ignore Grid is deprecated but still used in the codebase
+                key={`CheckRow-${key}`}
+                item
+                className="organic-matter-checkbox-item"
+                sx={style.checkboxItem}
+              >
+                <span className="organic-matter-checkbox-label">{key}</span>
+              </Grid>
+            ))}
+        </Grid>
+        <Grid
+          // @ts-ignore Grid is deprecated but still used in the codebase
+          item
+          xs={6}
+        >
+          <Typography sx={style.columnHeader}>
+            Known matter <u>not</u> accepted
+          </Typography>
+          {omrrDataBooleanFields
+            .filter((key) => !item[key])
+            .map((key) => (
+              <Grid
+                // @ts-ignore Grid is deprecated but still used in the codebase
+                key={`CheckRow-${key}`}
+                item
+                className="organic-matter-checkbox-item"
+                sx={style.checkboxItem}
+              >
+                <span className="organic-matter-checkbox-label">{key}</span>
+              </Grid>
+            ))}
+        </Grid>
       </Grid>
     </Grid>
   )
