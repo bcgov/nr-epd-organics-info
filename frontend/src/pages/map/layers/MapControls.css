@@ -20,8 +20,8 @@
   align-items: center;
   border-radius: 8px;
   background: var(--surface-color-background-white);
-  color: var(--surface-color-primary-active-border);
-  border: 2px solid var(--surface-color-primary-active-border);
+  color: var(--surface-color-primary-default);
+  border: 1px solid var(--surface-color-primary-default);
   box-shadow: var(--box-shadow-small);
   transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -34,14 +34,13 @@
 
 .map-controls button.map-control-button:focus,
 .map-controls .map-control-button:focus {
-  outline: 2px solid rgba(46, 93, 215, 0.5);
+  outline: 2px solid var(--surface-color-primary-active-border);
 }
 
 .map-controls button.map-control-button--active,
 .map-controls .map-control-button--active {
   background-color: var(--surface-color-primary-active-border);
   color: var(--surface-color-background-white);
-  border-color: var(--surface-color-background-white);
 }
 
 .map-controls button.map-control-button--active:hover,
@@ -52,7 +51,7 @@
 /* Make all SVG icons in the buttons blue */
 .map-controls button.map-control-button svg,
 .map-controls .map-control-button svg {
-  color: var(--surface-color-primary-active-border);
+  color: var(--surface-color-primary-default);
 }
 
 .map-controls button.map-control-button--active svg,

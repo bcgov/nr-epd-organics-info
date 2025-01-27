@@ -50,8 +50,8 @@ export function SearchAutocomplete() {
     <Autocomplete
       value={value}
       sx={{
-        border: '2px solid #295286',
-        borderRadius: '4px',
+        border: '1px solid #295286',
+        borderRadius: '6px',
         color: '#295286',
         '& svg path': {
           fill: '#295286',

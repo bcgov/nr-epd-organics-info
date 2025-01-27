@@ -41,11 +41,11 @@ button.map-button {
   flex: 0 0 auto;
   gap: 8px;
   background-color: var(--surface-color-background-white);
-  color: var(--typography-color-secondary);
+  color: var(--surface-color-primary-default);
   box-sizing: border-box;
   text-wrap: nowrap;
   border-radius: var(--layout-border-radius-large);
-  border: 2px solid #295286;
+  border: 1px solid #295286;
   box-shadow: var(--box-shadow-small);
 }
 button.map-button svg path {
@@ -66,9 +66,7 @@ button.map-button.map-button--medium {
 
 button.map-button--active {
   background-color: #295286;
-  border-radius: 4px;
   color: white;
-  border: 2px solid white;
   transform: scale(1.05);
 }
 

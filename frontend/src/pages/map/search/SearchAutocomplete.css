@@ -4,8 +4,15 @@
   transition: width ease-in-out 0.3s;
 }
 
+.search-autocomplete {
+  height: 62px;
+}
+
 div.search-autocomplete.MuiAutocomplete-hasClearIcon .MuiInputBase-root {
   padding-right: 16px;
+  height: 60px;
+  min-height: 34px;
+  border-radius: 6px;
 }
 
 .search-autocomplete .search-input-clear-button > .search-input-icon {

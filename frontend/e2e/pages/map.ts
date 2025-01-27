@@ -46,7 +46,7 @@ export const map_page = async (page: Page) => {
     page.getByRole('checkbox', { name: 'Compost Production Facility' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('checkbox', { name: 'Land Application Biosolids' }),
+    page.getByRole('checkbox', { name: 'Land Application' }),
   ).toBeVisible()
   await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
   await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()

@@ -36,7 +36,8 @@ export function FilterByButton({ isLarge }: Readonly<Props>) {
             right: isLarge ? '-30px' : '-12px',
             width: isLarge ? '10px' : '6px',
             height: isLarge ? '10px' : '6px',
-            backgroundColor: 'red',
+            backgroundColor:
+              'var(--surface-color-primary-dangerButton-default, #ce3e39)',
             borderRadius: '50%',
           }}
         />
