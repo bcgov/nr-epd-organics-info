@@ -159,10 +159,10 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     ],
   },
   {
-    name: 'Indian Reserves',
+    name: 'First Nation Reserves',
     layers: [
       {
-        name: 'Indian Reserves Including Band Names',
+        name: 'First Nation Reserves Including Band Names',
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/ows',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP',
         styles: '381_382',
