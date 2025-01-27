@@ -128,7 +128,7 @@ describe('Test suite for MapView', () => {
   it('should render the MapView and test point search', async () => {
     const { user } = renderComponent(themeBreakpointValues.xxl, mockOmrrData)
 
-    const pointSearchBtn = screen.getByRole('button', { name: 'Point Search' })
+    const pointSearchBtn = screen.getByRole('button', { name: 'Radius Search' })
     await user.click(pointSearchBtn)
 
     const cancelBtn = screen.getByRole('button', { name: 'Cancel' })

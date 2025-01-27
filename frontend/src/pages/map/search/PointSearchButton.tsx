@@ -42,10 +42,10 @@ export function PointSearchButton({ isActive }: Readonly<Props>) {
       )}
       onClick={onClick}
       startIcon={
-        <PointIcon title="Point search icon" className="point-search-icon" />
+        <PointIcon title="Radius search icon" className="point-search-icon" />
       }
     >
-      Point Search
+      Radius Search
     </Button>
   )
 }

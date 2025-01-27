@@ -49,4 +49,4 @@ export enum ActiveToolEnum {
 /**
  * The smallest allowed radius in meters for the Point Search feature.
  */
-export const MIN_CIRCLE_RADIUS = 500
+export const MIN_CIRCLE_RADIUS = 1000

@@ -31,7 +31,7 @@ function getTitle(
     case ActiveToolEnum.polygonSearch:
       return 'Polygon Search'
     case ActiveToolEnum.pointSearch:
-      return 'Point Search'
+      return 'Radius Search'
     case ActiveToolEnum.searchBy:
       return 'Search By'
     case ActiveToolEnum.filterBy:

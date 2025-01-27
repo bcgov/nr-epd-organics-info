@@ -18,7 +18,9 @@ export const map_page = async (page: Page) => {
   await expect(
     page.getByRole('button', { name: 'Polygon Search' }),
   ).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Point Search' })).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Radius Search' }),
+  ).toBeVisible()
 
   const searchBy = page.getByText('Search By:')
   await expect(searchBy).toBeVisible()
