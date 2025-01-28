@@ -71,7 +71,7 @@ export function ContactUs() {
         >
           <LinkSection
             title="Organic matter"
-            text="For questions about Organic Matter Recycling Regulation, biosolids, or compost."
+            text="For questions about the Organic Matter Recycling Regulation, biosolids, or compost."
             className="link-section"
             headerClassName="link-section-header"
             contentClassName="link-section-content"
