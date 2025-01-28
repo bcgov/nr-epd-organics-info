@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { LatLngBoundsLiteral, LatLngTuple } from 'leaflet'
 
 import { RootState } from '@/app/store'
@@ -7,6 +7,7 @@ import OmrrData from '@/interfaces/omrr'
 import { DataLayer } from '@/interfaces/data-layers'
 import { useCallback } from 'react'
 import { ActiveToolEnum } from '@/constants/constants'
+import { setSearchTextFilter } from '@/features/omrr/omrr-slice'
 
 export interface ZoomPosition {
   position: LatLngTuple
@@ -30,6 +31,7 @@ export interface MapSliceState {
   // Keeps track of the active tool - point/polygon search (all screen sizes), and
   // data layers, search by and filter by (small screens only - shown in bottom drawer)
   activeTool?: ActiveToolEnum
+  searchResults: OmrrData[]
 }
 
 export const initialState: MapSliceState = {
@@ -41,6 +43,7 @@ export const initialState: MapSliceState = {
   selectedItem: undefined,
   dataLayers: [],
   activeTool: undefined,
+  searchResults: [],
 }
 
 export const mapSlice = createSlice({
@@ -93,6 +96,9 @@ export const mapSlice = createSlice({
     clearActiveTool: (state) => {
       state.activeTool = undefined
     },
+    clearSearchResults: (state) => {
+      state.searchResults = []
+    },
   },
 })
 
@@ -107,7 +113,17 @@ export const {
   resetDataLayers,
   toggleActiveTool,
   clearActiveTool,
+  clearSearchResults,
 } = mapSlice.actions
+
+// Create a thunk to clear both search results and search text
+export const clearSearchAndResults = createAsyncThunk(
+  'map/clearSearchAndResults',
+  async (_, { dispatch }) => {
+    dispatch(clearSearchResults())
+    dispatch(setSearchTextFilter(''))
+  },
+)
 
 // Selectors
 const selectMyLocationVisible = (state: RootState) =>

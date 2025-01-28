@@ -22,7 +22,7 @@ export const authorization_list_page = async (page: Page) => {
   await expect(page.getByLabel('Notification')).toBeVisible()
   await page.getByLabel('Notification').check()
   await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
-  await expect(page.getByLabel('Land Application Biosolids')).toBeVisible()
+  await expect(page.getByLabel('Land Application')).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Reset Filters' }),
   ).toBeVisible()
