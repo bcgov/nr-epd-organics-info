@@ -228,7 +228,7 @@ describe('Test suite for MapDrawer', () => {
     await waitFor(() => expect(div).toHaveClass('map-bottom-drawer--expanded'))
     expect(state.bottomDrawerHeight).toBe(MAP_BOTTOM_DRAWER_HEIGHT_SMALL)
     expect(state.activeTool).toBe(ActiveToolEnum.pointSearch)
-    screen.getByText('Point Search')
+    screen.getByText('Radius Search')
     screen.getByRole('slider', { name: 'Search radius' })
 
     // Swipe up to make full height
