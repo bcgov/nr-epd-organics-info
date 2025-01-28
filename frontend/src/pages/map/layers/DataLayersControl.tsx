@@ -39,18 +39,19 @@ export function DataLayersControl() {
             display: 'flex',
             '& .MuiBadge-badge': {
               right: -3,
-              bottom: 3,
+              bottom: -15,
               top: 'auto',
               padding: '0 4px',
               minWidth: '16px',
               height: '16px',
               fontSize: '0.75rem',
-              backgroundColor: 'var(--surface-color-primary-active-border)',
+              backgroundColor:
+                'var(--surface-color-primary-dangerButton-default, #ce3e39)',
               color: 'var(--surface-color-background-white)',
             },
           }}
         >
-          <LayersIcon />
+          <LayersIcon className="layers-icon" />
         </Badge>
       </div>
     </IconButton>

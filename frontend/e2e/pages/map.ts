@@ -20,7 +20,7 @@ export const map_page = async (page: Page) => {
   ).toBeVisible()
   await expect(page.getByRole('button', { name: 'Point Search' })).toBeVisible()
 
-  const searchBy = page.getByText('Search By:')
+  const searchBy = page.getByText('Status')
   await expect(searchBy).toBeVisible()
   await searchBy.click()
 
@@ -35,7 +35,7 @@ export const map_page = async (page: Page) => {
 
   await expect(page.getByLabel('Inactive')).toBeHidden()
 
-  const filterBy = page.getByText('Filter by Facility Type')
+  const filterBy = page.getByText('Filter')
   await expect(filterBy).toBeVisible()
   await filterBy.click()
 
@@ -46,7 +46,7 @@ export const map_page = async (page: Page) => {
     page.getByRole('checkbox', { name: 'Compost Production Facility' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('checkbox', { name: 'Land Application Biosolids' }),
+    page.getByRole('checkbox', { name: 'Land Application' }),
   ).toBeVisible()
   await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
   await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()

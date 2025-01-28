@@ -36,7 +36,7 @@ export const facilityTypeFilters: OmrrFilter[] = [
       },
       {
         value: OPERATION_TYPE_LAND_APPLICATION,
-        label: 'Land Application Biosolids',
+        label: 'Land Application',
         field: 'Operation Type',
         on: false,
         // Compare to start of value instead of exact match

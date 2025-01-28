@@ -89,7 +89,7 @@ describe('Test suite for DetailsSection', () => {
   it('should render DetailsSection for Notification Land Application', () => {
     const materialLandApplied = 'Class B Biosolids'
     const notification: OmrrData = createMockOmrrData('Notification', {
-      'Operation Type': 'Land Application Biosolids',
+      'Operation Type': 'Land Application',
       'Material Land Applied': materialLandApplied,
       'Intended Dates of Land Application': 'September 1, 2008',
     })
@@ -99,7 +99,7 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Authorization Type')
     screen.getByText('Notification')
     screen.getByText('Operation Type')
-    screen.getByText('Land Application Biosolids')
+    screen.getByText('Land Application')
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText('Material Land Applied')
