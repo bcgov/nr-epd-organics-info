@@ -8,31 +8,36 @@ export const contact_page = async (page: Page) => {
   const contactUsLink = page.getByRole('link', { name: 'Contact Us' })
   await contactUsLink.click()
 
+  // Test main heading
   await expect(
-    page.getByRole('heading', {
-      name: 'Contact Us',
-    }),
+    page.getByRole('heading', { name: 'Contact us', level: 1 }),
   ).toBeVisible()
+
+  // Test section headers using the new class
   await expect(
-    page.getByRole('heading', {
-      name: 'Organic matter',
-    }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('heading', {
-      name: 'Authorizations',
-    }),
+    page.locator('.link-section-header', { hasText: 'Organic matter' }),
   ).toBeVisible()
 
   await expect(
-    page.getByRole('heading', {
-      name: 'Report natural resource violations',
-    }),
+    page.locator('.link-section-header', { hasText: 'Authorizations' }),
   ).toBeVisible()
 
   await expect(
-    page.getByRole('link', {
-      name: 'ENV.OMRR.Reg.Reviews@gov.bc.ca',
+    page.locator('.link-section-header', {
+      hasText: 'Report natural resource violations',
     }),
+  ).toBeVisible()
+
+  // Test Need general help section
+  await expect(
+    page.getByRole('heading', { name: 'Need general help?' }),
+  ).toBeVisible()
+
+  // Test link sections are present
+  await expect(page.locator('.link-section')).toHaveCount(3)
+
+  // Test a sample link is visible
+  await expect(
+    page.getByRole('link', { name: 'ENV.OMRR.Reg.Reviews@gov.bc.ca' }),
   ).toBeVisible()
 }
