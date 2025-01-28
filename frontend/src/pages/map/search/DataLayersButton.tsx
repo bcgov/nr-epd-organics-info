@@ -3,7 +3,7 @@ import { useSidebarWidth, useDataLayers } from '@/features/map/map-slice'
 import { DataLayersCheckboxGroup } from '@/components/DataLayersCheckboxGroup'
 import { Badge } from '@mui/material'
 
-import layersIcon from '@/assets/svgs/fa-layers.svg'
+import LayersIcon from '@/assets/svgs/fa-layers.svg?react'
 
 export function DataLayersButton() {
   const sidebarWidth = useSidebarWidth()
@@ -30,17 +30,19 @@ export function DataLayersButton() {
               display: 'flex',
               '& .MuiBadge-badge': {
                 right: -3,
-                top: 3,
+                bottom: -15,
+                top: 'auto',
                 padding: '0 4px',
                 minWidth: '16px',
                 height: '16px',
                 fontSize: '0.75rem',
-                backgroundColor: 'var(--surface-color-primary-active-border)',
+                backgroundColor:
+                  'var(--surface-color-primary-dangerButton-default, #ce3e39)',
                 color: 'var(--surface-color-background-white)',
               },
             }}
           >
-            <img src={layersIcon} alt="Data layers icon" />
+            <LayersIcon className="layers-icon" />
           </Badge>
         </div>
       }

@@ -33,9 +33,9 @@ function getTitle(
     case ActiveToolEnum.pointSearch:
       return 'Point Search'
     case ActiveToolEnum.searchBy:
-      return 'Search By'
+      return 'Status'
     case ActiveToolEnum.filterBy:
-      return 'Filter by Facility Type'
+      return 'Filter'
     default:
       return hasSelectedItem ? '' : 'Search Results'
   }
