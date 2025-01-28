@@ -37,7 +37,7 @@ describe('Test suite for MapSearch', () => {
       screen.queryByRole('button', { name: 'Layers' }),
     ).not.toBeInTheDocument()
     screen.getByRole('button', { name: 'Polygon Search' })
-    screen.getByRole('button', { name: 'Point Search' })
+    screen.getByRole('button', { name: 'Radius Search' })
     screen.getByText('Status')
     screen.getByRole('button', { name: 'Filter' })
   })
