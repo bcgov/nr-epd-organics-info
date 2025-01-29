@@ -356,3 +356,10 @@ const selectPointFilterRadius = (state: RootState) =>
   state.omrr.pointFilterRadius
 export const usePointFilterCenter = () => useSelector(selectPointFilterCenter)
 export const usePointFilterRadius = () => useSelector(selectPointFilterRadius)
+
+// Add a new selector to check if point filter is active
+export const usePointFilterActive = () => {
+  return useSelector(
+    (state: RootState) => state.omrr.pointFilterCenter !== undefined,
+  )
+}
