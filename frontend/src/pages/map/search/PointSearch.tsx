@@ -45,7 +45,7 @@ const styles = {
   },
   sliderContainer: ({ isSmall }: { isSmall: boolean }) => ({
     display: 'flex',
-    flexDirection: isSmall ? 'column' : 'row',
+    flexDirection: isSmall ? ('column' as const) : ('row' as const),
     gap: '20px',
     alignItems: 'center',
   }),
