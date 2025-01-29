@@ -31,11 +31,11 @@ describe('Test suite for SearchAutocomplete', () => {
     // This should match 4 results
     await user.type(input, 'waste')
     const options = await screen.findAllByRole('option')
-    expect(options).toHaveLength(4)
-    await screen.findByText(/WYNDLOW WOOD WASTE/i)
-    screen.getByText('11123')
-    screen.getByText(/BIOWASTE MANAGEMENT/i)
-    screen.getByText('11475')
+    expect(options).toHaveLength(6)
+    await screen.findByText(/Circular Waste/i)
+    screen.getByText('110565')
+    screen.getByText(/Waste Solutions/i)
+    screen.getByText('108919')
 
     await user.clear(input)
     await user.type(input, 'V9N')
