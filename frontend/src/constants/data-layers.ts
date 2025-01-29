@@ -101,15 +101,23 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     ],
   },
   {
-    name: 'Crown Lands',
+    name: 'ParcelMap BC',
     layers: [
       {
-        name: 'PMBC Parcel Cadastre – Crown Provincial',
+        name: 'Parcels - Outlined',
         url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
         layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
-        styles: '5899', // Provincial Crown Lands
+        styles: '5898',
         webUrl:
-          'https://catalogue.data.gov.bc.ca/dataset/4cf233c2-f020-4f7a-9b87-1923252fbc24',
+          'https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b',
+      },
+      {
+        name: 'Parcel IDs',
+        url: `${BASE_URL}/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows`,
+        layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+        styles: '7834',
+        webUrl:
+          'https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b',
       },
     ],
   },
@@ -151,10 +159,10 @@ export const DATA_LAYER_GROUPS: DataLayerGroup[] = [
     ],
   },
   {
-    name: 'Indian Reserves',
+    name: 'First Nation Reserves',
     layers: [
       {
-        name: 'Indian Reserves Including Band Names',
+        name: 'First Nation Reserves Including Band Names',
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/ows',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP',
         styles: '381_382',
