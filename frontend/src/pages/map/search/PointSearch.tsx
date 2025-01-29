@@ -149,6 +149,19 @@ export function PointSearch({
             },
           }}
         />
+        {isSmall && (
+          <Button
+            color="primary"
+            variant="contained"
+            size="small"
+            onClick={onFinish}
+            disabled={!isDrawing || !isFilterActive || finished}
+            startIcon={<CheckIcon className="point-ok-icon" />}
+            sx={{ ml: 1 }}
+          >
+            OK
+          </Button>
+        )}
       </div>
     </div>
   )

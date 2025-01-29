@@ -235,10 +235,8 @@ export const omrrSlice = createSlice({
       }
     },
     setPointFilterFinished: (state) => {
-      console.log('setPointFilterFinished', state.pointFilterFinished)
       if (!state.pointFilterFinished && state.pointFilterCenter) {
         state.pointFilterFinished = true
-        console.log('setPointFilterFinished', state.pointFilterFinished)
         performSearch(state)
       }
     },
