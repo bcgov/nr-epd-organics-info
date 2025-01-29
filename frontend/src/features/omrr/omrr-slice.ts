@@ -240,6 +240,12 @@ export const omrrSlice = createSlice({
         performSearch(state)
       }
     },
+    setPointFilterUnfinished: (state) => {
+      if (!state.pointFilterFinished && state.pointFilterCenter) {
+        state.pointFilterFinished = false
+        performSearch(state)
+      }
+    },
   },
   extraReducers: (builder: ActionReducerMapBuilder<OmrrSliceState>) => {
     // Handle the pending action
@@ -293,6 +299,7 @@ export const {
   resetPointFilter,
   clearShapeFilters,
   setPointFilterFinished,
+  setPointFilterUnfinished,
 } = omrrSlice.actions
 
 export default omrrSlice.reducer

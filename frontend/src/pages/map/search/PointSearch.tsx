@@ -16,6 +16,7 @@ import {
   usePointFilterActive,
   usePointFilterFinished,
   setPointFilterFinished,
+  setPointFilterUnfinished,
 } from '@/features/omrr/omrr-slice'
 import { formatDistance } from '@/utils/utils'
 import { ActiveToolEnum } from '@/constants/constants'
@@ -44,16 +45,16 @@ const styles = {
     width: '100%',
   },
   textField: {
-    marginTop: '-24px',
+    marginTop: '-10px',
     '& input[type=number]': {
       MozAppearance: 'textfield',
     },
     '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button':
       {
         WebkitAppearance: 'none',
-        margin: 0,
       },
   },
+  okButton: { marginTop: '-10px' },
   input: {
     textAlign: 'right',
     paddingRight: '2px',
@@ -78,6 +79,7 @@ export function PointSearch({
   const onCancel = () => {
     dispatch(resetPointFilter())
     dispatch(clearActiveTool())
+    dispatch(setPointFilterUnfinished())
   }
 
   const onFinish = () => {
@@ -157,7 +159,7 @@ export function PointSearch({
             onClick={onFinish}
             disabled={!isDrawing || !isFilterActive || finished}
             startIcon={<CheckIcon className="point-ok-icon" />}
-            sx={{ ml: 1 }}
+            sx={{ ml: 1, ...styles.okButton }}
           >
             OK
           </Button>
