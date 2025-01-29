@@ -52,6 +52,7 @@ export interface OmrrSliceState {
   lastSearchTime?: number
   pointFilterCenter?: LatLngTuple
   pointFilterRadius: number
+  pointFilterFinished: boolean
   polygonFilterPositions: LatLngTuple[]
   polygonFilterFinished: boolean
 }
@@ -79,6 +80,7 @@ export const initialState: OmrrSliceState = {
   // The point filter is active when the center point is defined
   pointFilterCenter: undefined,
   pointFilterRadius: MIN_CIRCLE_RADIUS,
+  pointFilterFinished: false,
   // The polygon filter is active when finished is true
   polygonFilterPositions: [],
   polygonFilterFinished: false,
@@ -215,8 +217,8 @@ export const omrrSlice = createSlice({
       }
     },
     resetPointFilter: (state) => {
-      // Reset point filter and search if necessary
       state.pointFilterRadius = MIN_CIRCLE_RADIUS
+      state.pointFilterFinished = false
       if (state.pointFilterCenter) {
         state.pointFilterCenter = undefined
         performSearch(state, false)
@@ -230,6 +232,14 @@ export const omrrSlice = createSlice({
         state.polygonFilterFinished = false
         state.pointFilterCenter = undefined
         performSearch(state, false)
+      }
+    },
+    setPointFilterFinished: (state) => {
+      console.log('setPointFilterFinished', state.pointFilterFinished)
+      if (!state.pointFilterFinished && state.pointFilterCenter) {
+        state.pointFilterFinished = true
+        console.log('setPointFilterFinished', state.pointFilterFinished)
+        performSearch(state)
       }
     },
   },
@@ -284,6 +294,7 @@ export const {
   setPointFilterRadius,
   resetPointFilter,
   clearShapeFilters,
+  setPointFilterFinished,
 } = omrrSlice.actions
 
 export default omrrSlice.reducer
@@ -363,3 +374,6 @@ export const usePointFilterActive = () => {
     (state: RootState) => state.omrr.pointFilterCenter !== undefined,
   )
 }
+
+export const usePointFilterFinished = () =>
+  useSelector((state: RootState) => state.omrr.pointFilterFinished)

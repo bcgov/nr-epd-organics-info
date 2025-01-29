@@ -4,11 +4,18 @@ import clsx from 'clsx'
 
 import DropdownButton from '@/components/DropdownButton'
 import { MIN_CIRCLE_RADIUS } from '@/constants/constants'
-import { clearActiveTool, toggleActiveTool } from '@/features/map/map-slice'
+import {
+  clearActiveTool,
+  toggleActiveTool,
+  useActiveTool,
+} from '@/features/map/map-slice'
 import {
   resetPointFilter,
   setPointFilterRadius,
   usePointFilterRadius,
+  usePointFilterActive,
+  usePointFilterFinished,
+  setPointFilterFinished,
 } from '@/features/omrr/omrr-slice'
 import { formatDistance } from '@/utils/utils'
 import { ActiveToolEnum } from '@/constants/constants'
@@ -63,15 +70,18 @@ export function PointSearch({
 }: Readonly<Props>) {
   const dispatch = useDispatch()
   const radius = usePointFilterRadius()
+  const activeTool = useActiveTool()
+  const isDrawing = activeTool === ActiveToolEnum.pointSearch
+  const isFilterActive = usePointFilterActive()
+  const finished = usePointFilterFinished()
 
   const onCancel = () => {
     dispatch(resetPointFilter())
     dispatch(clearActiveTool())
   }
 
-  const onOk = () => {
-    dispatch(toggleActiveTool(ActiveToolEnum.pointSearch))
-    // No dispatches needed - just let the dropdown close naturally
+  const onFinish = () => {
+    dispatch(setPointFilterFinished())
   }
 
   const onRadiusChange = (_ev: any, value: number | number[]) => {
@@ -165,6 +175,7 @@ export function PointSearch({
             size="medium"
             menuClassName="point-search-menu"
             dropdownContent={sliderBox}
+            // disabled={finished}
           >
             Set Radius
           </DropdownButton>
@@ -172,10 +183,11 @@ export function PointSearch({
             color="primary"
             variant="contained"
             size="medium"
-            onClick={onOk}
+            onClick={onFinish}
+            disabled={!isDrawing || !isFilterActive || finished}
             startIcon={<CheckIcon className="point-ok-icon" />}
           >
-            Ok
+            OK
           </Button>
         </>
       )}
