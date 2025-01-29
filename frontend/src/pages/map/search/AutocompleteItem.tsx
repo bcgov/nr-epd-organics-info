@@ -39,11 +39,7 @@ function getLabel(matchType: MatchType, item: OmrrData | undefined): ReactNode {
   }
   if (item) {
     const { 'Authorization Number': number = 0 } = item
-    return (
-      <span>
-        Authorization #: <b>{number}</b>
-      </span>
-    )
+    return <span>Authorization #: {number}</span>
   }
   return 'Authorization:'
 }
