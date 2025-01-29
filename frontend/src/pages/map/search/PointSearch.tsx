@@ -83,6 +83,10 @@ export function PointSearch({
   }
 
   const onFinish = () => {
+    const mapContainer = document.querySelector('.map-container')
+    if (mapContainer) {
+      mapContainer.classList.remove('crosshairs-cursor')
+    }
     dispatch(setPointFilterFinished())
   }
 
