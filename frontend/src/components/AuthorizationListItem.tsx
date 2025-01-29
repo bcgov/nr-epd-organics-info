@@ -46,7 +46,7 @@ export function AuthorizationListItem({
       sx={sx}
     >
       <Typography component="div" fontSize={14} marginBottom="8px">
-        Authorization #: {number}
+        Authorization #: <span>{number}</span>
       </Typography>
       <Typography
         component="div"
