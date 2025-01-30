@@ -6,6 +6,9 @@ import { ActiveToolEnum } from '@/constants/constants'
 import {
   resetPointFilter,
   resetPolygonFilter,
+  usePointFilterActive,
+  setPointFilterUnfinished,
+  usePointFilterFinished,
 } from '@/features/omrr/omrr-slice'
 import { toggleActiveTool } from '@/features/map/map-slice'
 
@@ -17,15 +20,17 @@ interface Props {
 
 export function PointSearchButton({ isActive }: Readonly<Props>) {
   const dispatch = useDispatch()
+  const isFilterActive = usePointFilterActive()
+  const isFinished = usePointFilterFinished()
 
   const onClick = () => {
-    if (isActive) {
-      // Turn off point search
-      dispatch(resetPointFilter())
-    } else {
-      // starting point search - make sure the polygon filter is turned off
+    dispatch(resetPointFilter())
+    dispatch(setPointFilterUnfinished())
+
+    if (!isActive) {
       dispatch(resetPolygonFilter())
     }
+
     dispatch(toggleActiveTool(ActiveToolEnum.pointSearch))
   }
 
@@ -42,10 +47,26 @@ export function PointSearchButton({ isActive }: Readonly<Props>) {
       )}
       onClick={onClick}
       startIcon={
-        <PointIcon title="Point search icon" className="point-search-icon" />
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <PointIcon title="Radius search icon" className="point-search-icon" />
+          {isFilterActive && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '-2px',
+                right: '-12px',
+                width: '6px',
+                height: '6px',
+                backgroundColor:
+                  'var(--surface-color-primary-dangerButton-default, #ce3e39)',
+                borderRadius: '50%',
+              }}
+            />
+          )}
+        </div>
       }
     >
-      Point Search
+      Radius Search
     </Button>
   )
 }

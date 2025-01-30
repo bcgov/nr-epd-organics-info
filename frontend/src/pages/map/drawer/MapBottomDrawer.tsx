@@ -15,6 +15,7 @@ import { SearchResultsList } from './SearchResultsList'
 import { PolygonSearch } from '../search/PolygonSearch'
 import { PointSearch } from '../search/PointSearch'
 import { ClearSelectedItemButton } from './ClearSelectedItemButton'
+import { useRadiusActive } from '@/features/map/map-slice'
 
 import ChevronUpIcon from '@/assets/svgs/fa-chevron-up.svg?react'
 import CloseIcon from '@/assets/svgs/close.svg?react'
@@ -31,7 +32,7 @@ function getTitle(
     case ActiveToolEnum.polygonSearch:
       return 'Polygon Search'
     case ActiveToolEnum.pointSearch:
-      return 'Point Search'
+      return 'Radius Search'
     case ActiveToolEnum.searchBy:
       return 'Status'
     case ActiveToolEnum.filterBy:
@@ -64,6 +65,7 @@ export function MapBottomDrawer() {
   } = useBottomDrawerState()
   const [fullHeight, setFullHeight] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
+  const isRadiusActive = useRadiusActive()
 
   const onClose = () => {
     setExpanded(false)
@@ -96,11 +98,16 @@ export function MapBottomDrawer() {
   return (
     <div
       ref={ref}
-      style={!isExpanded || fullHeight ? undefined : { height: `${height}px` }}
+      style={
+        !isExpanded || fullHeight
+          ? undefined
+          : { height: `${height}px`, maxHeight: '80vh' }
+      }
       className={clsx(
         'map-bottom-drawer',
         isExpanded && 'map-bottom-drawer--expanded',
         fullHeight && 'map-bottom-drawer--full-height',
+        isExpanded && isRadiusActive && 'radius-active',
       )}
       data-testid="map-bottom-drawer"
     >

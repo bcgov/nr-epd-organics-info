@@ -8,6 +8,7 @@ import {
   setPointFilterCenter,
   usePointFilterCenter,
   usePointFilterRadius,
+  usePointFilterFinished,
 } from '@/features/omrr/omrr-slice'
 import { useMapCrosshairsCursor } from '../hooks/useMapCrosshairsCursor'
 import { CrosshairsTooltipMarker } from './CrosshairsTooltipMarker'
@@ -24,22 +25,27 @@ function CircleLayer() {
   const dispatch = useDispatch()
   const center = usePointFilterCenter()
   const radius = usePointFilterRadius()
+  const finished = usePointFilterFinished()
   const map = useMap()
   useMapCrosshairsCursor(map)
 
   useMapEvents({
     click: (ev: LeafletMouseEvent) => {
-      const newCenter: LatLngTuple = [ev.latlng.lat, ev.latlng.lng]
-      dispatch(setPointFilterCenter(newCenter))
+      if (!finished) {
+        const newCenter: LatLngTuple = [ev.latlng.lat, ev.latlng.lng]
+        dispatch(setPointFilterCenter(newCenter))
+      }
     },
   })
 
   const drawCircle = center && radius > 0
   return (
     <>
-      <CrosshairsTooltipMarker center={center}>
-        Click to place center point
-      </CrosshairsTooltipMarker>
+      {!finished && (
+        <CrosshairsTooltipMarker center={center}>
+          Click to place center point
+        </CrosshairsTooltipMarker>
+      )}
       {drawCircle && (
         <Circle
           center={center}
@@ -47,6 +53,7 @@ function CircleLayer() {
           stroke
           fill
           className="point-search-circle"
+          interactive={false}
         />
       )}
     </>

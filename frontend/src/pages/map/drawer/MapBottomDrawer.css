@@ -12,6 +12,7 @@
   border-radius: 6px 6px 0 0;
   border-bottom: 1px solid var(--surface-color-border-light);
   transition: height 0.5s ease-in-out;
+  max-height: calc(100% - var(--header-height));
 }
 
 .map-bottom-drawer.map-bottom-drawer--full-height {
@@ -84,4 +85,12 @@ button.map-bottom-drawer-button {
 .map-bottom-drawer-container .filter-by-checkbox-group {
   overflow: hidden auto;
   padding-bottom: 40px;
+}
+
+.map-bottom-drawer--expanded {
+  min-height: 100px;
+}
+
+.map-bottom-drawer--expanded.radius-active {
+  min-height: 250px;
 }

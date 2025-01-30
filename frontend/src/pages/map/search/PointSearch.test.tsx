@@ -55,7 +55,7 @@ describe('Test suite for PointSearch', () => {
 
     const setRadiusBtn = screen.getByRole('button', { name: 'Set Radius' })
     await user.click(setRadiusBtn)
-    screen.getByText(`${MIN_CIRCLE_RADIUS} m`)
+    screen.getByText(`${MIN_CIRCLE_RADIUS / 1000} km`)
     const slider = screen.getByRole('slider', { name: 'Search radius' })
     fireEvent.change(slider, { target: { value: 1000 } })
     expect(state.pointFilterCenter).toBeUndefined()
@@ -68,7 +68,7 @@ describe('Test suite for PointSearch', () => {
     expect(screen.queryByText('Cancel')).not.toBeInTheDocument()
     screen.getByText('Set Radius:')
     const slider = screen.getByRole('slider', { name: 'Search radius' })
-    screen.getByText(`${MIN_CIRCLE_RADIUS} m`)
+    screen.getByText(`${MIN_CIRCLE_RADIUS / 1000} km`)
     fireEvent.change(slider, { target: { value: 2000 } })
     expect(state.pointFilterCenter).toBeUndefined()
     expect(state.pointFilterRadius).toBe(2000)

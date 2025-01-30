@@ -32,6 +32,7 @@ export interface MapSliceState {
   // data layers, search by and filter by (small screens only - shown in bottom drawer)
   activeTool?: ActiveToolEnum
   searchResults: OmrrData[]
+  isRadiusActive: boolean
 }
 
 export const initialState: MapSliceState = {
@@ -44,6 +45,7 @@ export const initialState: MapSliceState = {
   dataLayers: [],
   activeTool: undefined,
   searchResults: [],
+  isRadiusActive: false,
 }
 
 export const mapSlice = createSlice({
@@ -99,6 +101,14 @@ export const mapSlice = createSlice({
     clearSearchResults: (state) => {
       state.searchResults = []
     },
+    setRadiusActive: (state, action: PayloadAction<boolean>) => {
+      state.isRadiusActive = action.payload
+      if (action.payload) {
+        state.bottomDrawerHeight = 500 // 300 + 200
+      } else {
+        state.bottomDrawerHeight = 300
+      }
+    },
   },
 })
 
@@ -114,6 +124,7 @@ export const {
   toggleActiveTool,
   clearActiveTool,
   clearSearchResults,
+  setRadiusActive,
 } = mapSlice.actions
 
 // Create a thunk to clear both search results and search text
@@ -162,3 +173,6 @@ export const useHasDataLayersOn = () => useSelector(selectDataLayers).length > 0
 
 const selectActiveTool = (state: RootState) => state.map.activeTool
 export const useActiveTool = () => useSelector(selectActiveTool)
+
+export const useRadiusActive = () =>
+  useSelector((state: RootState) => state.map.isRadiusActive)
