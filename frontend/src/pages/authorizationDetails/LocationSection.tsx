@@ -67,11 +67,17 @@ export function LocationSection({ item }: Readonly<Props>) {
         </>
       ) : (
         <>
-          <Box display="flex" flexDirection="column" gap="24px" flex={1}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="24px"
+            flex={1}
+            width="50%"
+          >
             {title}
             {details}
           </Box>
-          {map}
+          <Box width="50%">{map}</Box>
         </>
       )}
     </Stack>
