@@ -38,6 +38,7 @@ export default function AuthorizationDetails() {
     'Regulated Party': name,
     'Effective/Issue Date': effectiveIssueDate,
     'Last Amendment Date': lastAmendmentDate,
+    'Authorization Type': authorizationType,
   } = item
 
   return (

@@ -66,7 +66,6 @@ describe('Test suite for AuthorizationDetails', () => {
       'Effective/Issue Date': issueDate,
       'Last Amendment Date': lastAmendmentDate,
       'Facility Location': address,
-      'Authorization Type': authorizationType,
       Latitude,
       Longitude,
     } = item
@@ -96,7 +95,6 @@ describe('Test suite for AuthorizationDetails', () => {
 
     screen.getByText('Authorization Details')
     screen.getByText('Authorization Type')
-    screen.getByText(authorizationType)
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText(/^Please note that authorizations issued/)
@@ -110,13 +108,11 @@ describe('Test suite for AuthorizationDetails', () => {
     const item = mockOmrrData.find(
       (item) => item['Authorization Number'] === number,
     ) as OmrrData
-    const { 'Authorization Type': authorizationType } = item
 
     renderComponent(number)
 
     screen.getByText('Application Status')
     const box = screen.getByTestId('application-status-box')
-    getByText(box, authorizationType)
     getByText(box, 'Received Date')
     getByText(box, '2019-09-27')
     getByText(box, 'Status')
