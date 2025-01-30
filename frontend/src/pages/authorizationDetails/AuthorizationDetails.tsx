@@ -85,7 +85,7 @@ export default function AuthorizationDetails() {
                 Authorization
               </Typography>
               <Typography variant="h5" component="span" fontWeight={500}>
-                #{number}
+                #: {number}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
