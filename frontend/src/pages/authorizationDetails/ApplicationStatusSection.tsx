@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'
 import {
@@ -30,14 +30,26 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
 
   return (
     <div className="application-status-section">
-      <Typography fontSize={12} fontWeight="bold">
+      <Typography fontSize={14} fontWeight="bold">
         Application Status
       </Typography>
+      <Typography fontSize={14} fontWeight="normal" fontStyle="italic">
+        <a
+          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/change"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn more
+        </a>{' '}
+        about amendments, notifications and authorizations
+      </Typography>
+
       {allApplications.map((appStatus: OmrrApplicationStatus) => {
         const {
           'Authorization Type': authorizationType,
           'Received Date': receivedDate,
           'Job Tracking Number': trackingNumber,
+          'Job Type': jobType,
           Status: status,
         } = appStatus
         return (
@@ -47,41 +59,52 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
               xs: 'column',
               md: 'row',
             }}
+            spacing={4}
             className="application-status-box"
             component="section"
             data-testid="application-status-box"
           >
-            <Typography
-              fontWeight="bold"
-              sx={{
-                flex: 1,
-                marginBottom: {
-                  xs: '16px',
-                  md: 0,
-                },
-              }}
-            >
-              {authorizationType}
-            </Typography>
-            <div className="application-status-label application-status-label--light">
-              Received Date
-            </div>
-            <div className="application-status-value">{receivedDate}</div>
-            <div className="application-status-label application-status-label--light">
-              Status
-            </div>
-            <div className="application-status-value">{status}</div>
+            {/* Column 1: Authorization Type - 50% */}
+            <Stack sx={{ flex: '0 0 50%' }}>
+              <Typography fontWeight="bold" sx={{ marginBottom: '8px' }}>
+                {jobType}
+              </Typography>
+              {jobType === 'Authorization Amendment' && (
+                <Typography
+                  fontSize={14}
+                  fontWeight="normal"
+                  fontStyle="italic"
+                >
+                  <a
+                    href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/change"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn more
+                  </a>{' '}
+                  what an amendment to an application means
+                </Typography>
+              )}
+            </Stack>
+
+            {/* Column 2: Received Date - 25% */}
+            <Stack direction="row" spacing={2} sx={{ flex: '0 0 25%' }}>
+              <Box className="application-status-label application-status-label--light">
+                Received Date
+              </Box>
+              <Box className="application-status-value">{receivedDate}</Box>
+            </Stack>
+
+            {/* Column 3: Status - 25% */}
+            <Stack direction="row" spacing={2} sx={{ flex: '0 0 25%' }}>
+              <Box className="application-status-label application-status-label--light">
+                Status
+              </Box>
+              <Box className="application-status-value">{status}</Box>
+            </Stack>
           </Stack>
         )
       })}
-
-      <div className="application-status-guidance">
-        Applies to amendment and new notifications only,{' '}
-        <NavLink to="/guidance" className="application-status-guidance-link">
-          please see our guidance on data we show
-        </NavLink>
-        .
-      </div>
     </div>
   )
 }
