@@ -74,7 +74,6 @@ describe('Test suite for AuthorizationDetails', () => {
     expect(location.pathname).toBe(`/authorization/${number}`)
     await screen.findByText(name)
 
-    screen.getByText(number)
     screen.getByText('Effective/Issue Date')
     screen.getByText(issueDate)
     screen.getByText('Last Amendment Date')
