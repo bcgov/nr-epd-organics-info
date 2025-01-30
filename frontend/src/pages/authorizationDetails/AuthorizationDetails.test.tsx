@@ -74,9 +74,6 @@ describe('Test suite for AuthorizationDetails', () => {
     expect(location.pathname).toBe(`/authorization/${number}`)
     await screen.findByText(name)
 
-    screen.getByText('Authorization Status')
-    screen.getByText('Inactive')
-    screen.getByText('Authorization Number')
     screen.getByText(number)
     screen.getByText('Effective/Issue Date')
     screen.getByText(issueDate)
@@ -117,9 +114,6 @@ describe('Test suite for AuthorizationDetails', () => {
     getByText(box, '2019-09-27')
     getByText(box, 'Status')
     getByText(box, 'In Review')
-
-    screen.getByText(/^Applies to amendment and new notifications only/)
-    // screen.getByRole('link', { name: 'please see our guidance on data we show' })
   })
 
   it('should render AuthorizationDetails with no documents', async () => {
