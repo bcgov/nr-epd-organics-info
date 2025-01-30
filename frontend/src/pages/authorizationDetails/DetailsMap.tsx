@@ -16,11 +16,10 @@ export function DetailsMap({ item, isSmall = false }: Readonly<Props>) {
   return (
     <MapContainer
       center={position}
-      scrollWheelZoom={false}
-      zoomControl={false}
       zoom={14}
-      style={{ height: `${height}px` }}
-      className="authorization-details-map"
+      scrollWheelZoom={false}
+      style={{ height: height, width: '100%' }}
+      dragging={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
