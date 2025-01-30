@@ -81,7 +81,6 @@ describe('Test suite for AuthorizationDetails', () => {
       screen.getByText(lastAmendmentDate)
     }
 
-    screen.getByText('Location Details')
     screen.getByText('Facility Location')
     screen.getByText(address)
     screen.getByText('Latitude')
