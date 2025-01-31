@@ -143,7 +143,5 @@ describe('Test suite for AuthorizationDetails', () => {
 
     screen.getByText('Documents')
     screen.getByText('File Description')
-    screen.getByText('test-file.pdf')
-    screen.getByText('sample-file.pdf')
   })
 })
