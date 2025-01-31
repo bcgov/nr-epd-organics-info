@@ -57,8 +57,8 @@ backend:
     enabled: false # enable it in PRODUCTION for having pod disruption budget.
     minAvailable: 1 # the minimum number of pods that must be available during the disruption budget.
   env:
-    omrrAuthzDocsFlag: "false"
-    omrrAppStatusFlag: "false"
+    omrrAuthzDocsFlag: "true"
+    omrrAppStatusFlag: "true"
 
 frontend:
   # -- enable or disable a component deployment.
@@ -90,4 +90,3 @@ frontend:
   env:
     osmGrayscaleFlag: "false"
     zoomToResultsControlFlag: "true"
-
