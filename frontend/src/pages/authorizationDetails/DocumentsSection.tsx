@@ -60,6 +60,7 @@ export function DocumentsSection({ item }: Readonly<Props>) {
           </div>
         )}
         {documents.map((doc: OmrrAuthzDocs) => {
+          console.log(doc)
           const extension =
             (doc.Filename ?? '').split('.').pop()?.toUpperCase() || 'DOC'
           return (
