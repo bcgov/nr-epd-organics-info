@@ -33,7 +33,7 @@ foreach ($key in $secretData.data.PSObject.Properties.Name) {
 }
 $envContent += "NR_ORACLE_SERVICE_URL=http://localhost:9080`n"
 $envContent += "OMRR_AUTHZ_DOCS_FLAG=true`n"
-$envContent += "OMRR_APP_STATUS_FLAG=flase"
+$envContent += "OMRR_APP_STATUS_FLAG=true`n"
 # Write the content to the output file
 $envContent | Out-File -FilePath "$file_path" -Encoding utf8
 
