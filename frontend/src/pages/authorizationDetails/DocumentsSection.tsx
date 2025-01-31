@@ -48,24 +48,28 @@ export function DocumentsSection({ item }: Readonly<Props>) {
             There are no documents to display.
           </div>
         )}
-        {documents.map((doc: OmrrAuthzDocs) => (
-          <Link
-            key={`DocumentRow-${doc.DocumentObjectID}`}
-            className={clsx(
-              'documents-table-cell',
-              canDownload && 'documents-table-cell--link',
-            )}
-            href={
-              env.VITE_AMS_URL +
-              'download.aspx?PosseObjectId=' +
-              doc.DocumentObjectID
-            }
-            target="_blank"
-            rel={canDownload ? 'noopener noreferrer' : ''}
-          >
-            {doc.Description}
-          </Link>
-        ))}
+        {documents.map((doc: OmrrAuthzDocs) => {
+          const extension =
+            (doc.Filename ?? '').split('.').pop()?.toUpperCase() || 'DOC'
+          return (
+            <Link
+              key={`DocumentRow-${doc.DocumentObjectID}`}
+              className={clsx(
+                'documents-table-cell',
+                canDownload && 'documents-table-cell--link',
+              )}
+              href={
+                env.VITE_AMS_URL +
+                'download.aspx?PosseObjectId=' +
+                doc.DocumentObjectID
+              }
+              target="_blank"
+              rel={canDownload ? 'noopener noreferrer' : ''}
+            >
+              {doc.Description} ({extension})
+            </Link>
+          )
+        })}
       </Stack>
     </Stack>
   )
