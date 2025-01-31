@@ -69,22 +69,6 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
               <Typography fontWeight="bold" sx={{ marginBottom: '8px' }}>
                 {jobType}
               </Typography>
-              {jobType === 'Authorization Amendment' && (
-                <Typography
-                  fontSize={14}
-                  fontWeight="normal"
-                  fontStyle="italic"
-                >
-                  <a
-                    href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/change"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Learn more
-                  </a>{' '}
-                  what an amendment to an application means
-                </Typography>
-              )}
             </Stack>
 
             {/* Column 2: Received Date - 25% */}
@@ -105,6 +89,13 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
           </Stack>
         )
       })}
+      <div className="application-status-guidance">
+        Applies to amendment and new notifications only,{' '}
+        <NavLink to="/guidance" className="application-status-guidance-link">
+          please see our guidance on data we show
+        </NavLink>
+        .
+      </div>
     </div>
   )
 }
