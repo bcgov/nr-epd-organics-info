@@ -39,6 +39,17 @@ export function DocumentsSection({ item }: Readonly<Props>) {
       <Typography fontWeight={700} color="#000" fontSize="24px">
         Documents
       </Typography>
+      <Typography fontSize="16px" color="#666" fontStyle="italic">
+        Authorization document(s) presented are publicly available document(s)
+        hosted on the{' '}
+        <a
+          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/find-authorization"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Authorization Management System
+        </a>
+      </Typography>
       <Stack className="documents-table" direction="column">
         <div className="documents-table-cell documents-table-cell--header">
           File Description
