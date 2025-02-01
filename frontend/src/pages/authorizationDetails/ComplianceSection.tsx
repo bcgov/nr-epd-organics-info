@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ImportExportIcon from '@mui/icons-material/ImportExport'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { useEffect, useState } from 'react'
 import './ComplianceSection.css'
@@ -19,7 +20,9 @@ interface ComplianceRecord {
 
 export function ComplianceSection({ item }: Readonly<Props>) {
   const [complianceData, setComplianceData] = useState<ComplianceRecord[]>([])
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(
+    null,
+  )
 
   useEffect(() => {
     const fetchComplianceData = async () => {
@@ -46,13 +49,27 @@ export function ComplianceSection({ item }: Readonly<Props>) {
   }, [item])
 
   const handleSort = () => {
+    const newDirection =
+      sortDirection === null ? 'desc' : sortDirection === 'desc' ? 'asc' : null
+
     const sorted = [...complianceData].sort((a, b) => {
       const dateA = new Date(a.dateIssued).getTime()
       const dateB = new Date(b.dateIssued).getTime()
-      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA
+      return newDirection === 'asc'
+        ? dateA - dateB
+        : newDirection === 'desc'
+          ? dateB - dateA
+          : 0
     })
-    setComplianceData(sorted)
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+
+    setComplianceData(newDirection === null ? sorted.reverse() : sorted)
+    setSortDirection(newDirection)
+  }
+
+  const getSortIcon = () => {
+    if (sortDirection === 'asc') return <ArrowUpwardIcon fontSize="small" />
+    if (sortDirection === 'desc') return <ArrowDownwardIcon fontSize="small" />
+    return <ImportExportIcon fontSize="small" />
   }
 
   return (
@@ -80,11 +97,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
             onClick={handleSort}
           >
             Date Issued
-            {sortDirection === 'asc' ? (
-              <ArrowUpwardIcon fontSize="small" />
-            ) : (
-              <ArrowDownwardIcon fontSize="small" />
-            )}
+            {getSortIcon()}
           </div>
           <div className="compliance-table-cell">Type</div>
           <div className="compliance-table-cell">Summary</div>
