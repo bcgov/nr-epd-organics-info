@@ -1,4 +1,6 @@
 import { Stack, Typography } from '@mui/material'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { useEffect, useState } from 'react'
 import './ComplianceSection.css'
 import OmrrData from '@/interfaces/omrr'
@@ -16,6 +18,7 @@ interface ComplianceRecord {
 
 export function ComplianceSection({ item }: Readonly<Props>) {
   const [complianceData, setComplianceData] = useState<ComplianceRecord[]>([])
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
   useEffect(() => {
     const fetchComplianceData = async () => {
@@ -25,7 +28,6 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       try {
         const response = await fetch(url)
         const data = await response.json()
-        console.log(data)
         const records = data[0].searchResults.map((record: any) => ({
           dateIssued: record.dateIssued,
           recordType: record.recordType,
@@ -41,6 +43,16 @@ export function ComplianceSection({ item }: Readonly<Props>) {
 
     fetchComplianceData()
   }, [item])
+
+  const handleSort = () => {
+    const sorted = [...complianceData].sort((a, b) => {
+      const dateA = new Date(a.dateIssued).getTime()
+      const dateB = new Date(b.dateIssued).getTime()
+      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA
+    })
+    setComplianceData(sorted)
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+  }
 
   return (
     <Stack
@@ -62,7 +74,17 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       </Typography>
       <Stack className="compliance-table" direction="column">
         <div className="compliance-table-row compliance-table-header">
-          <div className="compliance-table-cell">Date Issued</div>
+          <div
+            className="compliance-table-cell compliance-table-cell--sortable"
+            onClick={handleSort}
+          >
+            Date Issued
+            {sortDirection === 'asc' ? (
+              <ArrowUpwardIcon fontSize="small" />
+            ) : (
+              <ArrowDownwardIcon fontSize="small" />
+            )}
+          </div>
           <div className="compliance-table-cell">Type</div>
           <div className="compliance-table-cell">Summary</div>
           <div className="compliance-table-cell">Action</div>

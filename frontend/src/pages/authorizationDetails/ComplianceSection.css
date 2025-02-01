@@ -40,3 +40,19 @@
   text-decoration-line: none;
   font-size: 12px;
 }
+
+.compliance-table-cell--sortable {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.compliance-table-cell--sortable:hover {
+  background-color: var(--surface-color-brand-gray-30);
+}
+
+.compliance-table-cell--sortable svg {
+  width: 16px;
+  height: 16px;
+}
