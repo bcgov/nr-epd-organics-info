@@ -74,7 +74,13 @@ export function ComplianceSection({ item }: Readonly<Props>) {
         )}
         {complianceData.map((record) => (
           <div key={record.id} className="compliance-table-row">
-            <div className="compliance-table-cell">{record.dateIssued}</div>
+            <div className="compliance-table-cell">
+              {new Date(record.dateIssued).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </div>
             <div className="compliance-table-cell">{record.recordType}</div>
             <div className="compliance-table-cell">{record.summary}</div>
             <div className="compliance-table-cell">

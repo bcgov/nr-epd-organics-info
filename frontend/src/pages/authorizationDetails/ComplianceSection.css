@@ -10,14 +10,10 @@
 
 .compliance-table-cell {
   background-color: var(--surface-color-background-white);
-  border-bottom: 1px solid var(--surface-color-border-medium);
-  color: var(--typography-color-primary);
+  border-bottom: 1px solid #d8d8d8;
+  color: var(--typography-color-secondary);
   padding: 8px;
   font-size: 12px;
-}
-
-.compliance-table-cell:last-child {
-  border-bottom: none;
 }
 
 .compliance-table-cell--no-data {
@@ -37,4 +33,10 @@
 
 .compliance-table-header:first-child {
   border-radius: 4px 4px 0 0;
+}
+
+.compliance-table-cell a {
+  color: var(--typography-color-link);
+  text-decoration-line: none;
+  font-size: 12px;
 }
