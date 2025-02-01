@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { useEffect, useState } from 'react'
 import './ComplianceSection.css'
 import OmrrData from '@/interfaces/omrr'
@@ -110,8 +111,9 @@ export function ComplianceSection({ item }: Readonly<Props>) {
                 href={`https://nrced.gov.bc.ca/records;autofocus=${record.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="view-link"
               >
-                View
+                View <OpenInNewIcon fontSize="small" />
               </a>
             </div>
           </div>

@@ -56,3 +56,19 @@
   width: 16px;
   height: 16px;
 }
+
+.view-link {
+  color: var(--typography-color-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.view-link svg {
+  font-size: 14px;
+}
+
+.view-link:hover {
+  text-decoration: underline;
+}
