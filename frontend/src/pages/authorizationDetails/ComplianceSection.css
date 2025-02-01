@@ -1,0 +1,40 @@
+.compliance-table {
+  border-radius: 4px 4px 0 0;
+  border: 1px solid var(--surface-color-border-light);
+}
+
+.compliance-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+}
+
+.compliance-table-cell {
+  background-color: var(--surface-color-background-white);
+  border-bottom: 1px solid var(--surface-color-border-medium);
+  color: var(--typography-color-primary);
+  padding: 8px;
+  font-size: 12px;
+}
+
+.compliance-table-cell:last-child {
+  border-bottom: none;
+}
+
+.compliance-table-cell--no-data {
+  color: var(--typography-color-secondary);
+  text-align: center;
+  padding: 24px;
+  background-color: var(--surface-color-brand-gray-10);
+  grid-column: 1 / -1; /* This makes it span all columns */
+}
+
+.compliance-table-header .compliance-table-cell {
+  background-color: var(--surface-color-brand-gray-20);
+  border-bottom-color: var(--surface-color-border-medium);
+  color: var(--typography-color-secondary);
+  font-weight: 700;
+}
+
+.compliance-table-header:first-child {
+  border-radius: 4px 4px 0 0;
+}
