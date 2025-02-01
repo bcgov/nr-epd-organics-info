@@ -5,7 +5,7 @@
 
 .compliance-table-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 4fr 100px;
 }
 
 .compliance-table-cell {
@@ -27,8 +27,13 @@
 .compliance-table-header .compliance-table-cell {
   background-color: var(--surface-color-brand-gray-20);
   border-bottom-color: var(--surface-color-border-medium);
+  border-right: 1px solid var(--surface-color-border-light);
   color: var(--typography-color-secondary);
   font-weight: 700;
+}
+
+.compliance-table-header .compliance-table-cell:last-child {
+  border-right: none;
 }
 
 .compliance-table-header:first-child {
@@ -71,4 +76,8 @@
 
 .view-link:hover {
   text-decoration: underline;
+}
+
+.compliance-table-row:not(.compliance-table-header) > div:last-child {
+  padding-left: 10px;
 }
