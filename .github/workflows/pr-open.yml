@@ -17,7 +17,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        package: [ backend, frontend ]
+        package: [backend, frontend]
     timeout-minutes: 10
     steps:
       - uses: bcgov/action-builder-ghcr@v2.3.0
@@ -42,11 +42,14 @@ jobs:
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
         --set global.amsURL=https://test.j200.gov.bc.ca/pub/ams/ \
+        --set global.nrptiAPIURL=https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca \
+        --set global.nrcedURL=https://nrced.gov.bc.ca \
         --set-string backend.env.omrrAuthzDocsFlag=true \
+
   tests:
     name: Tests
     if: needs.deploys.outputs.triggered == 'true'
-    needs: [ deploys ]
+    needs: [deploys]
     uses: ./.github/workflows/.tests.yml
     with:
       target: ${{ github.event.number }}
