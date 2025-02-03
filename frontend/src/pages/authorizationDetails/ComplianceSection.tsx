@@ -49,8 +49,9 @@ export function ComplianceSection({ item }: Readonly<Props>) {
   }, [item])
 
   const handleSort = () => {
-    const newDirection =
-      sortDirection === null ? 'desc' : sortDirection === 'desc' ? 'asc' : null
+    let newDirection: 'asc' | 'desc' | null = 'desc'
+    if (sortDirection === 'desc') newDirection = 'asc'
+    else if (sortDirection === 'asc') newDirection = null
 
     const sorted = [...complianceData].sort((a, b) => {
       const dateA = new Date(a.dateIssued).getTime()
@@ -64,7 +65,10 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       return sortResult
     })
 
-    setComplianceData(newDirection === null ? sorted.reverse() : sorted)
+    if (newDirection === null) {
+      sorted.reverse()
+    }
+    setComplianceData(sorted)
     setSortDirection(newDirection)
   }
 
