@@ -176,7 +176,8 @@ describe('Test suite for AuthorizationDetails', () => {
 
     // Wait for data to load
     await screen.findByText(mockComplianceData[0].summary)
-    screen.getByText('View')
+    const viewLinks = screen.getAllByText('View')
+    expect(viewLinks).toHaveLength(2) // Verify we have two "View" links
   })
 
   it('should handle compliance section sorting', async () => {
