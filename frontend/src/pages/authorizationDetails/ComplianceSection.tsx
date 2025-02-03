@@ -6,6 +6,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { useEffect, useState } from 'react'
 import './ComplianceSection.css'
 import OmrrData from '@/interfaces/omrr'
+import { env } from '@/env'
 
 interface Props {
   item: OmrrData
@@ -27,7 +28,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
   useEffect(() => {
     const fetchComplianceData = async () => {
       const keywords = `${item['Authorization Number']} OR "${item['Regulated Party']}"`
-      const url = `${import.meta.env.VITE_NRPTI_API_URL}/api/public/search?dataset=OrderNRCED,InspectionNRCED,RestorativeJusticeNRCED,AdministrativePenaltyNRCED,AdministrativeSanctionNRCED,TicketNRCED,WarningNRCED,CourtConvictionNRCED,CorrespondenceNRCED,DamSafetyInspectionNRCED,ReportNRCED&keywords=${encodeURIComponent(keywords)}&pageNum=0&pageSize=25&sortBy=-dateIssued&fields=`
+      const url = `${env.VITE_NRPTI_API_URL}/api/public/search?dataset=OrderNRCED,InspectionNRCED,RestorativeJusticeNRCED,AdministrativePenaltyNRCED,AdministrativeSanctionNRCED,TicketNRCED,WarningNRCED,CourtConvictionNRCED,CorrespondenceNRCED,DamSafetyInspectionNRCED,ReportNRCED&keywords=${encodeURIComponent(keywords)}&pageNum=0&pageSize=25&sortBy=-dateIssued&fields=`
 
       try {
         const response = await fetch(url)
@@ -127,7 +128,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
             <div className="compliance-table-cell">{record.summary}</div>
             <div className="compliance-table-cell">
               <a
-                href={`${import.meta.env.VITE_NRCED_URL}/records;autofocus=${record.id}`}
+                href={`${env.VITE_NRCED_URL}/records;autofocus=${record.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-link"
