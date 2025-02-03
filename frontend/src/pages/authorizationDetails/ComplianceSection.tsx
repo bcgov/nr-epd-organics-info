@@ -27,7 +27,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
   useEffect(() => {
     const fetchComplianceData = async () => {
       const keywords = `${item['Authorization Number']} OR "${item['Regulated Party']}"`
-      const url = `https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca/api/public/search?dataset=OrderNRCED,InspectionNRCED,RestorativeJusticeNRCED,AdministrativePenaltyNRCED,AdministrativeSanctionNRCED,TicketNRCED,WarningNRCED,CourtConvictionNRCED,CorrespondenceNRCED,DamSafetyInspectionNRCED,ReportNRCED&keywords=${encodeURIComponent(keywords)}&pageNum=0&pageSize=25&sortBy=-dateIssued&fields=`
+      const url = `${import.meta.env.VITE_NRPTI_API_URL}/api/public/search?dataset=OrderNRCED,InspectionNRCED,RestorativeJusticeNRCED,AdministrativePenaltyNRCED,AdministrativeSanctionNRCED,TicketNRCED,WarningNRCED,CourtConvictionNRCED,CorrespondenceNRCED,DamSafetyInspectionNRCED,ReportNRCED&keywords=${encodeURIComponent(keywords)}&pageNum=0&pageSize=25&sortBy=-dateIssued&fields=`
 
       try {
         const response = await fetch(url)
@@ -127,7 +127,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
             <div className="compliance-table-cell">{record.summary}</div>
             <div className="compliance-table-cell">
               <a
-                href={`https://nrced.gov.bc.ca/records;autofocus=${record.id}`}
+                href={`${import.meta.env.VITE_NRCED_URL}/records;autofocus=${record.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-link"
