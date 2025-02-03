@@ -8,7 +8,7 @@ import { mockOmrrData } from '@/mocks/mock-omrr-data'
 import { mockOmrrApplicationStatusResponse } from '@/mocks/mock-omrr-application-status'
 import { mockOmrrDocuments } from '@/mocks/mock-omrr-documents'
 import AuthorizationDetails from './AuthorizationDetails'
-import { mockComplianceData } from '../../mocks/mock-compliance-data'
+import { mockComplianceData } from '@/mocks/mock-compliance-data'
 
 describe('Test suite for AuthorizationDetails', () => {
   function renderComponent(
