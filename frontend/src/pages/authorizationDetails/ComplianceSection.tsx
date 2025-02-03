@@ -55,11 +55,13 @@ export function ComplianceSection({ item }: Readonly<Props>) {
     const sorted = [...complianceData].sort((a, b) => {
       const dateA = new Date(a.dateIssued).getTime()
       const dateB = new Date(b.dateIssued).getTime()
-      return newDirection === 'asc'
-        ? dateA - dateB
-        : newDirection === 'desc'
-          ? dateB - dateA
-          : 0
+      let sortResult = 0
+      if (newDirection === 'asc') {
+        sortResult = dateA - dateB
+      } else if (newDirection === 'desc') {
+        sortResult = dateB - dateA
+      }
+      return sortResult
     })
 
     setComplianceData(newDirection === null ? sorted.reverse() : sorted)
@@ -92,13 +94,13 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       </Typography>
       <Stack className="compliance-table" direction="column">
         <div className="compliance-table-row compliance-table-header">
-          <div
+          <button
             className="compliance-table-cell compliance-table-cell--sortable"
             onClick={handleSort}
           >
             Date Issued
             {getSortIcon()}
-          </div>
+          </button>
           <div className="compliance-table-cell">Type</div>
           <div className="compliance-table-cell">Summary</div>
           <div className="compliance-table-cell">Action</div>
