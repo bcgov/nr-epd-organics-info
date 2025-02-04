@@ -43,9 +43,9 @@ jobs:
         --set frontend.deploymentStrategy=RollingUpdate \
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
-        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
-        --set-string backend.env.omrrAppStatusFlag=true \
-        --set-string backend.env.omrrAuthzDocsFlag=true\
+        --set-string global.amsURL="https://j200.gov.bc.ca/pub/ams/" \
+        --set-string backend.env.omrrAppStatusFlag="true" \
+        --set-string backend.env.omrrAuthzDocsFlag="true" \
   tests:
     name: Tests
     needs: [deploy-test]
@@ -67,11 +67,11 @@ jobs:
         --set frontend.deploymentStrategy=RollingUpdate \
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
-        --set global.amsURL=https://j200.gov.bc.ca/pub/ams/ \
-        --set-string backend.env.omrrAppStatusFlag=true \
-        --set-string backend.env.omrrAuthzDocsFlag=true\
-        --set global.nrptiAPIURL=https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca \
-        --set global.nrcedURL=https://nrced.gov.bc.ca \
+        --set-string global.amsURL="https://j200.gov.bc.ca/pub/ams/" \
+        --set-string backend.env.omrrAppStatusFlag="true" \
+        --set-string backend.env.omrrAuthzDocsFlag="true" \
+        --set-string global.nrptiAPIURL="https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca" \
+        --set-string global.nrcedURL="https://nrced.gov.bc.ca" \
 
   promote:
     name: Promote Images
