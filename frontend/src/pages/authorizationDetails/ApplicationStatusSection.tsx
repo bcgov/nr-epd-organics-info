@@ -30,7 +30,7 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
 
   return (
     <div className="application-status-section">
-      <Typography fontSize={14} fontWeight="bold">
+      <Typography fontWeight={700} fontSize="24px">
         Application Status
       </Typography>
       <Typography fontSize={14} fontWeight="normal" fontStyle="italic">
@@ -67,7 +67,7 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
             {/* Column 1: Authorization Type - 50% */}
             <Stack sx={{ flex: '0 0 50%' }}>
               <Typography fontWeight="bold" sx={{ marginBottom: '8px' }}>
-                {jobType}
+                {authorizationType} - {jobType}
               </Typography>
             </Stack>
 
@@ -91,9 +91,14 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
       })}
       <div className="application-status-guidance">
         Applies to amendment and new notifications only,{' '}
-        <NavLink to="/guidance" className="application-status-guidance-link">
+        <a
+          href="https://www2.gov.bc.ca/gov/content?id=AF9C921702294B06AD1490034721D3D6"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="application-status-guidance-link"
+        >
           please see our guidance on data we show
-        </NavLink>
+        </a>
         .
       </div>
     </div>
