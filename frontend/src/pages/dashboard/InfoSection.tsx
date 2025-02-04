@@ -22,21 +22,25 @@ const styles = {
     padding: '0 0 0 32px',
   },
   imageContainer: {
-    flex: 1,
+    flex: '1 1 50%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    maxHeight: '400px',
   },
   image: {
     borderRadius: '8px',
-    maxHeight: '40vh',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    maxHeight: '400px',
   },
   stack: {
     justifyContent: {
-      lg: 'flex-end',
+      lg: 'space-between',
       xs: 'flex-start',
     },
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     marginTop: {
       xs: 0,
       md: '32px',
@@ -48,7 +52,7 @@ const styles = {
     },
   },
   stackList: {
-    flex: 1,
+    flex: '1 1 50%',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     gap: {
@@ -79,7 +83,12 @@ export function InfoSection() {
         sx={styles.stack}
       >
         <Box sx={styles.imageContainer}>
-          <img src={infoImage} style={styles.image} alt="Information image" />
+          <Box
+            component="img"
+            src={infoImage}
+            sx={styles.image}
+            alt="Information image"
+          />
         </Box>
         <Stack direction="column" sx={styles.stackList}>
           <Typography variant="h2" component="h2" sx={styles.heading2}>
