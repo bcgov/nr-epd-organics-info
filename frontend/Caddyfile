@@ -18,7 +18,7 @@
         header {
           Content-Type text/javascript
         }
-        respond `window.config={"VITE_AMS_URL":"{$VITE_AMS_URL}", "VITE_AMS_DOCS_FLAG":"{$VITE_AMS_DOCS_FLAG}", "VITE_OSM_GRAYSCALE_FLAG":"{$VITE_OSM_GRAYSCALE_FLAG}", "VITE_ZOOM_TO_RESULTS_CONTROL_FLAG":"{$VITE_ZOOM_TO_RESULTS_CONTROL_FLAG}"};`
+        respond `window.config={"VITE_AMS_URL":"{$VITE_AMS_URL}", "VITE_AMS_DOCS_FLAG":"{$VITE_AMS_DOCS_FLAG}", "VITE_OSM_GRAYSCALE_FLAG":"{$VITE_OSM_GRAYSCALE_FLAG}", "VITE_ZOOM_TO_RESULTS_CONTROL_FLAG":"{$VITE_ZOOM_TO_RESULTS_CONTROL_FLAG}", "VITE_NRPTI_API_URL":"{$VITE_NRPTI_API_URL}", "VITE_NRCED_URL":"{$VITE_NRCED_URL}"};`
     }
 	root * /srv
 	encode zstd gzip
@@ -38,11 +38,12 @@
 		X-Content-Type-Options "nosniff"
 		Strict-Transport-Security "max-age=31536000"
 		Content-Security-Policy "
-		    default-src 'self'  https://spt.apps.gov.bc.ca data: https://*.openstreetmap.org ;
-		    script-src 'self'  https://www2.gov.bc.ca https://*.openstreetmap.org;
+		    default-src 'self'  https://spt.apps.gov.bc.ca https://*.apps.silver.devops.gov.bc.ca data: https://*.openstreetmap.org ;
+		    script-src 'self'  https://www2.gov.bc.ca https://*.openstreetmap.org https://*.apps.silver.devops.gov.bc.ca;
 		    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com https://*.openstreetmap.org;
 		    font-src 'self' https://fonts.gstatic.com https://*.openstreetmap.org;
-		    img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.google.com https://*.openstreetmap.org https://*.stadiamaps.com https://server.arcgisonline.com https://api.maptiler.com;
+		    img-src 'self' data: https://fonts.googleapis.com http://www.w3.org https://*.gov.bc.ca https://*.google.com https://*.openstreetmap.org https://*.stadiamaps.com https://server.arcgisonline.com https://api.maptiler.com https://*.apps.silver.devops.gov.bc.ca;
+			connect-src 'self' https://*.apps.silver.devops.gov.bc.ca;
 			frame-ancestors 'none';
 			form-action 'self' {$BACKEND_URL};
 			frame-src 'none';

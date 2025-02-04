@@ -47,6 +47,10 @@ spec:
               value: {{ .Values.frontend.env.osmGrayscaleFlag | quote }}
             - name: VITE_ZOOM_TO_RESULTS_CONTROL_FLAG
               value: {{ .Values.frontend.env.zoomToResultsControlFlag | quote }}
+            - name: VITE_NRPTI_API_URL
+              value: {{ .Values.global.nrptiAPIURL | quote }}
+            - name: VITE_NRCED_URL
+              value: {{ .Values.global.nrcedURL | quote }}
           ports:
             - name: http
               containerPort: 3000
