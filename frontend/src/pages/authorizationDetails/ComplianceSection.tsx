@@ -90,7 +90,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
           md: '40px 24px 48px',
         },
       }}
-      className="details-section"
+      className={`details-section-content ${!isExpanded ? 'collapsed' : ''}`}
     >
       <Stack direction="row" alignItems="center" spacing={1}>
         <Typography fontWeight={700} color="#000" fontSize="24px">
@@ -101,11 +101,12 @@ export function ComplianceSection({ item }: Readonly<Props>) {
             display: { xs: 'flex', md: 'none' },
             transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
             transition: 'transform 0.3s ease',
+            padding: '8px',
           }}
           onClick={() => setIsExpanded(!isExpanded)}
-          size="small"
+          size="large"
         >
-          <KeyboardArrowDownIcon />
+          <KeyboardArrowDownIcon sx={{ fontSize: 32 }} />
         </IconButton>
       </Stack>
       <Stack

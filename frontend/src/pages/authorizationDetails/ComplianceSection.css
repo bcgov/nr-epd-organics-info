@@ -85,3 +85,23 @@
 .details-section {
   overflow: hidden;
 }
+
+.details-section-content {
+  height: auto;
+  opacity: 1;
+  transition:
+    height 0.3s ease-in-out,
+    opacity 0.2s ease-in-out;
+}
+
+.details-section-content.collapsed {
+  height: 40px; /* Height of the header section */
+}
+
+.details-section-content > *:not(:first-child) {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.details-section-content.collapsed > *:not(:first-child) {
+  opacity: 0;
+}
