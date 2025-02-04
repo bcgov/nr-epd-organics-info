@@ -37,7 +37,7 @@ jobs:
       autoscaling: false
       tag: ${{ github.event.number }}
       release: ${{ github.event.number }}
-      triggers: ('backend/' 'frontend/' 'migrations/' 'charts/' '.github/')
+      triggers: ('backend/' 'frontend/' 'charts/' '.github/')
       params: |
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \

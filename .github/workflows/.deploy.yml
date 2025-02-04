@@ -60,6 +60,7 @@ env:
   package_tag: ${{ inputs.tag }}
 
 jobs:
+  
   deploys:
     name: Helm
     environment: ${{ inputs.environment }}
@@ -69,83 +70,49 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
     steps:
       - uses: actions/checkout@v4
-      - name: Check Deployment Triggers
-        id: triggers
-        run: |
-          # Expand for trigger processing
-
-          # Always deploy if no triggers are provided
-          if [ -z "${{ inputs.triggers }}" ]; then
-            echo "Always deploy when no triggers are provided"
-            echo "triggered=true" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # Deploy if changed files (git diff) match triggers
-          TRIGGERS=${{ inputs.triggers }}
-          git fetch origin ${{ github.event.repository.default_branch }}
-          while read -r check; do
-            for t in "${TRIGGERS[@]}"; do
-              if [[ "${check}" =~ "${t}" ]]; then
-                  echo "Build triggered based on git diff"
-                  echo -e "${t}\n --> ${check}"
-                  echo "triggered=true" >> $GITHUB_OUTPUT
-                  exit 0
-              fi
-            done
-          done < <(git diff origin/${{ github.event.repository.default_branch }} --name-only)
-
-          # If here skip deployment
-          echo "No triggers have fired, deployment skipped"
-
-      - uses: redhat-actions/openshift-tools-installer@v1
-        if: steps.triggers.outputs.triggered == 'true'
+      - name: Stop pre-existing deployments on PRs (status = pending-upgrade)
+        if: github.event_name == 'pull_request'
+        uses: bcgov/action-oc-runner@v0.3.0
         with:
-          oc: "4"
+          oc_namespace: ${{ vars.oc_namespace }}
+          oc_token: ${{ secrets.oc_token }}
+          oc_server: ${{ vars.oc_server }}
+          triggers: ${{ inputs.triggers }}
+          commands: |
+            # Interrupt any previous deployments (PR only)
+            PREVIOUS=$(helm status ${{ env.repo_release }} -o json | jq .info.status || true)
+            if [[ ${PREVIOUS} =~ pending ]]; then
+              echo "Rollback triggered"
+              helm rollback ${{ env.repo_release }} || \
+                helm uninstall ${{ env.repo_release }}
+            fi
 
-      - name: Deploy if Triggers Fired
-        if: steps.triggers.outputs.triggered == 'true'
-        working-directory: ${{ inputs.directory }}
-        shell: bash
-        run: |
-          oc login --token=${{ secrets.oc_token }} --server=${{ vars.oc_server }}
-          oc project ${{ vars.OC_NAMESPACE }} # Safeguard!
+      - name: Deploy
+        uses: bcgov/action-oc-runner@v0.3.0
+        with:
+          oc_namespace: ${{ vars.oc_namespace }}
+          oc_token: ${{ secrets.oc_token }}
+          oc_server: ${{ vars.oc_server }}
+          triggers: ${{ inputs.triggers }}
+          commands: |
+            # If directory provided, cd to it
+            [ -z "${{ inputs.directory }}" ]|| cd ${{ inputs.directory }}
+            # Deploy Helm Chart
+            helm dependency update
+            helm package --app-version="${{ env.package_tag }}" --version=${{ inputs.tag }} .
 
-          # Interrupt any previous jobs (status = pending-upgrade)
-          PREVIOUS=$(helm status ${{ env.repo_release }} -o json | jq .info.status || true)
-          if [[ ${PREVIOUS} =~ pending ]]; then
-            echo "Rollback triggered"
-            helm rollback ${{ env.repo_release }} || \
-              helm uninstall ${{ env.repo_release }}
-          fi
-          # Clean previous deployments for PR pipeline, if any 
-          if [[ '${{inputs.environment}}' == '' ]]; then
-            helm uninstall ${{ env.repo_release }} || true
-            # Remove Bitnami Crunchy PVCs
-            oc delete pvc data-${{ env.repo_release }}-bitnami-pg-0 || \
-              echo "Not found: pvc data-${{ env.repo_release }}-bitnami-pg-0"
-          fi
+            helm upgrade \
+              --set global.autoscaling=${{ inputs.autoscaling }} \
+              --set-string global.repository=${{ github.repository }} \
+              --set-string global.tag="${{ env.package_tag }}" \
+              ${{ inputs.params }} \
+              --install --wait --atomic  ${{ env.repo_release }} \
+              --timeout ${{ inputs.timeout-minutes }}m \
+              --values ${{ inputs.values }} \
+              ./${{ github.event.repository.name }}-${{ inputs.tag }}.tgz
 
-          # Deploy Helm Chart
-          helm dependency update
-          helm package --app-version="${{ env.package_tag }}" --version=${{ inputs.tag }} .
+            # print history 
+            helm history ${{ env.repo_release }}
 
-          helm upgrade \
-            --set global.autoscaling=${{ inputs.autoscaling }} \
-            --set-string global.repository=${{ github.repository }} \
-            --set-string global.tag="${{ env.package_tag }}" \
-            --set-string global.secrets.osBucket="${{ secrets.osBucket }}" \
-            --set-string global.secrets.osAccessKeyId="${{ secrets.osAccessKeyId }}" \
-            --set-string global.secrets.osSecretAccessKeyId="${{ secrets.osSecretAccessKeyId }}" \
-            --set-string global.secrets.osEndpoint="${{ secrets.osEndpoint }}" \
-            ${{ inputs.params }} \
-            --install --wait --atomic  ${{ env.repo_release }} \
-            --timeout ${{ inputs.timeout-minutes }}m \
-            --values ${{ inputs.values }} \
-            ./${{ github.event.repository.name }}-${{ inputs.tag }}.tgz
-
-          # print history 
-          helm history ${{ env.repo_release }}
-
-          # Remove old build runs, build pods and deployment pods
-          oc delete po --field-selector=status.phase==Succeeded
+            # Remove old build runs, build pods and deployment pods
+            oc delete po --field-selector=status.phase==Succeeded
