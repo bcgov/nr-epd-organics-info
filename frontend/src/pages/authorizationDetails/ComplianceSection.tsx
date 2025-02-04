@@ -1,8 +1,9 @@
-import { Stack, Typography } from '@mui/material'
+import { Stack, Typography, IconButton } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ImportExportIcon from '@mui/icons-material/ImportExport'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { useEffect, useState } from 'react'
 import './ComplianceSection.css'
 import OmrrData from '@/interfaces/omrr'
@@ -24,6 +25,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | null>(
     null,
   )
+  const [isExpanded, setIsExpanded] = useState(true)
 
   useEffect(() => {
     const fetchComplianceData = async () => {
@@ -84,60 +86,79 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       direction="column"
       sx={{
         padding: {
-          xs: '24px 16px 32px',
+          xs: '24px 16px',
           md: '40px 24px 48px',
         },
       }}
       className="details-section"
     >
-      <Typography fontWeight={700} color="#000" fontSize="24px">
-        Compliance and Enforcement
-      </Typography>
-      <Typography fontSize="16px" color="#666" fontStyle="italic">
-        Compliance and enforcement data presented is from the Natural Resource
-        Compliance and Enforcement Database and may not be complete
-      </Typography>
-      <Stack className="compliance-table" direction="column">
-        <div className="compliance-table-row compliance-table-header">
-          <button
-            className="compliance-table-cell compliance-table-cell--sortable"
-            onClick={handleSort}
-          >
-            Date Issued
-            {getSortIcon()}
-          </button>
-          <div className="compliance-table-cell">Type</div>
-          <div className="compliance-table-cell">Summary</div>
-          <div className="compliance-table-cell">Action</div>
-        </div>
-        {complianceData.length === 0 && (
-          <div className="compliance-table-cell compliance-table-cell--no-data">
-            No results found
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Typography fontWeight={700} color="#000" fontSize="24px">
+          Compliance and Enforcement
+        </Typography>
+        <IconButton
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
+            transition: 'transform 0.3s ease',
+          }}
+          onClick={() => setIsExpanded(!isExpanded)}
+          size="small"
+        >
+          <KeyboardArrowDownIcon />
+        </IconButton>
+      </Stack>
+      <Stack
+        sx={{
+          display: { xs: isExpanded ? 'flex' : 'none', md: 'flex' },
+        }}
+      >
+        <Typography fontSize="16px" color="#666" fontStyle="italic">
+          Compliance and enforcement data presented is from the Natural Resource
+          Compliance and Enforcement Database and may not be complete
+        </Typography>
+        <Stack className="compliance-table" direction="column">
+          <div className="compliance-table-row compliance-table-header">
+            <button
+              className="compliance-table-cell compliance-table-cell--sortable"
+              onClick={handleSort}
+            >
+              Date Issued
+              {getSortIcon()}
+            </button>
+            <div className="compliance-table-cell">Type</div>
+            <div className="compliance-table-cell">Summary</div>
+            <div className="compliance-table-cell">Action</div>
           </div>
-        )}
-        {complianceData.map((record) => (
-          <div key={record.id} className="compliance-table-row">
-            <div className="compliance-table-cell">
-              {new Date(record.dateIssued).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              })}
+          {complianceData.length === 0 && (
+            <div className="compliance-table-cell compliance-table-cell--no-data">
+              No results found
             </div>
-            <div className="compliance-table-cell">{record.recordType}</div>
-            <div className="compliance-table-cell">{record.summary}</div>
-            <div className="compliance-table-cell">
-              <a
-                href={`${env.VITE_NRCED_URL}/records;autofocus=${record.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="view-link"
-              >
-                View <OpenInNewIcon fontSize="small" />
-              </a>
+          )}
+          {complianceData.map((record) => (
+            <div key={record.id} className="compliance-table-row">
+              <div className="compliance-table-cell">
+                {new Date(record.dateIssued).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </div>
+              <div className="compliance-table-cell">{record.recordType}</div>
+              <div className="compliance-table-cell">{record.summary}</div>
+              <div className="compliance-table-cell">
+                <a
+                  href={`${env.VITE_NRCED_URL}/records;autofocus=${record.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="view-link"
+                >
+                  View <OpenInNewIcon fontSize="small" />
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Stack>
       </Stack>
     </Stack>
   )

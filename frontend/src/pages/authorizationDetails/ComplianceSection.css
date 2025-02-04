@@ -81,3 +81,7 @@
 .compliance-table-row:not(.compliance-table-header) > div:last-child {
   padding-left: 10px;
 }
+
+.details-section {
+  overflow: hidden;
+}
