@@ -12,6 +12,7 @@ import { LocationSection } from './LocationSection'
 import { DetailsSection } from './DetailsSection'
 import { DocumentsSection } from './DocumentsSection'
 import { ContactSection } from './ContactSection'
+import { ComplianceSection } from './ComplianceSection'
 
 import './AuthorizationDetails.css'
 
@@ -150,6 +151,7 @@ export default function AuthorizationDetails() {
       </Stack>
 
       <DetailsSection item={item} />
+      <ComplianceSection item={item} />
       <DocumentsSection item={item} />
       <ContactSection authNumber={number.toString()} />
     </Stack>

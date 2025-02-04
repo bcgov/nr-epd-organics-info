@@ -29,6 +29,18 @@ export const authorization_details_page = async (page: Page) => {
     page.getByText('Schedule 2 - Composting Operations'),
   ).toBeVisible()
 
+  // Compliance and Enforcement
+  await expect(
+    page.getByText('Compliance and Enforcement', { exact: true }),
+  ).toBeVisible()
+  const headerRow = page.locator('.compliance-table-header')
+  await expect(
+    headerRow.getByText('Date Issued', { exact: true }),
+  ).toBeVisible()
+  await expect(headerRow.getByText('Type', { exact: true })).toBeVisible()
+  await expect(headerRow.getByText('Summary', { exact: true })).toBeVisible()
+  await expect(headerRow.getByText('Action', { exact: true })).toBeVisible()
+
   const backBtn = page.getByRole('button', { name: 'Back to Text Search' })
   await expect(backBtn).toBeVisible()
   await backBtn.click()
