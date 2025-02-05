@@ -4,12 +4,13 @@ import { Page } from 'playwright'
 
 export const dashboard_page = async (page: Page) => {
   await page.goto(baseURL)
-  await expect(page.getByText('Organics Info')).toBeVisible()
   await expect(page.getByAltText('Logo')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Map Search' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Text Search' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Guidance' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Contact Us' })).toBeVisible()
+
+  // Top Section
   await expect(
     page.getByRole('heading', {
       name: 'Find an authorized compost and biosolid facility in British Columbia',
@@ -22,29 +23,41 @@ export const dashboard_page = async (page: Page) => {
     page.getByRole('button', { name: 'List all authorizations' }),
   ).toBeVisible()
 
+  // Info Section
   await expect(
-    page.getByRole('heading', {
-      name: 'Organic Recycling in B.C.',
-    }),
+    page.getByRole('heading', { name: 'Who is this for' }),
   ).toBeVisible()
-  await expect(
-    page.getByRole('heading', {
-      name: 'The B.C. government has a plan to update the regulation to',
-    }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('link', { name: 'Project Update Report' }),
-  ).toBeVisible()
+  await expect(page.getByText('I am a member of the public')).toBeVisible()
+  await expect(page.getByText('I am an industry professional')).toBeVisible()
+  await expect(page.getByText('I am an organization')).toBeVisible()
   await expect(page.getByAltText('Information image')).toBeVisible()
 
-  await expect(page.getByText('Learn more')).toBeVisible()
+  // Use This Tool Section
   await expect(
-    page.getByRole('link', { name: 'Legislation', exact: true }),
+    page.getByRole('heading', { name: 'Why use this tool' }),
+  ).toBeVisible()
+  await expect(page.getByAltText('Water Drop')).toBeVisible()
+  await expect(page.getByAltText('Leaves')).toBeVisible()
+  await expect(page.getByAltText('Cloud')).toBeVisible()
+  await expect(page.getByAltText('Chat')).toBeVisible()
+  await expect(page.getByAltText('Transport')).toBeVisible()
+  await expect(page.getByAltText('Calendar')).toBeVisible()
+  await expect(
+    page.getByText('Organic Matter Recycling Regulation'),
+  ).toBeVisible()
+
+  // Learn More Section
+  await expect(
+    page.getByRole('heading', { name: 'More resources' }),
+  ).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Legislation' })).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: 'Process and procedures' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('link', { name: 'Process and procedures', exact: true }),
+    page.getByRole('link', { name: 'Compliance and enforcement' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('link', { name: 'Compliance and enforcement', exact: true }),
+    page.getByText('Authorization application process'),
   ).toBeVisible()
 }
