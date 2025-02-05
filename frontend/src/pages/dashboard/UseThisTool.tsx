@@ -21,20 +21,24 @@ const styles = {
       md: 'row',
     },
     gap: '32px',
+    alignItems: 'flex-start',
   },
   card: {
-    flex: '1 1 50%',
+    flex: '0 1 33.33%',
     background: '#d8eafd',
     borderRadius: '8px',
-    padding: '32px',
+    padding: '16px',
+    minWidth: '300px',
+    alignSelf: 'flex-start',
   },
   iconsGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
     gridTemplateRows: 'repeat(2, 1fr)',
-    gap: '24px',
+    gap: '12px',
     justifyItems: 'center',
     alignItems: 'center',
+    minHeight: '200px',
   },
   icon: {
     width: '64px',
@@ -42,7 +46,7 @@ const styles = {
     borderRadius: '8px',
   },
   content: {
-    flex: '1 1 50%',
+    flex: '1 1 auto',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
@@ -86,23 +90,17 @@ export function UseThisTool() {
           <Box sx={styles.iconsGrid}>
             <Box
               component="img"
-              src={calendarIcon}
-              sx={styles.icon}
-              alt="Calendar"
-            />
-            <Box
-              component="img"
-              src={transportIcon}
-              sx={styles.icon}
-              alt="Transport"
-            />
-            <Box component="img" src={cloudIcon} sx={styles.icon} alt="Cloud" />
-            <Box
-              component="img"
               src={waterDropIcon}
               sx={styles.icon}
               alt="Water Drop"
             />
+            <Box
+              component="img"
+              src={leavesIcon}
+              sx={styles.icon}
+              alt="Leaves"
+            />
+            <Box component="img" src={cloudIcon} sx={styles.icon} alt="Cloud" />
             <Box
               component="img"
               src={chatBubblesIcon}
@@ -111,9 +109,15 @@ export function UseThisTool() {
             />
             <Box
               component="img"
-              src={leavesIcon}
+              src={transportIcon}
               sx={styles.icon}
-              alt="Leaves"
+              alt="Transport"
+            />
+            <Box
+              component="img"
+              src={calendarIcon}
+              sx={styles.icon}
+              alt="Calendar"
             />
           </Box>
         </Card>
@@ -126,7 +130,15 @@ export function UseThisTool() {
             Organics Info helps you find information on authorized land
             application sites, compost and biosolids facilities in B.C. This
             tool improves transparency around organic matter management in
-            accordance with the Organic Matter Recycling Regulation which:
+            accordance with the{' '}
+            <a
+              href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Organic Matter Recycling Regulation
+            </a>{' '}
+            which:
           </Typography>
           <ul style={styles.list}>
             <Typography component="li">
@@ -134,7 +146,7 @@ export function UseThisTool() {
             </Typography>
             <Typography component="li">
               Regulates the production, distribution, storage, sale and use of
-              biosolids and compost controls how compost facilities are built
+              biosolids and compost controls how compost facilities are built
               and operated
             </Typography>
           </ul>
