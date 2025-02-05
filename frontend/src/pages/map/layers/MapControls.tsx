@@ -60,12 +60,8 @@ export function MapControls() {
 
   return (
     <Control position="bottomright" className="map-controls" style={style}>
-      {isMedium && (
-        <>
-          <DataLayersControl />
-          <FindMeControl />
-        </>
-      )}
+      <DataLayersControl />
+      {isMedium && <FindMeControl />}
       <BasemapControlButton />
       <ZoomToResultsControl />
       {isSmall ? null : <ZoomInOutControl />}
