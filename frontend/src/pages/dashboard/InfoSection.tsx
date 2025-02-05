@@ -26,14 +26,14 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    maxHeight: '400px',
+    maxHeight: '300px',
   },
   image: {
     borderRadius: '8px',
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    maxHeight: '400px',
+    maxHeight: '370px',
   },
   stack: {
     justifyContent: {

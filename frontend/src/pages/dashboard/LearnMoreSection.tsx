@@ -18,8 +18,8 @@ import organicExample from '@/assets/compost-example.png'
 const styles = {
   section: {
     margin: {
-      xs: '24px',
-      md: '80px',
+      xs: '-12px 24px',
+      md: '-20px 80px',
     },
     gap: '4px',
   },

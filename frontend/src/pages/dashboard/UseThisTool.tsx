@@ -10,8 +10,8 @@ import leavesIcon from '@/assets/svgs/leaves-icon.svg'
 const styles = {
   section: {
     padding: {
-      xs: '40px 24px',
-      md: '80px',
+      xs: '24px',
+      md: '40px 80px',
     },
   },
   container: {
