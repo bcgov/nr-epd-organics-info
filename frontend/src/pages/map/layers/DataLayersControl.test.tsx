@@ -91,6 +91,7 @@ describe('DataLayersControl', () => {
     await user.click(button)
 
     expect(mockDispatch).toHaveBeenCalledWith(mockToggleAction)
+    expect(toggleActiveTool).toHaveBeenCalledWith(ActiveToolEnum.dataLayers)
   })
 
   it('displays menu with layer options', () => {
