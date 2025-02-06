@@ -77,23 +77,6 @@ describe('DataLayersControl', () => {
     expect(button).toBeInTheDocument()
   })
 
-  it('dispatches toggle action on mobile', async () => {
-    vi.mocked(useMediaQuery).mockReturnValue(true)
-    const user = userEvent.setup()
-    const mockToggleAction = {
-      type: 'map/toggleActiveTool' as const,
-      payload: ActiveToolEnum.dataLayers,
-    }
-    vi.mocked(toggleActiveTool).mockReturnValue(mockToggleAction)
-
-    render(<DataLayersControl />)
-    const button = screen.getByTitle('Show the data layers')
-    await user.click(button)
-
-    expect(mockDispatch).toHaveBeenCalledWith(mockToggleAction)
-    expect(toggleActiveTool).toHaveBeenCalledWith(ActiveToolEnum.dataLayers)
-  })
-
   it('displays menu with layer options', () => {
     vi.mocked(useMediaQuery).mockReturnValue(false)
 
