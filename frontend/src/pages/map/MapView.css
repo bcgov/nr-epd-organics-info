@@ -94,3 +94,10 @@
 .wl-pod-sources img {
   filter: brightness(0.5);
 }
+
+/* Hide the top layers button but keep it functional */
+#mapDataLayersButton {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}

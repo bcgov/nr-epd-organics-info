@@ -107,9 +107,6 @@ export function DataLayersCheckboxGroup({
         <Typography className="data-layers-top-text">
           All data layers sourced from GeoBC.
         </Typography>
-        <NavLink to="/guidance" className="data-layers-top-link">
-          Click here to read our guidance page about map layers.
-        </NavLink>
       </Stack>
     </Stack>
   )
