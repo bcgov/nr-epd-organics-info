@@ -12,14 +12,17 @@ import {
 import { ActiveToolEnum } from '@/constants/constants'
 
 // Mock the hooks
-vi.mock('@mui/material', () => ({
-  ...vi.importActual('@mui/material'),
-  useMediaQuery: vi.fn(),
-  IconButton: vi.fn(({ children, ...props }) => (
-    <button {...props}>{children}</button>
-  )),
-  Badge: vi.fn(({ children, ...props }) => <div {...props}>{children}</div>),
-}))
+vi.mock('@mui/material', async (importOriginal) => {
+  const actual = (await importOriginal()) as Record<string, unknown>
+  return {
+    ...actual,
+    useMediaQuery: vi.fn(),
+    IconButton: vi.fn(({ children, ...props }) => (
+      <button {...props}>{children}</button>
+    )),
+    Badge: vi.fn(({ children, ...props }) => <div {...props}>{children}</div>),
+  }
+})
 
 vi.mock('react-redux', () => ({
   useDispatch: vi.fn(),
