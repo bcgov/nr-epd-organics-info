@@ -113,6 +113,7 @@ describe('DataLayersControl', () => {
       { name: 'layer1', url: 'url1', layers: 'layers1', webUrl: 'webUrl1' },
       { name: 'layer2', url: 'url2', layers: 'layers2', webUrl: 'webUrl2' },
     ])
+    vi.mocked(useHasDataLayersOn).mockReturnValue(true)
 
     render(<DataLayersControl />)
 
