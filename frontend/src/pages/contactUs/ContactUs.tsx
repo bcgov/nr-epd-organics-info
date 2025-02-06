@@ -9,6 +9,17 @@ import { LinkSection } from './LinkSection'
 import './ContactUs.css'
 
 export function ContactUs() {
+  const iconContainerStyle = {
+    backgroundColor: 'var(--surface-color-primary-hover)',
+    borderRadius: '50%',
+    width: 40,
+    height: 40,
+    minWidth: 40,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+
   return (
     <Stack direction="column" className="contact-us">
       <Stack
@@ -76,18 +87,8 @@ export function ContactUs() {
             headerClassName="link-section-header"
             contentClassName="link-section-content"
           >
-            <Stack direction="row" spacing={1}>
-              <div
-                style={{
-                  backgroundColor: 'var(--surface-color-primary-hover)',
-                  borderRadius: '50%',
-                  width: 40,
-                  height: 40,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+            <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
+              <div style={iconContainerStyle}>
                 <EmailIcon sx={{ color: 'white' }} />
               </div>
               <Stack direction="column">
@@ -116,17 +117,7 @@ export function ContactUs() {
               sx={{ width: '100%' }}
             >
               <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
-                <div
-                  style={{
-                    backgroundColor: 'var(--surface-color-primary-hover)',
-                    borderRadius: '50%',
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div style={iconContainerStyle}>
                   <EmailIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
@@ -142,17 +133,7 @@ export function ContactUs() {
                 </Stack>
               </Stack>
               <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
-                <div
-                  style={{
-                    backgroundColor: 'var(--surface-color-primary-hover)',
-                    borderRadius: '50%',
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div style={iconContainerStyle}>
                   <LinkIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
@@ -185,17 +166,7 @@ export function ContactUs() {
               sx={{ width: '100%' }}
             >
               <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
-                <div
-                  style={{
-                    backgroundColor: 'var(--surface-color-primary-hover)',
-                    borderRadius: '50%',
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div style={iconContainerStyle}>
                   <PhoneIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
@@ -211,17 +182,7 @@ export function ContactUs() {
                 </Stack>
               </Stack>
               <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
-                <div
-                  style={{
-                    backgroundColor: 'var(--surface-color-primary-hover)',
-                    borderRadius: '50%',
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div style={iconContainerStyle}>
                   <LinkIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
