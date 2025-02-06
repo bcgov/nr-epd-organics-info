@@ -25,12 +25,16 @@ vi.mock('react-redux', () => ({
   useDispatch: vi.fn(),
 }))
 
-vi.mock('@/features/map/map-slice', () => ({
-  useActiveTool: vi.fn(),
-  useDataLayers: vi.fn(),
-  toggleActiveTool: vi.fn(),
-  useHasDataLayersOn: vi.fn(),
-}))
+vi.mock('@/features/map/map-slice', async (importOriginal) => {
+  const actual = (await importOriginal()) as Record<string, unknown>
+  return {
+    ...actual,
+    useActiveTool: vi.fn(),
+    useDataLayers: vi.fn(),
+    toggleActiveTool: vi.fn(),
+    useHasDataLayersOn: vi.fn(),
+  }
+})
 
 describe('DataLayersControl', () => {
   const mockDispatch = vi.fn()
