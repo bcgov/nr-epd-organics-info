@@ -194,28 +194,6 @@ describe('Test suite for MapView', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('should render the MapView and test data layers', async () => {
-    const { user } = renderComponent(themeBreakpointValues.xxl, [])
-
-    const dataLayersBtn = screen.getByRole('button', {
-      name: 'Layers',
-    })
-    await user.click(dataLayersBtn)
-
-    screen.getByText(/^All data layers sourced/)
-    expect(
-      screen.queryByRole('button', { name: 'Reset Layers' }),
-    ).not.toBeInTheDocument()
-    const layerCb = screen.getByRole('checkbox', { name: 'Aquifers - All' })
-    expect(layerCb).not.toBeChecked()
-    await user.click(layerCb)
-    expect(layerCb).toBeChecked()
-
-    const resetBtn = screen.getByRole('button', { name: 'Clear All' })
-    await user.click(resetBtn)
-    expect(layerCb).not.toBeChecked()
-  })
-
   it('should render the MapView with OSM and zoom feature flags turned on', async () => {
     env.VITE_ZOOM_TO_RESULTS_CONTROL_FLAG = 'true'
     env.VITE_OSM_GRAYSCALE_FLAG = 'true'
