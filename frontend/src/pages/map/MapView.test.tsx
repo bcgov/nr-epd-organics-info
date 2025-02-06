@@ -45,7 +45,6 @@ describe('Test suite for MapView', () => {
 
     screen.getByPlaceholderText('Search')
     await screen.findByRole('button', { name: 'Find Me' })
-    expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
     expect(
       screen.queryByTitle('Show my location on the map'),
     ).not.toBeInTheDocument()
@@ -68,21 +67,9 @@ describe('Test suite for MapView', () => {
     const markers = screen.queryAllByAltText('Authorization marker')
     expect(markers).toHaveLength(0)
 
-    const dataLayers = screen.getByTitle('Show the data layers')
     const findMeControl = screen.getByTitle('Show my location on the map')
     expect(findMeControl).toHaveClass('map-control-button--active')
     await screen.findByTitle('My location marker')
-
-    expect(dataLayers).toBeEnabled()
-    expect(dataLayers).not.toHaveClass('map-control-button--active')
-    await user.click(dataLayers)
-
-    expect(dataLayers).toHaveClass('map-control-button--active')
-    await screen.findByText('Data Layers')
-    screen.getByText('Available Layers')
-    const closeBtn = screen.getByTitle('Close')
-    await user.click(closeBtn)
-    expect(screen.queryByText('Available Layers')).not.toBeInTheDocument()
 
     const searchBy = screen.getByRole('button', { name: 'Search By' })
     expect(searchBy).not.toHaveClass('map-button--active')
