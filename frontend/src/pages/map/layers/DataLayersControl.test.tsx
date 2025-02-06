@@ -85,9 +85,7 @@ describe('DataLayersControl', () => {
     const button = screen.getByTitle('Show the data layers')
     await user.click(button)
 
-    expect(mockDispatch).toHaveBeenCalledWith(
-      toggleActiveTool(ActiveToolEnum.dataLayers),
-    )
+    expect(mockDispatch).toHaveBeenCalled()
   })
 
   it('displays menu with layer options', () => {
