@@ -29,6 +29,7 @@ vi.mock('@/features/map/map-slice', () => ({
   useActiveTool: vi.fn(),
   useDataLayers: vi.fn(),
   toggleActiveTool: vi.fn(),
+  useHasDataLayersOn: vi.fn(),
 }))
 
 describe('DataLayersControl', () => {
