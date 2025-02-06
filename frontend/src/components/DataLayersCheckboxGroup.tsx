@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -103,9 +103,30 @@ export function DataLayersCheckboxGroup({
           setForceAction={setForceAction}
         />
       ))}
-      <Stack direction="column" spacing={1}>
+      <Stack>
         <Typography className="data-layers-top-text">
           All data layers sourced from GeoBC.
+        </Typography>
+        <Typography className="data-layers-top-text">
+          {/* This is weird workaround to avoid some zombie styling behaviour. */}
+          <button
+            className="data-layers-top-link"
+            onClick={() =>
+              window.open(
+                'https://www2.gov.bc.ca/gov/content?id=703C452C2F8C4B0095AF39CA59B9D1A2',
+                '_blank',
+              )
+            }
+            style={{
+              textDecoration: 'underline',
+              border: 'none',
+              background: 'none',
+              padding: 0,
+              cursor: 'pointer',
+            }}
+          >
+            Click here to learn more about map layers
+          </button>
         </Typography>
       </Stack>
     </Stack>

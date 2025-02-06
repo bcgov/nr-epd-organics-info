@@ -32,6 +32,14 @@ p.data-layers-top-text,
   font-size: 14px;
 }
 
+.data-layers-top-text a {
+  display: inline;
+  white-space: normal;
+  word-break: normal;
+  color: var(--typography-color-disabled);
+  text-decoration: underline;
+}
+
 .available-layers-row {
   display: flex;
   justify-content: space-between;
