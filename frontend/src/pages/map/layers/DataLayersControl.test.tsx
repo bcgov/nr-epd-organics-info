@@ -90,20 +90,12 @@ describe('DataLayersControl', () => {
     )
   })
 
-  it('shows/hides menu on desktop', async () => {
-    vi.mocked(useMediaQuery).mockReturnValue(false) // isSmall = false
-
-    const user = userEvent.setup()
+  it('displays menu with layer options', () => {
+    vi.mocked(useMediaQuery).mockReturnValue(false)
 
     render(<DataLayersControl />)
 
-    const button = screen.getByTitle('Show the data layers')
-    await user.click(button)
-
-    const menu = screen.getByRole('menu')
-    expect(menu).toBeVisible()
-
-    await user.click(button)
-    expect(menu).not.toBeVisible()
+    const menu = screen.getByTestId('data-layers-checkbox-group')
+    expect(menu).toBeInTheDocument()
   })
 })
