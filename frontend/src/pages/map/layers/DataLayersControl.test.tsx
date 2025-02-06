@@ -15,6 +15,10 @@ import { ActiveToolEnum } from '@/constants/constants'
 vi.mock('@mui/material', () => ({
   ...vi.importActual('@mui/material'),
   useMediaQuery: vi.fn(),
+  IconButton: vi.fn(({ children, ...props }) => (
+    <button {...props}>{children}</button>
+  )),
+  Badge: vi.fn(({ children, ...props }) => <div {...props}>{children}</div>),
 }))
 
 vi.mock('react-redux', () => ({
