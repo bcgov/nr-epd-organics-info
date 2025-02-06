@@ -8,6 +8,8 @@ import {
   toggleActiveTool,
   useActiveTool,
   useDataLayers,
+  useHasDataLayersOn,
+  useIsDataLayerOn,
 } from '@/features/map/map-slice'
 import { ActiveToolEnum } from '@/constants/constants'
 
@@ -41,6 +43,7 @@ vi.mock('@/features/map/map-slice', async (importOriginal) => {
     useDataLayers: vi.fn(),
     toggleActiveTool: vi.fn(),
     useHasDataLayersOn: vi.fn(),
+    useIsDataLayerOn: vi.fn(),
   }
 })
 
@@ -49,11 +52,10 @@ describe('DataLayersControl', () => {
 
   beforeEach(() => {
     vi.mocked(useDispatch).mockReturnValue(mockDispatch)
-    vi.mocked(useDataLayers).mockReturnValue([
-      { name: 'layer1', url: 'url1', layers: 'layers1', webUrl: 'webUrl1' },
-      { name: 'layer2', url: 'url2', layers: 'layers2', webUrl: 'webUrl2' },
-    ])
+    vi.mocked(useDataLayers).mockReturnValue([])
     vi.mocked(useActiveTool).mockReturnValue(undefined)
+    vi.mocked(useHasDataLayersOn).mockReturnValue(false)
+    vi.mocked(useIsDataLayerOn).mockReturnValue(() => false)
   })
 
   it('renders mobile version on small screens', () => {
