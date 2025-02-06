@@ -108,13 +108,13 @@ export function DataLayersCheckboxGroup({
           All data layers sourced from GeoBC.
         </Typography>
         <Typography className="data-layers-top-text">
-          {/* This is weird workaround to avoid some zombie styling behaviour. */}
           <button
             className="data-layers-top-link"
             onClick={() =>
               window.open(
                 'https://www2.gov.bc.ca/gov/content?id=703C452C2F8C4B0095AF39CA59B9D1A2',
                 '_blank',
+                'noopener',
               )
             }
             style={{
