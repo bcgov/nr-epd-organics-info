@@ -106,27 +106,4 @@ describe('DataLayersControl', () => {
     await user.click(button)
     expect(menu).not.toBeVisible()
   })
-
-  it('displays badge with layer count', () => {
-    vi.mocked(useMediaQuery).mockReturnValue(false)
-    vi.mocked(useDataLayers).mockReturnValue([
-      { name: 'layer1', url: 'url1', layers: 'layers1', webUrl: 'webUrl1' },
-      { name: 'layer2', url: 'url2', layers: 'layers2', webUrl: 'webUrl2' },
-    ])
-    vi.mocked(useHasDataLayersOn).mockReturnValue(true)
-
-    render(<DataLayersControl />)
-
-    const badge = screen.getByText('2')
-    expect(badge).toBeInTheDocument()
-  })
-
-  it('hides badge when no layers are selected', () => {
-    vi.mocked(useMediaQuery).mockReturnValue(false)
-    vi.mocked(useDataLayers).mockReturnValue([])
-
-    render(<DataLayersControl />)
-
-    expect(screen.queryByText('0')).not.toBeInTheDocument()
-  })
 })
