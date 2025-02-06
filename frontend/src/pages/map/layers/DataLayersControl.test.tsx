@@ -24,9 +24,14 @@ vi.mock('@mui/material', async (importOriginal) => {
   }
 })
 
-vi.mock('react-redux', () => ({
-  useDispatch: vi.fn(),
-}))
+vi.mock('react-redux', async (importOriginal) => {
+  const actual = (await importOriginal()) as Record<string, unknown>
+  return {
+    ...actual,
+    useDispatch: vi.fn(),
+    useSelector: vi.fn(),
+  }
+})
 
 vi.mock('@/features/map/map-slice', async (importOriginal) => {
   const actual = (await importOriginal()) as Record<string, unknown>
