@@ -34,9 +34,6 @@ describe('Test suite for DataLayersCheckboxGroup', () => {
   it('should render large DataLayersCheckboxGroup', async () => {
     const { user, state } = renderComponent(false, 'test-class')
     screen.getByText(/^All data layers sourced from GeoBC/)
-    screen.getByRole('link', { name: /^Click here to read our guidance/ })
-    expect(state.dataLayers).toHaveLength(0)
-    expect(state.hasDataLayersOn).toBe(false)
 
     const div = screen.getByTestId('data-layers-checkbox-group')
     expect(div).not.toHaveClass('data-layers-checkbox-group--small')

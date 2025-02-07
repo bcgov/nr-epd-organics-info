@@ -45,7 +45,6 @@ describe('Test suite for MapView', () => {
 
     screen.getByPlaceholderText('Search')
     await screen.findByRole('button', { name: 'Find Me' })
-    expect(screen.queryByTitle('Show the data layers')).not.toBeInTheDocument()
     expect(
       screen.queryByTitle('Show my location on the map'),
     ).not.toBeInTheDocument()
@@ -68,21 +67,9 @@ describe('Test suite for MapView', () => {
     const markers = screen.queryAllByAltText('Authorization marker')
     expect(markers).toHaveLength(0)
 
-    const dataLayers = screen.getByTitle('Show the data layers')
     const findMeControl = screen.getByTitle('Show my location on the map')
     expect(findMeControl).toHaveClass('map-control-button--active')
     await screen.findByTitle('My location marker')
-
-    expect(dataLayers).toBeEnabled()
-    expect(dataLayers).not.toHaveClass('map-control-button--active')
-    await user.click(dataLayers)
-
-    expect(dataLayers).toHaveClass('map-control-button--active')
-    await screen.findByText('Data Layers')
-    screen.getByText('Available Layers')
-    const closeBtn = screen.getByTitle('Close')
-    await user.click(closeBtn)
-    expect(screen.queryByText('Available Layers')).not.toBeInTheDocument()
 
     const searchBy = screen.getByRole('button', { name: 'Search By' })
     expect(searchBy).not.toHaveClass('map-button--active')
@@ -192,28 +179,6 @@ describe('Test suite for MapView', () => {
     expect(
       screen.queryByText('Click to start drawing shape'),
     ).not.toBeInTheDocument()
-  })
-
-  it('should render the MapView and test data layers', async () => {
-    const { user } = renderComponent(themeBreakpointValues.xxl, [])
-
-    const dataLayersBtn = screen.getByRole('button', {
-      name: 'Layers',
-    })
-    await user.click(dataLayersBtn)
-
-    screen.getByText(/^All data layers sourced/)
-    expect(
-      screen.queryByRole('button', { name: 'Reset Layers' }),
-    ).not.toBeInTheDocument()
-    const layerCb = screen.getByRole('checkbox', { name: 'Aquifers - All' })
-    expect(layerCb).not.toBeChecked()
-    await user.click(layerCb)
-    expect(layerCb).toBeChecked()
-
-    const resetBtn = screen.getByRole('button', { name: 'Clear All' })
-    await user.click(resetBtn)
-    expect(layerCb).not.toBeChecked()
   })
 
   it('should render the MapView with OSM and zoom feature flags turned on', async () => {

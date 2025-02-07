@@ -1,0 +1,40 @@
+.leaflet-control-layers {
+  border: 0 !important;
+  border-radius: 0;
+}
+
+.data-layers-menu {
+  position: absolute;
+  bottom: 0;
+  right: 60px;
+  background: var(--surface-color-background-white);
+  border: 2px solid var(--surface-color-primary-active-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: var(--box-shadow-small);
+  max-height: calc(100vh - 400px);
+  overflow-y: auto;
+  width: 413px;
+  pointer-events: auto;
+  z-index: 1000;
+  overscroll-behavior: contain;
+}
+
+.data-layers-menu.hidden {
+  display: none;
+}
+
+/* Add the thin-scrollbar styles if not already defined elsewhere */
+.data-layers-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.data-layers-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.data-layers-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
