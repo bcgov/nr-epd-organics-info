@@ -23,7 +23,7 @@ describe('Test suite for Dashboard', () => {
     screen.getByText('I am an industry professional')
     screen.getByText('I am an organization')
     screen.getByText(
-      'I am a local government of First Nations and want to see information about authorized compose and biosolids facilities.',
+      'I am a local government or First Nation and want to see information about authorized land application sites and compost facilities.',
     )
     screen.getByAltText('Information image')
 
