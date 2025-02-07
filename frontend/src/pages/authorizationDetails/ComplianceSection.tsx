@@ -90,7 +90,7 @@ export function ComplianceSection({ item }: Readonly<Props>) {
           md: '40px 24px 48px',
         },
       }}
-      className={`details-section-content ${!isExpanded ? 'collapsed' : ''}`}
+      className="details-section"
     >
       <Stack direction="row" alignItems="center" spacing={1}>
         <Typography fontWeight={700} color="#000" fontSize="24px">

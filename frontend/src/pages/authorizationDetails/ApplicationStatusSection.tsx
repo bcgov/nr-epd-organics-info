@@ -33,9 +33,9 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
       <Typography fontWeight={700} fontSize="24px">
         Application Status
       </Typography>
-      <Typography fontSize={14} fontWeight="normal" fontStyle="italic">
+      <Typography fontSize={'1rem'} fontWeight="normal" fontStyle="italic">
         <a
-          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/change"
+          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -90,14 +90,14 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
         )
       })}
       <div className="application-status-guidance">
-        Applies to amendment and new notifications only,{' '}
+        Applies to amendments and new notifications only,{' '}
         <a
           href="https://www2.gov.bc.ca/gov/content?id=AF9C921702294B06AD1490034721D3D6"
           target="_blank"
           rel="noopener noreferrer"
           className="application-status-guidance-link"
         >
-          please see our guidance on data we show
+          please see our website on data we show.
         </a>
         .
       </div>

@@ -162,7 +162,8 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
       <Typography className="organic-matter-note" sx={style.subtitle}>
         <i>
           The information presented was provided by the proponent at the time of
-          submission
+          submission. Please see Schedule 12 of the Organic Matter Recycling
+          Regulation for a list of Organic Matter Suitable for Composting.
         </i>
       </Typography>
       <Grid
@@ -176,7 +177,9 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
           item
           xs={6}
         >
-          <Typography sx={style.columnHeader}>Known matter accepted</Typography>
+          <Typography sx={style.columnHeader}>
+            Types of organic matter accepted
+          </Typography>
           {omrrDataBooleanFields
             .filter((key) => Boolean(item[key]))
             .map((key) => (
@@ -197,7 +200,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
           xs={6}
         >
           <Typography sx={style.columnHeader}>
-            Known matter <u>not</u> accepted
+            Type of organic matter <u>not</u> accepted
           </Typography>
           {omrrDataBooleanFields
             .filter((key) => !item[key])
