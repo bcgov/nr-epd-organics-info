@@ -2,27 +2,40 @@ import {
   Box,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
-  Link,
+  Typography,
 } from '@mui/material'
-import Grid from '@mui/material/Grid'
-
-import ChevronRight from '@/assets/svgs/fa-chevron-right.svg?react'
 
 const styles = {
+  wrapper: {
+    width: {
+      xs: '100%',
+      md: '33.33%',
+    },
+    padding: '12px',
+    display: 'flex',
+  },
   card: {
     display: 'flex',
     flexDirection: 'column',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    width: '100%',
+    background: '#d8eafd',
   },
-  header: {
-    padding: 0,
-    marginBottom: {
-      xs: '12px',
-      md: '16px',
-    },
+  content: {
+    padding: '20px 32px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    flex: 1,
+  },
+  icon: {
+    width: '48px',
+    height: '48px',
+    marginBottom: '8px',
+    borderRadius: '8px',
   },
   title: {
     fontWeight: 700,
@@ -33,20 +46,9 @@ const styles = {
     gap: '16px',
     color: '#255a90',
   },
-  content: {
-    background: '#d8eafd',
-    height: '9em',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '0 0 20px',
-  },
-  icon: {
-    width: 'auto',
-    height: '48px',
-  },
   actions: {
-    padding: '0 0 16px',
+    padding: '0',
+    color: 'text.primary',
   },
   divider: {
     display: {
@@ -73,27 +75,10 @@ export function LearnMoreCard({
   actions,
   divider = true,
 }: Readonly<Props>) {
-  const titleElement = (
-    <Link sx={styles.title} target="_blank" href={link}>
-      {title}
-      <ChevronRight width={9} />
-    </Link>
-  )
-
   return (
-    <Grid item xs={12} md={4} component="section">
+    <Box component="section" sx={styles.wrapper}>
       <Card elevation={0} sx={styles.card}>
-        <CardActionArea target="_blank" href={link}>
-          <CardHeader
-            sx={{
-              ...styles.header,
-              display: {
-                xs: 'none',
-                md: 'flex',
-              },
-            }}
-            title={titleElement}
-          />
+        <CardActionArea target="_blank" href={link} sx={{ height: '100%' }}>
           <CardContent sx={styles.content}>
             <CardMedia
               component="img"
@@ -101,22 +86,13 @@ export function LearnMoreCard({
               sx={styles.icon}
               alt={title}
             />
+            <Typography sx={styles.title}>{title}</Typography>
+            <Typography sx={styles.actions}>{actions}</Typography>
           </CardContent>
-          <CardHeader
-            sx={{
-              ...styles.header,
-              display: {
-                xs: 'flex',
-                md: 'none',
-              },
-            }}
-            title={titleElement}
-          />
-          <CardActions sx={styles.actions}>{actions}</CardActions>
           {divider && <Box component="hr" sx={styles.divider} />}
         </CardActionArea>
       </Card>
-    </Grid>
+    </Box>
   )
 }
 

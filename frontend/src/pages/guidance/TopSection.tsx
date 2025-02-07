@@ -9,8 +9,8 @@ const styles = {
       md: '305px',
     },
     padding: {
-      xs: '40px 24px 80px',
-      md: '160px 76px 80px',
+      xs: '40px 24px 40px',
+      md: '160px 76px 40px',
     },
     background: `linear-gradient(0deg, var(--surface-color-brand-gold-60) 0%, var(--surface-color-brand-gold-60) 100%), url(${homePageBanner}) lightgray -34.093px -78.971px / 111.389% 194.45% no-repeat`,
     backgroundBlendMode: 'multiply, normal',
