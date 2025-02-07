@@ -19,6 +19,7 @@ export function DataLayersButton() {
       className="map-button map-button--large"
       menuClassName="data-layers-button-menu"
       openClassName="map-button--active"
+      menuPosition={{ horizontal: 'right', offset: 20 }}
       startIcon={
         <div className="layers-badge-wrapper" style={{ marginRight: '8px' }}>
           <Badge

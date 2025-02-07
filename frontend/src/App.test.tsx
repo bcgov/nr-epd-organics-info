@@ -65,7 +65,7 @@ describe('App suite', () => {
     screen.getByAltText('Logo')
     screen.getByText('Organics Info')
     screen.getByText(
-      'Find an authorized compost and biosolid facility in British Columbia',
+      'Find authorized land application sites and compost facilities in B.C.',
     )
   })
 
@@ -114,7 +114,7 @@ describe('App suite', () => {
     })
 
     await screen.findByText(
-      'Find an authorized compost and biosolid facility in British Columbia',
+      'Find authorized land application sites and compost facilities in B.C.',
     )
     // Ensure state is set properly
     expect(state.allResults).toBeDefined()
