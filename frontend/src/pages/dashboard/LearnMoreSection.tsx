@@ -98,8 +98,7 @@ export function LearnMoreSection() {
           title="Process and procedures"
           link="https://www2.gov.bc.ca/gov/content?id=0876E90DA4744A449423D35EB4E09785"
           icon={verification}
-          actions="Learn about how we administer the authorizations process for
-                    compost and biosolids facilities and land application."
+          actions="Learn about how we administer the authorization process for land application sites and compost facilities."
         />
         <LearnMoreCard
           title="Compliance and enforcement"
@@ -112,7 +111,7 @@ export function LearnMoreSection() {
 
       <Card elevation={0} sx={styles.fullWidthCard}>
         <CardActionArea
-          href="https://www2.gov.bc.ca/gov/content?id=0876E90DA4744A449423D35EB4E09785"
+          href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization/apply"
           target="_blank"
         >
           <Box sx={styles.fullWidthContent}>

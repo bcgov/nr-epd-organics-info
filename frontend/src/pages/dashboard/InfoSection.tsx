@@ -101,8 +101,9 @@ export function InfoSection() {
             </Typography>
             <Typography component="li">I am an organization</Typography>
             <Typography component="li">
-              I am a local government of First Nations and want to see
-              information about authorized compose and biosolids facilities.
+              I am a local government or First Nation and want to see
+              information about authorized land application sites and compost
+              facilities.
             </Typography>
           </ul>
         </Stack>

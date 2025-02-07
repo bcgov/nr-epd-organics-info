@@ -10,7 +10,7 @@ describe('Test suite for Dashboard', () => {
     })
 
     screen.getByRole('heading', {
-      name: 'Find an authorized compost and biosolid facility in British Columbia',
+      name: 'Find authorized land application sites and compost facilities in B.C.',
     })
     const mapButton = screen.getByRole('button', { name: 'Search on a map' })
     const listButton = screen.getByRole('button', {

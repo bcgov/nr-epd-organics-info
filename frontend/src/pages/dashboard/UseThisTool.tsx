@@ -128,9 +128,8 @@ export function UseThisTool() {
           </Typography>
           <Typography sx={styles.description}>
             Organics Info helps you find information on authorized land
-            application sites, compost and biosolids facilities in B.C. This
-            tool improves transparency around organic matter management in
-            accordance with the{' '}
+            application sites and compost facilities in B.C. This tool improves
+            transparency around organic matter management in accordance with the{' '}
             <a
               href="https://www2.gov.bc.ca/gov/content/environment/waste-management/food-and-organic-waste/regulations-guidelines"
               target="_blank"

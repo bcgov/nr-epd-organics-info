@@ -47,7 +47,7 @@ export function TopSection() {
         color="secondary"
         sx={styles.heading}
       >
-        Find an authorized compost and biosolid facility in British Columbia
+        Find authorized land application sites and compost facilities in B.C.
       </Typography>
       <Stack
         direction={{

@@ -13,7 +13,7 @@ export const dashboard_page = async (page: Page) => {
   // Top Section
   await expect(
     page.getByRole('heading', {
-      name: 'Find an authorized compost and biosolid facility in British Columbia',
+      name: 'Find authorized land application sites and compost facilities in B.C.',
     }),
   ).toBeVisible()
   await expect(
