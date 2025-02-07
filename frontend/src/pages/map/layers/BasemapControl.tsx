@@ -4,6 +4,7 @@ import L from 'leaflet'
 import { IconButton } from '@mui/material'
 import clsx from 'clsx'
 import LayersIcon from '@/assets/svgs/fa-map.svg?react'
+import GlobeIcon from '@/assets/svgs/globe.svg?react'
 
 import './BasemapControl.css'
 
@@ -64,7 +65,7 @@ export function BasemapControlButton() {
         onClick={() => setIsListVisible(!isListVisible)}
         title="Change basemap"
       >
-        <LayersIcon />
+        <GlobeIcon />
       </IconButton>
 
       <div className={clsx('basemaps-list', !isListVisible && 'hidden')}>
