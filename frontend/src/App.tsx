@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
   Box,
@@ -31,8 +31,9 @@ const loadingStyle = {
   justifyContent: 'center',
 }
 
-export default function App() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+// Create a wrapper component to access useLocation
+function AppContent() {
+  const location = useLocation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const status: LoadingStatusType = useSelector(selectStatus)
@@ -40,6 +41,11 @@ export default function App() {
   const isLoading = status === 'loading' || status === 'idle'
   const isError = status === 'failed'
   const isReady = status === 'succeeded'
+
+  // Don't show footer on map view
+  const showFooter = location.pathname !== '/map'
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -57,51 +63,58 @@ export default function App() {
   ]
 
   return (
+    <Stack direction="column" sx={{ minHeight: '100vh' }}>
+      <DsHeader title="Organics Info">
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              aria-label="menu"
+              onClick={handleMenuOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              {navLinks.map((link) => (
+                <MenuItem key={link.href} onClick={handleMenuClose}>
+                  <Link href={link.href} underline="none" color="inherit">
+                    {link.text}
+                  </Link>
+                </MenuItem>
+              ))}
+            </Menu>
+          </>
+        ) : (
+          navLinks.map((link) => (
+            <Link key={link.href} href={link.href} underline="none">
+              {link.text}
+            </Link>
+          ))
+        )}
+      </DsHeader>
+      <Box
+        component="div"
+        flex={1}
+        style={isLoading ? loadingStyle : undefined}
+      >
+        {isLoading && <CircularProgress title="Loading..." />}
+        {isError && <AppError />}
+        {isReady && <AppRoutes />}
+      </Box>
+      {showFooter && <Footer />}
+    </Stack>
+  )
+}
+
+// Main App component
+export default function App() {
+  return (
     <BrowserRouter>
-      <Stack direction="column" sx={{ minHeight: '100vh' }}>
-        <DsHeader title="Organics Info">
-          {isMobile ? (
-            <>
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                onClick={handleMenuOpen}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-              >
-                {navLinks.map((link) => (
-                  <MenuItem key={link.href} onClick={handleMenuClose}>
-                    <Link href={link.href} underline="none" color="inherit">
-                      {link.text}
-                    </Link>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </>
-          ) : (
-            navLinks.map((link) => (
-              <Link key={link.href} href={link.href} underline="none">
-                {link.text}
-              </Link>
-            ))
-          )}
-        </DsHeader>
-        <Box
-          component="div"
-          flex={1}
-          style={isLoading ? loadingStyle : undefined}
-        >
-          {isLoading && <CircularProgress title="Loading..." />}
-          {isError && <AppError />}
-          {isReady && <AppRoutes />}
-        </Box>
-        <Footer />
-      </Stack>
+      <AppContent />
     </BrowserRouter>
   )
 }

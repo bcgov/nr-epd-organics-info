@@ -77,7 +77,7 @@ export function ListSearchSection() {
           }
           sx={{ textTransform: 'none' }}
         >
-          Filter by Facility Type
+          Filter
         </Button>
       </Box>
       <Menu

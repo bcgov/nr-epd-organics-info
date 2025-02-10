@@ -14,12 +14,28 @@ export const authorization_list_page = async (page: Page) => {
     }),
   ).toBeVisible()
 
-  await page.getByRole('button', { name: 'Filter by Facility Type' }).click()
+  // Test the Search dropdown
+  await page.getByRole('button', { name: 'Search' }).click()
+  await expect(
+    page.getByRole('menuitem', { name: 'All', exact: true }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('menuitem', { name: 'Active', exact: true }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('menuitem', { name: 'Inactive', exact: true }),
+  ).toBeVisible()
+  await page.getByRole('menuitem', { name: 'Active', exact: true }).click()
+
+  // Ensure menu is closed by clicking away
+  await page.click('body', { position: { x: 0, y: 0 } })
+
+  // Test the Filter dropdown
+  await page.getByRole('button', { name: 'Filter' }).click()
   await expect(page.getByLabel('Notification')).toBeVisible()
   await expect(page.getByLabel('Permit')).toBeVisible()
   await expect(page.getByLabel('Approval')).toBeVisible()
   await expect(page.getByLabel('Operational Certificate')).toBeVisible()
-  await expect(page.getByLabel('Notification')).toBeVisible()
   await page.getByLabel('Notification').check()
   await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
   await expect(page.getByLabel('Land Application')).toBeVisible()
@@ -27,12 +43,18 @@ export const authorization_list_page = async (page: Page) => {
     page.getByRole('button', { name: 'Reset Filters' }),
   ).toBeVisible()
 
-  await expect(page.getByPlaceholder('Type keyword to search')).toBeVisible()
-  const searchInput = page.getByLabel('Search Authorizations')
+  // Close the filter menu
+  await page.click('body', { position: { x: 0, y: 0 } })
+
+  // Test the search input
+  const searchInput = page.getByPlaceholder(
+    'Search authorizations by City or Number',
+  )
+  await expect(searchInput).toBeVisible()
   await searchInput.click()
   await searchInput.fill('victoria')
 
-  // There are 3 search results - find the City of Victoria one
+  // Test search results
   const listItem = page
     .getByRole('listitem')
     .filter({ hasText: 'CITY OF VICTORIA' })
@@ -41,7 +63,7 @@ export const authorization_list_page = async (page: Page) => {
   await expect(listItem.getByText('Active')).toBeVisible()
   await expect(listItem.getByText('Notification')).toBeVisible()
 
-  // Sort by location
+  // Test location sort
   await page.getByTitle('Sort results by my location').click()
 
   await expect(

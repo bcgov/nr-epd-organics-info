@@ -27,7 +27,7 @@ describe('Test suite for AuthorizationList', () => {
     screen.getByRole('heading', { name: 'Search Authorizations' })
     screen.getByLabelText('Search Authorizations')
     const input = screen.getByPlaceholderText('Type keyword to search')
-    screen.getByText('Search by:')
+    screen.getByText('Search')
     await screen.findByText('There are no matching authorizations.')
 
     expect(screen.queryByText('Export Results to CSV')).not.toBeInTheDocument()
@@ -51,7 +51,7 @@ describe('Test suite for AuthorizationList', () => {
       filteredResults: mockOmrrData,
     })
 
-    screen.getByText('Search by:')
+    screen.getByText('Search')
     // Results text is shown twice
     const total = mockOmrrData.length
     const resultsText = screen.getAllByText(`Showing 1-2 of ${total} results`)
@@ -104,7 +104,7 @@ describe('Test suite for AuthorizationList', () => {
     screen.getByText(first['Facility Location'])
 
     const btns = screen.getAllByRole('button', {
-      name: 'View Facility Details',
+      name: 'View Details',
     })
     expect(btns).toHaveLength(2)
     await user.click(btns[0])

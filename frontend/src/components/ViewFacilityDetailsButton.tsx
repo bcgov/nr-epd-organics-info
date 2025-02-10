@@ -33,7 +33,7 @@ export function ViewFacilityDetailsButton({ item }: Readonly<Props>) {
       onClick={() => onClick(`/authorization/${number}`)}
       className="button--square-padding"
     >
-      View Facility Details
+      View Details
     </Button>
   )
 }
