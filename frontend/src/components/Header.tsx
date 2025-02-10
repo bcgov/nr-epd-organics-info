@@ -129,8 +129,8 @@ export default function Header() {
         <Stack direction="row" id="nav">
           {mdMatches && (
             <>
-              <HeaderLink to="/map">Map Search</HeaderLink>
-              <HeaderLink to="/search">Text Search</HeaderLink>
+              <HeaderLink to="/map">Map View</HeaderLink>
+              <HeaderLink to="/search">List View</HeaderLink>
               <HeaderLink to="/contact">Contact Us</HeaderLink>
               <HeaderLink to="/help">Help</HeaderLink>
             </>
@@ -161,10 +161,10 @@ export default function Header() {
                 }}
               >
                 <HeaderMenuLink onClick={handleMenuClose} to="/map">
-                  Map Search
+                  Map View
                 </HeaderMenuLink>
                 <HeaderMenuLink onClick={handleMenuClose} to="/search">
-                  Text Search
+                  List View
                 </HeaderMenuLink>
                 <HeaderMenuLink onClick={handleMenuClose} to="/contact">
                   Contact Us

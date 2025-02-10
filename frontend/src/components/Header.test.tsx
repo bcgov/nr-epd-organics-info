@@ -12,8 +12,8 @@ describe('Header suite', () => {
 
     const logoLink = screen.getByAltText('Logo')
     screen.getByText('Organics Info')
-    const mapLink = screen.getByRole('link', { name: 'Map Search' })
-    const textLink = screen.getByRole('link', { name: 'Text Search' })
+    const mapLink = screen.getByRole('link', { name: 'Map View' })
+    const textLink = screen.getByRole('link', { name: 'List View' })
     const contactLink = screen.getByRole('link', { name: 'Contact Us' })
 
     await user.click(mapLink)
@@ -21,9 +21,6 @@ describe('Header suite', () => {
 
     await user.click(textLink)
     expect(location.href).toContain('/search')
-
-    await user.click(guidanceLink)
-    expect(location.href).toContain('/guidance')
 
     await user.click(contactLink)
     expect(location.href).toContain('/contact')
@@ -49,8 +46,8 @@ describe('Header suite', () => {
     await user.click(menuButton)
 
     const menu = screen.getByRole('menu')
-    const mapLink = getByText(menu, 'Map Search')
-    const textLink = getByText(menu, 'Text Search')
+    const mapLink = getByText(menu, 'Map View')
+    const textLink = getByText(menu, 'List View')
     const contactLink = getByText(menu, 'Contact Us')
 
     await user.click(mapLink)

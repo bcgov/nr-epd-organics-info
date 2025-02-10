@@ -45,7 +45,7 @@ export const authorization_details_page = async (page: Page) => {
   await expect(headerRow.getByText('Summary', { exact: true })).toBeVisible()
   await expect(headerRow.getByText('Action', { exact: true })).toBeVisible()
 
-  const backBtn = page.getByRole('button', { name: 'Back to Text Search' })
+  const backBtn = page.getByRole('button', { name: 'Back to List View' })
   await expect(backBtn).toBeVisible()
   await backBtn.click()
 
