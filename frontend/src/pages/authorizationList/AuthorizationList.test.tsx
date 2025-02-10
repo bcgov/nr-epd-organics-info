@@ -87,15 +87,13 @@ describe('Test suite for AuthorizationList', () => {
     expect(opCertCb).not.toBeChecked()
     expect(screen.queryByText('Reset Filters')).not.toBeInTheDocument()
 
-    // Test the search by radio buttons
-    const allRb = screen.getByRole('radio', { name: 'All' })
-    expect(allRb).toBeChecked()
-    const activeRb = screen.getByRole('radio', { name: 'Active' })
-    expect(activeRb).not.toBeChecked()
-    const inactiveRb = screen.getByRole('radio', { name: 'Inactive' })
-    expect(inactiveRb).not.toBeChecked()
+    // Test the search by dropdown
+    const searchByButton = screen.getByRole('button', { name: 'Search' })
+    expect(searchByButton).toBeInTheDocument()
+    await user.click(searchByButton)
 
-    await user.click(activeRb)
+    const activeMenuItem = screen.getByRole('menuitem', { name: 'Active' })
+    await user.click(activeMenuItem)
 
     const [first] = mockActiveOmrrData
     const { 'Authorization Number': number } = first
