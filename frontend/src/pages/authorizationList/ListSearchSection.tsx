@@ -9,24 +9,37 @@ import { ListSearchByGroup } from './ListSearchByGroup'
 import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 const styles = {
-  searchByRow: {
+  container: {
     display: 'flex',
     flexDirection: {
       xs: 'column',
       md: 'row',
     },
-    justifyContent: {
-      xs: 'flex-start',
-      md: 'space-between',
-    },
+    gap: '24px',
     alignItems: {
-      xs: 'flex-start',
+      xs: 'stretch',
       md: 'center',
     },
-    gap: '24px',
-    marginBottom: {
-      xs: 0,
-      md: '16px',
+  },
+  searchInput: {
+    flex: 1,
+  },
+  actionButtons: {
+    display: 'flex',
+    gap: '16px',
+    flexShrink: 0,
+    flexDirection: {
+      xs: 'column',
+      md: 'row',
+    },
+    '& .MuiButton-root': {
+      height: '56px',
+      width: {
+        xs: '100%',
+        md: 'auto',
+      },
+      justifyContent: 'space-between',
+      padding: '0 16px',
     },
   },
 }
@@ -43,9 +56,11 @@ export function ListSearchSection() {
   }
 
   return (
-    <>
-      <ListSearchInput />
-      <Box sx={styles.searchByRow}>
+    <Box sx={styles.container}>
+      <Box sx={styles.searchInput}>
+        <ListSearchInput />
+      </Box>
+      <Box sx={styles.actionButtons}>
         <ListSearchByGroup />
         <Button
           color="primary"
@@ -62,7 +77,7 @@ export function ListSearchSection() {
           }
           sx={{ textTransform: 'none' }}
         >
-          Filter
+          Filter by Facility Type
         </Button>
       </Box>
       <Menu
@@ -80,6 +95,6 @@ export function ListSearchSection() {
           <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
       </Menu>
-    </>
+    </Box>
   )
 }
