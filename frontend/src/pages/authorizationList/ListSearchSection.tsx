@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Button, Collapse } from '@mui/material'
+import { Box, Button, Menu } from '@mui/material'
 import clsx from 'clsx'
 
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
@@ -32,7 +32,15 @@ const styles = {
 }
 
 export function ListSearchSection() {
-  const [filtersExpanded, setFiltersExpanded] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <>
@@ -42,37 +50,36 @@ export function ListSearchSection() {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => setFiltersExpanded(!filtersExpanded)}
+          onClick={handleClick}
           endIcon={
             <DownArrow
               width={10}
               style={{
-                transform: `rotate(${filtersExpanded ? 180 : 0}deg)`,
+                transform: `rotate(${Boolean(anchorEl) ? 180 : 0}deg)`,
                 transition: 'transform 0.2s linear',
               }}
             />
           }
+          sx={{ textTransform: 'none' }}
         >
-          Filter by Facility Type
+          Filter
         </Button>
       </Box>
-      <Collapse in={filtersExpanded} timeout="auto" unmountOnExit>
-        <Box
-          component="div"
-          className={clsx(
-            'list-search-filter-by-row',
-            filtersExpanded && 'list-search-filter-by-row--expanded',
-          )}
-          sx={{
-            gap: {
-              xs: '8px',
-              md: '16px',
-            },
-          }}
-        >
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            width: { xs: '100%', md: '400px' },
+            mt: 1,
+          },
+        }}
+      >
+        <Box sx={{ p: 2 }}>
           <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
-      </Collapse>
+      </Menu>
     </>
   )
 }
