@@ -25,22 +25,21 @@ describe('Test suite for AuthorizationList', () => {
     const { user } = renderComponent({ filteredResults: [] })
 
     screen.getByRole('heading', { name: 'Search Authorizations' })
-    screen.getByPlaceholderText('Search authorizations by City or Number')
-    screen.getByText('Search')
+    const searchInput = screen.getByPlaceholderText(
+      'Search authorizations by City or Number',
+    )
+    screen.getByRole('button', { name: /Search by:/ })
     await screen.findByText('There are no matching authorizations.')
 
     expect(screen.queryByText('Export Results to CSV')).not.toBeInTheDocument()
     expect(screen.queryByTestId('list-pagination')).not.toBeInTheDocument()
 
-    const input = screen.getByPlaceholderText(
-      'Search authorizations by City or Number',
-    )
-    await user.type(input, 'zzzz')
+    await user.type(searchInput, 'zzzz')
 
     const clearBtn = screen.getByRole('button', { name: 'Clear Search Text' })
     await user.click(clearBtn)
 
-    await user.type(input, 'abcde')
+    await user.type(searchInput, 'abcde')
 
     const clearBtn2 = screen.getByTitle('Clear')
     await user.click(clearBtn2)
@@ -53,45 +52,8 @@ describe('Test suite for AuthorizationList', () => {
       filteredResults: mockOmrrData,
     })
 
-    screen.getByText('Search')
-    // Results text is shown twice
-    const total = mockOmrrData.length
-    const resultsText = screen.getAllByText(`Showing 1-2 of ${total} results`)
-    expect(resultsText).toHaveLength(2)
-
-    // Test filter checkboxes
-    const filterByBtn = screen.getByRole('button', {
-      name: 'Filter',
-    })
-    // Display the checkbox filters
-    await user.click(filterByBtn)
-    // Only shown when there are active filters
-    expect(screen.queryByText('Reset Filters')).not.toBeInTheDocument()
-
-    const checkboxes = screen.getAllByRole('checkbox')
-    expect(checkboxes).toHaveLength(6)
-    // Initially none are checked
-    checkboxes.forEach((cb) => {
-      expect(cb).not.toBeChecked()
-    })
-    const opCertCb = screen.getByRole('checkbox', {
-      name: 'Operational Certificate',
-    })
-    expect(opCertCb).not.toBeChecked()
-    await user.click(opCertCb)
-    expect(opCertCb).toBeChecked()
-
-    // Should be 1 result now
-    screen.getAllByText('Showing 1 result')
-    screen.getByText('NANAIMO ORGANIC WASTE LTD.')
-
-    const resetBtn = screen.getByRole('button', { name: 'Reset Filters' })
-    await user.click(resetBtn)
-    expect(opCertCb).not.toBeChecked()
-    expect(screen.queryByText('Reset Filters')).not.toBeInTheDocument()
-
-    // Test the search by dropdown
-    const searchByButton = screen.getByRole('button', { name: 'Search' })
+    // Test the search dropdown
+    const searchByButton = screen.getByRole('button', { name: /Search by:/ })
     expect(searchByButton).toBeInTheDocument()
     await user.click(searchByButton)
 

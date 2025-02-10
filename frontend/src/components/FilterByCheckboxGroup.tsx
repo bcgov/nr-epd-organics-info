@@ -14,7 +14,7 @@ import {
   selectFilters,
   updateFilter,
 } from '@/features/omrr/omrr-slice'
-import { OmrrFilter } from '@/interfaces/types'
+import { OmrrFilter } from '@/interfaces/omrr-filter'
 import { flattenFilters } from '@/features/omrr/omrr-utils'
 
 import './FilterByCheckboxGroup.css'

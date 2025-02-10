@@ -9,4 +9,5 @@ export interface OmrrFilter {
   label: string
   on: boolean
   disabled?: boolean
+  field: string
 }
