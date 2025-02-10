@@ -25,8 +25,7 @@ describe('Test suite for AuthorizationList', () => {
     const { user } = renderComponent({ filteredResults: [] })
 
     screen.getByRole('heading', { name: 'Search Authorizations' })
-    screen.getByLabelText('Search Authorizations')
-    const input = screen.getByPlaceholderText('Type keyword to search')
+    screen.getByPlaceholderText('Search authorizations by City or Number')
     screen.getByText('Search')
     await screen.findByText('There are no matching authorizations.')
 
@@ -59,7 +58,7 @@ describe('Test suite for AuthorizationList', () => {
 
     // Test filter checkboxes
     const filterByBtn = screen.getByRole('button', {
-      name: 'Filter by Facility Type',
+      name: 'Filter',
     })
     // Display the checkbox filters
     await user.click(filterByBtn)
