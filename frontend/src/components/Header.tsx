@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import {
   AppBar,
   Box,
+  Divider,
   IconButton,
   Link,
   Menu,
@@ -16,19 +17,16 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { HeaderLink } from './HeaderLink'
 import { HeaderMenuLink } from './HeaderMenuLink'
 
-import BCGovLogoH from '@/assets/BCID_H_rgb_rev.png'
-import BCGovLogoV from '@/assets/BCID_V_rgb_rev.png'
-import MapIcon from '@/assets/svgs/fa-map.svg?react'
-import TextIcon from '@/assets/svgs/fa-text.svg?react'
+import BCGovLogoH from '@/assets/bc-logo-white.png'
+import BCGovLogoV from '@/assets/bc-logo-white-small.png'
 import MenuIcon from '@/assets/svgs/fa-menu.svg?react'
 
 import './Header.css'
 
 const styles = {
   appBar: {
-    color: '#ffffff',
-    backgroundColor: '#053662',
-    borderBottom: '0.1em solid rgb(252, 186, 25) !important',
+    color: '#053662',
+    backgroundColor: '#ffffff',
     height: '4em',
   },
   toolbar: {
@@ -36,6 +34,10 @@ const styles = {
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'space-between',
+    px: {
+      xs: 2,
+      md: 12,
+    },
   },
   logo: {
     alignContent: 'center',
@@ -100,6 +102,16 @@ export default function Header() {
               alt="Logo"
             />
           </Link>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              mx: 2,
+              height: '34px',
+              my: 'auto',
+              borderColor: 'rgba(0, 0, 0, 0.12)',
+            }}
+          />
           <Link
             style={{
               display: 'inline-flex',
@@ -117,20 +129,10 @@ export default function Header() {
         <Stack direction="row" id="nav">
           {mdMatches && (
             <>
-              <HeaderLink
-                to="/map"
-                icon={<MapIcon width="20px" height="24px" />}
-              >
-                Map Search
-              </HeaderLink>
-              <HeaderLink
-                to="/search"
-                icon={<TextIcon width="14px" height="24px" />}
-              >
-                Text Search
-              </HeaderLink>
-              <HeaderLink to="/guidance">Guidance</HeaderLink>
+              <HeaderLink to="/map">Map Search</HeaderLink>
+              <HeaderLink to="/search">Text Search</HeaderLink>
               <HeaderLink to="/contact">Contact Us</HeaderLink>
+              <HeaderLink to="/help">Help</HeaderLink>
             </>
           )}
           {!mdMatches && (
@@ -141,7 +143,7 @@ export default function Header() {
                 title="Menu"
                 className="header-menu-button"
               >
-                <MenuIcon />
+                <MenuIcon style={{ color: '#053662' }} />
               </IconButton>
               <Menu
                 id="headerMenu"
@@ -164,11 +166,11 @@ export default function Header() {
                 <HeaderMenuLink onClick={handleMenuClose} to="/search">
                   Text Search
                 </HeaderMenuLink>
-                <HeaderMenuLink onClick={handleMenuClose} to="/guidance">
-                  Guidance
-                </HeaderMenuLink>
                 <HeaderMenuLink onClick={handleMenuClose} to="/contact">
                   Contact Us
+                </HeaderMenuLink>
+                <HeaderMenuLink onClick={handleMenuClose} to="/guidance">
+                  Help
                 </HeaderMenuLink>
               </Menu>
             </div>

@@ -7,7 +7,6 @@ export const dashboard_page = async (page: Page) => {
   await expect(page.getByAltText('Logo')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Map Search' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Text Search' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Guidance' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Contact Us' })).toBeVisible()
 
   // Top Section
