@@ -47,7 +47,7 @@ describe('Header suite', () => {
 
     const menu = screen.getByRole('menu')
     const mapLink = getByText(menu, 'Map View')
-    const textLink = getByText(menu, 'List View')
+    const textLink = getByText(menu, 'Text View')
     const contactLink = getByText(menu, 'Contact Us')
 
     await user.click(mapLink)
