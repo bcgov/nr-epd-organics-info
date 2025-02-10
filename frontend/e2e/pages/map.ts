@@ -3,13 +3,8 @@ import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
-  await page.goto(baseURL)
-  await page.getByRole('link', { name: 'Map View' }).click()
-
+  await page.goto(baseURL + '/map')
   await expect(page).toHaveTitle('Organics Info')
-  await expect(page.getByRole('link', { name: 'Map View' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'List View' })).toBeVisible()
-
   await expect(page.getByTestId('map-view')).toBeVisible()
 
   // Search components

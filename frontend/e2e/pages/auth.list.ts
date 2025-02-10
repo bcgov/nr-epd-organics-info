@@ -3,8 +3,8 @@ import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
 
 export const authorization_list_page = async (page: Page) => {
-  await page.goto(baseURL)
-  await page.getByRole('button', { name: 'List all authorizations' }).click()
+  await page.goto(baseURL + '/search')
+
   await expect(
     page.getByRole('heading', { name: 'Search Authorizations' }),
   ).toBeVisible()

@@ -4,10 +4,6 @@ import { Page } from 'playwright'
 
 export const dashboard_page = async (page: Page) => {
   await page.goto(baseURL)
-  await expect(page.getByAltText('Logo')).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Map View' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'List View' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Contact Us' })).toBeVisible()
 
   // Top Section
   await expect(

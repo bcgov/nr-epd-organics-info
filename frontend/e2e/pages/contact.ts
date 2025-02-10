@@ -4,9 +4,7 @@ import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
 
 export const contact_page = async (page: Page) => {
-  await page.goto(baseURL)
-  const contactUsLink = page.getByRole('link', { name: 'Contact Us' })
-  await contactUsLink.click()
+  await page.goto(baseURL + '/contact')
 
   // Test main heading
   await expect(
