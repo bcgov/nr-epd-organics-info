@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Box, CircularProgress, Stack } from '@mui/material'
 
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import { Footer } from '@bcgov/design-system-react-components'
 import AppError from '@/components/AppError'
 import AppRoutes from '@/routes'
 import { LoadingStatusType } from '@/interfaces/loading-status'
