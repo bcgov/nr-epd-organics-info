@@ -1,0 +1,10 @@
+.bcds-header a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 8px;
+  color: var(--typography-color-primary);
+  text-transform: none;
+  text-decoration: none;
+}
