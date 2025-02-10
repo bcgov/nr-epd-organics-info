@@ -14,7 +14,7 @@ import {
   selectFilters,
   updateFilter,
 } from '@/features/omrr/omrr-slice'
-import { OmrrFilter } from '@/interfaces/omrr-filter'
+import { OmrrFilter } from '@/interfaces/types'
 import { flattenFilters } from '@/features/omrr/omrr-utils'
 
 import './FilterByCheckboxGroup.css'
@@ -81,7 +81,7 @@ export function FilterByCheckboxGroup({
           />
         ))}
       </FormGroup>
-      {!isSmall && showResetButton && (
+      {showResetButton && (
         <Button
           variant="outlined"
           onClick={onReset}

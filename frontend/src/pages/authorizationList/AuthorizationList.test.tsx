@@ -32,6 +32,9 @@ describe('Test suite for AuthorizationList', () => {
     expect(screen.queryByText('Export Results to CSV')).not.toBeInTheDocument()
     expect(screen.queryByTestId('list-pagination')).not.toBeInTheDocument()
 
+    const input = screen.getByPlaceholderText(
+      'Search authorizations by City or Number',
+    )
     await user.type(input, 'zzzz')
 
     const clearBtn = screen.getByRole('button', { name: 'Clear Search Text' })
