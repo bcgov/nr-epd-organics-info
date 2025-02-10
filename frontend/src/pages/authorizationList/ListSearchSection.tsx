@@ -33,7 +33,7 @@ const styles = {
       md: 'row',
     },
     '& .MuiButton-root': {
-      height: '56px',
+      height: '63px',
       width: {
         xs: '100%',
         md: 'auto',
