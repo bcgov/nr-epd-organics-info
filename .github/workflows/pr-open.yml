@@ -37,7 +37,6 @@ jobs:
       autoscaling: false
       tag: ${{ github.event.number }}
       release: ${{ github.event.number }}
-      triggers: ('backend/' 'frontend/' 'charts/' '.github/')
       params: |
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
@@ -48,7 +47,6 @@ jobs:
 
   tests:
     name: Tests
-    if: needs.deploys.outputs.triggered == 'true'
     needs: [deploys]
     uses: ./.github/workflows/.tests.yml
     with:
