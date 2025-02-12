@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Box, Button, Menu } from '@mui/material'
+import { Box, Button, IconButton, Menu, Stack } from '@mui/material'
 import clsx from 'clsx'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { ListSearchInput } from './ListSearchInput'
@@ -62,23 +63,25 @@ export function ListSearchSection() {
       </Box>
       <Box sx={styles.actionButtons}>
         <ListSearchByGroup />
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={handleClick}
-          endIcon={
-            <DownArrow
-              width={10}
-              style={{
-                transform: `rotate(${Boolean(anchorEl) ? 180 : 0}deg)`,
-                transition: 'transform 0.2s linear',
-              }}
-            />
-          }
-          sx={{ textTransform: 'none' }}
-        >
-          Filter
-        </Button>
+        <Stack direction="row" gap="16px">
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={handleClick}
+            endIcon={
+              <DownArrow
+                width={10}
+                style={{
+                  transform: `rotate(${Boolean(anchorEl) ? 180 : 0}deg)`,
+                  transition: 'transform 0.2s linear',
+                }}
+              />
+            }
+            sx={{ textTransform: 'none' }}
+          >
+            Filter
+          </Button>
+        </Stack>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -88,9 +91,21 @@ export function ListSearchSection() {
           sx: {
             width: { xs: '100%', md: '400px' },
             mt: 1,
+            position: 'relative',
           },
         }}
       >
+        <IconButton
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            display: { xs: 'block', md: 'none' },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Box sx={{ p: 2 }}>
           <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
