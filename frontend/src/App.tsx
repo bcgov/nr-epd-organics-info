@@ -70,6 +70,10 @@ function AppContent() {
             <IconButton
               color="inherit"
               aria-label="menu"
+              sx={{
+                border: '1px solid black',
+                borderRadius: '5px',
+              }}
               onClick={handleMenuOpen}
             >
               <MenuIcon />
