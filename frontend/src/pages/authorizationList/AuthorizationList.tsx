@@ -41,7 +41,9 @@ export default function AuthorizationList({ pageSize = 10 }: Readonly<Props>) {
     <Stack direction="column" className="authorization-list">
       <ListTopSection />
       <Stack component="section" direction="column" sx={styles.stack}>
-        <ListSearchSection />
+        <Stack sx={{ display: { xs: 'block', md: 'none' } }}>
+          <ListSearchSection />
+        </Stack>
         <ListLastUpdated />
         <ListPagination
           page={page}

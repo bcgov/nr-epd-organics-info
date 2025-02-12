@@ -41,8 +41,12 @@ export function ListSearchByGroup() {
   return (
     <div>
       <Button
-        color="primary"
+        color="secondary"
         variant="contained"
+        sx={{
+          textTransform: 'none',
+          justifyContent: 'space-between',
+        }}
         onClick={handleClick}
         endIcon={
           <DownArrow
@@ -53,12 +57,8 @@ export function ListSearchByGroup() {
             }}
           />
         }
-        sx={{
-          textTransform: 'none',
-          justifyContent: 'space-between',
-        }}
       >
-        Search
+        Status
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={() => handleSelect(SEARCH_BY_ALL)}>

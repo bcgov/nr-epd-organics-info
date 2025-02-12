@@ -63,7 +63,7 @@ export function ListSearchSection() {
       <Box sx={styles.actionButtons}>
         <ListSearchByGroup />
         <Button
-          color="primary"
+          color="secondary"
           variant="contained"
           onClick={handleClick}
           endIcon={
