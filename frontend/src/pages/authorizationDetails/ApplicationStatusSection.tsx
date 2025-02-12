@@ -34,6 +34,16 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
         Application Status
       </Typography>
       <Typography fontSize={'1rem'} fontWeight="normal" fontStyle="italic">
+        Applies to amendments and new notifications only,{' '}
+        <a
+          href="https://www2.gov.bc.ca/gov/content?id=AF9C921702294B06AD1490034721D3D6"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="application-status-guidance-link"
+        >
+          please see our website on data we show
+        </a>
+        {'. '}
         <a
           href="https://www2.gov.bc.ca/gov/content/environment/waste-management/waste-discharge-authorization"
           target="_blank"
@@ -41,7 +51,7 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
         >
           Learn more
         </a>{' '}
-        about amendments, notifications and authorizations
+        about amendments, notifications and authorizations.
       </Typography>
 
       {allApplications.map((appStatus: OmrrApplicationStatus) => {
@@ -89,18 +99,6 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
           </Stack>
         )
       })}
-      <div className="application-status-guidance">
-        Applies to amendments and new notifications only,{' '}
-        <a
-          href="https://www2.gov.bc.ca/gov/content?id=AF9C921702294B06AD1490034721D3D6"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="application-status-guidance-link"
-        >
-          please see our website on data we show.
-        </a>
-        .
-      </div>
     </div>
   )
 }
