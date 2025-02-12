@@ -33,7 +33,12 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
       <Typography fontWeight={700} fontSize="24px">
         Application Status
       </Typography>
-      <Typography fontSize={'1rem'} fontWeight="normal" fontStyle="italic">
+      <Typography
+        fontSize={'1rem'}
+        fontWeight="normal"
+        fontStyle="italic"
+        color="var(--typography-color-secondary)"
+      >
         Applies to amendments and new notifications only,{' '}
         <a
           href="https://www2.gov.bc.ca/gov/content?id=AF9C921702294B06AD1490034721D3D6"
