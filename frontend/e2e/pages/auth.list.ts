@@ -7,7 +7,7 @@ export const authorization_list_page = async (page: Page) => {
 
   await expect(
     page.getByRole('heading', {
-      name: 'Authorized compost and biosolid facilities in B.C.',
+      name: 'Authorized land application sites and compost facilities in B.C.',
     }),
   ).toBeVisible()
 
@@ -44,9 +44,7 @@ export const authorization_list_page = async (page: Page) => {
   await page.click('body', { position: { x: 0, y: 0 } })
 
   // Test the search input
-  const searchInput = page.getByPlaceholder(
-    'Search authorizations by City or Number',
-  )
+  const searchInput = page.getByPlaceholder('Search')
   await expect(searchInput).toBeVisible()
   await searchInput.click()
   await searchInput.fill('victoria')

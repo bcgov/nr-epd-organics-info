@@ -21,7 +21,7 @@ export function ListSearchInput() {
 
   return (
     <SearchInput
-      placeholder="Search authorizations by City or Number"
+      placeholder="Search"
       className="list-search-input"
       value={value}
       onChange={onChange}

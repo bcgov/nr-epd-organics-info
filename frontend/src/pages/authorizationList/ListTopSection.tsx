@@ -31,7 +31,7 @@ export function ListTopSection() {
         Search Authorizations
       </Typography>
       <Typography variant="h6" component="h6" fontSize="18px">
-        Authorized compost and biosolid facilities in B.C.
+        Authorized land application sites and compost facilities in B.C.
       </Typography>
     </Stack>
   )

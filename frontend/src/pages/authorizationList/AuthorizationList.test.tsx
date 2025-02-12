@@ -25,9 +25,7 @@ describe('Test suite for AuthorizationList', () => {
     const { user } = renderComponent({ filteredResults: [] })
 
     screen.getByRole('heading', { name: 'Search Authorizations' })
-    const searchInput = screen.getByPlaceholderText(
-      'Search authorizations by City or Number',
-    )
+    const searchInput = screen.getByPlaceholderText('Search')
     screen.getByRole('button', { name: 'Search' })
     await screen.findByText('There are no matching authorizations.')
 
