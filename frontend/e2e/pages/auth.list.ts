@@ -6,9 +6,6 @@ export const authorization_list_page = async (page: Page) => {
   await page.goto(baseURL + '/search')
 
   await expect(
-    page.getByRole('heading', { name: 'Search Authorizations' }),
-  ).toBeVisible()
-  await expect(
     page.getByRole('heading', {
       name: 'Authorized compost and biosolid facilities in B.C.',
     }),

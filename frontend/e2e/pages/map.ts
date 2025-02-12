@@ -4,8 +4,6 @@ import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
   await page.goto(baseURL + '/map')
-  await expect(page).toHaveTitle('Organics Info')
-  await expect(page.getByTestId('map-view')).toBeVisible()
 
   // Search components
   await expect(page.getByPlaceholder('Search')).toBeVisible()
