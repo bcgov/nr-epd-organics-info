@@ -114,9 +114,11 @@ export function ComplianceSection({ item }: Readonly<Props>) {
           display: { xs: isExpanded ? 'flex' : 'none', md: 'flex' },
         }}
       >
-        <Typography fontSize="16px" color="#666" fontStyle="italic">
+        <Typography fontSize="16px" color="#666" fontStyle="italic" mb={2}>
           Compliance and enforcement data presented is from the Natural Resource
-          Compliance and Enforcement Database and may not be complete
+          Compliance and Enforcement Database and may not be complete. The
+          information shown is based on a search using the authorization number
+          and the name of the regulated party.
         </Typography>
         <Stack className="compliance-table" direction="column">
           <div className="compliance-table-row compliance-table-header">

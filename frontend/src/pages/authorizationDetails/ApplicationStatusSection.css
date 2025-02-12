@@ -22,7 +22,7 @@
 }
 
 .application-status-label--light {
-  color: var(--typography-color-secondary);
+  color: var(--typography-color-primary);
 }
 
 .application-status-guidance {

@@ -64,7 +64,6 @@ export function NotificationGridItems() {
 }
 
 export function NotificationCompostGridItems({ item }: Readonly<Props>) {
-  console.log(item)
   return (
     <>
       <DetailsGridLabel label="Operation Type" md={6}>
@@ -74,7 +73,7 @@ export function NotificationCompostGridItems({ item }: Readonly<Props>) {
         <RecyclingRegulationLink />
       </DetailsGridLabel>
       <DetailsGridLabel label="Type of Compost Produced" md={6}>
-        {item['Material Land Applied'] ?? ''}
+        {item['Type of Compost Produced'] ?? ''}
       </DetailsGridLabel>
       <DetailsGridLabel
         label="Facility Design Capacity (tonnes per year)"
@@ -162,8 +161,16 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
       <Typography className="organic-matter-note" sx={style.subtitle}>
         <i>
           The information presented was provided by the proponent at the time of
-          submission. Please see Schedule 12 of the Organic Matter Recycling
-          Regulation for a list of Organic Matter Suitable for Composting.
+          submission. Please see{' '}
+          <a
+            href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/18_2002#Schedule12"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Schedule 12
+          </a>{' '}
+          of the Organic Matter Recycling Regulation for a list of Organic
+          Matter Suitable for Composting.
         </i>
       </Typography>
       <Grid
