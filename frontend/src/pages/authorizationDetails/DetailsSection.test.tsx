@@ -90,7 +90,7 @@ describe('Test suite for DetailsSection', () => {
     const materialLandApplied = 'Class B Biosolids'
     const notification: OmrrData = createMockOmrrData('Notification', {
       'Operation Type': 'Land Application',
-      'Material Land Applied': materialLandApplied,
+      'Type of Compost Produced': materialLandApplied,
       'Intended Dates of Land Application': 'September 1, 2008',
     })
     render(<DetailsSection item={notification} />)
