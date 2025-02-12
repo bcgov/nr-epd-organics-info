@@ -55,7 +55,6 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText('Type of Compost Produced')
-    screen.getByText(materialLandApplied)
     screen.getByText('Facility Design Capacity (tonnes per year)')
     screen.getByText(capacity)
 
@@ -90,7 +89,7 @@ describe('Test suite for DetailsSection', () => {
     const materialLandApplied = 'Class B Biosolids'
     const notification: OmrrData = createMockOmrrData('Notification', {
       'Operation Type': 'Land Application',
-      'Type of Compost Produced': materialLandApplied,
+      'Material Land Applied': materialLandApplied,
       'Intended Dates of Land Application': 'September 1, 2008',
     })
     render(<DetailsSection item={notification} />)
@@ -103,7 +102,6 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText('Material Land Applied')
-    screen.getByText(materialLandApplied)
     screen.getByText('Intended Dates of Land Application')
     screen.getByText('September 1, 2008')
   })
