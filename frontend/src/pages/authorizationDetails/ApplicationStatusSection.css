@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 8px;
   color: black;
+  width: 100%;
 }
 
 .application-status-box {
@@ -13,6 +14,7 @@
   font-size: 16px;
   gap: 8px 24px;
   padding: var(--layout-padding-large) var(--layout-margin-large);
+  width: 100%;
 }
 
 .application-status-label {
@@ -20,7 +22,7 @@
 }
 
 .application-status-label--light {
-  color: var(--typography-color-secondary);
+  color: var(--typography-color-primary);
 }
 
 .application-status-guidance {
