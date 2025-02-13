@@ -5,8 +5,10 @@ import { baseURL } from '../utils'
 export const authorization_details_page = async (page: Page) => {
   await page.goto(baseURL)
   await page.getByRole('button', { name: 'List all authorizations' }).click()
-  await page.getByPlaceholder('Search').click()
-  await page.getByPlaceholder('Search').fill('12398')
+
+  const searchInput = page.getByTestId('authorization-list-search-input-mobile')
+  await searchInput.click()
+  await searchInput.fill('12398')
   await page.getByText('View Details').click()
 
   await expect(page.getByText('Authorization Status')).toBeVisible()
@@ -49,8 +51,8 @@ export const authorization_details_page = async (page: Page) => {
   await expect(backBtn).toBeVisible()
   await backBtn.click()
 
-  // Go to a Notification compost facility
-  await page.getByPlaceholder('Search').fill('16109')
+  // Update the second search operation
+  await searchInput.fill('16109')
   await page.getByText('View Details').click()
   await expect(page.getByText('FISHER ROAD HOLDINGS LTD.')).toBeVisible()
   await expect(page.getByText('Operation Type')).toBeVisible()

@@ -35,7 +35,7 @@ export function ListTopSection() {
         Authorized land application sites and compost facilities in B.C.
       </Typography>
       <Stack sx={{ display: { xs: 'none', md: 'block' }, marginTop: '24px' }}>
-        <ListSearchSection />
+        <ListSearchSection isMobile={false} />
       </Stack>
     </Stack>
   )

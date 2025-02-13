@@ -7,7 +7,7 @@ import {
 } from '@/features/omrr/omrr-slice'
 import { SearchInput } from '@/components/SearchInput'
 
-export function ListSearchInput() {
+export function ListSearchInput(props: { isMobile?: boolean }) {
   const dispatch = useDispatch()
   const value = useSearchTextFilter()
 
@@ -37,6 +37,7 @@ export function ListSearchInput() {
           fontSize: '12px',
         },
       }}
+      data-testid={`authorization-list-search-input${props.isMobile ? '-mobile' : '-desktop'}`}
     />
   )
 }

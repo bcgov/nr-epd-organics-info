@@ -45,7 +45,7 @@ const styles = {
   },
 }
 
-export function ListSearchSection() {
+export function ListSearchSection({ isMobile }: { isMobile?: boolean }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -59,7 +59,7 @@ export function ListSearchSection() {
   return (
     <Box sx={styles.container}>
       <Box sx={styles.searchInput}>
-        <ListSearchInput />
+        <ListSearchInput isMobile={isMobile} />
       </Box>
       <Box sx={styles.actionButtons}>
         <ListSearchByGroup />

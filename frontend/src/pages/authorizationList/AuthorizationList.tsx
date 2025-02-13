@@ -42,7 +42,7 @@ export default function AuthorizationList({ pageSize = 10 }: Readonly<Props>) {
       <ListTopSection />
       <Stack component="section" direction="column" sx={styles.stack}>
         <Stack sx={{ display: { xs: 'block', md: 'none' } }}>
-          <ListSearchSection />
+          <ListSearchSection isMobile={true} />
         </Stack>
         <ListLastUpdated />
         <ListPagination
