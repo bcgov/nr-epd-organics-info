@@ -62,7 +62,7 @@ export function DocumentsSection({ item }: Readonly<Props>) {
         {documents.map((doc: OmrrAuthzDocs) => {
           const extension =
             (doc.Filename ?? '').match(/\.([^.]+)$/)?.[1]?.toUpperCase() ||
-            'DOC'
+            'DOC/DOCX'
           return (
             <Link
               key={`DocumentRow-${doc.DocumentObjectID}`}

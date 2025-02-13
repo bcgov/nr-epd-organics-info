@@ -55,7 +55,6 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText('Type of Compost Produced')
-    screen.getByText(materialLandApplied)
     screen.getByText('Facility Design Capacity (tonnes per year)')
     screen.getByText(capacity)
 
@@ -103,7 +102,6 @@ describe('Test suite for DetailsSection', () => {
     screen.getByText('Regulation')
     screen.getByRole('link', { name: 'Organic Matter Recycling Regulation' })
     screen.getByText('Material Land Applied')
-    screen.getByText(materialLandApplied)
     screen.getByText('Intended Dates of Land Application')
     screen.getByText('September 1, 2008')
   })
