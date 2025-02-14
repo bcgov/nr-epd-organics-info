@@ -62,10 +62,10 @@ export function ListSearchSection({ isMobile }: { isMobile?: boolean }) {
         <ListSearchInput isMobile={isMobile} />
       </Box>
       <Box sx={styles.actionButtons}>
-        <ListSearchByGroup />
+        <ListSearchByGroup isMobile={isMobile} />
         <Stack direction="row" gap="16px">
           <Button
-            color="secondary"
+            color={isMobile ? 'primary' : 'secondary'}
             variant="contained"
             onClick={handleClick}
             endIcon={

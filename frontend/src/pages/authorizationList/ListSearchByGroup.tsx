@@ -9,7 +9,7 @@ import {
 } from '@/interfaces/types'
 import { setSearchBy, useSearchBy } from '@/features/omrr/omrr-slice'
 
-export function ListSearchByGroup() {
+export function ListSearchByGroup({ isMobile }: { isMobile?: boolean }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const dispatch = useDispatch()
   const searchBy = useSearchBy()
@@ -41,7 +41,7 @@ export function ListSearchByGroup() {
   return (
     <div>
       <Button
-        color="secondary"
+        color={isMobile ? 'primary' : 'secondary'}
         variant="contained"
         sx={{
           textTransform: 'none',
