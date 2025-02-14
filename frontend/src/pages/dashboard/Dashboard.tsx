@@ -6,7 +6,13 @@ import { TopSection } from './TopSection'
 import { UseThisTool } from './UseThisTool'
 import { HowToUseThisTool } from './HowToUseThisTool'
 
-const VIDEO_URL = 'https://your-video-url-here.com' // You can move this to an environment variable or config file
+/**
+ * If there is a video url specified here then the video will
+ * be shown on the dashboard
+ */
+
+// const VIDEO_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' // You can move this to an environment variable or config file
+const VIDEO_URL = '' // You can move this to an environment variable or config file
 
 export default function Dashboard() {
   return (
