@@ -26,7 +26,7 @@ describe('Test suite for AuthorizationList', () => {
 
     screen.getByRole('heading', { name: 'Search Authorizations' })
     const searchInput = screen.getByPlaceholderText('Search')
-    screen.getByRole('button', { name: 'Search' })
+    screen.getAllByRole('button', { name: 'Status' })[0]
     await screen.findByText('There are no matching authorizations.')
 
     expect(screen.queryByText('Export Results to CSV')).not.toBeInTheDocument()
@@ -51,7 +51,7 @@ describe('Test suite for AuthorizationList', () => {
     })
 
     // Test the search dropdown
-    const searchByButton = screen.getByRole('button', { name: 'Search' })
+    const searchByButton = screen.getByRole('button', { name: 'Status' })
     expect(searchByButton).toBeInTheDocument()
     await user.click(searchByButton)
 
