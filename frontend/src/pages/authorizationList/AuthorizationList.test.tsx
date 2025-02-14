@@ -39,7 +39,7 @@ describe('Test suite for AuthorizationList', () => {
 
     await user.type(searchInput, 'abcde')
 
-    const clearBtn2 = screen.getByTitle('Clear')
+    const clearBtn2 = screen.getAllByTitle('Clear')[0]
     await user.click(clearBtn2)
   })
 
