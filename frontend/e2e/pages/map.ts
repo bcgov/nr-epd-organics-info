@@ -96,11 +96,13 @@ export const map_page = async (page: Page) => {
   await expect(hideResultsBtn).toBeVisible()
   await hideResultsBtn.click()
 
-  const showResultsBtn = page.getByRole('button', { name: 'Show Results' })
+  const showResultsBtn = page
+    .getByRole('button', { name: 'Show Results' })
+    .first()
   await expect(showResultsBtn).toBeVisible()
   await showResultsBtn.click()
 
-  await page.getByTitle('Close').click({ force: true })
+  await page.getByTitle('Close').first().click({ force: true })
 
   // Test basemap switcher
   const basemapButton = page.locator('.leaflet-control-basemaps')

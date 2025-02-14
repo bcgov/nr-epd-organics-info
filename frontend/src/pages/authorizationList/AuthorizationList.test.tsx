@@ -51,7 +51,7 @@ describe('Test suite for AuthorizationList', () => {
     })
 
     // Test the search dropdown
-    const searchByButton = screen.getByRole('button', { name: 'Status' })
+    const searchByButton = screen.getAllByRole('button', { name: 'Status' })[0]
     expect(searchByButton).toBeInTheDocument()
     await user.click(searchByButton)
 

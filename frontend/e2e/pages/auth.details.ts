@@ -6,7 +6,7 @@ export const authorization_details_page = async (page: Page) => {
   await page.goto(baseURL)
   await page.getByRole('button', { name: 'List all authorizations' }).click()
 
-  const searchInput = page.getByTestId('authorization-list-search-input-mobile')
+  const searchInput = page.locator('input[placeholder="Search"]').first()
   await searchInput.click()
   await searchInput.fill('12398')
   await page.getByText('View Details').click()

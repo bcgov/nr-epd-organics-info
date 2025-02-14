@@ -12,7 +12,7 @@ export const authorization_list_page = async (page: Page) => {
   ).toBeVisible()
 
   // Test the Search dropdown
-  await page.getByRole('button', { name: 'Search' }).click()
+  await page.getByRole('button', { name: 'Status' }).first().click()
   await expect(
     page.getByRole('menuitem', { name: 'All', exact: true }),
   ).toBeVisible()
@@ -44,7 +44,7 @@ export const authorization_list_page = async (page: Page) => {
   await page.click('body', { position: { x: 0, y: 0 } })
 
   // Test the search input
-  const searchInput = page.getByPlaceholder('Search')
+  const searchInput = page.locator('input[placeholder="Search"]').first()
   await expect(searchInput).toBeVisible()
   await searchInput.click()
   await searchInput.fill('victoria')
@@ -58,10 +58,9 @@ export const authorization_list_page = async (page: Page) => {
   await expect(listItem.getByText('Active')).toBeVisible()
   await expect(listItem.getByText('Notification')).toBeVisible()
 
-  // Test location sort
-  await page.getByTitle('Sort results by my location').click()
-
   await expect(
     page.getByRole('button', { name: 'Export Results to CSV' }),
   ).toBeVisible()
+
+  await page.getByTitle('Sort results by my location').first().click()
 }
