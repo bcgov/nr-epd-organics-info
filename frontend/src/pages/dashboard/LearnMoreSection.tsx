@@ -36,6 +36,9 @@ const styles = {
     flexWrap: 'wrap',
     margin: '-12px',
     alignItems: 'stretch',
+    hr: {
+      display: 'none',
+    },
   },
   fullWidthCard: {
     marginTop: '24px',
