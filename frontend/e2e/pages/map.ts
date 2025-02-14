@@ -107,7 +107,7 @@ export const map_page = async (page: Page) => {
   // Test basemap switcher
   const basemapButton = page.locator('.leaflet-control-basemaps')
   await expect(basemapButton).toBeVisible()
-  await basemapButton.click()
+  await basemapButton.click({ force: true })
 
   // Check all basemap options are available
   await expect(
