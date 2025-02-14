@@ -10,7 +10,6 @@ export default function Dashboard() {
     <Stack
       direction="column"
       sx={{
-        marginTop: '4em',
         '& > section': {
           // Target all direct section children
           paddingTop: {

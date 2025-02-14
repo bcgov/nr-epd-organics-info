@@ -59,7 +59,6 @@ function AppContent() {
     { href: '/map', text: 'Map View' },
     { href: '/search', text: 'List View' },
     { href: '/contact', text: 'Contact Us' },
-    { href: '/help', text: 'Help' },
   ]
 
   return (
