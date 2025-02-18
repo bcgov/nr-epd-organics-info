@@ -87,7 +87,7 @@ export function ContactUs() {
             headerClassName="link-section-header"
             contentClassName="link-section-content"
             data-testid="link-section"
-            data-section-header="true"
+            data-section-header={true}
           >
             <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
               <div style={iconContainerStyle}>
@@ -113,7 +113,7 @@ export function ContactUs() {
             headerClassName="link-section-header"
             contentClassName="link-section-content"
             data-testid="link-section"
-            data-section-header="true"
+            data-section-header={true}
           >
             <Stack
               direction={{ xs: 'column', md: 'row' }}
@@ -164,7 +164,7 @@ export function ContactUs() {
             headerClassName="link-section-header"
             contentClassName="link-section-content"
             data-testid="link-section"
-            data-section-header="true"
+            data-section-header={true}
           >
             <Stack
               direction={{ xs: 'column', md: 'row' }}
