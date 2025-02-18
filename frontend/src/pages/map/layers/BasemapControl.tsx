@@ -80,7 +80,7 @@ export function BasemapControlButton() {
             onClick={() => handleLayerChange(basemap.layer)}
           >
             <img src={basemap.thumbnail} alt={basemap.name} />
-            <span>{basemap.name}</span>
+            <span data-basemap-name="true">{basemap.name}</span>
           </button>
         ))}
       </div>

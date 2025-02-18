@@ -111,12 +111,12 @@ export const map_page = async (page: Page) => {
 
   // Check all basemap options are available
   await expect(
-    page.locator('.basemap-option span').filter({ hasText: 'Streets' }),
+    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Streets' }),
   ).toBeVisible()
   await expect(
-    page.locator('.basemap-option span').filter({ hasText: 'Terrain' }),
+    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Terrain' }),
   ).toBeVisible()
   await expect(
-    page.locator('.basemap-option span').filter({ hasText: 'Imagery' }),
+    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Imagery' }),
   ).toBeVisible()
 }

@@ -22,7 +22,9 @@ export function LinkSection({
 }: LinkSectionProps) {
   return (
     <Stack className={className}>
-      <Stack className={headerClassName}>{title}</Stack>
+      <Stack className={headerClassName}>
+        <span data-section-header="true">{title}</span>
+      </Stack>
       <Stack className={contentClassName}>
         <Typography sx={{ mb: 3 }}>{text}</Typography>
         <ul style={{ margin: 0, paddingLeft: '20px' }}>{children}</ul>

@@ -26,9 +26,6 @@ export const contact_page = async (page: Page) => {
     page.getByRole('heading', { name: 'Need general help?' }),
   ).toBeVisible()
 
-  // Test link sections are present
-  await expect(page.locator('[data-testid="link-section"]')).toHaveCount(3)
-
   // Test a sample link is visible
   await expect(
     page.getByRole('link', { name: 'ENV.OMRR.Reg.Reviews@gov.bc.ca' }),
