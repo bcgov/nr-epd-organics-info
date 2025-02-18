@@ -6,17 +6,17 @@ import { baseURL } from '../utils'
 export const contact_page = async (page: Page) => {
   await page.goto(baseURL + '/contact')
 
-  // Test section headers using the new class
+  // Test section headers using data attributes
   await expect(
-    page.locator('.link-section-header', { hasText: 'Organic matter' }),
+    page.locator('[data-section-header="true"]', { hasText: 'Organic matter' }),
   ).toBeVisible()
 
   await expect(
-    page.locator('.link-section-header', { hasText: 'Authorizations' }),
+    page.locator('[data-section-header="true"]', { hasText: 'Authorizations' }),
   ).toBeVisible()
 
   await expect(
-    page.locator('.link-section-header', {
+    page.locator('[data-section-header="true"]', {
       hasText: 'Report natural resource violations',
     }),
   ).toBeVisible()
@@ -27,7 +27,7 @@ export const contact_page = async (page: Page) => {
   ).toBeVisible()
 
   // Test link sections are present
-  await expect(page.locator('.link-section')).toHaveCount(3)
+  await expect(page.locator('[data-testid="link-section"]')).toHaveCount(3)
 
   // Test a sample link is visible
   await expect(
