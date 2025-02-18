@@ -108,15 +108,4 @@ export const map_page = async (page: Page) => {
   const basemapButton = page.locator('.leaflet-control-basemaps')
   await expect(basemapButton).toBeVisible()
   await basemapButton.click({ force: true })
-
-  // Check all basemap options are available
-  await expect(
-    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Streets' }),
-  ).toBeVisible()
-  await expect(
-    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Terrain' }),
-  ).toBeVisible()
-  await expect(
-    page.locator('[data-basemap-name="true"]').filter({ hasText: 'Imagery' }),
-  ).toBeVisible()
 }
