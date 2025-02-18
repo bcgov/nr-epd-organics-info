@@ -1,4 +1,4 @@
-import { Stack, Typography, SxProps, Theme } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
 import './LinkSection.css'
@@ -10,6 +10,8 @@ interface LinkSectionProps {
   className?: string
   headerClassName?: string
   contentClassName?: string
+  'data-testid'?: string
+  'data-section-header'?: boolean
 }
 
 export function LinkSection({
@@ -19,11 +21,15 @@ export function LinkSection({
   className = '',
   headerClassName = '',
   contentClassName = '',
+  'data-testid': dataTestId,
+  'data-section-header': dataSectionHeader,
 }: LinkSectionProps) {
   return (
-    <Stack className={className}>
+    <Stack className={className} data-testid={dataTestId}>
       <Stack className={headerClassName}>
-        <span data-section-header="true">{title}</span>
+        <Typography component="h2" data-section-header={dataSectionHeader}>
+          {title}
+        </Typography>
       </Stack>
       <Stack className={contentClassName}>
         <Typography sx={{ mb: 3 }}>{text}</Typography>
