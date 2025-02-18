@@ -5,14 +5,22 @@ import { baseURL } from '../utils'
 export const authorization_list_page = async (page: Page) => {
   await page.goto(baseURL + '/search')
 
+  // Wait for the main heading to be visible
   await expect(
     page.getByRole('heading', {
       name: 'Authorized land application sites and compost facilities in B.C.',
     }),
   ).toBeVisible()
 
+  // Wait for the page to be fully loaded and interactive
+  await page.waitForLoadState('networkidle')
+
   // Test the Search dropdown
-  await page.getByRole('button', { name: 'Status' }).first().click()
+  const statusButton = page.getByRole('button', { name: 'Status' }).first()
+  await expect(statusButton).toBeVisible()
+  await expect(statusButton).toBeEnabled()
+  await statusButton.click()
+
   await expect(
     page.getByRole('menuitem', { name: 'All', exact: true }),
   ).toBeVisible()
@@ -28,7 +36,11 @@ export const authorization_list_page = async (page: Page) => {
   await page.click('body', { position: { x: 0, y: 0 } })
 
   // Test the Filter dropdown
-  await page.getByRole('button', { name: 'Filter' }).click()
+  const filterButton = page.getByRole('button', { name: 'Filter' })
+  await expect(filterButton).toBeVisible()
+  await expect(filterButton).toBeEnabled()
+  await filterButton.click()
+
   await expect(page.getByLabel('Notification')).toBeVisible()
   await expect(page.getByLabel('Permit')).toBeVisible()
   await expect(page.getByLabel('Approval')).toBeVisible()
