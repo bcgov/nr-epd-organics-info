@@ -29,7 +29,7 @@ describe('Test suite for MapSearch', () => {
     })
 
     expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
-    screen.getByRole('button', { name: 'Text Search' })
+    screen.getByRole('button', { name: 'List View' })
     expect(
       screen.queryByRole('button', { name: 'Find Me' }),
     ).not.toBeInTheDocument()

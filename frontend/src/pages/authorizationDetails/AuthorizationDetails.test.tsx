@@ -53,7 +53,7 @@ describe('Test suite for AuthorizationDetails', () => {
 
     expect(location.pathname).toBe(`/authorization/${num}`)
     await screen.findByText('WYNDLOW WOOD WASTE REDUCTION INC.')
-    const backBtn = screen.getByRole('button', { name: 'Back to Text Search' })
+    const backBtn = screen.getByRole('button', { name: 'Back to List View' })
 
     await user.click(backBtn)
     expect(location.pathname).toBe('/search')

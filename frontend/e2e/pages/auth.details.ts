@@ -5,9 +5,11 @@ import { baseURL } from '../utils'
 export const authorization_details_page = async (page: Page) => {
   await page.goto(baseURL)
   await page.getByRole('button', { name: 'List all authorizations' }).click()
-  await page.getByLabel('Search Authorizations').click()
-  await page.getByLabel('Search Authorizations').fill('12398')
-  await page.getByText('View Facility Details').click()
+
+  const searchInput = page.locator('input[placeholder="Search"]').first()
+  await searchInput.click()
+  await searchInput.fill('12398')
+  await page.getByText('View Details').click()
 
   await expect(page.getByText('Effective/Issue Date')).toBeVisible()
   await expect(page.getByText('1994-08-02')).toBeVisible()
@@ -41,13 +43,13 @@ export const authorization_details_page = async (page: Page) => {
   await expect(headerRow.getByText('Summary', { exact: true })).toBeVisible()
   await expect(headerRow.getByText('Action', { exact: true })).toBeVisible()
 
-  const backBtn = page.getByRole('button', { name: 'Back to Text Search' })
+  const backBtn = page.getByRole('button', { name: 'Back to List View' })
   await expect(backBtn).toBeVisible()
   await backBtn.click()
 
-  // Go to a Notification compost facility
-  await page.getByLabel('Search Authorizations').fill('16109')
-  await page.getByText('View Facility Details').click()
+  // Update the second search operation
+  await searchInput.fill('16109')
+  await page.getByText('View Details').click()
   await expect(page.getByText('FISHER ROAD HOLDINGS LTD.')).toBeVisible()
   await expect(page.getByText('Operation Type')).toBeVisible()
   await expect(page.getByText('Compost Production Facility')).toBeVisible()

@@ -46,8 +46,8 @@ const styles = {
       md: '32px',
     },
     gap: {
-      xs: '16px',
-      md: '32px',
+      xs: '100px',
+      md: '132px',
       lg: '80px',
     },
   },

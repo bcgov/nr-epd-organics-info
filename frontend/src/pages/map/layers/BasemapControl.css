@@ -11,6 +11,8 @@
   display: flex;
   gap: 12px;
   box-shadow: var(--box-shadow-small);
+  max-width: calc(100vw - 80px);
+  overflow-x: auto;
 }
 
 .basemaps-list.hidden {
@@ -25,6 +27,7 @@
   border-radius: 8px;
   padding: 8px;
   width: 90px;
+  min-width: 90px;
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   border: 2px solid var(--surface-color-border);
   background: var(--surface-color-background-white);
@@ -57,4 +60,26 @@
 .basemap-option.active img {
   border-color: var(--surface-color-border);
   box-shadow: none;
+}
+
+@media screen and (max-width: 480px) {
+  .basemap-option {
+    width: 70px;
+    min-width: 70px;
+    padding: 6px;
+  }
+
+  .basemap-option img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .basemap-option span {
+    font-size: 10px;
+  }
+
+  .basemaps-list {
+    gap: 8px;
+    padding: 8px;
+  }
 }

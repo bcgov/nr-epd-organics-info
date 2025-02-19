@@ -30,7 +30,6 @@ describe('App suite', () => {
       withStateProvider: true,
     })
 
-    screen.getByAltText('Logo')
     screen.getByText('Organics Info')
     screen.getByTitle('Loading...')
   })
@@ -46,7 +45,6 @@ describe('App suite', () => {
       },
     })
 
-    screen.getByAltText('Logo')
     screen.getByText('Organics Info')
     screen.getByTitle('Loading...')
   })
@@ -62,7 +60,6 @@ describe('App suite', () => {
       },
     })
 
-    screen.getByAltText('Logo')
     screen.getByText('Organics Info')
     screen.getByText(
       'Find authorized land application sites and compost facilities in B.C.',
@@ -81,7 +78,6 @@ describe('App suite', () => {
       },
     })
 
-    screen.getByAltText('Logo')
     screen.getByText('Organics Info')
     screen.getByText('Loading failed, please try again later')
   })

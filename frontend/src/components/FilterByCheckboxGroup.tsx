@@ -81,7 +81,7 @@ export function FilterByCheckboxGroup({
           />
         ))}
       </FormGroup>
-      {!isSmall && showResetButton && (
+      {showResetButton && (
         <Button
           variant="outlined"
           onClick={onReset}

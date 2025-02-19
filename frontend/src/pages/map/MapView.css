@@ -1,9 +1,9 @@
 .map-view {
-  width: 100%;
+  position: relative;
   height: calc(100vh - var(--header-height));
+  width: 100%;
   /* Header is fixed */
   padding-top: var(--header-height);
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,10 +19,19 @@
   height: 100dvh;
 }
 
-.map-view > .map-container {
-  width: 100%;
+.map-container {
   height: 100%;
+  width: 100%;
   z-index: 1;
+}
+
+/* Position the Leaflet controls */
+.leaflet-bottom {
+  bottom: 70px !important;
+}
+
+.leaflet-right {
+  right: 0px !important;
 }
 
 /* Make open street map tiles grayscale */

@@ -16,14 +16,18 @@ describe('Test suite for ContactUs', () => {
 
     // Test section headings
     expect(
-      screen.getByText('Organic matter', { selector: '.link-section-header' }),
+      screen.getByText('Organic matter', {
+        selector: '[data-section-header="true"]',
+      }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('Authorizations', { selector: '.link-section-header' }),
+      screen.getByText('Authorizations', {
+        selector: '[data-section-header="true"]',
+      }),
     ).toBeInTheDocument()
     expect(
       screen.getByText('Report natural resource violations', {
-        selector: '.link-section-header',
+        selector: '[data-section-header="true"]',
       }),
     ).toBeInTheDocument()
     expect(

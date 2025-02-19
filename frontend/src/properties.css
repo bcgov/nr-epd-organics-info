@@ -13,7 +13,7 @@
   --layout-border-radius-medium: 4px;
   --layout-border-radius-large: 6px;
 
-  --header-height: 64px;
+  --header-height: 0px;
   --footer-height: 64px;
 
   --surface-color-primary-active-border: #2e5dd7;

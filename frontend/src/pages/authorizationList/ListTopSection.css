@@ -1,6 +1,5 @@
 .list-top-section {
   margin-top: var(--header-height);
-  background-color: var(--surface-color-brand-gold-50);
-  color: #000;
+  background-color: #1e5189;
+  color: #fff;
 }
-
