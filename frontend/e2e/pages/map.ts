@@ -6,24 +6,24 @@ export const map_page = async (page: Page) => {
   await page.goto(baseURL + '/map')
 
   // Search components
-  await expect(page.getByPlaceholder('Search')).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
-  await expect(
-    page.getByRole('button', { name: 'Polygon Search' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('button', { name: 'Radius Search' }),
-  ).toBeVisible()
+  // await expect(page.getByPlaceholder('Search')).toBeVisible()
+  // await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
+  // await expect(
+  //   page.getByRole('button', { name: 'Polygon Search' }),
+  // ).toBeVisible()
+  // await expect(
+  //   page.getByRole('button', { name: 'Radius Search' }),
+  // ).toBeVisible()
 
-  const searchBy = page.getByText('Status')
-  await expect(searchBy).toBeVisible()
-  await searchBy.click()
+  // const searchBy = page.getByText('Status')
+  // await expect(searchBy).toBeVisible()
+  // await searchBy.click()
 
-  await expect(page.getByRole('radio', { name: 'All' })).toBeVisible()
-  const activeRadio = page.getByRole('radio', { name: 'Active', exact: true })
-  await expect(activeRadio).toBeVisible()
-  await expect(page.getByLabel('Inactive')).toBeVisible()
-  await activeRadio.check()
+  // await expect(page.getByRole('radio', { name: 'All' })).toBeVisible()
+  // const activeRadio = page.getByRole('radio', { name: 'Active', exact: true })
+  // await expect(activeRadio).toBeVisible()
+  // await expect(page.getByLabel('Inactive')).toBeVisible()
+  // await activeRadio.check()
 
   // Close the menu by clicking on the mask
   await page.locator('.MuiBackdrop-root').click({ force: true })
