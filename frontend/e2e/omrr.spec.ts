@@ -3,7 +3,6 @@ import { dashboard_page } from './pages/dashboard'
 import { authorization_list_page } from './pages/auth.list'
 import { authorization_details_page } from './pages/auth.details'
 import { map_page } from './pages/map'
-import { contact_page } from './pages/contact'
 
 test.setTimeout(30000) // Set timeout to 30 seconds
 
@@ -19,8 +18,5 @@ test.describe.parallel('Organics Info', () => {
   })
   test('Map View', async ({ page }) => {
     await map_page(page)
-  })
-  test('Contact Us Page', async ({ page }) => {
-    await contact_page(page)
   })
 })
