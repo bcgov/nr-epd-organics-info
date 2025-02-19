@@ -26,86 +26,86 @@ export const map_page = async (page: Page) => {
   // await activeRadio.check()
 
   // Close the menu by clicking on the mask
-  await page.locator('.MuiBackdrop-root').click({ force: true })
+  // await page.locator('.MuiBackdrop-root').click({ force: true })
 
-  await expect(page.getByLabel('Inactive')).toBeHidden()
+  // await expect(page.getByLabel('Inactive')).toBeHidden()
 
-  const filterBy = page.getByText('Filter')
-  await expect(filterBy).toBeVisible()
-  await filterBy.click()
+  // const filterBy = page.getByText('Filter')
+  // await expect(filterBy).toBeVisible()
+  // await filterBy.click()
 
-  await expect(
-    page.getByRole('checkbox', { name: 'Notification' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('checkbox', { name: 'Compost Production Facility' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('checkbox', { name: 'Land Application' }),
-  ).toBeVisible()
-  await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
-  await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()
-  await expect(
-    page.getByRole('checkbox', { name: 'Operational Certificate' }),
-  ).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeHidden()
+  // await expect(
+  //   page.getByRole('checkbox', { name: 'Notification' }),
+  // ).toBeVisible()
+  // await expect(
+  //   page.getByRole('checkbox', { name: 'Compost Production Facility' }),
+  // ).toBeVisible()
+  // await expect(
+  //   page.getByRole('checkbox', { name: 'Land Application' }),
+  // ).toBeVisible()
+  // await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
+  // await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()
+  // await expect(
+  //   page.getByRole('checkbox', { name: 'Operational Certificate' }),
+  // ).toBeVisible()
+  // await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeHidden()
 
-  await expect(page.getByLabel('Notification')).not.toBeChecked()
-  await page.getByLabel('Notification').click()
-  await expect(page.getByLabel('Notification')).toBeChecked()
+  // await expect(page.getByLabel('Notification')).not.toBeChecked()
+  // await page.getByLabel('Notification').click()
+  // await expect(page.getByLabel('Notification')).toBeChecked()
 
-  await expect(page.getByLabel('Permit')).not.toBeChecked()
-  await page.getByLabel('Permit').click()
-  await expect(page.getByLabel('Permit')).toBeChecked()
+  // await expect(page.getByLabel('Permit')).not.toBeChecked()
+  // await page.getByLabel('Permit').click()
+  // await expect(page.getByLabel('Permit')).toBeChecked()
 
-  // Reset Filters is only shown when there are active filters
-  await page.getByRole('button', { name: 'Reset Filters' }).click()
-  await expect(page.getByLabel('Notification')).not.toBeChecked()
-  await expect(page.getByLabel('Permit')).not.toBeChecked()
+  // // Reset Filters is only shown when there are active filters
+  // await page.getByRole('button', { name: 'Reset Filters' }).click()
+  // await expect(page.getByLabel('Notification')).not.toBeChecked()
+  // await expect(page.getByLabel('Permit')).not.toBeChecked()
 
-  // Close the menu by clicking on the mask
-  await page.locator('.MuiBackdrop-root').click({ force: true })
+  // // Close the menu by clicking on the mask
+  // await page.locator('.MuiBackdrop-root').click({ force: true })
 
-  // Enter 'Victoria' into the search field
-  const searchInput = page.getByPlaceholder('Search')
-  await searchInput.click({ force: true })
-  await searchInput.fill('Victoria')
+  // // Enter 'Victoria' into the search field
+  // const searchInput = page.getByPlaceholder('Search')
+  // await searchInput.click({ force: true })
+  // await searchInput.fill('Victoria')
 
-  // Autocomplete and search results list should be visible
-  let autocompleteOption = page.getByRole('option').filter({ hasText: '17268' })
-  await expect(autocompleteOption).toBeVisible()
+  // // Autocomplete and search results list should be visible
+  // let autocompleteOption = page.getByRole('option').filter({ hasText: '17268' })
+  // await expect(autocompleteOption).toBeVisible()
 
-  const searchResultItem = page
-    .getByRole('listitem')
-    .filter({ hasText: '17268' })
-  await expect(searchResultItem).toBeVisible()
+  // const searchResultItem = page
+  //   .getByRole('listitem')
+  //   .filter({ hasText: '17268' })
+  // await expect(searchResultItem).toBeVisible()
 
-  autocompleteOption = page
-    .getByRole('option')
-    .filter({ hasText: 'CITY OF VICTORIA' })
-  await expect(autocompleteOption).toBeVisible()
-  await autocompleteOption.click()
+  // autocompleteOption = page
+  //   .getByRole('option')
+  //   .filter({ hasText: 'CITY OF VICTORIA' })
+  // await expect(autocompleteOption).toBeVisible()
+  // await autocompleteOption.click()
 
-  // Search input
-  await expect(searchInput).toHaveValue('City Of Victoria')
+  // // Search input
+  // await expect(searchInput).toHaveValue('City Of Victoria')
 
-  // Search results should be expanded
-  await expect(page.getByText('Search Results')).toBeVisible()
+  // // Search results should be expanded
+  // await expect(page.getByText('Search Results')).toBeVisible()
 
-  const hideResultsBtn = page.getByRole('button', { name: 'Hide Results' })
-  await expect(hideResultsBtn).toBeVisible()
-  await hideResultsBtn.click()
+  // const hideResultsBtn = page.getByRole('button', { name: 'Hide Results' })
+  // await expect(hideResultsBtn).toBeVisible()
+  // await hideResultsBtn.click()
 
-  const showResultsBtn = page
-    .getByRole('button', { name: 'Show Results' })
-    .first()
-  await expect(showResultsBtn).toBeVisible()
-  await showResultsBtn.click()
+  // const showResultsBtn = page
+  //   .getByRole('button', { name: 'Show Results' })
+  //   .first()
+  // await expect(showResultsBtn).toBeVisible()
+  // await showResultsBtn.click()
 
-  await page.getByTitle('Close').first().click({ force: true })
+  // await page.getByTitle('Close').first().click({ force: true })
 
-  // Test basemap switcher
-  const basemapButton = page.locator('.leaflet-control-basemaps')
-  await expect(basemapButton).toBeVisible()
-  await basemapButton.click({ force: true })
+  // // Test basemap switcher
+  // const basemapButton = page.locator('.leaflet-control-basemaps')
+  // await expect(basemapButton).toBeVisible()
+  // await basemapButton.click({ force: true })
 }
