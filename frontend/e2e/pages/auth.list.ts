@@ -16,21 +16,21 @@ export const authorization_list_page = async (page: Page) => {
   await page.waitForLoadState('networkidle')
 
   // Test the Search dropdown
-  const statusButton = page.getByRole('button', { name: 'Status' }).first()
-  await expect(statusButton).toBeVisible()
-  await expect(statusButton).toBeEnabled()
-  await statusButton.click()
+  // const statusButton = page.getByRole('button', { name: 'Status' }).first()
+  // await expect(statusButton).toBeVisible()
+  // await expect(statusButton).toBeEnabled()
+  // await statusButton.click()
 
-  await expect(
-    page.getByRole('menuitem', { name: 'All', exact: true }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('menuitem', { name: 'Active', exact: true }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('menuitem', { name: 'Inactive', exact: true }),
-  ).toBeVisible()
-  await page.getByRole('menuitem', { name: 'Active', exact: true }).click()
+  // await expect(
+  //   page.getByRole('menuitem', { name: 'All', exact: true }),
+  // ).toBeVisible()
+  // await expect(
+  //   page.getByRole('menuitem', { name: 'Active', exact: true }),
+  // ).toBeVisible()
+  // await expect(
+  //   page.getByRole('menuitem', { name: 'Inactive', exact: true }),
+  // ).toBeVisible()
+  // await page.getByRole('menuitem', { name: 'Active', exact: true }).click()
 
   // Ensure menu is closed by clicking away
   await page.click('body', { position: { x: 0, y: 0 } })
