@@ -134,9 +134,9 @@ export function HowToUseThisTool({ videoUrl }: HowToUseThisToolProps) {
             How to use this tool
           </Typography>
           <Typography sx={styles.description}>
-            Watch this video on how to use this resource when understanding
-            authorized land application sites, compost, or biosolid facilities
-            in your area.
+            Watch this video on how to use this resource to find information
+            about authorized land application sites and compost facilities in
+            your area.
           </Typography>
           <Button
             variant="contained"
