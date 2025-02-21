@@ -41,6 +41,7 @@ export function ListSearchByGroup({ isMobile }: { isMobile?: boolean }) {
   return (
     <div>
       <Button
+        data-testid="list-page-search-by-button"
         color={isMobile ? 'primary' : 'secondary'}
         variant="contained"
         sx={{
@@ -61,15 +62,24 @@ export function ListSearchByGroup({ isMobile }: { isMobile?: boolean }) {
         Status
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={() => handleSelect(SEARCH_BY_ALL)}>
+        <MenuItem
+          data-testid="list-page-search-by-button-all"
+          onClick={() => handleSelect(SEARCH_BY_ALL)}
+        >
           <Radio checked={searchBy === SEARCH_BY_ALL} size="small" />
           All
         </MenuItem>
-        <MenuItem onClick={() => handleSelect(SEARCH_BY_ACTIVE)}>
+        <MenuItem
+          data-testid="list-page-search-by-button-active"
+          onClick={() => handleSelect(SEARCH_BY_ACTIVE)}
+        >
           <Radio checked={searchBy === SEARCH_BY_ACTIVE} size="small" />
           Active
         </MenuItem>
-        <MenuItem onClick={() => handleSelect(SEARCH_BY_INACTIVE)}>
+        <MenuItem
+          data-testid="list-page-search-by-button-inactive"
+          onClick={() => handleSelect(SEARCH_BY_INACTIVE)}
+        >
           <Radio checked={searchBy === SEARCH_BY_INACTIVE} size="small" />
           Inactive
         </MenuItem>

@@ -16,10 +16,12 @@ export const authorization_list_page = async (page: Page) => {
   await page.waitForLoadState('networkidle')
 
   // Test the Search dropdown
-  // const statusButton = page.getByRole('button', { name: 'Status' }).first()
-  // await expect(statusButton).toBeVisible()
-  // await expect(statusButton).toBeEnabled()
-  // await statusButton.click()
+  const statusButton = page.getByTestId('list-page-search-by-button')
+  await expect(statusButton).toBeVisible()
+  await expect(statusButton).toBeEnabled()
+  await statusButton.click()
+
+  await expect(page.getByTestId('list-page-search-by-button-all')).toBeVisible()
 
   // await expect(
   //   page.getByRole('menuitem', { name: 'All', exact: true }),
