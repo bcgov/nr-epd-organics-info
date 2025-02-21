@@ -4,7 +4,6 @@ import AuthorizationList from '@/pages/authorizationList/AuthorizationList'
 import AuthorizationDetails from '@/pages/authorizationDetails/AuthorizationDetails'
 import MapView from '@/pages/map/MapView'
 import ContactUs from '@/pages/contactUs/ContactUs'
-import GuidancePage from '@/pages/guidance/GuidancePage'
 
 export default function AppRoutes() {
   return (
@@ -14,7 +13,6 @@ export default function AppRoutes() {
       <Route path="/authorization/:id" element={<AuthorizationDetails />} />
       <Route path="/map" element={<MapView />} />
       <Route path="/contact" element={<ContactUs />} />
-      <Route path="/guidance" element={<GuidancePage />} />
       <Route path="*" element={<Dashboard />} />
     </Routes>
   )

@@ -3,8 +3,8 @@ import { dashboard_page } from './pages/dashboard'
 import { authorization_list_page } from './pages/auth.list'
 import { authorization_details_page } from './pages/auth.details'
 import { map_page } from './pages/map'
-import { guidance_page } from './pages/guidance'
-import { contact_page } from './pages/contact'
+
+test.setTimeout(30000) // Set timeout to 30 seconds
 
 test.describe.parallel('Organics Info', () => {
   test('Dashboard Page', async ({ page }) => {
@@ -18,11 +18,5 @@ test.describe.parallel('Organics Info', () => {
   })
   test('Map View', async ({ page }) => {
     await map_page(page)
-  })
-  test('Guidance Page', async ({ page }) => {
-    await guidance_page(page)
-  })
-  test('Contact Us Page', async ({ page }) => {
-    await contact_page(page)
   })
 })

@@ -22,9 +22,9 @@ export function TextSearchButton() {
         )}
         startIcon={<SearchIcon title="Search icon" />}
         onClick={() => setOpen(true)}
-        aria-label="Text Search"
+        aria-label="List View"
       >
-        Text Search
+        List View
       </Button>
       {open && <SearchDialog onClose={() => setOpen(false)} />}
     </>

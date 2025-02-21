@@ -100,7 +100,7 @@ describe('Test suite for MapView', () => {
     await user.click(resetLink)
     expect(screen.queryByText('Reset')).not.toBeInTheDocument()
 
-    const searchBtn = screen.getByRole('button', { name: 'Text Search' })
+    const searchBtn = screen.getByRole('button', { name: 'List View' })
     expect(searchBtn).not.toHaveClass('map-button--active')
     await user.click(searchBtn)
 

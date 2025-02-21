@@ -104,15 +104,22 @@ export function AuthorizationListItem({
         )}
       </Grid>
 
-      <Stack direction="row" gap="16px" alignItems="center">
-        <Typography component="div">Status:</Typography>
-        <AuthorizationStatusChip status={status} />
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        gap="16px"
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+      >
+        <Stack direction="row" gap="16px" alignItems="center">
+          <Typography component="div">Status:</Typography>
+          <AuthorizationStatusChip status={status} />
+        </Stack>
         <CardActions
           sx={{
             padding: 0,
             flex: 1,
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: { xs: 'stretch', sm: 'flex-end' },
+            width: { xs: '100%', sm: 'auto' },
           }}
         >
           <ViewFacilityDetailsButton item={item} />

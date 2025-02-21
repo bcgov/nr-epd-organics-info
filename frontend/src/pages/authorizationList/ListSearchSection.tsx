@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Box, Button, Collapse } from '@mui/material'
+import { Box, Button, IconButton, Menu, Stack } from '@mui/material'
 import clsx from 'clsx'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { FilterByCheckboxGroup } from '@/components/FilterByCheckboxGroup'
 import { ListSearchInput } from './ListSearchInput'
@@ -9,70 +10,106 @@ import { ListSearchByGroup } from './ListSearchByGroup'
 import DownArrow from '@/assets/svgs/fa-caret-down.svg?react'
 
 const styles = {
-  searchByRow: {
+  container: {
     display: 'flex',
     flexDirection: {
       xs: 'column',
       md: 'row',
     },
-    justifyContent: {
-      xs: 'flex-start',
-      md: 'space-between',
-    },
+    gap: '24px',
     alignItems: {
-      xs: 'flex-start',
+      xs: 'stretch',
       md: 'center',
     },
-    gap: '24px',
-    marginBottom: {
-      xs: 0,
-      md: '16px',
+  },
+  searchInput: {
+    flex: 1,
+  },
+  actionButtons: {
+    display: 'flex',
+    gap: '16px',
+    flexShrink: 0,
+    flexDirection: {
+      xs: 'column',
+      md: 'row',
+    },
+    '& .MuiButton-root': {
+      height: '63px',
+      width: {
+        xs: '100%',
+        md: 'auto',
+      },
+      justifyContent: 'space-between',
+      padding: '0 16px',
     },
   },
 }
 
-export function ListSearchSection() {
-  const [filtersExpanded, setFiltersExpanded] = useState<boolean>(false)
+export function ListSearchSection({ isMobile }: { isMobile?: boolean }) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
-    <>
-      <ListSearchInput />
-      <Box sx={styles.searchByRow}>
-        <ListSearchByGroup />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => setFiltersExpanded(!filtersExpanded)}
-          endIcon={
-            <DownArrow
-              width={10}
-              style={{
-                transform: `rotate(${filtersExpanded ? 180 : 0}deg)`,
-                transition: 'transform 0.2s linear',
-              }}
-            />
-          }
-        >
-          Filter by Facility Type
-        </Button>
+    <Box sx={styles.container}>
+      <Box sx={styles.searchInput}>
+        <ListSearchInput isMobile={isMobile} />
       </Box>
-      <Collapse in={filtersExpanded} timeout="auto" unmountOnExit>
-        <Box
-          component="div"
-          className={clsx(
-            'list-search-filter-by-row',
-            filtersExpanded && 'list-search-filter-by-row--expanded',
-          )}
+      <Box sx={styles.actionButtons}>
+        <ListSearchByGroup isMobile={isMobile} />
+        <Stack direction="row" gap="16px">
+          <Button
+            color={isMobile ? 'primary' : 'secondary'}
+            variant="contained"
+            onClick={handleClick}
+            endIcon={
+              <DownArrow
+                width={10}
+                style={{
+                  transform: `rotate(${Boolean(anchorEl) ? 180 : 0}deg)`,
+                  transition: 'transform 0.2s linear',
+                }}
+              />
+            }
+            sx={{ textTransform: 'none' }}
+          >
+            Filter
+          </Button>
+        </Stack>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            width: { xs: '100%', md: '400px' },
+            mt: 1,
+            position: 'relative',
+          },
+        }}
+      >
+        <IconButton
+          onClick={handleClose}
           sx={{
-            gap: {
-              xs: '8px',
-              md: '16px',
-            },
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            display: { xs: 'block', md: 'none' },
           }}
         >
+          <CloseIcon />
+        </IconButton>
+        <Box sx={{ p: 2 }}>
           <FilterByCheckboxGroup className="list-search-checkbox-group" />
         </Box>
-      </Collapse>
-    </>
+      </Menu>
+    </Box>
   )
 }

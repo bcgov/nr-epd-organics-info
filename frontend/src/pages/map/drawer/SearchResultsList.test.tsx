@@ -158,7 +158,7 @@ describe('Test suite for SearchResultsList', () => {
     screen.getByText('Status:')
     screen.getByText(status)
 
-    const btn = screen.getByRole('button', { name: 'View Facility Details' })
+    const btn = screen.getByRole('button', { name: 'View Details' })
 
     // Details
     const issueDate = selectedItem['Effective/Issue Date']
@@ -198,7 +198,7 @@ describe('Test suite for SearchResultsList', () => {
     expect(screen.queryByText(item3['Regulated Party'])).not.toBeInTheDocument()
 
     expect(
-      screen.getAllByRole('button', { name: 'View Facility Details' }),
+      screen.getAllByRole('button', { name: 'View Details' }),
     ).toHaveLength(2)
 
     // Should be no details
