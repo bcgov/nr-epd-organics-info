@@ -32,60 +32,31 @@ export const authorization_list_page = async (page: Page) => {
   await page.getByLabel('Notification').check()
   await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
   await expect(page.getByLabel('Land Application')).toBeVisible()
+
+  await expect(
+    page.getByRole('button', { name: 'Reset Filters' }),
+  ).toBeVisible()
   // click away
   await page.click('body', { position: { x: 0, y: 0 } })
-  // await expect(
-  //   page.getByRole('menuitem', { name: 'All', exact: true }),
-  // ).toBeVisible()
-  // await expect(
-  //   page.getByRole('menuitem', { name: 'Active', exact: true }),
-  // ).toBeVisible()
-  // await expect(
-  //   page.getByRole('menuitem', { name: 'Inactive', exact: true }),
-  // ).toBeVisible()
-  // await page.getByRole('menuitem', { name: 'Active', exact: true }).click()
 
-  // Ensure menu is closed by clicking away
-  // await page.click('body', { position: { x: 0, y: 0 } })
+  // Test the search input
+  const searchInput = page.locator('input[placeholder="Search"]').first()
+  await expect(searchInput).toBeVisible()
+  await searchInput.click()
+  await searchInput.fill('victoria')
 
-  // // Test the Filter dropdown
-  // const filterButton = page.getByRole('button', { name: 'Filter' })
-  // await expect(filterButton).toBeVisible()
-  // await expect(filterButton).toBeEnabled()
-  // await filterButton.click()
+  // Test search results
+  const listItem = page
+    .getByRole('listitem')
+    .filter({ hasText: 'CITY OF VICTORIA' })
+  await expect(listItem.getByText('Authorization #:')).toBeVisible()
+  await expect(listItem.getByText('17268')).toBeVisible()
+  await expect(listItem.getByText('Active')).toBeVisible()
+  await expect(listItem.getByText('Notification')).toBeVisible()
 
-  // await expect(page.getByLabel('Notification')).toBeVisible()
-  // await expect(page.getByLabel('Permit')).toBeVisible()
-  // await expect(page.getByLabel('Approval')).toBeVisible()
-  // await expect(page.getByLabel('Operational Certificate')).toBeVisible()
-  // await page.getByLabel('Notification').check()
-  // await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
-  // await expect(page.getByLabel('Land Application')).toBeVisible()
-  // await expect(
-  //   page.getByRole('button', { name: 'Reset Filters' }),
-  // ).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Export Results to CSV' }),
+  ).toBeVisible()
 
-  // // Close the filter menu
-  // await page.click('body', { position: { x: 0, y: 0 } })
-
-  // // Test the search input
-  // const searchInput = page.locator('input[placeholder="Search"]').first()
-  // await expect(searchInput).toBeVisible()
-  // await searchInput.click()
-  // await searchInput.fill('victoria')
-
-  // // Test search results
-  // const listItem = page
-  //   .getByRole('listitem')
-  //   .filter({ hasText: 'CITY OF VICTORIA' })
-  // await expect(listItem.getByText('Authorization #:')).toBeVisible()
-  // await expect(listItem.getByText('17268')).toBeVisible()
-  // await expect(listItem.getByText('Active')).toBeVisible()
-  // await expect(listItem.getByText('Notification')).toBeVisible()
-
-  // await expect(
-  //   page.getByRole('button', { name: 'Export Results to CSV' }),
-  // ).toBeVisible()
-
-  // await page.getByTitle('Sort results by my location').first().click()
+  await page.getByTitle('Sort results by my location').first().click()
 }
