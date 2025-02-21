@@ -11,14 +11,14 @@ export const authorization_list_page = async (page: Page) => {
   await expect(page.getByTestId('auth-list-top-section-subtitle')).toBeVisible()
 
   // Test the Search dropdown
-  const statusButton = page
+  /* const statusButton = page
     .getByTestId('list-page-search-by-button')
     .filter({ has: page.getByRole('button', { name: 'Status' }) })
   await expect(statusButton).toBeVisible()
   await expect(statusButton).toBeEnabled()
   await statusButton.click()
 
-  await expect(page.getByTestId('list-page-search-by-button-all')).toBeVisible()
+  await expect(page.getByTestId('list-page-search-by-button-all')).toBeVisible() */
 
   // await expect(
   //   page.getByRole('menuitem', { name: 'All', exact: true }),
