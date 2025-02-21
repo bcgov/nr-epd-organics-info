@@ -10,16 +10,29 @@ export const authorization_list_page = async (page: Page) => {
   await expect(page.getByTestId('auth-list-top-section-title')).toBeVisible()
   await expect(page.getByTestId('auth-list-top-section-subtitle')).toBeVisible()
 
-  // Test the Search dropdown
-  /* const statusButton = page
-    .getByTestId('list-page-search-by-button')
-    .filter({ has: page.getByRole('button', { name: 'Status' }) })
-  await expect(statusButton).toBeVisible()
-  await expect(statusButton).toBeEnabled()
-  await statusButton.click() */
   await page.getByRole('button', { name: 'Status' }).click()
 
   await expect(page.getByTestId('list-page-search-by-button-all')).toBeVisible()
+  await expect(
+    page.getByTestId('list-page-search-by-button-active'),
+  ).toBeVisible()
+  await expect(
+    page.getByTestId('list-page-search-by-button-inactive'),
+  ).toBeVisible()
+
+  // // Test the Filter dropdown
+  const filterButton = page.getByRole('button', { name: 'Filter' })
+  await expect(filterButton).toBeVisible()
+  await expect(filterButton).toBeEnabled()
+  await filterButton.click()
+
+  await expect(page.getByLabel('Notification')).toBeVisible()
+  await expect(page.getByLabel('Permit')).toBeVisible()
+  await expect(page.getByLabel('Approval')).toBeVisible()
+  await expect(page.getByLabel('Operational Certificate')).toBeVisible()
+  await page.getByLabel('Notification').check()
+  await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
+  await expect(page.getByLabel('Land Application')).toBeVisible()
 
   // await expect(
   //   page.getByRole('menuitem', { name: 'All', exact: true }),
