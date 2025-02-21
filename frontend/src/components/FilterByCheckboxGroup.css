@@ -1,23 +1,30 @@
 .filter-by-checkbox-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  scrollbar-width: thin;
-}
-
-.filter-by-checkbox-form-group {
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
+  gap: 16px;
 }
 
 .filter-by-checkbox-group--small {
-  scrollbar-width: none;
+  max-height: none;
+  overflow: visible;
 }
 
-.filter-by-checkbox-group--small .filter-by-checkbox-form-group {
-  align-self: stretch;
+.filter-by-checkbox-form-group {
+  overflow-y: auto;
+}
+
+.filter-by-checkbox-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-by-reset-button {
+  margin-top: 8px;
+}
+
+.filter-by-checkbox-item {
+  margin-left: 0;
 }
 
 label.filter-by-checkbox-item {
@@ -46,15 +53,6 @@ label.filter-by-checkbox-item {
 label.filter-by-checkbox-item .MuiFormControlLabel-label {
   flex: 1;
   text-align: left;
-}
-
-.filter-by-checkbox-group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  height: 28px;
-  flex: 0 0 28px;
 }
 
 button.filter-by-reset-link {

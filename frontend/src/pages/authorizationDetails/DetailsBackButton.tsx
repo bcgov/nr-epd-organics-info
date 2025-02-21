@@ -8,7 +8,7 @@ export function DetailsBackButton() {
   const navigate = useNavigate()
   const location = useLocation()
   const { previousPath = '/search' } = location.state || {}
-  const searchType = previousPath === '/map' ? 'Map Search' : 'Text Search'
+  const searchType = previousPath === '/map' ? 'Map View' : 'List View'
 
   const onClick = () => {
     navigate(previousPath) // reset the state

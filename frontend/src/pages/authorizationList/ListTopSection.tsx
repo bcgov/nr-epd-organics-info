@@ -1,4 +1,5 @@
 import { Stack, Typography } from '@mui/material'
+import { ListSearchSection } from './ListSearchSection'
 
 import './ListTopSection.css'
 
@@ -17,6 +18,7 @@ export function ListTopSection() {
       }}
     >
       <Typography
+        data-testid="auth-list-top-section-title"
         variant="h1"
         component="h1"
         fontWeight="700"
@@ -30,9 +32,17 @@ export function ListTopSection() {
       >
         Search Authorizations
       </Typography>
-      <Typography variant="h6" component="h6" fontSize="18px">
-        Authorized compost and biosolid facilities in B.C.
+      <Typography
+        data-testid="auth-list-top-section-subtitle"
+        variant="h6"
+        component="h6"
+        fontSize="18px"
+      >
+        Authorized land application sites and compost facilities in B.C.
       </Typography>
+      <Stack sx={{ display: { xs: 'none', md: 'block' }, marginTop: '24px' }}>
+        <ListSearchSection isMobile={false} />
+      </Stack>
     </Stack>
   )
 }
