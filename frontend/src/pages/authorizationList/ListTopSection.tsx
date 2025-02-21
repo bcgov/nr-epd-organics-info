@@ -18,6 +18,7 @@ export function ListTopSection() {
       }}
     >
       <Typography
+        data-testid="auth-list-top-section-title"
         variant="h1"
         component="h1"
         fontWeight="700"
@@ -31,7 +32,12 @@ export function ListTopSection() {
       >
         Search Authorizations
       </Typography>
-      <Typography variant="h6" component="h6" fontSize="18px">
+      <Typography
+        data-testid="auth-list-top-section-subtitle"
+        variant="h6"
+        component="h6"
+        fontSize="18px"
+      >
         Authorized land application sites and compost facilities in B.C.
       </Typography>
       <Stack sx={{ display: { xs: 'none', md: 'block' }, marginTop: '24px' }}>
