@@ -11,7 +11,9 @@ export const authorization_list_page = async (page: Page) => {
   await expect(page.getByTestId('auth-list-top-section-subtitle')).toBeVisible()
 
   // Test the Search dropdown
-  const statusButton = page.getByTestId('list-page-search-by-button')
+  const statusButton = page
+    .getByTestId('list-page-search-by-button')
+    .filter({ hasText: 'Status' })
   await expect(statusButton).toBeVisible()
   await expect(statusButton).toBeEnabled()
   await statusButton.click()
