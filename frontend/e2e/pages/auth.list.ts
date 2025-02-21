@@ -20,11 +20,10 @@ export const authorization_list_page = async (page: Page) => {
     page.getByTestId('list-page-search-by-button-inactive'),
   ).toBeVisible()
 
+  // click away
+  await page.click('body', { position: { x: 0, y: 0 } })
   // // Test the Filter dropdown
-  const filterButton = page.getByRole('button', { name: 'Filter' })
-  await expect(filterButton).toBeVisible()
-  await expect(filterButton).toBeEnabled()
-  await filterButton.click()
+  await page.getByRole('button', { name: 'Filter' }).click()
 
   await expect(page.getByLabel('Notification')).toBeVisible()
   await expect(page.getByLabel('Permit')).toBeVisible()
@@ -33,7 +32,8 @@ export const authorization_list_page = async (page: Page) => {
   await page.getByLabel('Notification').check()
   await expect(page.getByLabel('Compost Production Facility')).toBeVisible()
   await expect(page.getByLabel('Land Application')).toBeVisible()
-
+  // click away
+  await page.click('body', { position: { x: 0, y: 0 } })
   // await expect(
   //   page.getByRole('menuitem', { name: 'All', exact: true }),
   // ).toBeVisible()
