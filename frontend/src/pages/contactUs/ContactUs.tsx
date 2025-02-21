@@ -99,6 +99,8 @@ export function ContactUs() {
                   href="mailto:ENV.OMRR.Reg.Reviews@gov.bc.ca"
                   style={{
                     color: 'var(--typography-color-link)',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
                   }}
                 >
                   ENV.OMRR.Reg.Reviews@gov.bc.ca
@@ -130,6 +132,8 @@ export function ContactUs() {
                     href="mailto:ENVCIA@gov.bc.ca"
                     style={{
                       color: 'var(--typography-color-link)',
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
                     }}
                   >
                     ENVCIA@gov.bc.ca
@@ -149,6 +153,8 @@ export function ContactUs() {
                     target="wda-enquiry"
                     style={{
                       color: 'var(--typography-color-link)',
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
                     }}
                   >
                     https://forms.gov.bc.ca/environment/wda-enquiry/
@@ -200,6 +206,8 @@ export function ContactUs() {
                     target="rapp"
                     style={{
                       color: 'var(--typography-color-link)',
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
                     }}
                   >
                     https://forms.gov.bc.ca/environment/rapp/
@@ -253,7 +261,11 @@ export function ContactUs() {
             channels through Service BC.{' '}
             <a
               href="https://www2.gov.bc.ca/gov/content/home/get-help-with-government-services"
-              style={{ color: 'var(--typography-color-link)' }}
+              style={{
+                color: 'var(--typography-color-link)',
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word',
+              }}
             >
               Get help with government services
             </a>
