@@ -23,25 +23,39 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        project: [ chromium, Google Chrome, firefox, safari, Microsoft Edge ]
+        project: [chromium, Google Chrome, firefox, safari, Microsoft Edge]
     steps:
       - uses: actions/checkout@v4
         name: Checkout
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+      - name: Fix permissions
+        run: sudo chown -R $USER:$USER frontend
       - uses: actions/setup-node@v4
         name: Setup Node
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
       - name: Install dependencies
         run: |
           npm ci
-          npx playwright install --with-deps
+      - run: npx @playwright/test install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: ./frontend
+      - run: npx @playwright/test install-deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        working-directory: ./frontend
 
       - name: Run Tests
         env:
           E2E_BASE_URL: https://${{ github.event.repository.name }}-${{ inputs.target }}-frontend.${{ env.DOMAIN }}/
-          CI: 'true'
+          CI: "true"
         run: |
           npx playwright test --project="${{ matrix.project }}" --reporter=html
 

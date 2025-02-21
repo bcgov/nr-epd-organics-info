@@ -6,14 +6,14 @@ export const authorization_list_page = async (page: Page) => {
   await page.goto(baseURL)
   await page.getByRole('button', { name: 'List all authorizations' }).click()
   // Wait for the page to be fully loaded and interactive
-  await page.waitForLoadState('networkidle')
+  await page.waitForLoadState('domcontentloaded')
   await expect(page.getByTestId('auth-list-top-section-title')).toBeVisible()
   await expect(page.getByTestId('auth-list-top-section-subtitle')).toBeVisible()
 
   // Test the Search dropdown
   const statusButton = page
     .getByTestId('list-page-search-by-button')
-    .filter({ hasText: 'Status' })
+    .filter({ has: page.getByRole('button', { name: 'Status' }) })
   await expect(statusButton).toBeVisible()
   await expect(statusButton).toBeEnabled()
   await statusButton.click()
