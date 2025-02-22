@@ -106,7 +106,7 @@ const styles = {
 }
 
 interface HowToUseThisToolProps {
-  videoUrl: string
+  readonly videoUrl: string
 }
 
 export function HowToUseThisTool({ videoUrl }: HowToUseThisToolProps) {

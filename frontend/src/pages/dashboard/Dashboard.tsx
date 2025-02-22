@@ -5,14 +5,14 @@ import { LearnMoreSection } from './LearnMoreSection'
 import { TopSection } from './TopSection'
 import { UseThisTool } from './UseThisTool'
 import { HowToUseThisTool } from './HowToUseThisTool'
-
+import { env } from '@/env'
 /**
  * If there is a video url specified here then the video will
  * be shown on the dashboard
  */
 
 // const VIDEO_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' // You can move this to an environment variable or config file
-const VIDEO_URL = '' // You can move this to an environment variable or config file
+const VIDEO_URL = env.VITE_HOW_TO_VIDEO_URL // You can move this to an environment variable or config file
 
 export default function Dashboard() {
   return (
