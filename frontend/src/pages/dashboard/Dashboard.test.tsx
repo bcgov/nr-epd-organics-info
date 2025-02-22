@@ -32,5 +32,8 @@ describe('Test suite for Dashboard', () => {
 
     await user.click(listButton)
     expect(location.href).toContain('/search')
+    expect(
+      screen.queryByRole('heading', { name: 'How to use this tool' }),
+    ).not.toBeInTheDocument()
   })
 })
