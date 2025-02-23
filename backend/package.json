@@ -150,5 +150,8 @@
   "eslintIgnore": [],
   "prettier": {
     "singleQuote": true
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

@@ -82,5 +82,8 @@
     "playwright": "^1.45.1",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
