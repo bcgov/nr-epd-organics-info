@@ -52,6 +52,8 @@ spec:
               value: {{ .Values.global.nrptiAPIURL | quote }}
             - name: VITE_NRCED_URL
               value: {{ .Values.global.nrcedURL | quote }}
+            - name: VITE_HOW_TO_VIDEO_URL
+              value: {{ .Values.frontend.env.howToVideoURL | quote }}
           ports:
             - name: http
               containerPort: 3000
