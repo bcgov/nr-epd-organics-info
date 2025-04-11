@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { render, RenderOptions } from '@testing-library/react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { render, RenderOptions, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 
@@ -22,7 +22,7 @@ function TestRouter({
   if (withRouter) {
     window.history.replaceState({}, '', route ?? '/')
     return (
-      <BrowserRouter>
+      <MemoryRouter initialEntries={[route ?? '/']}>
         <Routes>
           {path ? (
             <>
@@ -33,7 +33,7 @@ function TestRouter({
             <Route path="*" element={children} />
           )}
         </Routes>
-      </BrowserRouter>
+      </MemoryRouter>
     )
   }
   return children

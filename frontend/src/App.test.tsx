@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 
 import App from '@/App'
 import { render } from '@/test-utils'
@@ -28,6 +29,7 @@ describe('App suite', () => {
   test('renders the App with idle state', () => {
     render(<App />, {
       withStateProvider: true,
+      withRouter: true,
     })
 
     screen.getByText('Organics Info')
@@ -37,6 +39,7 @@ describe('App suite', () => {
   test('renders the App with loading state', () => {
     render(<App />, {
       withStateProvider: true,
+      withRouter: true,
       initialState: {
         omrr: {
           ...initialState,
@@ -52,6 +55,7 @@ describe('App suite', () => {
   test('renders the App with successful data load', () => {
     render(<App />, {
       withStateProvider: true,
+      withRouter: true,
       initialState: {
         omrr: {
           ...initialState,
@@ -69,6 +73,7 @@ describe('App suite', () => {
   test('renders the App with error loading data', () => {
     render(<App />, {
       withStateProvider: true,
+      withRouter: true,
       initialState: {
         omrr: {
           ...initialState,
@@ -106,6 +111,7 @@ describe('App suite', () => {
     }
     render(<TestComponent />, {
       withStateProvider: true,
+      withRouter: true,
       withApiData: true,
     })
 
