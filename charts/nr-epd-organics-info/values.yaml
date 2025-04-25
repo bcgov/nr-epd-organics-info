@@ -80,4 +80,4 @@ frontend:
     zoomToResultsControlFlag: "true"
     nrptiAPIURL: "https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca"
     nrcedURL: "https://nrced.gov.bc.ca"
-    howToVideoURL: https://www.youtube.com/watch?v=5ITbSihfrqI
+    howToVideoURL: "https://www.youtube.com/watch?v=5ITbSihfrqI"
