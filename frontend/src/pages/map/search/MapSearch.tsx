@@ -24,9 +24,6 @@ import { TextSearchButton } from './TextSearchButton'
 import './MapSearch.css'
 
 const styles = {
-  marginTop: {
-    md: '40px',
-  },
   left: {
     xs: '24px',
     md: '72px',
