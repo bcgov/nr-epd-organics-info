@@ -39,7 +39,7 @@ services:
 
   backend:
     container_name: backend
-    entrypoint: sh -c "npm i && npm run start:dev"
+    entrypoint: sh -c "npm ci --ignore-scripts && npm run start:dev"
     environment:
       <<: *postgres-vars
       NODE_ENV: development
@@ -55,7 +55,7 @@ services:
 
   frontend:
     container_name: frontend
-    entrypoint: sh -c "npm ci && npm run dev"
+    entrypoint: sh -c "npm ci --ignore-scripts && npm run dev"
     environment:
       NODE_ENV: development
       PORT: 3000
