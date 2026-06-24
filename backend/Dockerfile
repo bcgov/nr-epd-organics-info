@@ -1,17 +1,16 @@
-FROM node:22-bullseye-slim AS build
+FROM node:24-bullseye-slim AS build
 
 # Install packages, build and keep only prod packages
 WORKDIR /app
 COPY *.json ./
 COPY ./src ./src
-COPY ./prisma ./prisma
 RUN npm ci --ignore-scripts --no-update-notifier --omit=dev
 
 RUN npm run build
 
 # Deploy container
 # Distroless has node, but not npm
-FROM gcr.io/distroless/nodejs22-debian12:nonroot
+FROM gcr.io/distroless/nodejs24-debian12:nonroot
 ENV NODE_ENV=production
 
 # Copy over app

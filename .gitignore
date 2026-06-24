@@ -119,3 +119,4 @@ test-report.xml
 **/target
 
 *.key
+.copilot-memory

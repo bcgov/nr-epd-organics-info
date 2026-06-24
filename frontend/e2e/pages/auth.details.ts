@@ -14,7 +14,7 @@ export const authorization_details_page = async (page: Page) => {
   await expect(page.getByText('Effective/Issue Date')).toBeVisible()
   await expect(page.getByText('1994-08-02')).toBeVisible()
   await expect(page.getByText('Last Amendment Date')).toBeVisible()
-  await expect(page.getByText('2020-08-18')).toBeVisible()
+  await expect(page.getByText('2025-08-06')).toBeVisible()
 
   await expect(page.getByText('CONSOLIDATED ENVIROWASTE')).toBeVisible()
   await expect(page.getByText('Huntingdon Road Abbotsford, BC')).toBeVisible()

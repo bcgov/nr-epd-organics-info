@@ -20,10 +20,10 @@ jobs:
         package: [backend, frontend]
     timeout-minutes: 10
     steps:
-      - uses: bcgov/action-builder-ghcr@v2.3.0
+      - uses: bcgov/action-builder-ghcr@v4.4.1
         with:
           package: ${{ matrix.package }}
-          tag: ${{ github.event.number }}
+          tags: ${{ github.event.number }}
           tag_fallback: latest
           triggers: ('${{ matrix.package }}/')
 

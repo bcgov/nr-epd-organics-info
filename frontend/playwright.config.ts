@@ -36,6 +36,20 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  /*
+   * Locally (no E2E_BASE_URL) start the frontend dev build and let the specs
+   * mock the OMRR API from committed fixtures. In CI E2E_BASE_URL points at a
+   * deployed environment, so no local server is started.
+   */
+  webServer: process.env.E2E_BASE_URL
+    ? undefined
+    : {
+        command: 'npm run dev',
+        url: 'http://localhost:3001',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
+
   /* Configure projects for major browsers */
   projects: [
     {
