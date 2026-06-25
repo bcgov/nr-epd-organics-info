@@ -41,6 +41,10 @@ RUN mkdir -p /tmp/coraza && \
 
 RUN /usr/bin/caddy fmt /etc/caddy/Caddyfile
 
+# Redirect Caddy's XDG dirs to /tmp (writable with readOnlyRootFilesystem: true)
+ENV XDG_DATA_HOME=/tmp/caddy \
+    XDG_CONFIG_HOME=/tmp/caddy
+
 # Boilerplate, since there are ignored by Openshift
 HEALTHCHECK --interval=30s --timeout=3s CMD wget -q -O /dev/null http://127.0.0.1:3001/health || exit 1
 EXPOSE 3000 3001

@@ -1,6 +1,7 @@
 {
 	auto_https off
 	admin 0.0.0.0:3003
+	order coraza_waf first
 	servers {
 		metrics
 	}

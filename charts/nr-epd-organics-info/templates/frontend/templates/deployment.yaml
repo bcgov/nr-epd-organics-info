@@ -65,6 +65,16 @@ spec:
               value: {{ .Values.global.nrcedURL | quote }}
             - name: VITE_HOW_TO_VIDEO_URL
               value: {{ .Values.frontend.env.howToVideoURL | quote }}
+            # readOnlyRootFilesystem: true → redirect every writable path
+            # onto an emptyDir. Caddy stores config/data under the XDG dirs
+            # (mounted at /tmp/caddy); Coraza writes SecTmpDir/SecDataDir
+            # under /tmp/coraza; generic temp files go to TMPDIR.
+            - name: XDG_CONFIG_HOME
+              value: /tmp/caddy
+            - name: XDG_DATA_HOME
+              value: /tmp/caddy
+            - name: TMPDIR
+              value: /tmp/caddy
           ports:
             - name: http
               containerPort: 3000
@@ -93,21 +103,19 @@ spec:
           resources:
             {{- toYaml .Values.frontend.containerResources | nindent 12 }}
           volumeMounts:
-            - name: data
-              mountPath: /data
-            - name: config
-              mountPath: /config
-            - name: tmp
-              mountPath: /tmp
+            - name: caddy-data
+              mountPath: /tmp/caddy
+            - name: coraza-tmp
+              mountPath: /tmp/coraza
       volumes:
-        - name: data
-          emptyDir: {}
-        - name: config
-          emptyDir: {}
-        - name: tmp
+        - name: caddy-data
           emptyDir:
             medium: Memory
-            sizeLimit: 64Mi
+            sizeLimit: 256Mi
+        - name: coraza-tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 256Mi
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
