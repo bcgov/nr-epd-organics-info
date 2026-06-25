@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { Stack, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 
