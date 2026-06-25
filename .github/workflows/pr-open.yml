@@ -33,6 +33,8 @@ jobs:
     needs: [builds]
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
+    permissions:
+      contents: read
     with:
       autoscaling: false
       tag: ${{ github.event.number }}
@@ -48,6 +50,8 @@ jobs:
   tests:
     name: Tests
     needs: [deploys]
+    permissions:
+      contents: read
     uses: ./.github/workflows/.tests.yml
     with:
       target: ${{ github.event.number }}

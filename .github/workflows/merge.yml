@@ -38,6 +38,8 @@ jobs:
     needs: [vars]
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
+    permissions:
+      contents: read
     with:
       environment: test
       tag: ${{ needs.vars.outputs.pr }}
@@ -62,6 +64,8 @@ jobs:
     needs: [vars, tests]
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
+    permissions:
+      contents: read
     with:
       environment: prod
       tag: ${{ needs.vars.outputs.pr }}
