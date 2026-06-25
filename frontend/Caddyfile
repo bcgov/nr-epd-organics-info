@@ -1,9 +1,10 @@
 {
 	auto_https off
 	admin 0.0.0.0:3003
-    servers {
-        metrics
-    }
+	order coraza_waf first
+	servers {
+		metrics
+	}
 }
 :3000 {
 	log {
@@ -14,12 +15,18 @@
 		}
 		level {$LOG_LEVEL}
 	}
-    handle /env.js {
-        header {
-          Content-Type text/javascript
-        }
-        respond `window.config={"VITE_AMS_URL":"{$VITE_AMS_URL}", "VITE_AMS_DOCS_FLAG":"{$VITE_AMS_DOCS_FLAG}", "VITE_OSM_GRAYSCALE_FLAG":"{$VITE_OSM_GRAYSCALE_FLAG}", "VITE_ZOOM_TO_RESULTS_CONTROL_FLAG":"{$VITE_ZOOM_TO_RESULTS_CONTROL_FLAG}", "VITE_NRPTI_API_URL":"{$VITE_NRPTI_API_URL}", "VITE_NRCED_URL":"{$VITE_NRCED_URL}", "VITE_HOW_TO_VIDEO_URL":"{$VITE_HOW_TO_VIDEO_URL}"};`
-    }
+	# Enable Coraza WAF
+	coraza_waf {
+		directives `
+		Include /etc/caddy/coraza.conf
+		`
+	}
+	handle /env.js {
+		header {
+			Content-Type text/javascript
+		}
+		respond `window.config={"VITE_AMS_URL":"{$VITE_AMS_URL}", "VITE_AMS_DOCS_FLAG":"{$VITE_AMS_DOCS_FLAG}", "VITE_OSM_GRAYSCALE_FLAG":"{$VITE_OSM_GRAYSCALE_FLAG}", "VITE_ZOOM_TO_RESULTS_CONTROL_FLAG":"{$VITE_ZOOM_TO_RESULTS_CONTROL_FLAG}", "VITE_NRPTI_API_URL":"{$VITE_NRPTI_API_URL}", "VITE_NRCED_URL":"{$VITE_NRCED_URL}", "VITE_HOW_TO_VIDEO_URL":"{$VITE_HOW_TO_VIDEO_URL}"};`
+	}
 	root * /srv
 	encode zstd gzip
 	file_server
@@ -57,8 +64,8 @@
 		Permissions-Policy "geolocation=(self), microphone=(), camera=(), speaker=(), usb=(), bluetooth=(), payment=(), interest-cohort=()"
 		-Server
 	}
-    # Proxy requests to API service
-    reverse_proxy /api* {$BACKEND_URL}
+	# Proxy requests to API service
+	reverse_proxy /api* {$BACKEND_URL}
 }
 :3001 {
 	handle /health {

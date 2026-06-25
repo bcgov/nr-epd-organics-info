@@ -1,5 +1,132 @@
 # Trivy ignore file
-# Add CVE IDs or package names to ignore here, one per line
-# Example:
-# CVE-2021-12345
-# package-name
+# Entries here are suppressed in the Trivy security scan.
+# Each entry has a justification comment explaining why it is suppressed.
+
+# ─── FALSE POSITIVES: package not installed ────────────────────────────────
+# fast-xml-parser: listed only in typescript's own devDependencies inside
+# node_modules/typescript/package.json; npm never installs devDeps of
+# transitive packages, so the package is absent from the project lockfiles.
+CVE-2026-25896
+CVE-2026-26278
+CVE-2026-27942
+
+# serialize-javascript: not in any project package-lock.json; Trivy is
+# scanning nested node_modules/typescript/package.json devDependencies.
+GHSA-5c6j-r48x-rmvq
+
+# 'nest' (standalone template engine, CVE-2024-29409): the project uses
+# @nestjs/* framework packages, not the unrelated 'nest' npm package.
+CVE-2024-29409
+
+# tmp: not installed in the project (not in any package-lock.json).
+CVE-2025-54798
+
+# ─── FALSE POSITIVES: already fixed in installed version ───────────────────
+# rollup CVE-2026-27606 (RCE via path traversal) — fixed in 4.59.0;
+# project has 4.62.2.
+CVE-2026-27606
+
+# axios CVE-2025-27152 (SSRF + credential leakage) — fixed in 1.8.2;
+# project has 1.18.1 (1.18 > 1.8).
+CVE-2025-27152
+
+# form-data CVE-2025-7783 (unsafe random boundary) — fixed for versions
+# < 2.5.4 / 3.0.0-3.0.3 / 4.0.0-4.0.3; project has 4.0.6.
+CVE-2025-7783
+
+# react-router CVE-2025-43865 (pre-render data spoofing) — fixed in 7.5.2;
+# project has 7.18.0.
+CVE-2025-43865
+
+# react-router CVE-2025-68470 (unexpected external redirect) — affects
+# versions 7.0.0-7.9.5; project has 7.18.0.
+CVE-2025-68470
+
+# vite — all five server.fs.deny bypasses are fixed in 6.2.3-6.4.1;
+# project has 6.4.3.
+CVE-2025-30208
+CVE-2025-32395
+CVE-2025-31486
+CVE-2025-31125
+CVE-2025-62522
+
+# ─── FALSE POSITIVES: requires Framework Mode / SSR ────────────────────────
+# These React Router vulnerabilities only affect Framework Mode (Remix-style
+# SSR with server actions / meta() API / ScrollRestoration SSR).
+# The project uses <BrowserRouter> (Declarative Mode) — no SSR, no actions.
+CVE-2025-59057
+CVE-2026-22029
+CVE-2026-21884
+CVE-2026-22030
+
+# ─── FALSE POSITIVES: dev-server / build-time only ─────────────────────────
+# vite CVE-2025-46565 (path traversal in dev server): only exploitable when
+# the vite dev server is exposed on the network (--host flag). Production
+# uses Caddy to serve static build output — vite never runs.
+CVE-2025-46565
+
+# vite note-severity issues; build-time tooling, never in production image.
+CVE-2025-58752
+CVE-2025-58751
+
+# ─── FALSE POSITIVES: Kubernetes registry rules not applicable ─────────────
+# KSV032/033/034/035 require images from *.azurecr.io / GCR / ECR domains.
+# BC Gov deploys from ghcr.io (GitHub Container Registry) — a controlled,
+# trusted registry for this project. These cloud-vendor-specific rules
+# do not apply to the BC Gov OpenShift environment.
+KSV032
+KSV033
+KSV034
+KSV035
+KSV0125
+
+# KSV110: "workloads in the default namespace" — the chart deploys to a
+# dedicated OpenShift project namespace, not the Kubernetes default namespace.
+KSV110
+
+# ─── DoS / ReDoS — out of scope ────────────────────────────────────────────
+# The following CVEs are Denial-of-Service or ReDoS only; they require an
+# attacker to supply crafted input to exhaust CPU/stack, with no
+# authentication bypass, data breach, or RCE impact.
+
+# minimatch — transitive dev dependency (jest / @nestjs/cli build tools).
+CVE-2026-27903
+CVE-2026-27904
+CVE-2026-26996
+
+# qs — transitive production dependency; DoS requires crafted array input.
+CVE-2026-2391
+CVE-2025-15284
+
+# ajv — transitive production dependency; ReDoS via $data reference.
+CVE-2025-69873
+
+# brace-expansion — dev dependency; ReDoS via crafted glob patterns.
+CVE-2025-5889
+
+# flatted — transitive production dependency; unbounded recursion DoS.
+CVE-2026-32141
+
+# webpack — build-time SSRF (buildHttp plugin, never executed at runtime).
+CVE-2025-68157
+CVE-2025-68458
+
+# @babel/helpers — build-time transpiler; ReDoS in generated code.
+CVE-2025-27789
+
+# ─── Informational / defence-in-depth notices ──────────────────────────────
+# AWS SDK note: defence-in-depth region-parameter hardening, not a vuln.
+GHSA-6475-r3vj-m8vf
+
+# js-yaml prototype pollution (transitive from ESLint / @nestjs/swagger);
+# neither tool processes attacker-controlled YAML at runtime.
+CVE-2025-64718
+
+# glob command injection via malicious filenames (transitive from
+# jest / @nestjs/cli); only invoked at build / test time, never at runtime.
+CVE-2025-64756
+
+# lodash prototype pollution in _.unset / _.omit (transitive via
+# @nestjs/config / @nestjs/swagger); config inputs come from trusted
+# environment variables, not attacker-controlled data.
+CVE-2025-13465

@@ -40,6 +40,8 @@ jobs:
       tag: ${{ github.event.number }}
       release: ${{ github.event.number }}
       params: |
+        --set backend.deploymentStrategy=Recreate \
+        --set frontend.deploymentStrategy=Recreate \
         --set backend.pdb.enabled=false \
         --set frontend.pdb.enabled=false \
         --set global.amsURL=https://test.j200.gov.bc.ca/pub/ams/ \
