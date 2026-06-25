@@ -54,6 +54,8 @@ jobs:
         --set-string backend.env.omrrAuthzDocsFlag="true" \
   tests:
     name: Tests
+    permissions:
+      contents: read
     needs: [deploy-test]
     uses: ./.github/workflows/.tests.yml
     with:
