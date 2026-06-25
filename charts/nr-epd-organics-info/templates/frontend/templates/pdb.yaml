@@ -11,5 +11,5 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "frontend.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  minAvailable: {{ .Values.frontend.pdb.minAvailable }}
+  maxUnavailable: {{ .Values.frontend.pdb.maxUnavailable }}
 {{- end }}

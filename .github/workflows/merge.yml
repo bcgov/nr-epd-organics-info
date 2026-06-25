@@ -73,10 +73,6 @@ jobs:
       tag: ${{ needs.vars.outputs.pr }}
       release: prod
       params: |
-        --set backend.deploymentStrategy=RollingUpdate \
-        --set frontend.deploymentStrategy=RollingUpdate \
-        --set backend.pdb.enabled=false \
-        --set frontend.pdb.enabled=false \
         --set-string global.amsURL="https://j200.gov.bc.ca/pub/ams/" \
         --set-string backend.env.omrrAppStatusFlag="true" \
         --set-string backend.env.omrrAuthzDocsFlag="true" \

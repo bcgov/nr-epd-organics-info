@@ -19,17 +19,35 @@ global:
 backend:
   #-- enable or disable backend
   enabled: true
-  #-- the deployment strategy, can be "Recreate" or "RollingUpdate"
-  deploymentStrategy: Recreate
+  #-- RollingUpdate gives zero-downtime rollouts; Recreate only if the app cannot run two versions concurrently
+  deploymentStrategy: RollingUpdate
   imagePullPolicy: Always
+  #-- SIGTERM grace: stop accepting traffic, drain in-flight, exit. ≤60s for stateless.
+  terminationGracePeriodSeconds: 60
+  #-- pod-level: runAsNonRoot + seccomp enforced cluster-side by restricted-v2; explicit here for portability
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  #-- container-level: restricted-v2 requires all five fields; do not hard-code runAsUser/fsGroup
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   containerResources:
     requests:
       cpu: 30m
       memory: 300Mi
+    limits:
+      memory: 512Mi
   autoscaling:
     #-- enable or disable autoscaling.
     enabled: true
-    #-- the minimum number of replicas.
+    #-- minReplicas ≥ 2 so one node drain does not take the workload down
     minReplicas: 3
     #-- the maximum number of replicas.
     maxReplicas: 7
@@ -41,9 +59,10 @@ backend:
     type: ClusterIP
     port: 80 # this is the service port, where it will be exposed internal to the namespace.
     targetPort: 3000 # this is container port where app listens on
+  #-- PDB: always enabled for multi-replica workloads; maxUnavailable for stateless
   pdb:
-    enabled: false # enable it in PRODUCTION for having pod disruption budget.
-    minAvailable: 1 # the minimum number of pods that must be available during the disruption budget.
+    enabled: true
+    maxUnavailable: 1
   env:
     omrrAuthzDocsFlag: "true"
     omrrAppStatusFlag: "true"
@@ -51,14 +70,30 @@ backend:
 frontend:
   # -- enable or disable a component deployment.
   enabled: true
-  # -- the deployment strategy, can be "Recreate" or "RollingUpdate"
-  deploymentStrategy: Recreate
+  #-- RollingUpdate gives zero-downtime rollouts; Recreate only if the app cannot run two versions concurrently
+  deploymentStrategy: RollingUpdate
   imagePullPolicy: Always
+  #-- SIGTERM grace: stop accepting traffic, drain in-flight, exit. ≤60s for stateless.
+  terminationGracePeriodSeconds: 60
+  #-- pod-level: runAsNonRoot + seccomp enforced cluster-side by restricted-v2; explicit here for portability
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  #-- container-level: restricted-v2 requires all five fields; do not hard-code runAsUser/fsGroup
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   #-- autoscaling for the component. it is optional and is an object.
   autoscaling:
     #-- enable or disable autoscaling.
     enabled: true
-    #-- the minimum number of replicas.
+    #-- minReplicas ≥ 2 so one node drain does not take the workload down
     minReplicas: 5
     #-- the maximum number of replicas.
     maxReplicas: 7
@@ -68,13 +103,16 @@ frontend:
   service:
     type: ClusterIP
   #-- the route for the component. it is optional and is an object. To make the application accessible from internet, use the route.
+  #-- PDB: always enabled for multi-replica workloads; maxUnavailable for stateless
   pdb:
-    enabled: false # enable it in PRODUCTION for having pod disruption budget.
-    minAvailable: 1 # the minimum number of pods that must be available during the disruption budget.
+    enabled: true
+    maxUnavailable: 1
   containerResources:
     requests:
       cpu: 50m
       memory: 100Mi
+    limits:
+      memory: 150Mi
   env:
     osmGrayscaleFlag: "false"
     zoomToResultsControlFlag: "true"

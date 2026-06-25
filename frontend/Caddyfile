@@ -14,6 +14,12 @@
 		}
 		level {$LOG_LEVEL}
 	}
+	# Enable Coraza WAF
+	coraza_waf {
+		directives `
+		Include /etc/caddy/coraza.conf
+		`
+	}
     handle /env.js {
         header {
           Content-Type text/javascript
