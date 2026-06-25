@@ -16,18 +16,22 @@ on:
         type: number
         required: true
 
+permissions: {}
+
 jobs:
   vars:
     name: Set Variables
     outputs:
       pr: ${{ steps.pr.outputs.pr }}
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 1
     steps:
       # Get PR number for squash merges to main
       - name: PR Number
         id: pr
-        uses: bcgov/action-get-pr@v0.3.1
+        uses: bcgov/action-get-pr@28b0adf8e4d40720d41f9c87356ce24b0a4bd6af # v0.3.1
 
   deploy-test:
     name: Deploy (test)
@@ -78,6 +82,7 @@ jobs:
     needs: [deploy-prod, vars]
     runs-on: ubuntu-24.04
     permissions:
+      contents: read
       packages: write
     strategy:
       matrix:

@@ -7,7 +7,7 @@ concurrency:
   # Cancel in progress for PR open and close
   group: ${{ github.workflow }}-${{ github.event.number }}
   cancel-in-progress: true
-
+permissions: {}
 jobs:
   # https://github.com/bcgov/action-builder-ghcr
   builds:
@@ -20,7 +20,7 @@ jobs:
         package: [backend, frontend]
     timeout-minutes: 10
     steps:
-      - uses: bcgov/action-builder-ghcr@v4.4.1
+      - uses: bcgov/action-builder-ghcr@cb2629351c87dd1c2130073e4ebb7233a9653a63 # v4.4.1
         with:
           package: ${{ matrix.package }}
           tags: ${{ github.event.number }}
