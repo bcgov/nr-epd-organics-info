@@ -162,11 +162,11 @@ describe('Test suite for MapView', () => {
     const map = document.querySelector('.leaflet-container') as HTMLElement
     fireEvent.mouseOver(map)
     fireEvent.mouseMove(map, { clientX: 50, clientY: 50 })
-    await user.click(map)
+    fireEvent.click(map)
     fireEvent.mouseMove(map, { clientX: 60, clientY: 60 })
-    await user.click(map)
+    fireEvent.click(map)
     fireEvent.mouseMove(map, { clientX: 60, clientY: 70 })
-    await user.click(map)
+    fireEvent.click(map)
     fireEvent.mouseOut(map)
 
     const lines = document.querySelectorAll('.polygon-search-line')

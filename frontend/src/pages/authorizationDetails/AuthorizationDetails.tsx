@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Stack, Typography, Box } from '@mui/material'
 
 import { useFindByAuthorizationNumber } from '@/features/omrr/omrr-slice'

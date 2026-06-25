@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
 
 import OmrrData from '@/interfaces/omrr'

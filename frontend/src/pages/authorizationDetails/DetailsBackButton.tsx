@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router'
-import { useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@mui/material'
 
 import ChevronLeft from '@/assets/svgs/fa-chevron-left.svg?react'

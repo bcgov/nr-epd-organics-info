@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { useSelector } from 'react-redux'
 
 import { render } from '@/test-utils'
@@ -87,7 +87,7 @@ describe('Test suite for AuthorizationMarkers', () => {
     await user.click(marker)
 
     expect(state.selectedItem).toBe(mockOmrrData[0])
-    expect(state.zoomPosition).toBeDefined()
+    await waitFor(() => expect(state.zoomPosition).toBeDefined())
   })
 
   it('should render AuthorizationMarkers in polygon search mode and click on marker', async () => {

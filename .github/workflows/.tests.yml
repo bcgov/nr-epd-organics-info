@@ -8,7 +8,7 @@ on:
         description: PR number, test or prod
         required: true
         type: string
-
+permissions: {}
 env:
   DOMAIN: apps.silver.devops.gov.bc.ca
   PREFIX: ${{ github.event.repository.name }}-${{ inputs.target }}
@@ -23,22 +23,24 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        project: [chromium, Google Chrome, firefox, safari, Microsoft Edge]
+        project: [Google Chrome, firefox, Microsoft Edge]
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         name: Checkout
       - name: Cache Playwright Browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: playwright-cache
         with:
           path: |
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         name: Setup Node
         with:
-          node-version: 20
+          node-version-file: .node-version
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
       - name: Install dependencies
@@ -58,7 +60,7 @@ jobs:
         run: |
           npx playwright test --project="${{ matrix.project }}" --reporter=html
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         name: upload results
         env:

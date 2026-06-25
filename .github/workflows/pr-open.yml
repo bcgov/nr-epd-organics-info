@@ -7,7 +7,7 @@ concurrency:
   # Cancel in progress for PR open and close
   group: ${{ github.workflow }}-${{ github.event.number }}
   cancel-in-progress: true
-
+permissions: {}
 jobs:
   # https://github.com/bcgov/action-builder-ghcr
   builds:
@@ -20,10 +20,10 @@ jobs:
         package: [backend, frontend]
     timeout-minutes: 10
     steps:
-      - uses: bcgov/action-builder-ghcr@v2.3.0
+      - uses: bcgov/action-builder-ghcr@cb2629351c87dd1c2130073e4ebb7233a9653a63 # v4.4.1
         with:
           package: ${{ matrix.package }}
-          tag: ${{ github.event.number }}
+          tags: ${{ github.event.number }}
           tag_fallback: latest
           triggers: ('${{ matrix.package }}/')
 
@@ -33,6 +33,8 @@ jobs:
     needs: [builds]
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
+    permissions:
+      contents: read
     with:
       autoscaling: false
       tag: ${{ github.event.number }}
@@ -48,6 +50,8 @@ jobs:
   tests:
     name: Tests
     needs: [deploys]
+    permissions:
+      contents: read
     uses: ./.github/workflows/.tests.yml
     with:
       target: ${{ github.event.number }}

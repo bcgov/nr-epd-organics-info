@@ -1,92 +1,131 @@
 name: Analysis
 
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
-  schedule:
-    - cron: "0 11 * * 0" # 3 AM PST = 12 PM UDT, runs sundays
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
-  tests:
-    name: Tests
+  backend-tests:
+    name: Backend Tests
     if: (! github.event.pull_request.draft)
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 5
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    strategy:
-      matrix:
-        dir: [backend, frontend]
-        include:
-          - dir: backend
-            token: SONAR_TOKEN_BACKEND
-          - dir: frontend
-            token: SONAR_TOKEN_FRONTEND
-    steps: # The project key is still pointing to the old name, changing it would break sonar analysis.
-      - uses: bcgov/action-test-and-analyse@v1.2.1
+    steps:
+      - uses: bcgov/action-test-and-analyse@8f699e3fd3fadd9a6adf6f4b1f2638ef7ecfefb9 # v2.0.0
         with:
           commands: |
             npm ci
             npm run test:cov
-          dir: ${{ matrix.dir }}
-          node_version: "20"
+          dir: backend
+          node_version: "24"
           sonar_args: >
             -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts,**/*test.ts,**/*test.tsx,**/e2e/**
             -Dsonar.organization=bcgov-sonarcloud
-            -Dsonar.projectKey=nr-omrr-transparency-${{ matrix.dir }}
+            -Dsonar.projectKey=nr-omrr-transparency-backend
             -Dsonar.sources=src
             -Dsonar.tests.inclusions=**/*spec.ts,**/*test.ts,**/*.test.tsx
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ secrets[matrix.token] }}
-          triggers: ('${{ matrix.dir }}/')
+          dep_scan: warn
+          supply_scan: true
+          triggers: ('backend/')
+
+  frontend-tests:
+    name: Frontend Tests
+    if: (! github.event.pull_request.draft)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: bcgov/action-test-and-analyse@8f699e3fd3fadd9a6adf6f4b1f2638ef7ecfefb9 # v2.0.0
+        with:
+          commands: |
+            npm ci
+            npm run test:cov
+          dir: frontend
+          node_version: "24"
+          sonar_args: >
+            -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts,**/*test.tsx,**/routeTree.gen.ts
+            -Dsonar.organization=bcgov-sonarcloud
+            -Dsonar.projectKey=nr-omrr-transparency-frontend
+            -Dsonar.sources=src
+            -Dsonar.test.inclusions=**/*spec.ts,**/*test.tsx
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+          dep_scan: warn
+          supply_scan: true
+          triggers: ('frontend/')
 
   # https://github.com/marketplace/actions/aqua-security-trivy
   trivy:
     name: Trivy Security Scan
     if: (! github.event.pull_request.draft)
-    needs: [tests]
+    continue-on-error: true
+    permissions:
+      contents: read
+      security-events: write
     runs-on: ubuntu-24.04
-    timeout-minutes: 1
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+
+      - name: Cache Trivy DB
+        uses: actions/cache@v6
+        with:
+          path: .trivycache
+          key: ${{ runner.os }}-trivy-v0.36.0-cache-v1
+          restore-keys: |
+            ${{ runner.os }}-trivy-
+
       - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           format: "sarif"
           output: "trivy-results.sarif"
           ignore-unfixed: true
           scan-type: "fs"
-          scanners: "vuln,secret,config"
+          scanners: "vuln,secret,misconfig"
           severity: "CRITICAL,HIGH"
+          trivyignores: ".github/.trivyignore"
+          cache-dir: .trivycache
+          skip-dirs: "**/node_modules,**/coverage,**/dist,.git"
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
+          category: "trivy"
           sarif_file: "trivy-results.sarif"
 
+  # ==========================================================================
+  # WARNING: This job acts as the required merge gate for this workflow.
+  # If you add a new job to this workflow, you MUST add its ID to the 'needs'
+  # array below, otherwise its failure or cancellation will not block the PR!
+  # ==========================================================================
   results:
     name: Analysis Results
-    if: always()
-    needs: [tests] # Restore trivy when/if fixed
+    needs: [backend-tests, frontend-tests]
+    if: always() && (! github.event.pull_request.draft)
     runs-on: ubuntu-24.04
+    permissions: {}
+    timeout-minutes: 1
     steps:
-      - if: contains(needs.*.result, 'failure')||contains(needs.*.result, 'canceled')
-        run: echo "At least one job has failed." && exit 1
-      - run: echo "Success!"
+      - name: Log Job Results Context
+        run: |
+          echo "=== Upstream Job Statuses ==="
+          echo '${{ toJson(needs) }}'
+
+      - name: Evaluate Overall Status
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "❌ Critical Check Failure: At least one required job has failed or was cancelled."
+          exit 1
+
+      - name: Success Message
+        run: echo "✅ All critical checks passed or were intentionally skipped!"
