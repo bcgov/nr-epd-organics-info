@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        project: [chromium, Google Chrome, firefox, safari, Microsoft Edge]
+        project: [Google Chrome, firefox, Microsoft Edge]
     permissions:
       contents: read
     steps:

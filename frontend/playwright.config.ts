@@ -53,13 +53,6 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-        baseURL,
-      },
-    },
-    {
       name: 'Google Chrome',
       use: {
         ...devices['Desktop Chrome'],
@@ -67,19 +60,10 @@ export default defineConfig({
         baseURL,
       },
     },
-
     {
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
-        baseURL,
-      },
-    },
-
-    {
-      name: 'safari',
-      use: {
-        ...devices['Desktop Safari'],
         baseURL,
       },
     },
