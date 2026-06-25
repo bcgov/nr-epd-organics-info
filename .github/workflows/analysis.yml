@@ -15,11 +15,11 @@ jobs:
     name: Backend Tests
     if: (! github.event.pull_request.draft)
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 5
     steps:
       - uses: bcgov/action-test-and-analyse@8f699e3fd3fadd9a6adf6f4b1f2638ef7ecfefb9 # v2.0.0
-        env:
-          sonar_token: ${{ secrets.sonar_token_backend }}
         with:
           commands: |
             npm ci
@@ -33,7 +33,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests.inclusions=**/*spec.ts,**/*test.ts,**/*.test.tsx
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ env.sonar_token }}
           dep_scan: warn
           supply_scan: true
           triggers: ('backend/')
@@ -42,11 +41,11 @@ jobs:
     name: Frontend Tests
     if: (! github.event.pull_request.draft)
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 5
     steps:
       - uses: bcgov/action-test-and-analyse@8f699e3fd3fadd9a6adf6f4b1f2638ef7ecfefb9 # v2.0.0
-        env:
-          sonar_token: ${{ secrets.sonar_token_frontend }}
         with:
           commands: |
             npm ci
@@ -60,7 +59,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.test.inclusions=**/*spec.ts,**/*test.tsx
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ env.sonar_token }}
           dep_scan: warn
           supply_scan: true
           triggers: ('frontend/')
@@ -71,8 +69,9 @@ jobs:
     if: (! github.event.pull_request.draft)
     continue-on-error: true
     permissions:
+      contents: read
       security-events: write
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
@@ -113,7 +112,8 @@ jobs:
     name: Analysis Results
     needs: [backend-tests, frontend-tests]
     if: always() && (! github.event.pull_request.draft)
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-24.04
+    permissions: {}
     timeout-minutes: 1
     steps:
       - name: Log Job Results Context
