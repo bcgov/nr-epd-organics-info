@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useMap } from 'react-leaflet'
-import L from 'leaflet'
+import { useState } from 'react'
+import { LayerGroup, TileLayer, WMSTileLayer } from 'react-leaflet'
 import { IconButton } from '@mui/material'
 import clsx from 'clsx'
 import LayersIcon from '@/assets/svgs/fa-map.svg?react'
@@ -11,66 +10,58 @@ import './BasemapControl.css'
 const basemaps = [
   {
     name: 'Terrain + Roads',
-    layer: L.layerGroup([
-      L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-        {
-          attribution: '© Esri',
-        },
-      ),
-      L.tileLayer.wms(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/ows',
-        {
-          layers: 'pub:WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP',
-          format: 'image/png',
-          transparent: true,
-          minNativeZoom: 10,
-          attribution: '© Government of British Columbia, DataBC, GeoBC',
-        },
-      ),
-    ]),
     thumbnail: 'streets.png',
+    render: () => (
+      <LayerGroup key="Terrain + Roads">
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+          attribution="© Esri"
+        />
+        <WMSTileLayer
+          url="https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/ows"
+          layers="pub:WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP"
+          format="image/png"
+          transparent
+          minZoom={12}
+          attribution="© Government of British Columbia, DataBC, GeoBC"
+        />
+      </LayerGroup>
+    ),
   },
   {
     name: 'Imagery + Roads',
-    layer: L.layerGroup([
-      L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        {
-          attribution: '© Esri',
-        },
-      ),
-      L.tileLayer.wms(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/ows',
-        {
-          layers: 'pub:WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP',
-          format: 'image/png',
-          transparent: true,
-          minNativeZoom: 10,
-          attribution: '© Government of British Columbia, DataBC, GeoBC',
-        },
-      ),
-    ]),
     thumbnail: '/imagery.png',
+    render: () => (
+      <LayerGroup key="Imagery + Roads">
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          attribution="© Esri"
+        />
+        <WMSTileLayer
+          url="https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/ows"
+          layers="pub:WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP"
+          format="image/png"
+          transparent
+          minZoom={12}
+          attribution="© Government of British Columbia, DataBC, GeoBC"
+        />
+      </LayerGroup>
+    ),
   },
 ]
 
 export function BasemapControlButton() {
-  const map = useMap()
   const [isListVisible, setIsListVisible] = useState(false)
-  const [activeLayer, setActiveLayer] = useState<L.Layer>(basemaps[0].layer)
+  const [activeBasemapName, setActiveBasemapName] = useState(
+    basemaps[0].name,
+  )
 
-  useEffect(() => {
-    activeLayer.addTo(map)
-    return () => {
-      map.removeLayer(activeLayer)
-    }
-  }, [map, activeLayer])
+  const activeBasemap =
+    basemaps.find((basemap) => basemap.name === activeBasemapName) ??
+    basemaps[0]
 
-  const handleLayerChange = (newLayer: L.Layer) => {
-    map.removeLayer(activeLayer)
-    newLayer.addTo(map)
-    setActiveLayer(newLayer)
+  const handleLayerChange = (name: string) => {
+    setActiveBasemapName(name)
     setIsListVisible(false)
   }
 
@@ -94,15 +85,18 @@ export function BasemapControlButton() {
             type="button"
             className={clsx(
               'basemap-option',
-              activeLayer === basemap.layer && 'active',
+              activeBasemapName === basemap.name && 'active',
             )}
-            onClick={() => handleLayerChange(basemap.layer)}
+            onClick={() => handleLayerChange(basemap.name)}
           >
             <img src={basemap.thumbnail} alt={basemap.name} />
             <span data-basemap-name="true">{basemap.name}</span>
           </button>
         ))}
       </div>
+
+      {activeBasemap.render()}
     </div>
   )
 }
+
