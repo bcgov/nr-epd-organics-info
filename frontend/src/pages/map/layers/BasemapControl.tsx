@@ -10,7 +10,7 @@ import './BasemapControl.css'
 
 const basemaps = [
   {
-    name: 'Streets',
+    name: 'Terrain + Roads',
     layer: L.layerGroup([
       L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
@@ -32,22 +32,26 @@ const basemaps = [
     thumbnail: 'streets.png',
   },
   {
-    name: 'Imagery',
-    layer: L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      {
-        attribution: '© Esri',
-      },
-    ),
+    name: 'Imagery + Roads',
+    layer: L.layerGroup([
+      L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution: '© Esri',
+        },
+      ),
+      L.tileLayer.wms(
+        'https://openmaps.gov.bc.ca/geo/pub/WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP/ows',
+        {
+          layers: 'pub:WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP',
+          format: 'image/png',
+          transparent: true,
+          minNativeZoom: 10,
+          attribution: '© Government of British Columbia, DataBC, GeoBC',
+        },
+      ),
+    ]),
     thumbnail: '/imagery.png',
-  },
-  {
-    name: 'Terrain',
-    layer: L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-      attribution: '© Google',
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    }),
-    thumbnail: 'terrain2.png',
   },
 ]
 
