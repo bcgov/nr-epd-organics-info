@@ -46,6 +46,16 @@ if (typeof window.URL.revokeObjectURL === 'undefined') {
   })
 }
 
+// jsdom does not implement ResizeObserver
+if (typeof window.ResizeObserver === 'undefined') {
+  class ResizeObserverMock {
+    observe = vi.fn()
+    unobserve = vi.fn()
+    disconnect = vi.fn()
+  }
+  window.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver
+}
+
 // Support SVG in leaflet, so that Polylines work
 // https://stackoverflow.com/questions/54382414/fixing-react-leaflet-testing-error-cannot-read-property-layeradd-of-null/54384719#54384719
 const createElementNSOrig = document.createElementNS
