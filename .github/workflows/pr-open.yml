@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 permissions: {}
 jobs:
-  # https://github.com/bcgov/action-builder-ghcr
+  # https://github.com/bcgov/actions/tree/main/builder
   builds:
     name: Builds
     runs-on: ubuntu-24.04
@@ -20,7 +20,7 @@ jobs:
         package: [backend, frontend]
     timeout-minutes: 10
     steps:
-      - uses: bcgov/action-builder-ghcr@cb2629351c87dd1c2130073e4ebb7233a9653a63 # v4.4.1
+      - uses: bcgov/actions/builder@4026bfd276b8a5839029106099b13edfb594b2c3 # v0.8.0
         with:
           package: ${{ matrix.package }}
           tags: ${{ github.event.number }}

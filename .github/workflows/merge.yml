@@ -20,18 +20,35 @@ permissions: {}
 
 jobs:
   vars:
-    name: Set Variables
-    outputs:
-      pr: ${{ steps.pr.outputs.pr }}
+    name: Resolve Images
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-    timeout-minutes: 1
+      packages: write
+      pull-requests: read
+    strategy:
+      matrix:
+        package: [backend, frontend]
+    timeout-minutes: 5
     steps:
-      # Get PR number for squash merges to main
-      - name: PR Number
-        id: pr
-        uses: bcgov/action-get-pr@28b0adf8e4d40720d41f9c87356ce24b0a4bd6af # v0.3.1
+      - uses: actions/checkout@v7
+
+      # Resolve the image digest built for this commit (squash merges walk back to the PR build)
+      - name: Resolve image
+        id: tracker
+        uses: bcgov/actions/image-tracker@4026bfd276b8a5839029106099b13edfb594b2c3 # v0.8.0
+        with:
+          package: ${{ matrix.package }}
+          max_depth: 100
+
+      # Tag that digest with the merge commit SHA; deploys and promotion use this tag
+      - name: Tag image with commit SHA
+        uses: shrink/actions-docker-registry-tag@e6aaef25c595b6e0edd18bf4c7dbfea3abd43299 # v5
+        with:
+          registry: ghcr.io
+          repository: ${{ github.repository }}/${{ matrix.package }}
+          target: ${{ steps.tracker.outputs.digest }}
+          tags: ${{ github.sha }}
 
   deploy-test:
     name: Deploy (test)
@@ -42,7 +59,7 @@ jobs:
       contents: read
     with:
       environment: test
-      tag: ${{ needs.vars.outputs.pr }}
+      tag: ${{ github.sha }}
       release: test
       params: |
         --set backend.deploymentStrategy=RollingUpdate \
@@ -70,7 +87,7 @@ jobs:
       contents: read
     with:
       environment: prod
-      tag: ${{ needs.vars.outputs.pr }}
+      tag: ${{ github.sha }}
       release: prod
       params: |
         --set-string global.amsURL="https://j200.gov.bc.ca/pub/ams/" \
@@ -95,5 +112,5 @@ jobs:
         with:
           registry: ghcr.io
           repository: ${{ github.repository }}/${{ matrix.package }}
-          target: ${{ needs.vars.outputs.pr }}
+          target: ${{ github.sha }}
           tags: prod
