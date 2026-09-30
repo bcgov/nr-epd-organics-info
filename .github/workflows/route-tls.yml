@@ -1,0 +1,37 @@
+name: Route TLS
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "true validates the certificate and does not change the route. false installs it."
+        required: true
+        type: choice
+        default: "true"
+        options:
+          - "true"
+          - "false"
+
+permissions: {}
+
+jobs:
+  route-tls:
+    name: Route TLS (dry_run=${{ inputs.dry_run }})
+    environment: prod
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: bcgov/actions-openshift/route-tls@75454b2b33edf37135f6f167775c77a3414207f6 # v0.3.1
+        with:
+          hostname: organicsinfo.gov.bc.ca
+          route_name: nr-epd-organics-info-prod-frontend-vanity
+          target_service: nr-epd-organics-info-prod-frontend
+          tls_certificate: ${{ secrets.TLS_CERTIFICATE }}
+          tls_private_key: ${{ secrets.TLS_PRIVATE_KEY }}
+          tls_ca_certificate: ${{ secrets.TLS_CA_CERTIFICATE }}
+          oc_namespace: ${{ vars.OC_NAMESPACE }}
+          oc_server: ${{ vars.OC_SERVER }}
+          oc_token: ${{ secrets.OC_TOKEN }}
+          dry_run: ${{ inputs.dry_run }}
