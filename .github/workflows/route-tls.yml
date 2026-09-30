@@ -3,20 +3,20 @@ name: Route TLS
 on:
   workflow_dispatch:
     inputs:
-      mode:
-        description: "dry-run validates the certificate and does not change the route. apply installs it."
+      dry_run:
+        description: "true validates the certificate and does not change the route. false installs it."
         required: true
         type: choice
-        default: dry-run
+        default: "true"
         options:
-          - dry-run
-          - apply
+          - "true"
+          - "false"
 
 permissions: {}
 
 jobs:
   route-tls:
-    name: Route TLS (${{ inputs.mode }})
+    name: Route TLS (dry_run=${{ inputs.dry_run }})
     environment: prod
     runs-on: ubuntu-24.04
     permissions:
@@ -34,4 +34,4 @@ jobs:
           oc_namespace: ${{ vars.OC_NAMESPACE }}
           oc_server: ${{ vars.OC_SERVER }}
           oc_token: ${{ secrets.OC_TOKEN }}
-          dry_run: ${{ inputs.mode == 'dry-run' && 'true' || 'false' }}
+          dry_run: ${{ inputs.dry_run }}
