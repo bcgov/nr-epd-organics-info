@@ -1,16 +1,21 @@
 name: Route TLS
+run-name: "Route TLS dry_run=${{ inputs.dry_run }} — ${{ inputs.description }}"
 
 on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "true validates the certificate and does not change the route. false installs it."
+        description: "Dry run. True = validate only, false = apply."
         required: true
         type: choice
         default: "true"
         options:
           - "true"
           - "false"
+      description:
+        description: "Shown on this workflow run."
+        required: true
+        type: string
 
 permissions: {}
 
