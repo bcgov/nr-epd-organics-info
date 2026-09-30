@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run = true|false"
+        description: "Dry run. True = validate only, false = apply."
         required: true
         type: choice
         default: "true"
