@@ -2,12 +2,21 @@ name: Route TLS
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run. True = validate only, false = apply."
+        required: true
+        type: choice
+        default: "true"
+        options:
+          - "true"
+          - "false"
 
 permissions: {}
 
 jobs:
   route-tls:
-    name: Route TLS
+    name: Route TLS (dry_run=${{ inputs.dry_run }})
     environment: prod
     runs-on: ubuntu-24.04
     permissions:
@@ -25,4 +34,4 @@ jobs:
           oc_namespace: ${{ vars.OC_NAMESPACE }}
           oc_server: ${{ vars.OC_SERVER }}
           oc_token: ${{ secrets.OC_TOKEN }}
-          dry_run: "false"
+          dry_run: ${{ inputs.dry_run }}
