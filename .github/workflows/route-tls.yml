@@ -1,5 +1,5 @@
 name: Route TLS
-run-name: "Route TLS dry_run=${{ inputs.dry_run }} — ${{ inputs.description }}"
+run-name: "Route TLS dry_run=${{ inputs.dry_run }}"
 
 on:
   workflow_dispatch:
@@ -12,10 +12,6 @@ on:
         options:
           - "true"
           - "false"
-      description:
-        description: "Shown on this workflow run."
-        required: true
-        type: string
 
 permissions: {}
 
