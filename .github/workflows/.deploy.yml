@@ -104,7 +104,7 @@ jobs:
               --set-string global.tag="${{ env.package_tag }}" \
               ${{ inputs.params }} \
               --install --wait --atomic  ${{ env.repo_release }} \
-              --timeout ${{ inputs.timeout-minutes }}m \
+              --timeout $(( ${{ inputs.timeout-minutes }} - 2 ))m \
               --values ${{ inputs.values }} \
               ./${{ github.event.repository.name }}-1.0.0-${{ github.run_number }}.tgz
 
