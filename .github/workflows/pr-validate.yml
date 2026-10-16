@@ -44,4 +44,6 @@ jobs:
     needs: [validate]
     runs-on: ubuntu-24.04
     steps:
-      - run: echo "Success!"
+      - uses: bcgov/actions/workflow-results@79aefe3a7abb2d0d00b1b3ea4cfbf12727a10638 # v0.9.0
+        with:
+          needs: ${{ toJson(needs) }}
