@@ -18,7 +18,7 @@ jobs:
   route-tls:
     name: Route TLS (dry_run=${{ inputs.dry_run }})
     environment: prod
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
     timeout-minutes: 5

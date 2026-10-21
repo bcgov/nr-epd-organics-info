@@ -21,7 +21,7 @@ permissions: {}
 jobs:
   vars:
     name: Resolve Images
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       packages: write
@@ -99,7 +99,7 @@ jobs:
   promote:
     name: Promote Images
     needs: [deploy-prod, vars]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       packages: write
