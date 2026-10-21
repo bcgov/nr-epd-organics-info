@@ -19,7 +19,7 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - uses: bcgov/actions/test-and-analyse@79aefe3a7abb2d0d00b1b3ea4cfbf12727a10638 # v0.9.0
+      - uses: bcgov/actions/test-and-analyse@122a9b1c6c082b1b1f18c300020fbdc417b6b0b2 # v0.10.0
         with:
           commands: |
             npm ci
@@ -35,7 +35,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
           dep_scan: warn
           supply_scan: true
-          triggers: ('backend/')
+          triggers: backend/
 
   frontend-tests:
     name: Frontend Tests
@@ -45,7 +45,7 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - uses: bcgov/actions/test-and-analyse@79aefe3a7abb2d0d00b1b3ea4cfbf12727a10638 # v0.9.0
+      - uses: bcgov/actions/test-and-analyse@122a9b1c6c082b1b1f18c300020fbdc417b6b0b2 # v0.10.0
         with:
           commands: |
             npm ci
@@ -61,7 +61,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
           dep_scan: warn
           supply_scan: true
-          triggers: ('frontend/')
+          triggers: frontend/
 
   # https://github.com/marketplace/actions/aqua-security-trivy
   trivy:
@@ -128,6 +128,6 @@ jobs:
     permissions: {}
     timeout-minutes: 1
     steps:
-      - uses: bcgov/actions/workflow-results@79aefe3a7abb2d0d00b1b3ea4cfbf12727a10638 # v0.9.0
+      - uses: bcgov/actions/workflow-results@122a9b1c6c082b1b1f18c300020fbdc417b6b0b2 # v0.10.0
         with:
           needs: ${{ toJson(needs) }}
