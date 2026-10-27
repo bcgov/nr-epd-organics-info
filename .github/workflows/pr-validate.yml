@@ -19,7 +19,7 @@ jobs:
 
     permissions:
       pull-requests: write
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: bcgov/actions/pr-validate@091f1da89c669d36bf4899830381e5b12d2c889a # v0.11.0
         with:
@@ -42,7 +42,7 @@ jobs:
     name: Validate Results
     if: always()
     needs: [validate]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: bcgov/actions/workflow-results@091f1da89c669d36bf4899830381e5b12d2c889a # v0.11.0
         with:
