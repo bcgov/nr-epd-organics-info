@@ -114,3 +114,20 @@ jobs:
           repository: ${{ github.repository }}/${{ matrix.package }}
           target: ${{ github.sha }}
           tags: prod
+
+  # Opens or comments on a "fix: failure in Merge" issue when any job above fails
+  results:
+    name: Merge Results
+    needs: [vars, deploy-test, tests, deploy-prod, promote]
+    if: always()
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+    timeout-minutes: 1
+    steps:
+      - uses: bcgov/actions/workflow-results@d209bb08aabe15e5e69aca53b24d338a7b2843d5 # v0.12.0
+        with:
+          needs: ${{ toJson(needs) }}
+          title: Merge Results
