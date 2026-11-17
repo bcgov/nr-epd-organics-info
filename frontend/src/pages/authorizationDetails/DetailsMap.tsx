@@ -21,9 +21,11 @@ export function DetailsMap({ item, isSmall = false }: Readonly<Props>) {
       style={{ height: height, width: '100%' }}
       dragging={false}
     >
+      {/* OpenStreetMap blocks our tile requests in prod (#422, #425), so use the
+          same Esri basemap as the main map. */}
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; Esri"
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
         crossOrigin="anonymous"
       />
       <Marker position={position} icon={pinHoverIcon} />
