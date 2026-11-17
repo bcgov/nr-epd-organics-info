@@ -98,18 +98,27 @@ jobs:
             helm dependency update
             helm package --app-version="${{ env.package_tag }}" --version=1.0.0-${{ github.run_number }} .
 
-            helm upgrade \
+            if ! helm upgrade \
               --set global.autoscaling=${{ inputs.autoscaling }} \
               --set-string global.repository=${{ github.repository }} \
               --set-string global.tag="${{ env.package_tag }}" \
               ${{ inputs.params }} \
-              --install --wait --atomic  ${{ env.repo_release }} \
+              --install --wait "${{ env.repo_release }}" \
               --timeout $(( ${{ inputs.timeout-minutes }} - 2 ))m \
               --values ${{ inputs.values }} \
-              ./${{ github.event.repository.name }}-1.0.0-${{ github.run_number }}.tgz
+              ./${{ github.event.repository.name }}-1.0.0-${{ github.run_number }}.tgz; then
+              echo "::group::OpenShift diagnostics on Helm failure"
+              oc get deployments,rs,pods -l "app.kubernetes.io/instance=${{ env.repo_release }}" -o wide || true
+              oc describe rs,pods -l "app.kubernetes.io/instance=${{ env.repo_release }}" || true
+              oc get events --sort-by='.lastTimestamp' | tail -n 50 || true
+              oc describe resourcequota || true
+              echo "::endgroup::"
+              helm rollback "${{ env.repo_release }}" || helm uninstall "${{ env.repo_release }}" || true
+              exit 1
+            fi
 
             # print history 
-            helm history ${{ env.repo_release }}
+            helm history "${{ env.repo_release }}"
 
             # Remove old build runs, build pods and deployment pods
             oc delete po --field-selector=status.phase==Succeeded
