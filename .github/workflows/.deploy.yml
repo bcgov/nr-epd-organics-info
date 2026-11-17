@@ -110,6 +110,8 @@ jobs:
               echo "::group::OpenShift diagnostics on Helm failure"
               oc get deployments,rs,pods -l "app.kubernetes.io/instance=${{ env.repo_release }}" -o wide || true
               oc describe rs,pods -l "app.kubernetes.io/instance=${{ env.repo_release }}" || true
+              oc logs -l "app.kubernetes.io/instance=${{ env.repo_release }}" --all-containers --tail=50 --prefix || true
+              oc logs -l "app.kubernetes.io/instance=${{ env.repo_release }}" --all-containers --previous --tail=50 --prefix || true
               oc get events --sort-by='.lastTimestamp' | tail -n 50 || true
               oc describe resourcequota || true
               echo "::endgroup::"
