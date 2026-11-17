@@ -44,6 +44,16 @@ export const authorization_details_page = async (page: Page) => {
     page.getByText(String(facility12398.Longitude)),
   ).toBeVisible()
 
+  // Basemap tiles must come from Esri, not OpenStreetMap (blocked, #425)
+  const mapTile = page.locator('.leaflet-tile-pane img.leaflet-tile').first()
+  await expect(mapTile).toHaveAttribute(
+    'src',
+    /^https:\/\/server\.arcgisonline\.com\//,
+  )
+  await expect(
+    page.locator('.leaflet-tile-pane img[src*="openstreetmap.org"]'),
+  ).toHaveCount(0)
+
   await expect(page.getByText('Authorization Details')).toBeVisible()
   await expect(page.getByText('Authorization Type')).toBeVisible()
   await expect(page.getByText('Regulation', { exact: true })).toBeVisible()
