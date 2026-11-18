@@ -29,10 +29,7 @@ const deepClone = rfdc({ circles: true })
 
 export const fetchOMRRData = createAsyncThunk(
   'data/fetchOMRRRecords',
-  async () => {
-    const result = await apiService.getAxiosInstance().get('/omrr')
-    return result?.data
-  },
+  async () => apiService.get<OmrrResponse>('/omrr'),
 )
 
 export interface OmrrSliceState {

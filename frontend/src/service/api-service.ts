@@ -1,35 +1,33 @@
-import type { AxiosInstance } from 'axios'
-import axios from 'axios'
 import { isTest } from '@/constants/env'
 
 class APIService {
-  private readonly client: AxiosInstance
+  private readonly baseURL = '/api'
 
-  constructor() {
-    this.client = axios.create({
-      baseURL: '/api',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    this.client.interceptors.response.use(
-      (config) => {
-        if (!isTest) {
-          console.info(`received response status: ${config.status}`)
-        }
-        return config
-      },
-      (error) => {
-        if (!isTest) {
-          console.error(error)
-        }
-      },
-    )
-    // console.info(env.VITE_AMS_URL)
-  }
+  public async get<T>(path: string): Promise<T> {
+    const url = `${this.baseURL}${path.startsWith('/') ? path : `/${path}`}`
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-  public getAxiosInstance(): AxiosInstance {
-    return this.client
+      if (!isTest) {
+        console.info(`received response status: ${response.status}`)
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      return (await response.json()) as T
+    } catch (error) {
+      if (!isTest) {
+        console.error(error)
+      }
+      throw error
+    }
   }
 }
 

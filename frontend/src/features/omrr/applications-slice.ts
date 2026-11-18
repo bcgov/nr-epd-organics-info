@@ -14,12 +14,8 @@ import { truncateDate } from '@/utils/utils'
 
 export const fetchOmrrApplicationStatus = createAsyncThunk(
   'data/fetchOmrrApplicationStatus',
-  async () => {
-    const result = await apiService
-      .getAxiosInstance()
-      .get('/omrr/application-status')
-    return result?.data
-  },
+  async () =>
+    apiService.get<OmrrApplicationStatus[]>('/omrr/application-status'),
 )
 
 export interface ApplicationsSliceState {
