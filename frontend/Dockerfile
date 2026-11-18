@@ -10,7 +10,7 @@ RUN npm run deploy
 FROM caddy:2.11.8-builder AS caddy
 # Install CA certificates for Go module downloads; libcap for setcap
 RUN apk add --no-cache ca-certificates libcap
-RUN xcaddy build \
+RUN xcaddy build -o /usr/bin/caddy \
     --with github.com/corazawaf/coraza-caddy/v2
 # Strip file capabilities here so the final image does not need libcap
 RUN setcap -r /usr/bin/caddy
