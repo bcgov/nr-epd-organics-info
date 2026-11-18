@@ -12,11 +12,9 @@ import { TasksModule } from './v1/tasks/task.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AmsOracleConnectorModule } from './v1/ams-oracle-connector/ams.oracle.connector.module';
 import { AmsOracleConnectorService } from './v1/ams-oracle-connector/ams.oracle.connector.service';
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
-    HttpModule,
     ConfigModule.forRoot(),
     TerminusModule,
     ThrottlerModule.forRoot([
