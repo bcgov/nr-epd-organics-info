@@ -148,49 +148,53 @@ describe('Test suite for AuthorizationDetails', () => {
 
   it('should render compliance section with data', async () => {
     const number = 12398
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve([{ searchResults: mockComplianceData }]),
-      }),
-    ) as ReturnType<typeof vi.fn>
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
+      json: async () => [{ searchResults: mockComplianceData }],
+    } as Response)
 
-    renderComponent(number)
+    try {
+      renderComponent(number)
 
-    screen.getByText('Compliance and Enforcement')
-    const headerRow = screen
-      .getByText('Date Issued')
-      .closest('.compliance-table-header')
-    expect(headerRow).toBeInTheDocument()
+      screen.getByText('Compliance and Enforcement')
+      const headerRow = screen
+        .getByText('Date Issued')
+        .closest('.compliance-table-header')
+      expect(headerRow).toBeInTheDocument()
 
-    // Wait for data to load
-    await screen.findByText(mockComplianceData[0].summary)
-    const viewLinks = screen.getAllByText('View')
-    expect(viewLinks).toHaveLength(2) // Verify we have two "View" links
+      // Wait for data to load
+      await screen.findByText(mockComplianceData[0].summary)
+      const viewLinks = screen.getAllByText('View')
+      expect(viewLinks).toHaveLength(2) // Verify we have two "View" links
+    } finally {
+      fetchSpy.mockRestore()
+    }
   })
 
   it('should handle compliance section sorting', async () => {
     const number = 12398
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve([{ searchResults: mockComplianceData }]),
-      }),
-    ) as ReturnType<typeof vi.fn>
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
+      json: async () => [{ searchResults: mockComplianceData }],
+    } as Response)
 
-    const { user } = renderComponent(number)
+    try {
+      const { user } = renderComponent(number)
 
-    // Wait for data to load
-    await screen.findByText(mockComplianceData[0].summary)
+      // Wait for data to load
+      await screen.findByText(mockComplianceData[0].summary)
 
-    const sortButton = screen.getByText('Date Issued').closest('button')
-    expect(sortButton).toBeInTheDocument()
+      const sortButton = screen.getByText('Date Issued').closest('button')
+      expect(sortButton).toBeInTheDocument()
 
-    await user.click(sortButton!)
-    expect(screen.getByTestId('ArrowDownwardIcon')).toBeInTheDocument()
+      await user.click(sortButton!)
+      expect(screen.getByTestId('ArrowDownwardIcon')).toBeInTheDocument()
 
-    await user.click(sortButton!)
-    expect(screen.getByTestId('ArrowUpwardIcon')).toBeInTheDocument()
+      await user.click(sortButton!)
+      expect(screen.getByTestId('ArrowUpwardIcon')).toBeInTheDocument()
 
-    await user.click(sortButton!)
-    expect(screen.getByTestId('ImportExportIcon')).toBeInTheDocument()
+      await user.click(sortButton!)
+      expect(screen.getByTestId('ImportExportIcon')).toBeInTheDocument()
+    } finally {
+      fetchSpy.mockRestore()
+    }
   })
 })

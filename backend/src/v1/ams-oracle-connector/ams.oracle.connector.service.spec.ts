@@ -11,7 +11,6 @@ import { OMRR_AUTHZ_DOCS_QUERY } from './omrr-authz-docs-query';
 import { OmrrData } from '../types/omrr-data';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
 import { OmrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response';
-import * as process from 'node:process';
 
 describe('AmsOracleConnectorService', () => {
   let service: AmsOracleConnectorService;
@@ -83,6 +82,20 @@ describe('AmsOracleConnectorService', () => {
 
       expect(exitSpy).toHaveBeenCalledWith(128);
     });
+
+    it('should exit the process with code 128 if there is an error calling getOMRRAuthorizationDocumentsFromAMS', async () => {
+      process.env.OMRR_AUTHZ_DOCS_FLAG = 'true';
+      jest.spyOn(service, 'getOMRRDataFromAMS').mockResolvedValue(undefined);
+      jest
+        .spyOn(service, 'getOMRRAuthorizationDocumentsFromAMS')
+        .mockRejectedValue(new Error('Error'));
+
+      const exitSpy = jest.spyOn(process, 'exit').mockImplementation();
+
+      await service.onModuleInit();
+
+      expect(exitSpy).toHaveBeenCalledWith(128);
+    });
   });
 
   const mockFetchJson = (status: number, data?: unknown) =>
@@ -106,17 +119,31 @@ describe('AmsOracleConnectorService', () => {
   };
 
   describe('getOMRRDataFromAMS', () => {
-    it('should get OMRR data from AMS', async () => {
-      const omrrData: OmrrData[] = []; // Mocked OMRR data
+    it('should get OMRR data from AMS and tag Red Meat Waste for authorization 111479 only', async () => {
+      const omrrData: Partial<OmrrData>[] = [
+        { 'Authorization Number': 111479 },
+        { 'Authorization Number': 12398 },
+      ];
       const fetchSpy = mockFetchJson(200, omrrData);
 
       const result = await service.getOMRRDataFromAMS();
 
       expectFetchPost(fetchSpy, OMRR_QUERY);
-      expect(result).toEqual({
-        lastModified: expect.any(String),
-        omrrData,
-      });
+      expect(result.lastModified).toEqual(expect.any(String));
+      expect(result.omrrData[0]['Red Meat Waste']).toBe(true);
+      expect(result.omrrData[1]['Red Meat Waste']).toBe(false);
+    });
+
+    it('should throw an error if OMRR data endpoint returns non-200 status', async () => {
+      mockFetchJson(503);
+
+      await expect(service.getOMRRDataFromAMS()).rejects.toThrow(
+        'Error Getting OMRR data from AMS',
+      );
+      expect(loggerErrorSpy).toHaveBeenCalledWith(
+        'Error Getting OMRR data from AMS',
+        503,
+      );
     });
 
     it('should throw an error if there is an error getting OMRR data from AMS', async () => {
@@ -145,18 +172,13 @@ describe('AmsOracleConnectorService', () => {
 
   describe('getLatestOmrrDataFromCache', () => {
     it('should return the latest OMRR data from cache', async () => {
-      const omrrData: OmrrData[] = []; // Mocked OMRR data
-      service['omrrResponse'] = {
-        lastModified: new Date().toISOString(),
-        omrrData,
-      };
+      const omrrData: Partial<OmrrData>[] = [{ 'Authorization Number': 12398 }];
+      mockFetchJson(200, omrrData);
+      const expected = await service.getOMRRDataFromAMS();
 
       const result = await service.getLatestOmrrDataFromCache();
 
-      expect(result).toEqual({
-        lastModified: expect.any(String),
-        omrrData,
-      });
+      expect(result).toEqual(expected);
     });
   });
 
@@ -194,7 +216,7 @@ describe('AmsOracleConnectorService', () => {
   });
 
   describe('getOMRRAuthorizationDocumentsFromAMS', () => {
-    it('should get OMRR authorization documents from AMS', async () => {
+    it('should group documents by Authorization Number across multiple authorizations', async () => {
       const omrrAuthzDocs: OmrrAuthzDocsQueryResponse[] = [
         {
           'Authorization Number': 123,
@@ -206,18 +228,29 @@ describe('AmsOracleConnectorService', () => {
         {
           'Authorization Number': 123,
           DocumentObjectID: 125,
-          Description: 'desc',
+          Description: 'desc2',
           Publiclyviewable: 'Y',
           Filename: 'file2.pdf',
         },
-      ]; // Mocked OMRR authorization documents
+        {
+          'Authorization Number': 456,
+          DocumentObjectID: 126,
+          Description: 'desc3',
+          Publiclyviewable: 'Y',
+          Filename: 'file3.pdf',
+        },
+      ];
       const fetchSpy = mockFetchJson(200, omrrAuthzDocs);
 
       const result = await service.getOMRRAuthorizationDocumentsFromAMS();
 
       expectFetchPost(fetchSpy, OMRR_AUTHZ_DOCS_QUERY);
-      expect(result).toHaveLength(1);
+      expect(result).toHaveLength(2);
+      expect(result[0]['Authorization Number']).toBe(123);
       expect(result[0].doc_links).toHaveLength(2);
+      expect(result[1]['Authorization Number']).toBe(456);
+      expect(result[1].doc_links).toHaveLength(1);
+      expect(await service.getLatestOmrrAuthzDocsFromCache()).toEqual(result);
     });
 
     it('should throw error if status is not 200', async () => {

@@ -28,7 +28,9 @@ jobs:
         with:
           commands: |
             npm ci
+            npm run build
             npm run test:cov
+            npx eslint "{src,apps,libs,test}/**/*.ts"
           working_directory: backend
           node_version: "24"
           sonar_args: >
@@ -54,7 +56,10 @@ jobs:
         with:
           commands: |
             npm ci
+            npm run tsc
+            npm run build
             npm run test:cov
+            npm run lint
           working_directory: frontend
           node_version: "24"
           sonar_args: >

@@ -4,108 +4,114 @@ import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
   await page.goto(baseURL + '/map')
+  await page.waitForLoadState('domcontentloaded')
 
-  // Search components
-  // await expect(page.getByPlaceholder('Search')).toBeVisible()
-  // await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
-  // await expect(
-  //   page.getByRole('button', { name: 'Polygon Search' }),
-  // ).toBeVisible()
-  // await expect(
-  //   page.getByRole('button', { name: 'Radius Search' }),
-  // ).toBeVisible()
+  await expect(page.getByTestId('map-view')).toBeVisible()
 
-  // const searchBy = page.getByText('Status')
-  // await expect(searchBy).toBeVisible()
-  // await searchBy.click()
+  // Search and spatial tool buttons
+  await expect(page.getByPlaceholder('Search')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Polygon Search' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Radius Search' }),
+  ).toBeVisible()
 
-  // await expect(page.getByRole('radio', { name: 'All' })).toBeVisible()
-  // const activeRadio = page.getByRole('radio', { name: 'Active', exact: true })
-  // await expect(activeRadio).toBeVisible()
-  // await expect(page.getByLabel('Inactive')).toBeVisible()
-  // await activeRadio.check()
+  // Status dropdown
+  const searchBy = page.getByRole('button', { name: /Status/i })
+  await expect(searchBy).toBeVisible()
+  await searchBy.click()
 
-  // Close the menu by clicking on the mask
-  // await page.locator('.MuiBackdrop-root').click({ force: true })
+  await expect(page.getByRole('radio', { name: 'All' })).toBeVisible()
+  const activeRadio = page.getByRole('radio', { name: 'Active', exact: true })
+  await expect(activeRadio).toBeVisible()
+  await expect(page.getByLabel('Inactive')).toBeVisible()
+  await activeRadio.check()
 
-  // await expect(page.getByLabel('Inactive')).toBeHidden()
+  await page.keyboard.press('Escape')
+  await expect(page.getByLabel('Inactive')).toBeHidden()
 
-  // const filterBy = page.getByText('Filter')
-  // await expect(filterBy).toBeVisible()
-  // await filterBy.click()
+  // Filter dropdown
+  const filterBy = page.getByRole('button', { name: /Filter/i })
+  await expect(filterBy).toBeVisible()
+  await filterBy.click()
 
-  // await expect(
-  //   page.getByRole('checkbox', { name: 'Notification' }),
-  // ).toBeVisible()
-  // await expect(
-  //   page.getByRole('checkbox', { name: 'Compost Production Facility' }),
-  // ).toBeVisible()
-  // await expect(
-  //   page.getByRole('checkbox', { name: 'Land Application' }),
-  // ).toBeVisible()
-  // await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
-  // await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()
-  // await expect(
-  //   page.getByRole('checkbox', { name: 'Operational Certificate' }),
-  // ).toBeVisible()
-  // await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeHidden()
+  await expect(
+    page.getByRole('checkbox', { name: 'Notification' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('checkbox', { name: 'Compost Production Facility' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('checkbox', { name: 'Land Application' }),
+  ).toBeVisible()
+  await expect(page.getByRole('checkbox', { name: 'Permit' })).toBeVisible()
+  await expect(page.getByRole('checkbox', { name: 'Approval' })).toBeVisible()
+  await expect(
+    page.getByRole('checkbox', { name: 'Operational Certificate' }),
+  ).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeHidden()
 
-  // await expect(page.getByLabel('Notification')).not.toBeChecked()
-  // await page.getByLabel('Notification').click()
-  // await expect(page.getByLabel('Notification')).toBeChecked()
+  await page.getByLabel('Notification').click()
+  await expect(page.getByLabel('Notification')).toBeChecked()
+  await page.getByLabel('Permit').click()
+  await expect(page.getByLabel('Permit')).toBeChecked()
 
-  // await expect(page.getByLabel('Permit')).not.toBeChecked()
-  // await page.getByLabel('Permit').click()
-  // await expect(page.getByLabel('Permit')).toBeChecked()
+  await page.getByRole('button', { name: 'Reset Filters' }).click()
+  await expect(page.getByLabel('Notification')).not.toBeChecked()
+  await expect(page.getByLabel('Permit')).not.toBeChecked()
 
-  // // Reset Filters is only shown when there are active filters
-  // await page.getByRole('button', { name: 'Reset Filters' }).click()
-  // await expect(page.getByLabel('Notification')).not.toBeChecked()
-  // await expect(page.getByLabel('Permit')).not.toBeChecked()
+  await page.keyboard.press('Escape')
 
-  // // Close the menu by clicking on the mask
-  // await page.locator('.MuiBackdrop-root').click({ force: true })
+  // Search autocomplete and results sidebar
+  const searchInput = page.getByPlaceholder('Search')
+  await searchInput.click()
+  await searchInput.fill('Victoria')
 
-  // // Enter 'Victoria' into the search field
-  // const searchInput = page.getByPlaceholder('Search')
-  // await searchInput.click({ force: true })
-  // await searchInput.fill('Victoria')
+  await expect(
+    page.getByRole('option').filter({ hasText: '17268' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('listitem').filter({ hasText: '17268' }),
+  ).toBeVisible()
 
-  // // Autocomplete and search results list should be visible
-  // let autocompleteOption = page.getByRole('option').filter({ hasText: '17268' })
-  // await expect(autocompleteOption).toBeVisible()
+  const victoriaOption = page
+    .getByRole('option')
+    .filter({ hasText: 'CITY OF VICTORIA' })
+  await expect(victoriaOption).toBeVisible()
+  await victoriaOption.click()
 
-  // const searchResultItem = page
-  //   .getByRole('listitem')
-  //   .filter({ hasText: '17268' })
-  // await expect(searchResultItem).toBeVisible()
+  await expect(page.getByText('Search Results')).toBeVisible()
 
-  // autocompleteOption = page
-  //   .getByRole('option')
-  //   .filter({ hasText: 'CITY OF VICTORIA' })
-  // await expect(autocompleteOption).toBeVisible()
-  // await autocompleteOption.click()
+  const hideResultsBtn = page.getByRole('button', { name: 'Hide Results' })
+  await expect(hideResultsBtn).toBeVisible()
+  await hideResultsBtn.click()
 
-  // // Search input
-  // await expect(searchInput).toHaveValue('City Of Victoria')
+  const showResultsBtn = page.getByRole('button', { name: 'Show Results' })
+  await expect(showResultsBtn).toBeVisible()
+  await showResultsBtn.click()
 
-  // // Search results should be expanded
-  // await expect(page.getByText('Search Results')).toBeVisible()
+  await page.getByTitle('Close').first().click({ force: true })
 
-  // const hideResultsBtn = page.getByRole('button', { name: 'Hide Results' })
-  // await expect(hideResultsBtn).toBeVisible()
-  // await hideResultsBtn.click()
+  // Basemap tiles must come from Esri, not OpenStreetMap (#425)
+  const mapTile = page.locator('.leaflet-tile-pane img.leaflet-tile').first()
+  await expect(mapTile).toHaveAttribute(
+    'src',
+    /^https:\/\/server\.arcgisonline\.com\//,
+  )
+  await expect(
+    page.locator('.leaflet-tile-pane img[src*="openstreetmap.org"]'),
+  ).toHaveCount(0)
 
-  // const showResultsBtn = page
-  //   .getByRole('button', { name: 'Show Results' })
-  //   .first()
-  // await expect(showResultsBtn).toBeVisible()
-  // await showResultsBtn.click()
-
-  // await page.getByTitle('Close').first().click({ force: true })
-
-  // // Test basemap switcher
-  // const basemapButton = page.locator('.leaflet-control-basemaps')
-  // await expect(basemapButton).toBeVisible()
-  // await basemapButton.click({ force: true })
+  // Basemap switcher
+  const basemapButton = page.getByTitle('Change basemap')
+  await expect(basemapButton).toBeVisible()
+  await basemapButton.click()
+  await expect(
+    page.locator('.basemap-option span', { hasText: 'Terrain + Roads' }),
+  ).toBeVisible()
+  await expect(
+    page.locator('.basemap-option span', { hasText: 'Imagery + Roads' }),
+  ).toBeVisible()
 }
