@@ -62,7 +62,7 @@
     "@vitest/coverage-v8": "^3.0.0",
     "@vitest/ui": "^3.0.0",
     "css-mediaquery": "^0.1.2",
-    "csv-parse": "^5.5.6",
+    "csv-parse": "^7.0.0",
     "eslint": "^8.57.0",
     "eslint-config-love": "^54.0.0",
     "eslint-config-prettier": "^9.1.0",
