@@ -3,7 +3,8 @@ import { expect } from '@playwright/test'
 import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
-  await page.goto(baseURL + '/map')
+  await page.goto(baseURL)
+  await page.getByRole('button', { name: 'Search on a map' }).click()
   await page.waitForLoadState('domcontentloaded')
 
   await expect(page.getByTestId('map-view')).toBeVisible()
