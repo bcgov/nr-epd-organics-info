@@ -24,7 +24,7 @@ jobs:
         with:
           package: ${{ matrix.package }}
           tags: ${{ github.event.number }}
-          tag_fallback: latest
+          tag_fallback: prod
           triggers: ${{ matrix.package }}/
 
   # https://github.com/bcgov/action-deployer-openshift
