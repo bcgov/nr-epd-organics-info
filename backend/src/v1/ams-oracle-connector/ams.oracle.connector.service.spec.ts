@@ -4,7 +4,6 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { AmsOracleConnectorService } from './ams.oracle.connector.service';
-import { HttpService } from '@nestjs/axios';
 import { OmrrData } from '../types/omrr-data';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
 import { OmrrAuthzDocsQueryResponse } from '../types/omrr-authz-docs-response';
@@ -12,27 +11,16 @@ import * as process from 'node:process';
 
 describe('AmsOracleConnectorService', () => {
   let service: AmsOracleConnectorService;
-  let httpService: HttpService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AmsOracleConnectorService,
-        {
-          provide: HttpService,
-          useValue: {
-            axiosRef: {
-              post: jest.fn(),
-            },
-          },
-        },
-      ],
+      providers: [AmsOracleConnectorService],
     }).compile();
 
     service = module.get<AmsOracleConnectorService>(AmsOracleConnectorService);
-    httpService = module.get<HttpService>(HttpService);
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     jest.resetAllMocks();
   });
 
@@ -84,14 +72,16 @@ describe('AmsOracleConnectorService', () => {
     });
   });
 
+  const mockFetchJson = (status: number, data?: unknown) =>
+    jest.spyOn(globalThis, 'fetch').mockResolvedValue({
+      status,
+      json: async () => data,
+    } as Response);
+
   describe('getOMRRDataFromAMS', () => {
     it('should get OMRR data from AMS', async () => {
       const omrrData: OmrrData[] = []; // Mocked OMRR data
-      const response = {
-        status: 200,
-        data: omrrData,
-      };
-      jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
+      mockFetchJson(200, omrrData);
 
       const result = await service.getOMRRDataFromAMS();
 
@@ -103,9 +93,9 @@ describe('AmsOracleConnectorService', () => {
 
     it('should throw an error if there is an error getting OMRR data from AMS', async () => {
       const error = new Error('Error Getting OMRR data from AMS');
-      jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
+      jest.spyOn(globalThis, 'fetch').mockRejectedValue(error);
 
-      await expect(service.getOMRRDataFromAMS()).rejects.toThrowError(error);
+      await expect(service.getOMRRDataFromAMS()).rejects.toThrow(error);
     });
   });
 
@@ -129,11 +119,7 @@ describe('AmsOracleConnectorService', () => {
   describe('getOMRRApplicationStatusFromAMS', () => {
     it('should get OMRR application status from AMS', async () => {
       const omrrApplicationStatus: OmrrApplicationStatusResponse[] = []; // Mocked OMRR application status
-      const response = {
-        status: 200,
-        data: omrrApplicationStatus,
-      };
-      jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
+      mockFetchJson(200, omrrApplicationStatus);
 
       const result = await service.getOMRRApplicationStatusFromAMS();
 
@@ -142,11 +128,11 @@ describe('AmsOracleConnectorService', () => {
 
     it('should throw an error if there is an error getting OMRR application status from AMS', async () => {
       const error = new Error('Error Getting OMRR Application Status from AMS');
-      jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
+      jest.spyOn(globalThis, 'fetch').mockRejectedValue(error);
 
       await expect(
         service.getOMRRApplicationStatusFromAMS(),
-      ).rejects.toThrowError(error);
+      ).rejects.toThrow(error);
     });
   });
 
@@ -179,11 +165,7 @@ describe('AmsOracleConnectorService', () => {
           Filename: 'file2.pdf',
         },
       ]; // Mocked OMRR authorization documents
-      const response = {
-        status: 200,
-        data: omrrAuthzDocs,
-      };
-      jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
+      mockFetchJson(200, omrrAuthzDocs);
 
       const result = await service.getOMRRAuthorizationDocumentsFromAMS();
 
@@ -192,11 +174,7 @@ describe('AmsOracleConnectorService', () => {
     });
 
     it('should throw error if status is not 200', async () => {
-      const response = {
-        status: 400,
-        data: undefined,
-      };
-      jest.spyOn(httpService.axiosRef, 'post').mockResolvedValue(response);
+      mockFetchJson(400);
       const error = new Error(
         'Error Getting OMRR Authorization Documents from AMS',
       );
@@ -209,7 +187,7 @@ describe('AmsOracleConnectorService', () => {
       const error = new Error(
         'Error Getting OMRR Authorization Documents from AMS',
       );
-      jest.spyOn(httpService.axiosRef, 'post').mockRejectedValue(error);
+      jest.spyOn(globalThis, 'fetch').mockRejectedValue(error);
 
       await expect(
         service.getOMRRAuthorizationDocumentsFromAMS(),
