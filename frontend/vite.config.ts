@@ -104,7 +104,6 @@ export default ({ mode }) => {
               '@emotion/styled',
             ],
             mui: ['@mui/material', '@mui/icons-material'],
-            axios: ['axios'],
             reactLeaflet: ['react-leaflet', 'react-leaflet-cluster'],
             redux: ['@reduxjs/toolkit', 'react-redux'],
             leaflet: ['leaflet'],

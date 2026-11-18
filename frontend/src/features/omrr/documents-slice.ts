@@ -16,12 +16,8 @@ import {
 
 export const fetchOmrrDocuments = createAsyncThunk(
   'data/fetchOmrrDocuments',
-  async () => {
-    const result = await apiService
-      .getAxiosInstance()
-      .get('/omrr/authorization-docs')
-    return result?.data
-  },
+  async () =>
+    apiService.get<OmrrAuthzDocsResponse[]>('/omrr/authorization-docs'),
 )
 
 export interface DocumentsSliceState {
