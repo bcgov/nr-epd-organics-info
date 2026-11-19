@@ -45,7 +45,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
       throw new Error(errorMessage);
     } catch (error) {
       this.logger.error(error);
-      throw new Error(errorMessage);
+      throw new Error(errorMessage, { cause: error });
     }
   }
 
@@ -101,7 +101,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
       // avoid multiple execution
       try {
         await this.getOMRRDataFromAMS();
-      } catch (error) {
+      } catch {
         process.exit(128);
       }
     }
@@ -111,7 +111,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
     ) {
       try {
         await this.getOMRRApplicationStatusFromAMS();
-      } catch (error) {
+      } catch {
         process.exit(128);
       }
     }
@@ -121,7 +121,7 @@ export class AmsOracleConnectorService implements OnModuleInit {
     ) {
       try {
         await this.getOMRRAuthorizationDocumentsFromAMS();
-      } catch (error) {
+      } catch {
         process.exit(128);
       }
     }
@@ -129,11 +129,9 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async getOMRRApplicationStatusFromAMS() {
     this.logger.verbose('Getting OMRR Application Status from AMS');
-    omrrApplicationStatusResponse =
-      await this.postOracleQuery<OmrrApplicationStatusResponse[]>(
-        OMRR_APP_STATUS_QUERY,
-        'Error Getting OMRR Application Status from AMS',
-      );
+    omrrApplicationStatusResponse = await this.postOracleQuery<
+      OmrrApplicationStatusResponse[]
+    >(OMRR_APP_STATUS_QUERY, 'Error Getting OMRR Application Status from AMS');
     this.logger.verbose('Got OMRR Application Status from AMS');
     return omrrApplicationStatusResponse;
   }
