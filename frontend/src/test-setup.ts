@@ -76,17 +76,25 @@ document.createElementNS = function (namespaceURI, qualifiedName) {
 }
 
 // Define geolocation and permissions query
+const geoCoords = {
+  latitude: 48,
+  longitude: -123,
+  accuracy: 0,
+  heading: 0,
+  speed: 0,
+  altitude: 0,
+  altitudeAccuracy: 1,
+}
+
 const geoLocationResult: GeolocationPosition = {
   coords: {
-    latitude: 48,
-    longitude: -123,
-    accuracy: 0,
-    heading: 0,
-    speed: 0,
-    altitude: 0,
-    altitudeAccuracy: 1,
+    ...geoCoords,
+    toJSON: () => geoCoords,
   },
   timestamp: Date.now(),
+  toJSON() {
+    return { coords: this.coords.toJSON(), timestamp: this.timestamp }
+  },
 }
 
 Object.defineProperty(navigator, 'geolocation', {

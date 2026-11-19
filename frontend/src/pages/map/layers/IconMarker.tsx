@@ -31,7 +31,7 @@ export const IconMarker = forwardRef<LeafletMarker, Props>(
       children = null,
       riseOnHover = false,
       ...rest
-    }: Props,
+    },
     ref,
   ) => {
     const [isHovered, setIsHovered] = useState(false)

@@ -11,6 +11,7 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2022",
     "sourceMap": true,

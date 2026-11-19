@@ -20,7 +20,7 @@ describe('logger', () => {
     logger.error(error);
     expect(lodashOmitSpy).toHaveBeenCalled();
 
-    const error2 = new Error({ message: 'With object message' } as any);
+    const error2 = new Error({ message: 'With object message' } as unknown as string);
     logger.error(error2);
   });
 });
