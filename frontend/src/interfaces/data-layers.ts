@@ -1,4 +1,4 @@
-import { WMSTileLayerProps } from 'react-leaflet/lib/WMSTileLayer'
+import { WMSTileLayerProps } from 'react-leaflet'
 
 export interface DataLayer extends WMSTileLayerProps {
   name: string
