@@ -84,6 +84,25 @@ KSV0125
 # dedicated OpenShift project namespace, not the Kubernetes default namespace.
 KSV110
 
+# ─── FALSE POSITIVES: OpenShift SCC & BC Gov Private Cloud practices ────────
+# KSV-0020 & KSV-0021 (runs with UID/GID <= 10000): OpenShift's restricted-v2
+# Security Context Constraints (SCC) dynamically allocate a namespace-specific
+# high UID/GID range at runtime. Hardcoding runAsUser or runAsGroup in Helm
+# manifests causes the admission controller to reject pods when the hardcoded
+# ID falls outside the namespace's allocated range (values.yaml already notes
+# "do not hard-code runAsUser/fsGroup").
+KSV020
+KSV021
+AVD-KSV-0020
+AVD-KSV-0021
+
+# KSV-0011 (CPU not limited): BC Gov Private Cloud intentionally omits
+# resources.limits.cpu so containers can burst into unallocated node CPU
+# instead of suffering CFS quota throttling under peak load. CPU requests
+# (30m backend, 50m frontend) and memory limits are configured.
+KSV011
+AVD-KSV-0011
+
 # ─── DoS / ReDoS — out of scope ────────────────────────────────────────────
 # The following CVEs are Denial-of-Service or ReDoS only; they require an
 # attacker to supply crafted input to exhaust CPU/stack, with no
