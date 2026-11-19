@@ -45,7 +45,7 @@
     "vite": "^6.4.3",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.0",
-    "vitest": "^4.0.0"
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
@@ -59,8 +59,8 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.73.0",
     "@typescript-eslint/parser": "^8.73.0",
-    "@vitest/coverage-v8": "^4.0.0",
-    "@vitest/ui": "^4.0.0",
+    "@vitest/coverage-v8": "^5.0.0",
+    "@vitest/ui": "^5.0.0",
     "css-mediaquery": "^0.1.2",
     "csv-parse": "^7.0.0",
     "eslint": "^10.15.0",
