@@ -23,7 +23,7 @@ services:
     ports: ["5432:5432"]
 
   migrations:
-    image: flyway/flyway:9-alpine
+    image: flyway/flyway:12-alpine
     container_name: migrations
     command: info migrate info
     volumes: ["./migrations/sql:/flyway/sql:ro"]
@@ -43,7 +43,7 @@ services:
     environment:
       <<: *postgres-vars
       NODE_ENV: development
-    image: node:24-bullseye
+    image: node:26-bullseye
     ports: ["3001:3000"]
     volumes: ["./backend:/app", "/app/node_modules"]
     healthcheck:
@@ -60,7 +60,7 @@ services:
       NODE_ENV: development
       PORT: 3000
       BACKEND_URL: http://backend:3000
-    image: node:24-bullseye
+    image: node:26-bullseye
     ports: ["3000:3000"]
     volumes: ["./frontend:/app", "/app/node_modules"]
     healthcheck:
