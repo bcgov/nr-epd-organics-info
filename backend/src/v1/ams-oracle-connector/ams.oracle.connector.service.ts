@@ -1,7 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
 import { OmrrResponse } from '../types/omrr-response';
-import { AxiosResponse } from 'axios';
 import { OmrrData } from '../types/omrr-data';
 import { OMRR_QUERY } from './omrr-query';
 import { OmrrApplicationStatusResponse } from '../types/omrr-application-status';
@@ -22,7 +20,34 @@ const NR_ORACLE_SERVICE_KEY = process.env.NR_ORACLE_SERVICE_KEY;
 export class AmsOracleConnectorService implements OnModuleInit {
   private readonly logger = new Logger(AmsOracleConnectorService.name);
 
-  constructor(private readonly httpService: HttpService) {}
+  private async postOracleQuery<T>(
+    sql: string,
+    errorMessage: string,
+  ): Promise<T> {
+    try {
+      const response = await fetch(NR_ORACLE_SERVICE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': NR_ORACLE_SERVICE_KEY,
+        },
+        body: JSON.stringify({
+          queryType: 'READ',
+          sql,
+        }),
+      });
+
+      if (response.status === 200) {
+        return (await response.json()) as T;
+      }
+
+      this.logger.error(errorMessage, response.status);
+      throw new Error(errorMessage);
+    } catch (error) {
+      this.logger.error(error);
+      throw new Error(errorMessage);
+    }
+  }
 
   /**
    * This function will be called by the cron job in the TasksService
@@ -43,47 +68,27 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async getOMRRDataFromAMS() {
     this.logger.verbose('Getting OMRR data from AMS');
-    try {
-      const response: AxiosResponse<OmrrData[]> =
-        await this.httpService.axiosRef.post(
-          NR_ORACLE_SERVICE_URL,
-          {
-            queryType: 'READ',
-            sql: OMRR_QUERY,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'X-API-Key': NR_ORACLE_SERVICE_KEY,
-            },
-          },
-        );
+    const data = await this.postOracleQuery<OmrrData[]>(
+      OMRR_QUERY,
+      'Error Getting OMRR data from AMS',
+    );
 
-      if (response.status === 200) {
-        // iterate over array and for authorization number  is 111479, then add field "Red Meat Waste": "Yes", for all others add "No"
-        if (response.data?.length > 0) {
-          response.data.forEach((row: OmrrData) => {
-            if (row['Authorization Number'] === 111479) {
-              row['Red Meat Waste'] = true;
-            } else {
-              row['Red Meat Waste'] = false;
-            }
-          });
+    // iterate over array and for authorization number  is 111479, then add field "Red Meat Waste": "Yes", for all others add "No"
+    if (data?.length > 0) {
+      data.forEach((row: OmrrData) => {
+        if (row['Authorization Number'] === 111479) {
+          row['Red Meat Waste'] = true;
+        } else {
+          row['Red Meat Waste'] = false;
         }
-        omrrResponse = {
-          lastModified: new Date().toISOString(),
-          omrrData: response.data,
-        };
-        this.logger.verbose('Got OMRR data from AMS');
-        return omrrResponse;
-      } else {
-        this.logger.error('Error Getting OMRR data from AMS', response.status);
-        throw new Error('Error Getting OMRR data from AMS');
-      }
-    } catch (error) {
-      this.logger.error(error);
-      throw new Error('Error Getting OMRR data from AMS');
+      });
     }
+    omrrResponse = {
+      lastModified: new Date().toISOString(),
+      omrrData: data,
+    };
+    this.logger.verbose('Got OMRR data from AMS');
+    return omrrResponse;
   }
 
   async getLatestOmrrDataFromCache(): Promise<OmrrResponse> {
@@ -124,37 +129,13 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async getOMRRApplicationStatusFromAMS() {
     this.logger.verbose('Getting OMRR Application Status from AMS');
-    try {
-      const response: AxiosResponse<OmrrApplicationStatusResponse[]> =
-        await this.httpService.axiosRef.post(
-          NR_ORACLE_SERVICE_URL,
-          {
-            queryType: 'READ',
-            sql: OMRR_APP_STATUS_QUERY,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'X-API-Key': NR_ORACLE_SERVICE_KEY,
-            },
-          },
-        );
-
-      if (response.status === 200) {
-        omrrApplicationStatusResponse = response.data;
-        this.logger.verbose('Got OMRR Application Status from AMS');
-        return omrrApplicationStatusResponse;
-      } else {
-        this.logger.error(
-          'Error Getting OMRR Application Status from AMS',
-          response.status,
-        );
-        throw new Error('Error Getting OMRR Application Status from AMS');
-      }
-    } catch (error) {
-      this.logger.error(error);
-      throw new Error('Error Getting OMRR Application Status from AMS');
-    }
+    omrrApplicationStatusResponse =
+      await this.postOracleQuery<OmrrApplicationStatusResponse[]>(
+        OMRR_APP_STATUS_QUERY,
+        'Error Getting OMRR Application Status from AMS',
+      );
+    this.logger.verbose('Got OMRR Application Status from AMS');
+    return omrrApplicationStatusResponse;
   }
 
   async getLatestOmrrApplicationStatusFromCache(): Promise<
@@ -165,69 +146,44 @@ export class AmsOracleConnectorService implements OnModuleInit {
 
   async getOMRRAuthorizationDocumentsFromAMS() {
     this.logger.verbose('Getting OMRR Authorization Documents from AMS');
-    try {
-      const response: AxiosResponse<OmrrAuthzDocsQueryResponse[]> =
-        await this.httpService.axiosRef.post(
-          NR_ORACLE_SERVICE_URL,
-          {
-            queryType: 'READ',
-            sql: OMRR_AUTHZ_DOCS_QUERY,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'X-API-Key': NR_ORACLE_SERVICE_KEY,
-            },
-          },
+    const result = await this.postOracleQuery<OmrrAuthzDocsQueryResponse[]>(
+      OMRR_AUTHZ_DOCS_QUERY,
+      'Error Getting OMRR Authorization Documents from AMS',
+    );
+    // iterate over the results, if Authorization Number exists in the array, add the documents to the existing array,
+    // else create a new document array and add it to the authorization number
+    const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = [];
+    for (const row of result) {
+      const authNum: number = Number(row['Authorization Number']);
+      const doc = {
+        DocumentObjectID: Number(row['DocumentObjectID']),
+        Description: row['Description'],
+        Publiclyviewable: row['Publiclyviewable'],
+        Filename: row['Filename'],
+      };
+      if (omrrAuthzDocsResponseScoped?.length > 0) {
+        const authNumIndex = omrrAuthzDocsResponseScoped.findIndex(
+          (auth) => auth['Authorization Number'] === authNum,
         );
-
-      if (response.status === 200) {
-        const result: OmrrAuthzDocsQueryResponse[] = response.data;
-        // iterate over the results, if Authorization Number exists in the array, add the documents to the existing array,
-        // else create a new document array and add it to the authorization number
-        const omrrAuthzDocsResponseScoped: OmrrAuthzDocsResponse[] = [];
-        for (const row of result) {
-          const authNum: number = Number(row['Authorization Number']);
-          const doc = {
-            DocumentObjectID: Number(row['DocumentObjectID']),
-            Description: row['Description'],
-            Publiclyviewable: row['Publiclyviewable'],
-            Filename: row['Filename'],
+        if (authNumIndex === -1) {
+          const omrrAuthzDoc: OmrrAuthzDocsResponse = {
+            'Authorization Number': authNum,
+            doc_links: [doc],
           };
-          if (omrrAuthzDocsResponseScoped?.length > 0) {
-            const authNumIndex = omrrAuthzDocsResponseScoped.findIndex(
-              (auth) => auth['Authorization Number'] === authNum,
-            );
-            if (authNumIndex === -1) {
-              const omrrAuthzDoc: OmrrAuthzDocsResponse = {
-                'Authorization Number': authNum,
-                doc_links: [doc],
-              };
-              omrrAuthzDocsResponseScoped.push(omrrAuthzDoc);
-            } else {
-              omrrAuthzDocsResponseScoped[authNumIndex].doc_links.push(doc);
-            }
-          } else {
-            omrrAuthzDocsResponseScoped.push({
-              'Authorization Number': authNum,
-              doc_links: [doc],
-            });
-          }
+          omrrAuthzDocsResponseScoped.push(omrrAuthzDoc);
+        } else {
+          omrrAuthzDocsResponseScoped[authNumIndex].doc_links.push(doc);
         }
-        this.logger.verbose('Got OMRR Authorization Documents from AMS');
-        omrrAuthzDocsResponse = omrrAuthzDocsResponseScoped; // replace the in memory cache with the scoped response.
-        return omrrAuthzDocsResponse;
       } else {
-        this.logger.error(
-          'Error Getting OMRR Authorization Documents from AMS',
-          response.status,
-        );
-        throw new Error('Error Getting OMRR Authorization Documents from AMS');
+        omrrAuthzDocsResponseScoped.push({
+          'Authorization Number': authNum,
+          doc_links: [doc],
+        });
       }
-    } catch (error) {
-      this.logger.error(error);
-      throw new Error('Error Getting OMRR Authorization Documents from AMS');
     }
+    this.logger.verbose('Got OMRR Authorization Documents from AMS');
+    omrrAuthzDocsResponse = omrrAuthzDocsResponseScoped; // replace the in memory cache with the scoped response.
+    return omrrAuthzDocsResponse;
   }
   async getLatestOmrrAuthzDocsFromCache(): Promise<OmrrAuthzDocsResponse[]> {
     return omrrAuthzDocsResponse;

@@ -16,7 +16,7 @@ command line scripts can be run. The most used ones are:
 - `npm run tsc` - Runs the typescript checker for typing issues
 - `npm run test:unit` - Runs unit tests in watch mode
 - `npm run test:cov` - Runs unit tests and generates coverage report
-- `npm run test-e2e` - Runs Playwright end to end tests
+- `npm run test:e2e` - Runs Playwright end to end tests
 
 There is also a `scripts` folder that contains other utility scripts that can be
 run. See the README file in that directory for more details.

@@ -12,22 +12,18 @@ concurrency:
 permissions: {}
 
 jobs:
-  # Clean up OpenShift when PR closed, no conditions
-  cleanup-openshift:
-    name: Cleanup OpenShift
-    env:
-      release: ${{ github.event.repository.name }}-${{ github.event.number }}
-    runs-on: ubuntu-26.04
+  cleanup:
+    name: Cleanup and Image Promotion
     permissions:
       contents: read
-    timeout-minutes: 10
-    steps:
-      - uses: bcgov/actions-openshift/oc-runner@45d8c7f7d0d5e3b15786cb99a83f410e01547133 # v0.9.0
-        with:
-          oc_namespace: ${{ vars.oc_namespace }}
-          oc_token: ${{ secrets.oc_token }}
-          oc_server: ${{ vars.oc_server }}
-          commands: |
-            # If found, then remove
-            helm status ${{ env.release }} && helm uninstall --no-hooks ${{ env.release }} || \
-              echo "Not found: ${{ env.release }}"
+      packages: write
+    uses: bcgov/actions-openshift/.github/workflows/.pr-close.yml@510a8105fdffbb718094e8a093e638132e300975 # v0.10.0
+    secrets:
+      oc_namespace: ${{ vars.oc_namespace }}
+      oc_token: ${{ secrets.oc_token }}
+      oc_server: ${{ vars.oc_server }}
+    with:
+      cleanup: helm
+      packages: |
+        backend
+        frontend
