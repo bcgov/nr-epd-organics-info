@@ -7,8 +7,7 @@ COPY . ./
 RUN npm run deploy
 
 # Build custom Caddy binary with Coraza WAF plugin
-# A comment-only change here forces a PR image rebuild (tag_fallback latest is stale).
-FROM caddy:2.11.8-builder AS caddy
+FROM caddy:2.11.9-builder AS caddy
 # Install CA certificates for Go module downloads; libcap for setcap
 RUN apk add --no-cache ca-certificates libcap
 RUN xcaddy build \
