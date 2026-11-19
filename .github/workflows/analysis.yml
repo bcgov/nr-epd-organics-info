@@ -26,11 +26,13 @@ jobs:
     steps:
       - uses: bcgov/actions/test-and-analyse@6c8ac0469fcf0d826533bc526c90119b8f149884 # v0.13.0
         with:
-          commands: |
-            npm ci
-            npm run build
-            npm run test:cov
-            npx eslint "{src,apps,libs,test}/**/*.ts"
+          commands: |-
+            {
+              npm ci &&
+              npm run build &&
+              npm run test:cov &&
+              npx eslint "{src,apps,libs,test}/**/*.ts"
+            }
           working_directory: backend
           node_version: "24"
           sonar_args: >
@@ -54,12 +56,14 @@ jobs:
     steps:
       - uses: bcgov/actions/test-and-analyse@6c8ac0469fcf0d826533bc526c90119b8f149884 # v0.13.0
         with:
-          commands: |
-            npm ci
-            npm run tsc
-            npm run build
-            npm run test:cov
-            npm run lint
+          commands: |-
+            {
+              npm ci &&
+              npm run tsc &&
+              npm run build &&
+              npm run test:cov &&
+              npm run lint
+            }
           working_directory: frontend
           node_version: "24"
           sonar_args: >

@@ -1,5 +1,4 @@
 import { createLogger, format, transports } from 'winston';
-import { omit } from 'lodash';
 
 
 /**
@@ -21,7 +20,11 @@ function getDomainWinstonLoggerFormat(colors = true) {
 
       // handle single object
       if (!info.message) {
-        const obj = omit(info, ['level', 'timestamp', Symbol.for('level')]);
+        const obj = Object.fromEntries(
+          Object.entries(info).filter(
+            ([key]) => key !== 'level' && key !== 'timestamp',
+          ),
+        );
         return `${info.timestamp} - ${info.level}: ${obj}${stackTrace}`;
       }
       if (typeof info.message === 'object') {
