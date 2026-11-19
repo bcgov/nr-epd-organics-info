@@ -63,7 +63,12 @@ export const map_page = async (page: Page) => {
   await expect(page.getByLabel('Notification')).not.toBeChecked()
   await expect(page.getByLabel('Permit')).not.toBeChecked()
 
-  await page.keyboard.press('Escape')
+  await page
+    .locator('[aria-labelledby="mapFilterByButton"] .MuiBackdrop-root')
+    .click({
+      position: { x: 5, y: 5 },
+    })
+  await expect(page.getByLabel('Notification')).toBeHidden()
 
   // Search autocomplete and results sidebar
   const searchInput = page.getByPlaceholder('Search')
