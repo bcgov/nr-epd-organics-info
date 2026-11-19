@@ -1,7 +1,6 @@
-import 'dotenv/config';
+import './load-env';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { HTTPLoggerMiddleware } from './middleware/req.res.logger';
-import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { MetricsController } from './metrics.controller';
@@ -15,7 +14,6 @@ import { AmsOracleConnectorService } from './v1/ams-oracle-connector/ams.oracle.
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     TerminusModule,
     ThrottlerModule.forRoot([
       {
