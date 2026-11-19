@@ -17,9 +17,7 @@ describe('AmsOracleConnectorService', () => {
   let loggerErrorSpy: jest.SpyInstance;
 
   beforeEach(async () => {
-    loggerErrorSpy = jest
-      .spyOn(Logger.prototype, 'error')
-      .mockImplementation();
+    loggerErrorSpy = jest.spyOn(Logger.prototype, 'error').mockImplementation();
     const module: TestingModule = await Test.createTestingModule({
       providers: [AmsOracleConnectorService],
     }).compile();
@@ -150,7 +148,7 @@ describe('AmsOracleConnectorService', () => {
       const error = new Error('Error Getting OMRR data from AMS');
       jest.spyOn(globalThis, 'fetch').mockRejectedValue(error);
 
-      await expect(service.getOMRRDataFromAMS()).rejects.toThrow(error);
+      await expect(service.getOMRRDataFromAMS()).rejects.toThrow(error.message);
       expect(loggerErrorSpy).toHaveBeenCalledWith(error);
     });
 
@@ -197,9 +195,9 @@ describe('AmsOracleConnectorService', () => {
       const error = new Error('Error Getting OMRR Application Status from AMS');
       jest.spyOn(globalThis, 'fetch').mockRejectedValue(error);
 
-      await expect(
-        service.getOMRRApplicationStatusFromAMS(),
-      ).rejects.toThrow(error);
+      await expect(service.getOMRRApplicationStatusFromAMS()).rejects.toThrow(
+        error.message,
+      );
       expect(loggerErrorSpy).toHaveBeenCalledWith(error);
     });
   });
@@ -260,7 +258,7 @@ describe('AmsOracleConnectorService', () => {
       );
       await expect(
         service.getOMRRAuthorizationDocumentsFromAMS(),
-      ).rejects.toThrow(error);
+      ).rejects.toThrow(error.message);
       expect(loggerErrorSpy).toHaveBeenCalledWith(
         'Error Getting OMRR Authorization Documents from AMS',
         400,
@@ -275,7 +273,7 @@ describe('AmsOracleConnectorService', () => {
 
       await expect(
         service.getOMRRAuthorizationDocumentsFromAMS(),
-      ).rejects.toThrow(error);
+      ).rejects.toThrow(error.message);
       expect(loggerErrorSpy).toHaveBeenCalledWith(error);
     });
   });
