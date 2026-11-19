@@ -176,7 +176,7 @@ export const mswServer = setupServer(...successHandlers)
 // Start server before all tests
 beforeAll(() => {
   window.matchMedia = createMatchMedia()
-  mswServer.listen({ onUnhandledRequest: 'error' })
+  mswServer.listen({ onUnhandledFrame: 'error' })
 })
 
 //  Close server after all tests

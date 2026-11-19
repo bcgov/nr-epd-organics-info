@@ -5,12 +5,12 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strictNullChecks": true,
@@ -22,14 +22,13 @@
       "vite/client",
       "vite-plugin-svgr/client"
     ],
-    "baseUrl": "./",
     "paths": {
-      "@": ["src"],
-      "test": ["test"],
-      "test/*": ["test/*"],
-      "@/*": ["src/*"],
+      "@": ["./src"],
+      "test": ["./test"],
+      "test/*": ["./test/*"],
+      "@/*": ["./src/*"],
       "~/*": [
-        "node_modules/*"
+        "./node_modules/*"
       ]
     }
   },

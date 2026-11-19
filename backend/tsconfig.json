@@ -16,10 +16,11 @@
     "target": "es2022",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "rootDir": "./src",
     "incremental": true,
     "skipLibCheck": true,
-    "lib": ["es2022"]
+    "lib": ["es2022"],
+    "types": ["node", "jest"]
   },
   "include": ["src/**/*.ts"],
 }
