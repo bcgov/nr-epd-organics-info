@@ -10,7 +10,7 @@ RUN npm run build
 
 # Deploy container
 # Distroless has node, but not npm
-FROM gcr.io/distroless/nodejs24-debian12:nonroot
+FROM gcr.io/distroless/nodejs26-debian13:nonroot
 ENV NODE_ENV=production
 
 # Copy over app
