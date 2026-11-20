@@ -86,28 +86,33 @@ export default ({ mode }) => {
       // Build Target
       // https://vitejs.dev/config/build-options.html#build-target
       target: 'esnext',
-      // Minify option
-      // https://vitejs.dev/config/build-options.html#build-minify
-      minify: 'esbuild',
       // Rollup Options
       // https://vitejs.dev/config/build-options.html#build-rollupoptions
       rollupOptions: {
         output: {
-          manualChunks: {
+          manualChunks(id: string): string | undefined {
             // Split external library from transpiled code.
-            react: [
-              'react',
-              'react-dom',
-              'react-router-dom',
-              'react-router',
-              '@emotion/react',
-              '@emotion/styled',
-            ],
-            mui: ['@mui/material', '@mui/icons-material'],
-            reactLeaflet: ['react-leaflet', 'react-leaflet-cluster'],
-            redux: ['@reduxjs/toolkit', 'react-redux'],
-            leaflet: ['leaflet'],
-            rfdc: ['rfdc'],
+            const chunks: Record<string, string[]> = {
+              react: [
+                'react',
+                'react-dom',
+                'react-router-dom',
+                'react-router',
+                '@emotion/react',
+                '@emotion/styled',
+              ],
+              mui: ['@mui/material', '@mui/icons-material'],
+              reactLeaflet: ['react-leaflet', 'react-leaflet-cluster'],
+              redux: ['@reduxjs/toolkit', 'react-redux'],
+              leaflet: ['leaflet'],
+              rfdc: ['rfdc'],
+            }
+            for (const [chunk, pkgs] of Object.entries(chunks)) {
+              if (pkgs.some((pkg) => id.includes(`/node_modules/${pkg}/`))) {
+                return chunk
+              }
+            }
+            return undefined
           },
         },
       },
