@@ -86,7 +86,7 @@ export function SearchAutocomplete() {
         const { key, ...optionProps } = props
         return <AutocompleteItem key={key} option={option} {...optionProps} />
       }}
-      componentsProps={componentProps}
+      slotProps={componentProps}
       className="search-autocomplete"
     />
   )

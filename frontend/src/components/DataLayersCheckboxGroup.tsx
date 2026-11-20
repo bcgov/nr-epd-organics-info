@@ -59,7 +59,7 @@ export function DataLayersCheckboxGroup({
       data-testid="data-layers-checkbox-group"
     >
       <Stack direction="column" className="data-layers-top-section">
-        <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
           <Button
             variant="text"
             size="small"

@@ -36,10 +36,10 @@ export function DocumentsSection({ item }: Readonly<Props>) {
       }}
       className="details-section"
     >
-      <Typography fontWeight={700} color="#000" fontSize="24px">
+      <Typography sx={{ fontWeight: 700, color: '#000', fontSize: '24px' }}>
         Documents
       </Typography>
-      <Typography fontSize="16px" color="#666" fontStyle="italic">
+      <Typography sx={{ fontSize: '16px', color: '#666', fontStyle: 'italic' }}>
         Authorization document(s) presented are publicly available document(s)
         hosted on the{' '}
         <a

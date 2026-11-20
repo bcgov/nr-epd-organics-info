@@ -30,14 +30,16 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
 
   return (
     <div className="application-status-section">
-      <Typography fontWeight={700} fontSize="24px">
+      <Typography sx={{ fontWeight: 700, fontSize: '24px' }}>
         Application Status
       </Typography>
       <Typography
-        fontSize={'1rem'}
-        fontWeight="normal"
-        fontStyle="italic"
-        color="var(--typography-color-secondary)"
+        sx={{
+          fontSize: '1rem',
+          fontWeight: 'normal',
+          fontStyle: 'italic',
+          color: 'var(--typography-color-secondary)',
+        }}
       >
         Applies to amendments and new notifications only,{' '}
         <a
@@ -81,7 +83,7 @@ export function ApplicationStatusSection({ item }: Readonly<Props>) {
           >
             {/* Column 1: Authorization Type - 50% */}
             <Stack sx={{ flex: '0 0 50%' }}>
-              <Typography fontWeight="bold" sx={{ marginBottom: '8px' }}>
+              <Typography sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
                 {authorizationType} - {jobType}
               </Typography>
             </Stack>

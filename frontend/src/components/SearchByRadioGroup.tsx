@@ -1,7 +1,11 @@
 import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
-import { RadioGroupProps } from '@mui/material/RadioGroup/RadioGroup'
+import {
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  RadioGroupProps,
+} from '@mui/material'
 import clsx from 'clsx'
 
 import {

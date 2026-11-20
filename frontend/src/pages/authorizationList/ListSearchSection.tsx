@@ -63,7 +63,7 @@ export function ListSearchSection({ isMobile }: { isMobile?: boolean }) {
       </Box>
       <Box sx={styles.actionButtons}>
         <ListSearchByGroup isMobile={isMobile} />
-        <Stack direction="row" gap="16px">
+        <Stack direction="row" spacing="16px">
           <Button
             color={isMobile ? 'primary' : 'secondary'}
             variant="contained"
@@ -87,11 +87,13 @@ export function ListSearchSection({ isMobile }: { isMobile?: boolean }) {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        PaperProps={{
-          sx: {
-            width: { xs: '100%', md: '400px' },
-            mt: 1,
-            position: 'relative',
+        slotProps={{
+          paper: {
+            sx: {
+              width: { xs: '100%', md: '400px' },
+              mt: 1,
+              position: 'relative',
+            },
           },
         }}
       >

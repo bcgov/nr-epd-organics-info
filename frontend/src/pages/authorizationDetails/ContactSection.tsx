@@ -13,9 +13,9 @@ export function ContactSection({ authNumber }: Readonly<Props>) {
       sx={{ overflow: 'hidden' }}
     >
       <Typography
-        fontWeight={700}
-        fontSize="18px"
         sx={{
+          fontWeight: 700,
+          fontSize: '18px',
           background: 'var(--surface-color-primary-hover)',
           color: 'white',
           padding: {
@@ -55,7 +55,7 @@ export function ContactSection({ authNumber }: Readonly<Props>) {
             <EmailIcon sx={{ color: 'white' }} />
           </div>
           <Stack direction="column">
-            <Typography fontWeight={700}>Email</Typography>
+            <Typography sx={{ fontWeight: 700 }}>Email</Typography>
             <a
               href="mailto:WasteDischargeApplicationInquiries@gov.bc.ca"
               style={{

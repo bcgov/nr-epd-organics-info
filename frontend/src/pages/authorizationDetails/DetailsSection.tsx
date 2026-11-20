@@ -71,10 +71,10 @@ export function DetailsSection({ item }: Readonly<Props>) {
         },
       }}
     >
-      <Typography fontWeight={700} fontSize="24px" color="#000">
+      <Typography sx={{ fontWeight: 700, fontSize: '24px', color: '#000' }}>
         Authorization Details
       </Typography>
-      <Grid container gap="24px 0">
+      <Grid container sx={{ gap: '24px 0' }}>
         <DetailsGridLabel label="Authorization Type" md={authTypeCols}>
           {authorizationType}
         </DetailsGridLabel>

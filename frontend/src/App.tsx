@@ -101,7 +101,7 @@ function AppContent() {
       </DsHeader>
       <Box
         component="div"
-        flex={1}
+        sx={{ flex: 1 }}
         style={isLoading ? loadingStyle : undefined}
       >
         {isLoading && <CircularProgress title="Loading..." />}

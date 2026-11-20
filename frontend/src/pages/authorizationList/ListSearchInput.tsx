@@ -28,13 +28,15 @@ export function ListSearchInput(props: { isMobile?: boolean }) {
       showLocationIcon
       onClear={onClear}
       fullWidth
-      InputLabelProps={{
-        sx: {
-          position: 'static',
-          transform: 'none',
-          color: 'var(--typography-color-primary)',
-          marginBottom: 'var(--layout-margin-xsmall)',
-          fontSize: '12px',
+      slotProps={{
+        inputLabel: {
+          sx: {
+            position: 'static',
+            transform: 'none',
+            color: 'var(--typography-color-primary)',
+            marginBottom: 'var(--layout-margin-xsmall)',
+            fontSize: '12px',
+          },
         },
       }}
       data-testid={`authorization-list-search-input${props.isMobile ? '-mobile' : '-desktop'}`}
