@@ -67,23 +67,6 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
     steps:
       - uses: actions/checkout@v7
-      - name: Stop pre-existing deployments on PRs (status = pending-upgrade)
-        if: github.event_name == 'pull_request'
-        uses: bcgov/actions-openshift/oc-runner@510a8105fdffbb718094e8a093e638132e300975 # v0.10.0
-        with:
-          oc_namespace: ${{ vars.oc_namespace }}
-          oc_token: ${{ secrets.oc_token }}
-          oc_server: ${{ vars.oc_server }}
-          triggers: ${{ inputs.triggers }}
-          commands: |
-            # Interrupt any previous deployments (PR only)
-            PREVIOUS=$(helm status ${{ env.repo_release }} -o json | jq .info.status || true)
-            if [[ ${PREVIOUS} =~ pending ]]; then
-              echo "Rollback triggered"
-              helm rollback ${{ env.repo_release }} || \
-                helm uninstall ${{ env.repo_release }}
-            fi
-
       - name: Deploy
         uses: bcgov/actions-openshift/oc-runner@510a8105fdffbb718094e8a093e638132e300975 # v0.10.0
         with:
@@ -91,7 +74,18 @@ jobs:
           oc_token: ${{ secrets.oc_token }}
           oc_server: ${{ vars.oc_server }}
           triggers: ${{ inputs.triggers }}
+          # One oc-runner step: each login and each oc/helm process opens its own API connection
           commands: |
+            # Interrupt any previous deployments (PR only, status = pending-*)
+            if [ "${{ github.event_name }}" = pull_request ]; then
+              PREVIOUS=$(helm status ${{ env.repo_release }} -o json | jq .info.status || true)
+              if [[ ${PREVIOUS} =~ pending ]]; then
+                echo "Rollback triggered"
+                helm rollback ${{ env.repo_release }} || \
+                  helm uninstall ${{ env.repo_release }}
+              fi
+            fi
+
             # If directory provided, cd to it
             [ -z "${{ inputs.directory }}" ]|| cd ${{ inputs.directory }}
             # Deploy Helm Chart
@@ -118,9 +112,3 @@ jobs:
               helm rollback "${{ env.repo_release }}" || helm uninstall "${{ env.repo_release }}" || true
               exit 1
             fi
-
-            # print history 
-            helm history "${{ env.repo_release }}"
-
-            # Remove old build runs, build pods and deployment pods
-            oc delete po --field-selector=status.phase==Succeeded
