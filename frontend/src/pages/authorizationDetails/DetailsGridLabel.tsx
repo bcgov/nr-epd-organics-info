@@ -15,12 +15,10 @@ export function DetailsGridLabel({
   md = 3,
 }: Readonly<Props>) {
   return (
-    <Grid item xs={xs} md={md} flexDirection="column" gap="4px">
+    <Grid size={{ xs, md }} sx={{ flexDirection: 'column', gap: '4px' }}>
       <Typography
         component="div"
-        fontSize={12}
-        fontWeight="bold"
-        marginBottom="4px"
+        sx={{ fontSize: 12, fontWeight: 'bold', marginBottom: '4px' }}
       >
         {label}
       </Typography>

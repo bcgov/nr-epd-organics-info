@@ -57,7 +57,7 @@ export default function AuthorizationDetails() {
       </div>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <Box>
-          <Typography fontWeight={700} color="#000" fontSize="36px">
+          <Typography sx={{ fontWeight: 700, color: '#000', fontSize: '36px' }}>
             {name}
           </Typography>
         </Box>
@@ -82,15 +82,15 @@ export default function AuthorizationDetails() {
         <Stack spacing={3} sx={{ flex: 1 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="h5" component="span" fontWeight={700}>
+              <Typography variant="h5" component="span" sx={{ fontWeight: 700 }}>
                 Authorization
               </Typography>
-              <Typography variant="h5" component="span" fontWeight={500}>
+              <Typography variant="h5" component="span" sx={{ fontWeight: 500 }}>
                 #: {number}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="h5" component="span" fontWeight={400}>
+              <Typography variant="h5" component="span" sx={{ fontWeight: 400 }}>
                 Status:
               </Typography>
               <AuthorizationStatusChip status={status} size="small" />

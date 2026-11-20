@@ -53,7 +53,7 @@ export function FilterByCheckboxGroup({
     >
       {isSmall && (
         <div className="filter-by-checkbox-group-header">
-          <Typography fontSize="18px" fontWeight={700}>
+          <Typography sx={{ fontSize: '18px', fontWeight: 700 }}>
             Facility Type
           </Typography>
           {showResetButton && (

@@ -30,7 +30,7 @@ export function NoResults({ showResetFiltersButton = true }: Readonly<Props>) {
       <Typography color="textSecondary">
         There are no matching authorizations.
       </Typography>
-      <Stack direction="row" gap="16px">
+      <Stack direction="row" spacing="16px">
         {showResetFiltersButton && hasFiltersOn && (
           <Button variant="outlined" onClick={onResetFilters}>
             Reset Filters

@@ -45,14 +45,12 @@ export function AuthorizationListItem({
       component="li"
       sx={sx}
     >
-      <Typography component="div" fontSize={14} marginBottom="8px">
+      <Typography component="div" sx={{ fontSize: 14, marginBottom: '8px' }}>
         Authorization #: <span>{number}</span>
       </Typography>
       <Typography
         component="div"
-        fontSize={20}
-        fontWeight="bold"
-        marginBottom="16px"
+        sx={{ fontSize: 20, fontWeight: 'bold', marginBottom: '16px' }}
       >
         {name}
       </Typography>
@@ -106,10 +104,10 @@ export function AuthorizationListItem({
 
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
-        gap="16px"
-        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        spacing="16px"
+        sx={{ alignItems: { xs: 'flex-start', sm: 'center' } }}
       >
-        <Stack direction="row" gap="16px" alignItems="center">
+        <Stack direction="row" spacing="16px" sx={{ alignItems: 'center' }}>
           <Typography component="div">Status:</Typography>
           <AuthorizationStatusChip status={status} />
         </Stack>
@@ -151,18 +149,12 @@ function LabelValue({
   }
   return (
     <Grid
-      item
-      xs={12}
-      md={fullWidth ? undefined : 6}
-      flexDirection="column"
-      gap="4px"
-      marginBottom="24px"
+      size={{ xs: 12, md: fullWidth ? undefined : 6 }}
+      sx={{ flexDirection: 'column', gap: '4px', marginBottom: '24px' }}
     >
       <Typography
         component="div"
-        fontSize={14}
-        fontWeight="bold"
-        marginBottom="4px"
+        sx={{ fontSize: 14, fontWeight: 'bold', marginBottom: '4px' }}
       >
         {label}
       </Typography>

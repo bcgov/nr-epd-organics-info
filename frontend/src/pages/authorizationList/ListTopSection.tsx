@@ -8,7 +8,7 @@ export function ListTopSection() {
     <Stack
       direction="column"
       className="list-top-section"
-      gap="16px"
+      spacing="16px"
       component="section"
       sx={{
         padding: {
@@ -21,12 +21,12 @@ export function ListTopSection() {
         data-testid="auth-list-top-section-title"
         variant="h1"
         component="h1"
-        fontWeight="700"
         sx={{
           fontSize: {
             xs: '36px',
             md: '48px',
           },
+          fontWeight: '700',
           margin: 0,
         }}
       >
@@ -36,7 +36,7 @@ export function ListTopSection() {
         data-testid="auth-list-top-section-subtitle"
         variant="h6"
         component="h6"
-        fontSize="18px"
+        sx={{ fontSize: '18px' }}
       >
         Authorized land application sites and compost facilities in B.C.
       </Typography>

@@ -168,9 +168,11 @@ export function PointSearch({
                 sx={{ ...styles.textField }}
                 value={Math.round(radius / 1000)}
                 onChange={onInputChange}
-                InputProps={{
-                  endAdornment: <Typography variant="caption">km</Typography>,
-                  inputProps: {
+                slotProps={{
+                  input: {
+                    endAdornment: <Typography variant="caption">km</Typography>,
+                  },
+                  htmlInput: {
                     min: 1,
                     max: 400,
                     inputMode: 'numeric',
@@ -238,9 +240,11 @@ export function PointSearch({
             sx={{ ...styles.textField, mt: isSmall ? 2 : -2.5 }}
             value={Math.round(radius / 1000)}
             onChange={onInputChange}
-            InputProps={{
-              endAdornment: <Typography variant="caption">km</Typography>,
-              inputProps: {
+            slotProps={{
+              input: {
+                endAdornment: <Typography variant="caption">km</Typography>,
+              },
+              htmlInput: {
                 min: 1,
                 max: 400,
                 inputMode: 'numeric',

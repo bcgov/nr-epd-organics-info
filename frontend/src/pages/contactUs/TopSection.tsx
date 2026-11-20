@@ -21,6 +21,7 @@ const styles = {
       xs: '36px',
       md: '48px',
     },
+    fontWeight: 700,
   },
 }
 
@@ -31,7 +32,6 @@ export function TopSection() {
         variant="h1"
         component="h1"
         color="secondary"
-        fontWeight={700}
         sx={styles.heading}
       >
         Contact Us

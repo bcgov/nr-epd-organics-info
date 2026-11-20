@@ -1,6 +1,5 @@
 import { MouseEventHandler } from 'react'
-import { IconButton, InputAdornment, TextField } from '@mui/material'
-import { TextFieldProps } from '@mui/material/TextField/TextField'
+import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material'
 import clsx from 'clsx'
 
 import { LocationIconButton } from './LocationIconButton'
@@ -24,7 +23,7 @@ export function SearchInput({
   showClearIcon = true,
   onClear,
   showLocationIcon = false,
-  InputProps,
+  slotProps,
   placeholder = 'Search',
   className,
   size,
@@ -60,10 +59,13 @@ export function SearchInput({
       {...rest}
       value={value}
       onChange={onChange}
-      InputProps={{
-        ...InputProps,
-        startAdornment,
-        endAdornment,
+      slotProps={{
+        ...slotProps,
+        input: {
+          ...(typeof slotProps?.input === 'object' ? slotProps.input : undefined),
+          startAdornment,
+          endAdornment,
+        },
       }}
       placeholder={placeholder}
       variant="outlined"

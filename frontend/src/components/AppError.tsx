@@ -19,7 +19,7 @@ export default function AppError() {
   return (
     <Snackbar
       message="Loading failed, please try again later"
-      ContentProps={{ style: errorStyle }}
+      slotProps={{ content: { style: errorStyle } }}
       sx={{
         '&.MuiSnackbar-root': { top: '6em' },
       }}

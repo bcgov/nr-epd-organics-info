@@ -92,8 +92,8 @@ export function ComplianceSection({ item }: Readonly<Props>) {
       }}
       className="details-section"
     >
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography fontWeight={700} color="#000" fontSize="24px">
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <Typography sx={{ fontWeight: 700, color: '#000', fontSize: '24px' }}>
           Compliance and Enforcement
         </Typography>
         <IconButton
@@ -114,7 +114,9 @@ export function ComplianceSection({ item }: Readonly<Props>) {
           display: { xs: isExpanded ? 'flex' : 'none', md: 'flex' },
         }}
       >
-        <Typography fontSize="16px" color="#666" fontStyle="italic" mb={2}>
+        <Typography
+          sx={{ fontSize: '16px', color: '#666', fontStyle: 'italic', mb: 2 }}
+        >
           Compliance and enforcement data presented is from the Natural Resource
           Compliance and Enforcement Database and may not be complete. The
           information shown is based on a search using the authorization number

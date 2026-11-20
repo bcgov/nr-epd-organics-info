@@ -94,7 +94,7 @@ export function ContactUs() {
                 <EmailIcon sx={{ color: 'white' }} />
               </div>
               <Stack direction="column">
-                <Typography fontWeight={700}>Email</Typography>
+                <Typography sx={{ fontWeight: 700 }}>Email</Typography>
                 <a
                   href="mailto:ENV.OMRR.Reg.Reviews@gov.bc.ca"
                   style={{
@@ -127,7 +127,7 @@ export function ContactUs() {
                   <EmailIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
-                  <Typography fontWeight={700}>Email</Typography>
+                  <Typography sx={{ fontWeight: 700 }}>Email</Typography>
                   <a
                     href="mailto:ENVCIA@gov.bc.ca"
                     style={{
@@ -145,7 +145,7 @@ export function ContactUs() {
                   <LinkIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
-                  <Typography fontWeight={700}>
+                  <Typography sx={{ fontWeight: 700 }}>
                     Waste Discharge Application Enquiry
                   </Typography>
                   <a
@@ -182,7 +182,7 @@ export function ContactUs() {
                   <PhoneIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
-                  <Typography fontWeight={700}>Toll-free</Typography>
+                  <Typography sx={{ fontWeight: 700 }}>Toll-free</Typography>
                   <a
                     href="tel:18779527277"
                     style={{
@@ -198,7 +198,7 @@ export function ContactUs() {
                   <LinkIcon sx={{ color: 'white' }} />
                 </div>
                 <Stack direction="column">
-                  <Typography fontWeight={700}>
+                  <Typography sx={{ fontWeight: 700 }}>
                     Report All Poachers and Polluters
                   </Typography>
                   <a

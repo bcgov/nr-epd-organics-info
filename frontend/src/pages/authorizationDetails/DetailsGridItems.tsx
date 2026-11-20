@@ -23,7 +23,7 @@ export function PermitApprovalOperationalCertificateGridItems({
       <DetailsGridLabel label="Schedule" md={6}>
         {item['Waste Discharge Regulation'] ?? ''}
       </DetailsGridLabel>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography className="details-note">
           Permits, Operational Certificates, and Approvals are necessary for
           composting operations that handle 5,000 tonnes or more of finished
@@ -50,7 +50,7 @@ export function NotificationGridItems() {
       <DetailsGridLabel label="Regulation" md={6}>
         <RecyclingRegulationLink />
       </DetailsGridLabel>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography className="details-note">
           Please note that authorizations issued prior to 2007 are currently
           categorized as historical data. The Authorization Management System
@@ -149,9 +149,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
 
   return (
     <Grid
-      // @ts-ignore Grid is deprecated but still used in the codebase
-      item
-      xs={12}
+      size={12}
       sx={style.container}
       className="organic-matter-grid"
     >
@@ -174,16 +172,11 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
         </i>
       </Typography>
       <Grid
-        // @ts-ignore Grid is deprecated but still used in the codebase
         container
         sx={style.gridContainer}
         className="organic-matter-checkbox-grid"
       >
-        <Grid
-          // @ts-ignore Grid is deprecated but still used in the codebase
-          item
-          xs={6}
-        >
+        <Grid size={6}>
           <Typography sx={style.columnHeader}>
             Types of organic matter accepted
           </Typography>
@@ -191,9 +184,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
             .filter((key) => Boolean(item[key]))
             .map((key) => (
               <Grid
-                // @ts-ignore Grid is deprecated but still used in the codebase
                 key={`CheckRow-${key}`}
-                item
                 className="organic-matter-checkbox-item"
                 sx={style.checkboxItem}
               >
@@ -201,11 +192,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
               </Grid>
             ))}
         </Grid>
-        <Grid
-          // @ts-ignore Grid is deprecated but still used in the codebase
-          item
-          xs={6}
-        >
+        <Grid size={6}>
           <Typography sx={style.columnHeader}>
             Type of organic matter <u>not</u> accepted
           </Typography>
@@ -213,9 +200,7 @@ function OrganicMatterGridItem({ item }: Readonly<Props>) {
             .filter((key) => !item[key])
             .map((key) => (
               <Grid
-                // @ts-ignore Grid is deprecated but still used in the codebase
                 key={`CheckRow-${key}`}
-                item
                 className="organic-matter-checkbox-item"
                 sx={style.checkboxItem}
               >
