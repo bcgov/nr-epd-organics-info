@@ -23,7 +23,7 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - uses: bcgov/actions-openshift/route-tls@510a8105fdffbb718094e8a093e638132e300975 # v0.10.0
+      - uses: bcgov/actions-openshift/route-tls@47805d2fc4e919382757c1fbeb68d39313abe64f # v0.11.0
         with:
           hostname: organicsinfo.gov.bc.ca
           route_name: nr-epd-organics-info-prod-frontend-vanity

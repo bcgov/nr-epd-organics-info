@@ -43,7 +43,6 @@ jobs:
         uses: bcgov/actions/image-tracker@acc058abf85bb183dad21b839a92a40a4ff47af3 # v0.14.0
         with:
           packages: ${{ matrix.package }}
-          max_depth: 100
 
       # Tag that digest with the merge commit SHA; deploys and promotion use this tag
       - name: Tag image with commit SHA
