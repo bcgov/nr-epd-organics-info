@@ -42,8 +42,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests.inclusions=**/*spec.ts,**/*test.ts,**/*.test.tsx
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          unused_deps: warn
-          supply_scan: true
           triggers: backend/
 
   frontend-tests:
@@ -73,8 +71,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.test.inclusions=**/*spec.ts,**/*test.tsx
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          unused_deps: warn
-          supply_scan: true
           triggers: frontend/
 
   # https://github.com/marketplace/actions/aqua-security-trivy
