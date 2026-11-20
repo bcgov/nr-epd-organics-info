@@ -34,7 +34,7 @@ jobs:
               npx eslint "{src,apps,libs,test}/**/*.ts"
             }
           working_directory: backend
-          node_version: "24"
+          node_version: "26"
           sonar_args: >
             -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts,**/*test.ts,**/*test.tsx,**/e2e/**
             -Dsonar.organization=bcgov-sonarcloud
@@ -65,7 +65,7 @@ jobs:
               npm run lint
             }
           working_directory: frontend
-          node_version: "24"
+          node_version: "26"
           sonar_args: >
             -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts,**/*test.tsx,**/routeTree.gen.ts
             -Dsonar.organization=bcgov-sonarcloud
