@@ -1,5 +1,6 @@
 import { Page } from 'playwright'
 import { expect } from '@playwright/test'
+import { SEARCH_PLACEHOLDER } from '../../src/constants/constants'
 import { baseURL } from '../utils'
 
 // The OMRR API is backed by a live government database, so fields like dates
@@ -21,7 +22,9 @@ export const authorization_details_page = async (page: Page) => {
 
   await page.getByRole('button', { name: 'List all authorizations' }).click()
 
-  const searchInput = page.locator('input[placeholder="Search"]').first()
+  const searchInput = page
+    .locator(`input[placeholder="${SEARCH_PLACEHOLDER}"]`)
+    .first()
   await searchInput.click()
   await searchInput.fill('12398')
   await page.getByText('View Details').click()

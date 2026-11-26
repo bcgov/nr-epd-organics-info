@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { initialState as initialOmrrState } from '@/features/omrr/omrr-slice'
 import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
@@ -27,7 +28,7 @@ describe('Test suite for SearchAutocomplete', () => {
       },
     })
 
-    const input = screen.getByPlaceholderText('Search')
+    const input = screen.getByPlaceholderText(SEARCH_PLACEHOLDER)
     // This should match 4 results
     await user.type(input, 'waste')
     const options = await screen.findAllByRole('option')

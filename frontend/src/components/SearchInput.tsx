@@ -2,6 +2,7 @@ import { MouseEventHandler } from 'react'
 import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material'
 import clsx from 'clsx'
 
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { LocationIconButton } from './LocationIconButton'
 
 import SearchIcon from '@/assets/svgs/fa-search.svg?react'
@@ -24,7 +25,7 @@ export function SearchInput({
   onClear,
   showLocationIcon = false,
   slotProps,
-  placeholder = 'Search',
+  placeholder = SEARCH_PLACEHOLDER,
   className,
   size,
   ...rest

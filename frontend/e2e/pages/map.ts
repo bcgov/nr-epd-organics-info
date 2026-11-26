@@ -1,5 +1,6 @@
 import { Page } from 'playwright'
 import { expect } from '@playwright/test'
+import { SEARCH_PLACEHOLDER } from '../../src/constants/constants'
 import { baseURL } from '../utils'
 
 export const map_page = async (page: Page) => {
@@ -10,7 +11,7 @@ export const map_page = async (page: Page) => {
   await expect(page.getByTestId('map-view')).toBeVisible()
 
   // Search and spatial tool buttons
-  await expect(page.getByPlaceholder('Search')).toBeVisible()
+  await expect(page.getByPlaceholder(SEARCH_PLACEHOLDER)).toBeVisible()
   await expect(page.getByRole('button', { name: 'Find Me' })).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Polygon Search' }),
@@ -71,7 +72,7 @@ export const map_page = async (page: Page) => {
   await expect(page.getByLabel('Notification')).toBeHidden()
 
   // Search autocomplete and results sidebar
-  const searchInput = page.getByPlaceholder('Search')
+  const searchInput = page.getByPlaceholder(SEARCH_PLACEHOLDER)
   await searchInput.click()
   await searchInput.fill('Victoria')
 
