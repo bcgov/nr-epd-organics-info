@@ -6,7 +6,6 @@ services:
     volumes:
       - "./utils/oracle-mock.mjs:/app/oracle-mock.mjs:ro,z"
       - "./frontend/e2e/fixtures:/fixtures:ro,z"
-    ports: ["9080:9080"]
     healthcheck:
       test:
         [

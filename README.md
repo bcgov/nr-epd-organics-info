@@ -35,7 +35,7 @@ podman compose up -d   # or: docker compose up -d
 ```
 
 This starts:
-- `oracle-mock` on `http://localhost:9080` serving the committed OMRR snapshots from `frontend/e2e/fixtures/`
+- `oracle-mock` (internal port `9080`) serving the committed OMRR snapshots from `frontend/e2e/fixtures/`
 - `backend` on `http://localhost:3001` (API at `/api/omrr`, health at `/api/health`, Swagger at `/docs`)
 - `frontend` on `http://localhost:3000` (Vite dev server proxying `/api` to `backend`)
 
