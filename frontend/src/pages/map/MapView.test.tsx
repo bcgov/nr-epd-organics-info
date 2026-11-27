@@ -122,13 +122,19 @@ describe('Test suite for MapView', () => {
     await user.click(pointSearchBtn)
 
     const cancelBtn = screen.getByRole('button', { name: 'Cancel' })
-    screen.getByRole('button', { name: 'Set Radius' })
+    screen.getByRole('slider', { name: 'Search radius' })
+    screen.getByText(
+      'Click the map to place the centre point, then adjust the radius.',
+    )
     screen.getByText('Click to place center point')
 
     const map = document.querySelector('.leaflet-container') as HTMLElement
     await user.click(map)
 
     expect(document.querySelector('.point-search-circle')).toBeInTheDocument()
+    screen.getByText(
+      'Adjust the radius, then click OK to see results in the area.',
+    )
 
     await user.click(cancelBtn)
 

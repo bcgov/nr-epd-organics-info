@@ -16,7 +16,8 @@
 
 .map-search .MuiButton-root,
 .map-search .map-button,
-.map-search .search-autocomplete {
+.map-search .search-autocomplete,
+.map-search .map-search-tool-box {
   pointer-events: auto;
 }
 
@@ -125,11 +126,29 @@ button.map-button--active .MuiChip-root.Mui-active:hover {
   box-shadow: var(--box-shadow-small);
 }
 
-.polygon-search,
-.point-search {
+.polygon-search {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.point-search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.point-search-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.point-search-help {
+  display: block;
+  color: var(--typography-color-secondary);
 }
 
 .polygon-cancel-icon {

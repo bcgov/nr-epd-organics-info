@@ -1,19 +1,20 @@
 import { useDispatch } from 'react-redux'
 import { Button, Slider, Typography, TextField } from '@mui/material'
 import clsx from 'clsx'
+import L from 'leaflet'
 import { useEffect } from 'react'
 
-import DropdownButton from '@/components/DropdownButton'
 import { MIN_CIRCLE_RADIUS } from '@/constants/constants'
 import {
   clearActiveTool,
-  toggleActiveTool,
   useActiveTool,
   setRadiusActive,
+  setZoomBounds,
 } from '@/features/map/map-slice'
 import {
   resetPointFilter,
   setPointFilterRadius,
+  usePointFilterCenter,
   usePointFilterRadius,
   usePointFilterActive,
   usePointFilterFinished,
@@ -101,6 +102,7 @@ export function PointSearch({
   showControls = true,
 }: Readonly<Props>) {
   const dispatch = useDispatch()
+  const center = usePointFilterCenter()
   const radius = usePointFilterRadius()
   const activeTool = useActiveTool()
   const isDrawing = activeTool === ActiveToolEnum.pointSearch
@@ -127,6 +129,15 @@ export function PointSearch({
       mapContainer.classList.remove('crosshairs-cursor')
     }
     dispatch(setPointFilterFinished())
+    if (center) {
+      const bounds = L.latLng(center).toBounds(radius * 2)
+      dispatch(
+        setZoomBounds([
+          [bounds.getSouth(), bounds.getWest()],
+          [bounds.getNorth(), bounds.getEast()],
+        ]),
+      )
+    }
   }
 
   const onRadiusChange = (_ev: any, value: number | number[]) => {
@@ -257,14 +268,28 @@ export function PointSearch({
     </div>
   )
 
+  let helpText =
+    'Click the map to place the centre point, then adjust the radius.'
+  if (isFilterActive && finished) {
+    helpText = `Showing results within ${formatDistance(radius)}.`
+  } else if (isFilterActive) {
+    helpText =
+      'Adjust the radius, then click OK to see results in the area.'
+  }
+
   return isSmall ? (
     <div style={styles.container}>
-      <div style={styles.pointSearchContent}>{sliderBox}</div>
+      <div style={styles.pointSearchContent}>
+        {sliderBox}
+        <Typography variant="caption" className="point-search-help">
+          {helpText}
+        </Typography>
+      </div>
     </div>
   ) : (
     <div className={clsx('point-search', className)}>
       {showControls && (
-        <>
+        <div className="point-search-controls">
           <Button
             color="primary"
             variant="contained"
@@ -274,17 +299,7 @@ export function PointSearch({
           >
             Cancel
           </Button>
-          <DropdownButton
-            id="pointSearchSetRadiusButton"
-            color="primary"
-            variant="contained"
-            size="medium"
-            menuClassName="point-search-menu"
-            dropdownContent={sliderBox}
-            // disabled={finished}
-          >
-            Set Radius
-          </DropdownButton>
+          {sliderBox}
           <Button
             color="primary"
             variant="contained"
@@ -295,8 +310,11 @@ export function PointSearch({
           >
             OK
           </Button>
-        </>
+        </div>
       )}
+      <Typography variant="caption" className="point-search-help">
+        {helpText}
+      </Typography>
     </div>
   )
 }
