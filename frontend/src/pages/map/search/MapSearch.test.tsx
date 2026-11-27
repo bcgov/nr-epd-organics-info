@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react'
 
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { MapSearch } from './MapSearch'
 import { render } from '@/test-utils'
 
@@ -10,7 +11,7 @@ describe('Test suite for MapSearch', () => {
       withStateProvider: true,
     })
 
-    screen.getByPlaceholderText('Search')
+    screen.getByPlaceholderText(SEARCH_PLACEHOLDER)
     screen.getByRole('button', { name: 'Find Me' })
     screen.getByRole('button', { name: 'Layers' })
     screen.getByRole('button', { name: 'Polygon Search' })
@@ -28,7 +29,9 @@ describe('Test suite for MapSearch', () => {
       withStateProvider: true,
     })
 
-    expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
+    expect(
+      screen.queryByPlaceholderText(SEARCH_PLACEHOLDER),
+    ).not.toBeInTheDocument()
     screen.getByRole('button', { name: 'List View' })
     expect(
       screen.queryByRole('button', { name: 'Find Me' }),

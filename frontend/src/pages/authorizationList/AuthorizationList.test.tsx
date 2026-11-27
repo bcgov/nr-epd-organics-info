@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { initialState, OmrrSliceState } from '@/features/omrr/omrr-slice'
 import { mockActiveOmrrData, mockOmrrData } from '@/mocks/mock-omrr-data'
 import { SEARCH_BY_ALL } from '@/interfaces/types'
@@ -25,7 +26,7 @@ describe('Test suite for AuthorizationList', () => {
     const { user } = renderComponent({ filteredResults: [] })
 
     screen.getByRole('heading', { name: 'Search Authorizations' })
-    const searchInput = screen.getAllByPlaceholderText('Search')[0]
+    const searchInput = screen.getAllByPlaceholderText(SEARCH_PLACEHOLDER)[0]
     screen.getAllByRole('button', { name: 'Status' })[0]
     await screen.findByText('There are no matching authorizations.')
 

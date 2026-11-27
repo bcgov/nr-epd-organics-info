@@ -1,5 +1,6 @@
 import { Page } from 'playwright'
 import { expect } from '@playwright/test'
+import { SEARCH_PLACEHOLDER } from '../../src/constants/constants'
 import { baseURL } from '../utils'
 
 export const authorization_list_page = async (page: Page) => {
@@ -40,7 +41,9 @@ export const authorization_list_page = async (page: Page) => {
   await page.click('body', { position: { x: 0, y: 0 } })
 
   // Test the search input
-  const searchInput = page.locator('input[placeholder="Search"]').first()
+  const searchInput = page
+    .locator(`input[placeholder="${SEARCH_PLACEHOLDER}"]`)
+    .first()
   await expect(searchInput).toBeVisible()
   await searchInput.click()
   await searchInput.fill('victoria')

@@ -1,6 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react'
 
 import { render } from '@/test-utils'
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { initialState as initialOmrrState } from '@/features/omrr/omrr-slice'
 import { initialState as initialMapState } from '@/features/map/map-slice'
 import { mockOmrrData } from '@/mocks/mock-omrr-data'
@@ -43,7 +44,7 @@ describe('Test suite for MapView', () => {
     const markers = screen.getAllByAltText('Authorization marker')
     expect(markers.length > 0).toBe(true)
 
-    screen.getByPlaceholderText('Search')
+    screen.getByPlaceholderText(SEARCH_PLACEHOLDER)
     await screen.findByRole('button', { name: 'Find Me' })
     expect(
       screen.queryByTitle('Show my location on the map'),
@@ -105,11 +106,13 @@ describe('Test suite for MapView', () => {
     await user.click(searchBtn)
 
     expect(searchBtn).toHaveClass('map-button--active')
-    screen.getByPlaceholderText('Search')
+    screen.getByPlaceholderText(SEARCH_PLACEHOLDER)
     const backBtn = screen.getByTitle('Back to the map')
 
     await user.click(backBtn)
-    expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
+    expect(
+      screen.queryByPlaceholderText(SEARCH_PLACEHOLDER),
+    ).not.toBeInTheDocument()
   })
 
   it('should render the MapView and test point search', async () => {

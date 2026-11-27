@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import {
   setSearchTextFilter,
   useSearchTextFilter,
@@ -21,7 +22,7 @@ export function ListSearchInput(props: { isMobile?: boolean }) {
 
   return (
     <SearchInput
-      placeholder="Search"
+      placeholder={SEARCH_PLACEHOLDER}
       className="list-search-input"
       value={value}
       onChange={onChange}

@@ -1,6 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
 
 import { render } from '@/test-utils'
+import { SEARCH_PLACEHOLDER } from '@/constants/constants'
 import { themeBreakpointValues } from '@/theme'
 import { initialState as initialMapState } from '@/features/map/map-slice'
 import {
@@ -50,7 +51,7 @@ describe('Test suite for SearchDialog', () => {
     const { user, state } = renderComponent(onClose)
 
     screen.getByTitle('Back to the map')
-    const input = screen.getByPlaceholderText('Search')
+    const input = screen.getByPlaceholderText(SEARCH_PLACEHOLDER)
     expect(screen.queryAllByRole('option')).toHaveLength(0)
 
     await user.type(input, 'waste')
