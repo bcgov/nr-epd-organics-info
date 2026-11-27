@@ -28,6 +28,21 @@ Here is high-level documentation on the development of applications, use of GitH
 
 ## Running the application in local development environment
 
+### Using Compose (recommended, no OpenShift access required)
+
+```bash
+podman compose up -d   # or: docker compose up -d
+```
+
+This starts:
+- `oracle-mock` (internal port `9080`) serving the committed OMRR snapshots from `frontend/e2e/fixtures/`
+- `backend` on `http://localhost:3001` (API at `/api/omrr`, health at `/api/health`, Swagger at `/docs`)
+- `frontend` on `http://localhost:3000` (Vite dev server proxying `/api` to `backend`)
+
+To use the live `nr-oracle-service` via OpenShift port-forwarding instead of `oracle-mock`, set `NR_ORACLE_SERVICE_URL` and `NR_ORACLE_SERVICE_KEY` in your shell before running Compose.
+
+### Running directly on host with OpenShift port-forwarding
+
 Pre-requisites:
 
 - Node.js installed on the machine

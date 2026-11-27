@@ -1,74 +1,82 @@
----
-version: "3.9"
-
-x-var:
-  - &POSTGRES_USER postgres
-  - &POSTGRES_PASSWORD default
-  - &POSTGRES_DATABASE postgres
-
-x-postgres-vars: &postgres-vars
-  POSTGRES_HOST: database
-  POSTGRES_USER: *POSTGRES_USER
-  POSTGRES_PASSWORD: *POSTGRES_PASSWORD
-  POSTGRES_DATABASE: *POSTGRES_DATABASE
-
 services:
-  database:
-    image: postgres:19
-    container_name: database
-    environment:
-      <<: *postgres-vars
+  oracle-mock:
+    image: node:26
+    container_name: oracle-mock
+    command: ["node", "/app/oracle-mock.mjs"]
+    volumes:
+      - "./utils/oracle-mock.mjs:/app/oracle-mock.mjs:ro,z"
+      - "./frontend/e2e/fixtures:/fixtures:ro,z"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", *POSTGRES_USER]
-    ports: ["5432:5432"]
-
-  migrations:
-    image: flyway/flyway:13-alpine
-    container_name: migrations
-    command: info migrate info
-    volumes: ["./migrations/sql:/flyway/sql:ro"]
-    environment:
-      FLYWAY_URL: jdbc:postgresql://database:5432/postgres
-      FLYWAY_USER: *POSTGRES_USER
-      FLYWAY_PASSWORD: *POSTGRES_PASSWORD
-      FLYWAY_BASELINE_ON_MIGRATE: true
-      FLYWAY_DEFAULT_SCHEMA: omrr
-    depends_on:
-      database:
-        condition: service_healthy
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:9080/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   backend:
+    image: node:26
     container_name: backend
-    entrypoint: sh -c "npm ci --ignore-scripts && npm run start:dev"
+    entrypoint: sh -c "rm -rf dist tsconfig.build.tsbuildinfo && npm ci --ignore-scripts && npm run start:dev"
     environment:
-      <<: *postgres-vars
       NODE_ENV: development
-    image: node:26-bullseye
+      NR_ORACLE_SERVICE_URL: ${NR_ORACLE_SERVICE_URL:-http://oracle-mock:9080}
+      NR_ORACLE_SERVICE_KEY: ${NR_ORACLE_SERVICE_KEY:-local-dev-key}
+      OMRR_AUTHZ_DOCS_FLAG: ${OMRR_AUTHZ_DOCS_FLAG:-true}
+      OMRR_APP_STATUS_FLAG: ${OMRR_APP_STATUS_FLAG:-true}
     ports: ["3001:3000"]
-    volumes: ["./backend:/app", "/app/node_modules"]
+    volumes: ["./backend:/app:z", "/app/node_modules"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     working_dir: "/app"
     depends_on:
-      migrations:
-        condition: service_started
+      - oracle-mock
 
   frontend:
+    image: node:26
     container_name: frontend
     entrypoint: sh -c "npm ci --ignore-scripts && npm run dev"
     environment:
       NODE_ENV: development
-      PORT: 3000
-      BACKEND_URL: http://backend:3000
-    image: node:26-bullseye
+      VITE_PORT: 3000
+      VITE_API_URL: http://backend:3000
+      VITE_AMS_URL: ${VITE_AMS_URL:-https://test.j200.gov.bc.ca/pub/ams/}
+      VITE_OSM_GRAYSCALE_FLAG: ${VITE_OSM_GRAYSCALE_FLAG:-true}
+      VITE_ZOOM_TO_RESULTS_CONTROL_FLAG: ${VITE_ZOOM_TO_RESULTS_CONTROL_FLAG:-true}
+      VITE_AMS_DOCS_FLAG: ${VITE_AMS_DOCS_FLAG:-true}
+      VITE_NRPTI_API_URL: ${VITE_NRPTI_API_URL:-https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca}
+      VITE_NRCED_URL: ${VITE_NRCED_URL:-https://nrced.gov.bc.ca}
     ports: ["3000:3000"]
-    volumes: ["./frontend:/app", "/app/node_modules"]
+    volumes: ["./frontend:/app:z", "/app/node_modules"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     working_dir: "/app"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
 
   caddy:
     container_name: caddy
@@ -76,13 +84,18 @@ services:
     build: ./frontend
     environment:
       NODE_ENV: development
-      PORT: 3000
       BACKEND_URL: http://backend:3000
       LOG_LEVEL: info
+      VITE_AMS_URL: ${VITE_AMS_URL:-https://test.j200.gov.bc.ca/pub/ams/}
+      VITE_OSM_GRAYSCALE_FLAG: ${VITE_OSM_GRAYSCALE_FLAG:-true}
+      VITE_ZOOM_TO_RESULTS_CONTROL_FLAG: ${VITE_ZOOM_TO_RESULTS_CONTROL_FLAG:-true}
+      VITE_AMS_DOCS_FLAG: ${VITE_AMS_DOCS_FLAG:-true}
+      VITE_NRPTI_API_URL: ${VITE_NRPTI_API_URL:-https://nrpti-api-f00029-prod.apps.silver.devops.gov.bc.ca}
+      VITE_NRCED_URL: ${VITE_NRCED_URL:-https://nrced.gov.bc.ca}
+      VITE_HOW_TO_VIDEO_URL: ${VITE_HOW_TO_VIDEO_URL:-}
     ports: ["3005:3000"]
-    volumes: ["./frontend/Caddyfile:/etc/caddy/Caddyfile"]
+    volumes: ["./frontend/Caddyfile:/etc/caddy/Caddyfile:ro,z"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3001/health"]
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
