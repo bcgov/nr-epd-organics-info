@@ -1,8 +1,14 @@
 import { MouseEventHandler } from 'react'
-import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material'
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+  Tooltip,
+} from '@mui/material'
 import clsx from 'clsx'
 
-import { SEARCH_PLACEHOLDER } from '@/constants/constants'
+import { SEARCH_PLACEHOLDER, SEARCH_TOOLTIP } from '@/constants/constants'
 import { LocationIconButton } from './LocationIconButton'
 
 import SearchIcon from '@/assets/svgs/fa-search.svg?react'
@@ -15,6 +21,7 @@ interface Props extends Omit<TextFieldProps, 'variant'> {
   showClearIcon?: boolean
   onClear?: MouseEventHandler<HTMLButtonElement>
   showLocationIcon?: boolean
+  tooltip?: string
 }
 
 export function SearchInput({
@@ -24,6 +31,7 @@ export function SearchInput({
   showClearIcon = true,
   onClear,
   showLocationIcon = false,
+  tooltip = SEARCH_TOOLTIP,
   slotProps,
   placeholder = SEARCH_PLACEHOLDER,
   className,
@@ -56,25 +64,29 @@ export function SearchInput({
     ) : null
 
   return (
-    <TextField
-      {...rest}
-      value={value}
-      onChange={onChange}
-      slotProps={{
-        ...slotProps,
-        input: {
-          ...(typeof slotProps?.input === 'object' ? slotProps.input : undefined),
-          startAdornment,
-          endAdornment,
-        },
-      }}
-      placeholder={placeholder}
-      variant="outlined"
-      className={clsx(
-        'search-input',
-        size && `search-input--${size}`,
-        className,
-      )}
-    />
+    <Tooltip title={tooltip} arrow>
+      <TextField
+        {...rest}
+        value={value}
+        onChange={onChange}
+        slotProps={{
+          ...slotProps,
+          input: {
+            ...(typeof slotProps?.input === 'object'
+              ? slotProps.input
+              : undefined),
+            startAdornment,
+            endAdornment,
+          },
+        }}
+        placeholder={placeholder}
+        variant="outlined"
+        className={clsx(
+          'search-input',
+          size && `search-input--${size}`,
+          className,
+        )}
+      />
+    </Tooltip>
   )
 }
