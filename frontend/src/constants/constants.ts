@@ -4,6 +4,18 @@
 export const MIN_SEARCH_LENGTH = 3
 
 /**
+ * Placeholder text for the main authorization search inputs.
+ */
+export const SEARCH_PLACEHOLDER =
+  'Search by city, auth #, party, or postal code'
+
+/**
+ * Tooltip text explaining all supported authorization search fields.
+ */
+export const SEARCH_TOOLTIP =
+  'Search by city, authorization number, regulated party, or postal code'
+
+/**
  * How long to wait before performing a search.
  */
 export const SEARCH_DELAY = 300

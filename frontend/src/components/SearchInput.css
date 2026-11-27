@@ -28,6 +28,12 @@ div.search-input > .MuiInputBase-root.Mui-focused {
 
 div.search-input input {
   font-size: var(--map-button-font-size-large);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.search-input input::placeholder {
+  text-overflow: ellipsis;
 }
 
 .search-input > .MuiInputBase-root fieldset {
