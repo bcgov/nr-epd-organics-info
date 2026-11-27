@@ -113,7 +113,7 @@ jobs:
       # PR uploads must target the branch head ref so retries and merge-ref recalculations do not orphan the scan.
       - name: Upload Trivy scan results to GitHub Security tab (PR)
         if: always() && github.event_name == 'pull_request'
-        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        uses: github/codeql-action/upload-sarif@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
         with:
           category: "trivy"
           sarif_file: "trivy-results.sarif"
@@ -123,7 +123,7 @@ jobs:
       # Push / schedule / workflow_dispatch on main use default ambient ref and sha.
       - name: Upload Trivy scan results to GitHub Security tab
         if: always() && github.event_name != 'pull_request'
-        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        uses: github/codeql-action/upload-sarif@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
         with:
           category: "trivy"
           sarif_file: "trivy-results.sarif"
