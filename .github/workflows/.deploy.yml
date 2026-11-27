@@ -86,6 +86,13 @@ jobs:
               fi
             fi
 
+            # Ensure nr-oracle-service is running if scaled to 0 (e.g. idled in dev/test)
+            if [ "$(oc get deployment nr-oracle-service -o jsonpath='{.spec.replicas}' 2>/dev/null || true)" = "0" ]; then
+              echo "Scaling up deployment/nr-oracle-service to 1 replica"
+              oc scale deployment/nr-oracle-service --replicas=1
+              oc rollout status deployment/nr-oracle-service --timeout=120s
+            fi
+
             # If directory provided, cd to it
             [ -z "${{ inputs.directory }}" ]|| cd ${{ inputs.directory }}
             # Deploy Helm Chart
